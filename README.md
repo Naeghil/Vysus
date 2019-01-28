@@ -77,7 +77,7 @@ We use [SemVer](http://semver.org/) for versioning. For the versions available, 
 ## Authors
 
 * **Marc Serpik**       - *Team Leader* *Ast. Research & Documentation*                     - [uName](githublink)
-* **Max Lietz**         - *Deputy Team Leader* *Sn. Interface Designer* *Ast. Developer*    - [uName](githublink)
+* **Max Lietz**         - *Deputy Team Leader* *Sn. Interface Designer* *Ast. Developer*    - [BMaximilianLietz](https://github.com/BMaximilianLietz)
 * **Matthew Faustin**   - *DB design and administration*                                    - [uName](githublink)  
 * **Miles Everett**     - *Sn. Tester* *Sn. Research & Documentation*                       - [mileseverett](https://github.com/mileseverett)
 * **Roberto Sautto**    - *Sn. Developer* *Sn. Designer*                                    - [Naeghil](https://github.com/Naeghil/)

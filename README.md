@@ -82,8 +82,9 @@ We use [SemVer](http://semver.org/) for versioning. For the versions available, 
 * **Miles Everett**     - *Sn. Tester* *Sn. Research & Documentation*                       - [mileseverett](https://github.com/mileseverett)
 * **Roberto Sautto**    - *Sn. Developer* *Sn. Designer*                                    - [Naeghil](https://github.com/Naeghil/)
 
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
 <!--
+See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
+
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details

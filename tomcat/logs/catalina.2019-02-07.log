@@ -3246,3 +3246,111 @@ Caused by: java.net.BindException: Address already in use
 07-Feb-2019 22:15:05.508 INFO [main] org.apache.coyote.AbstractProtocol.start Starting ProtocolHandler ["http-nio-80"]
 07-Feb-2019 22:15:05.522 INFO [main] org.apache.coyote.AbstractProtocol.start Starting ProtocolHandler ["ajp-nio-8009"]
 07-Feb-2019 22:15:05.527 INFO [main] org.apache.catalina.startup.Catalina.start Server startup in [1,280] milliseconds
+07-Feb-2019 22:36:19.725 INFO [main] org.apache.catalina.core.StandardServer.await A valid shutdown command was received via the shutdown port. Stopping the Server instance.
+07-Feb-2019 22:36:19.726 INFO [main] org.apache.coyote.AbstractProtocol.pause Pausing ProtocolHandler ["http-nio-80"]
+07-Feb-2019 22:36:19.736 INFO [main] org.apache.coyote.AbstractProtocol.pause Pausing ProtocolHandler ["ajp-nio-8009"]
+07-Feb-2019 22:36:19.737 INFO [main] org.apache.catalina.core.StandardService.stopInternal Stopping service [Catalina]
+07-Feb-2019 22:36:19.786 INFO [main] org.apache.coyote.AbstractProtocol.stop Stopping ProtocolHandler ["http-nio-80"]
+07-Feb-2019 22:36:19.789 INFO [main] org.apache.coyote.AbstractProtocol.stop Stopping ProtocolHandler ["ajp-nio-8009"]
+07-Feb-2019 22:36:19.793 INFO [main] org.apache.coyote.AbstractProtocol.destroy Destroying ProtocolHandler ["http-nio-80"]
+07-Feb-2019 22:36:19.793 INFO [main] org.apache.coyote.AbstractProtocol.destroy Destroying ProtocolHandler ["ajp-nio-8009"]
+07-Feb-2019 22:41:31.137 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Server version name:   Apache Tomcat/9.0.14
+07-Feb-2019 22:41:31.140 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Server built:          Dec 6 2018 21:13:53 UTC
+07-Feb-2019 22:41:31.144 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Server version number: 9.0.14.0
+07-Feb-2019 22:41:31.145 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log OS Name:               Linux
+07-Feb-2019 22:41:31.145 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log OS Version:            4.14.94-89.73.amzn2.x86_64
+07-Feb-2019 22:41:31.145 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Architecture:          amd64
+07-Feb-2019 22:41:31.145 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Java Home:             /usr/java/jdk1.8.0_141/jre
+07-Feb-2019 22:41:31.145 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log JVM Version:           1.8.0_141-b15
+07-Feb-2019 22:41:31.146 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log JVM Vendor:            Oracle Corporation
+07-Feb-2019 22:41:31.146 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_BASE:         /home/ec2-user/server/Vysus/tomcat
+07-Feb-2019 22:41:31.147 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_HOME:         /home/ec2-user/server/apache-tomcat-9.0.14
+07-Feb-2019 22:41:31.147 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.util.logging.config.file=/home/ec2-user/server/Vysus/tomcat/conf/logging.properties
+07-Feb-2019 22:41:31.147 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager
+07-Feb-2019 22:41:31.148 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djdk.tls.ephemeralDHKeySize=2048
+07-Feb-2019 22:41:31.148 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.protocol.handler.pkgs=org.apache.catalina.webresources
+07-Feb-2019 22:41:31.148 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dorg.apache.catalina.security.SecurityListener.UMASK=0027
+07-Feb-2019 22:41:31.149 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dignore.endorsed.dirs=
+07-Feb-2019 22:41:31.149 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dcatalina.base=/home/ec2-user/server/Vysus/tomcat
+07-Feb-2019 22:41:31.149 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dcatalina.home=/home/ec2-user/server/apache-tomcat-9.0.14
+07-Feb-2019 22:41:31.149 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.io.tmpdir=/home/ec2-user/server/Vysus/tomcat/temp
+07-Feb-2019 22:41:31.149 INFO [main] org.apache.catalina.core.AprLifecycleListener.lifecycleEvent The APR based Apache Tomcat Native library which allows optimal performance in production environments was not found on the java.library.path: [/usr/java/packages/lib/amd64:/usr/lib64:/lib64:/lib:/usr/lib]
+07-Feb-2019 22:41:31.432 INFO [main] org.apache.coyote.AbstractProtocol.init Initializing ProtocolHandler ["http-nio-80"]
+07-Feb-2019 22:41:31.491 INFO [main] org.apache.coyote.AbstractProtocol.init Initializing ProtocolHandler ["ajp-nio-8009"]
+07-Feb-2019 22:41:31.501 INFO [main] org.apache.catalina.startup.Catalina.load Server initialization in [1,137] milliseconds
+07-Feb-2019 22:41:31.548 INFO [main] org.apache.catalina.core.StandardService.startInternal Starting service [Catalina]
+07-Feb-2019 22:41:31.553 INFO [main] org.apache.catalina.core.StandardEngine.startInternal Starting Servlet engine: [Apache Tomcat/9.0.14]
+07-Feb-2019 22:41:31.563 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory [/home/ec2-user/server/Vysus/tomcat/webapps/ROOT]
+07-Feb-2019 22:41:32.158 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [/home/ec2-user/server/Vysus/tomcat/webapps/ROOT] has finished in [595] ms
+07-Feb-2019 22:41:32.159 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory [/home/ec2-user/server/Vysus/tomcat/webapps/docs]
+07-Feb-2019 22:41:32.201 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [/home/ec2-user/server/Vysus/tomcat/webapps/docs] has finished in [42] ms
+07-Feb-2019 22:41:32.201 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory [/home/ec2-user/server/Vysus/tomcat/webapps/examples]
+07-Feb-2019 22:41:32.629 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [/home/ec2-user/server/Vysus/tomcat/webapps/examples] has finished in [428] ms
+07-Feb-2019 22:41:32.630 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory [/home/ec2-user/server/Vysus/tomcat/webapps/host-manager]
+07-Feb-2019 22:41:32.681 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [/home/ec2-user/server/Vysus/tomcat/webapps/host-manager] has finished in [51] ms
+07-Feb-2019 22:41:32.681 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory [/home/ec2-user/server/Vysus/tomcat/webapps/manager]
+07-Feb-2019 22:41:32.717 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [/home/ec2-user/server/Vysus/tomcat/webapps/manager] has finished in [36] ms
+07-Feb-2019 22:41:32.726 INFO [main] org.apache.coyote.AbstractProtocol.start Starting ProtocolHandler ["http-nio-80"]
+07-Feb-2019 22:41:32.756 INFO [main] org.apache.coyote.AbstractProtocol.start Starting ProtocolHandler ["ajp-nio-8009"]
+07-Feb-2019 22:41:32.777 INFO [main] org.apache.catalina.startup.Catalina.start Server startup in [1,275] milliseconds
+07-Feb-2019 22:47:43.282 INFO [Catalina-utility-1] org.apache.catalina.startup.HostConfig.undeploy Undeploying context []
+07-Feb-2019 22:47:43.804 INFO [Catalina-utility-1] org.apache.catalina.startup.HostConfig.undeploy Undeploying context [/examples]
+07-Feb-2019 22:47:44.311 INFO [Catalina-utility-1] org.apache.catalina.startup.HostConfig.undeploy Undeploying context [/host-manager]
+07-Feb-2019 22:47:44.821 INFO [Catalina-utility-1] org.apache.catalina.startup.HostConfig.undeploy Undeploying context [/manager]
+07-Feb-2019 22:47:45.330 INFO [Catalina-utility-1] org.apache.catalina.startup.HostConfig.undeploy Undeploying context [/docs]
+07-Feb-2019 22:48:49.750 INFO [main] org.apache.catalina.core.StandardServer.await A valid shutdown command was received via the shutdown port. Stopping the Server instance.
+07-Feb-2019 22:48:49.751 INFO [main] org.apache.coyote.AbstractProtocol.pause Pausing ProtocolHandler ["http-nio-80"]
+07-Feb-2019 22:48:49.756 INFO [main] org.apache.coyote.AbstractProtocol.pause Pausing ProtocolHandler ["ajp-nio-8009"]
+07-Feb-2019 22:48:49.757 INFO [main] org.apache.catalina.core.StandardService.stopInternal Stopping service [Catalina]
+07-Feb-2019 22:48:49.760 INFO [main] org.apache.coyote.AbstractProtocol.stop Stopping ProtocolHandler ["http-nio-80"]
+07-Feb-2019 22:48:49.762 INFO [main] org.apache.coyote.AbstractProtocol.stop Stopping ProtocolHandler ["ajp-nio-8009"]
+07-Feb-2019 22:48:49.763 INFO [main] org.apache.coyote.AbstractProtocol.destroy Destroying ProtocolHandler ["http-nio-80"]
+07-Feb-2019 22:48:49.764 INFO [main] org.apache.coyote.AbstractProtocol.destroy Destroying ProtocolHandler ["ajp-nio-8009"]
+07-Feb-2019 22:48:58.526 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Server version name:   Apache Tomcat/9.0.14
+07-Feb-2019 22:48:58.531 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Server built:          Dec 6 2018 21:13:53 UTC
+07-Feb-2019 22:48:58.531 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Server version number: 9.0.14.0
+07-Feb-2019 22:48:58.531 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log OS Name:               Linux
+07-Feb-2019 22:48:58.531 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log OS Version:            4.14.94-89.73.amzn2.x86_64
+07-Feb-2019 22:48:58.532 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Architecture:          amd64
+07-Feb-2019 22:48:58.532 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Java Home:             /usr/java/jdk1.8.0_141/jre
+07-Feb-2019 22:48:58.532 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log JVM Version:           1.8.0_141-b15
+07-Feb-2019 22:48:58.533 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log JVM Vendor:            Oracle Corporation
+07-Feb-2019 22:48:58.533 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_BASE:         /home/ec2-user/server/Vysus/tomcat
+07-Feb-2019 22:48:58.534 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_HOME:         /home/ec2-user/server/apache-tomcat-9.0.14
+07-Feb-2019 22:48:58.536 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.util.logging.config.file=/home/ec2-user/server/Vysus/tomcat/conf/logging.properties
+07-Feb-2019 22:48:58.537 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager
+07-Feb-2019 22:48:58.537 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djdk.tls.ephemeralDHKeySize=2048
+07-Feb-2019 22:48:58.537 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.protocol.handler.pkgs=org.apache.catalina.webresources
+07-Feb-2019 22:48:58.538 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dorg.apache.catalina.security.SecurityListener.UMASK=0027
+07-Feb-2019 22:48:58.538 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dignore.endorsed.dirs=
+07-Feb-2019 22:48:58.538 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dcatalina.base=/home/ec2-user/server/Vysus/tomcat
+07-Feb-2019 22:48:58.538 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dcatalina.home=/home/ec2-user/server/apache-tomcat-9.0.14
+07-Feb-2019 22:48:58.539 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.io.tmpdir=/home/ec2-user/server/Vysus/tomcat/temp
+07-Feb-2019 22:48:58.539 INFO [main] org.apache.catalina.core.AprLifecycleListener.lifecycleEvent The APR based Apache Tomcat Native library which allows optimal performance in production environments was not found on the java.library.path: [/usr/java/packages/lib/amd64:/usr/lib64:/lib64:/lib:/usr/lib]
+07-Feb-2019 22:48:58.836 INFO [main] org.apache.coyote.AbstractProtocol.init Initializing ProtocolHandler ["http-nio-80"]
+07-Feb-2019 22:48:58.895 INFO [main] org.apache.coyote.AbstractProtocol.init Initializing ProtocolHandler ["ajp-nio-8009"]
+07-Feb-2019 22:48:58.905 INFO [main] org.apache.catalina.startup.Catalina.load Server initialization in [1,153] milliseconds
+07-Feb-2019 22:48:58.958 INFO [main] org.apache.catalina.core.StandardService.startInternal Starting service [Catalina]
+07-Feb-2019 22:48:58.959 INFO [main] org.apache.catalina.core.StandardEngine.startInternal Starting Servlet engine: [Apache Tomcat/9.0.14]
+07-Feb-2019 22:48:58.970 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory [/home/ec2-user/server/Vysus/web/devTomCatInfo]
+07-Feb-2019 22:48:59.577 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [/home/ec2-user/server/Vysus/web/devTomCatInfo] has finished in [607] ms
+07-Feb-2019 22:48:59.585 INFO [main] org.apache.coyote.AbstractProtocol.start Starting ProtocolHandler ["http-nio-80"]
+07-Feb-2019 22:48:59.608 INFO [main] org.apache.coyote.AbstractProtocol.start Starting ProtocolHandler ["ajp-nio-8009"]
+07-Feb-2019 22:48:59.611 INFO [main] org.apache.catalina.startup.Catalina.start Server startup in [704] milliseconds
+07-Feb-2019 22:50:09.595 INFO [Catalina-utility-1] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory [/home/ec2-user/server/Vysus/web/ROOT]
+07-Feb-2019 22:50:09.630 INFO [Catalina-utility-1] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [/home/ec2-user/server/Vysus/web/ROOT] has finished in [35] ms
+07-Feb-2019 22:51:10.139 INFO [Catalina-utility-1] org.apache.catalina.startup.HostConfig.undeploy Undeploying context []
+07-Feb-2019 22:51:50.163 INFO [Catalina-utility-1] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory [/home/ec2-user/server/Vysus/web/ROOT]
+07-Feb-2019 22:51:50.228 INFO [Catalina-utility-1] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [/home/ec2-user/server/Vysus/web/ROOT] has finished in [65] ms
+07-Feb-2019 22:52:40.737 INFO [Catalina-utility-1] org.apache.catalina.startup.HostConfig.undeploy Undeploying context [/devTomCatInfo]
+07-Feb-2019 22:54:00.755 INFO [Catalina-utility-1] org.apache.catalina.startup.HostConfig.reload Reloading context []
+07-Feb-2019 22:54:00.755 INFO [Catalina-utility-1] org.apache.catalina.core.StandardContext.reload Reloading Context with name [] has started
+07-Feb-2019 22:54:00.796 INFO [Catalina-utility-1] org.apache.catalina.core.StandardContext.reload Reloading Context with name [] is completed
+07-Feb-2019 22:56:10.809 INFO [Catalina-utility-1] org.apache.catalina.startup.HostConfig.reload Reloading context []
+07-Feb-2019 22:56:10.809 INFO [Catalina-utility-1] org.apache.catalina.core.StandardContext.reload Reloading Context with name [] has started
+07-Feb-2019 22:56:10.835 INFO [Catalina-utility-1] org.apache.catalina.core.StandardContext.reload Reloading Context with name [] is completed
+07-Feb-2019 22:56:30.845 INFO [Catalina-utility-1] org.apache.catalina.startup.HostConfig.reload Reloading context []
+07-Feb-2019 22:56:30.845 INFO [Catalina-utility-1] org.apache.catalina.core.StandardContext.reload Reloading Context with name [] has started
+07-Feb-2019 22:56:30.876 INFO [Catalina-utility-1] org.apache.catalina.core.StandardContext.reload Reloading Context with name [] is completed
+07-Feb-2019 22:58:10.893 INFO [Catalina-utility-1] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory [/home/ec2-user/server/Vysus/web/devTomCatInfo]
+07-Feb-2019 22:58:10.926 INFO [Catalina-utility-1] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [/home/ec2-user/server/Vysus/web/devTomCatInfo] has finished in [32] ms

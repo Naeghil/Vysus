@@ -16,12 +16,12 @@ JVM    = java
 # 'TS' target file suffix; 'DS' dependency suffix; 'rule' for building target	
 # '$*' built-in macro, gets the basename of the current target 
 
- .java.class:
-         $(JC) $(JFLAGS) $*.java
+.java.class:
+	$(JC) $(JFLAGS) $*.java
 
 # CLASSES macro consisting of N words (N=|source files|)
 # \<return> split lines but considered a single line
- CLASSES = \
+CLASSES = \
 	storage.StorageInterface.java #
 	# Experiment.java \
 #         Block.java \

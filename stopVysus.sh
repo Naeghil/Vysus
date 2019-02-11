@@ -1,2 +1,2 @@
 #!/bin/sh
-$CATALINA_HOME/bin/shutdown.sh
+sudo $CATALINA_HOME/bin/catalina.sh stop

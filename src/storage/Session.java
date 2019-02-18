@@ -53,6 +53,7 @@ public class Session implements StorageInterface {
 
 	//Interface implementation:
 	public boolean create() {
+		boolean success = true;
 		try{ 
 			id.add(generateKey);
 			timeIn = new Timestamp(System.currentTimeMillis());
@@ -65,14 +66,17 @@ public class Session implements StorageInterface {
 			insert.setTimestamp(3, timeIn);
 			insert.setTimestamp(4, timeOut);
 			insert.setString(5, device);
-			if(insert.executeUpdate() != 1) return false;
+			if(insert.executeUpdate() != 1) success = false;
 		} catch (Exception e) {
-			return false;
+			success = false;
+		} finally {
+			if(insert!=null) insert.close());
+			return success;
 		}
-		return true;
 	}
 
 	public boolean retrieve() {
+		boolean success = true;
 		try{
 			String ret = "SELECT * FROM Session WHERE SessionId=?";
 			PreparedStatement retrieve = con.prepareStatement(ret);
@@ -83,29 +87,35 @@ public class Session implements StorageInterface {
 				timeIn = result.getTimestamp("timeIn");
 				timeOut = result.getTimestamp("timeOut");
 				device = result.getString("device");
-			} else return false;	
+			} else success = false;	
 			
 		} catch (Exception e) {
-			return false;
+			success = false;
+		} finally {
+			if(retrieve!=null) retrieve.close();
+			return success;
 		}
-		return true;
 	}	
 
 	public boolean update() {
 		timeOut = new Timestamp(System.currentTimeMillis() + 900000);
+		boolean success = true;
 		try{
 			String ret = "UPDATE Session SET timeOut=? WHERE SessionID = ?";
 			PreparedStatement update = con.prepareStatement(ret);
 			update.setTimestamp(1, timeOut);
 			update.setString(2, id.get(0));
-			if(update.executeUpdate() != 1) return false;
+			if(update.executeUpdate() != 1) success = false;
 		} catch (Exception e) {
-			return false;
+			success = false;
+		} finally { 
+			if(update!=null) update.close();
+			return success;
 		}
-		return true;
 	}
 	
 	public boolean delete() {
+		success = true;
 		try{
 			String lg = "INSERT INTO SessionLog(userId, start, end, device) VALUES(?, ?, ?, ?)";
 			String cls = "DELETE FROM Session WHERE SessionId=?";
@@ -114,13 +124,18 @@ public class Session implements StorageInterface {
 			del.setString(1, id.get(0));
 			log.setString(1, userId);
 			log.setTimestamp(2, timeIn);
-			if(del.executeUpdate != 1) return false;
-			log.setTimestamp(3, new Timestamp(System.currentTimeMillis()));
-			if(log.executeUpdate != 1) return false; //or somehow use an exception to save the log somewhere else?
+			if(del.executeUpdate != 1) success = false;
+			else {
+				log.setTimestamp(3, new Timestamp(System.currentTimeMillis()));
+				if(log.executeUpdate != 1) success = false; //or somehow use an exception to save the log somewhere else?
+			}
 		} catch (Exception e) {
-			return false;
+			success = false;
+		} finally {
+			if(log!=null) log.close();
+			if(del!=null) del.close();
+			return success;
 		}
-		true;
 	}
 	
 	

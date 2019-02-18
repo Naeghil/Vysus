@@ -28,7 +28,7 @@ public class User implements StorageInterface {
 	private String accountId;
 	//Fields: 
 	private HashMap<String, String> contacts;
-	//Fieds:
+	//Fields:
 	private HashMap<String, String> personalInfo;		
 	private boolean logged;
 	

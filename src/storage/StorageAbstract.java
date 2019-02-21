@@ -1,7 +1,7 @@
 package storage;
 
 /* ***********************************************************
- *                     Storage Interface                     *
+ *                     StorageAbstract                       *
  * Summarises the perks of objects representing db entities  *
  * ***********************************************************/
 
@@ -9,21 +9,19 @@ import java.util.ArrayList;
 import java.sql.*;
 
 
-public interface StorageInterface {
+public abstract class StorageAbstract {
 	//Some entities may have a composite private key
-	private ArrayList<String> id;
+	protected ArrayList<String> id;
 	
 	//Usually given at creation
-	private Connection con;
+	protected Connection con;
 	
 	//Creates a new record	
-	public boolean create();
+	public abstract void create() throws StorageException;
 	//Retrieve database record, populating the object fields
-	public boolean retrieve();
+	public abstract void retrieve() throws StorageException;
 	//Delete the object record
-	//usage: if(obj.delete()) obj = null;
-	public boolean delete();
-	//Rewrites the whole record to the db
-	//TODO: sensitivity to changes might be considered if it doesn't impact performance
-	public boolean update();
+	public abstract void delete() throws StorageException;
+	//Applies changes to the record
+	public abstract void update() throws StorageException;
 }

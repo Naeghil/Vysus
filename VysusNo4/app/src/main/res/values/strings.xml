@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">VysusNo4</string>
+    <string name="title_activity_home_page">Home Page</string>
+    <string name="title_jobs">My Jobs</string>
+    <string name="title_profilePage">Profile Page</string>
+    <string name="title_notifications">Notifications</string>
+</resources>

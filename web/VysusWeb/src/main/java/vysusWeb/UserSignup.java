@@ -133,7 +133,7 @@ public class UserSignup implements Serializable {
 		} catch(DBProblemException e1) {
 			Exception n = e1.getNested();
 			return "404"; 
-		} catch(InvalidDataException e2){
+		} catch(InvalidDataException e2) {
 			return "404";
 		} catch(StorageException ex) /*new catch for every different error*/ {
 			Exception n = ex.getNested();

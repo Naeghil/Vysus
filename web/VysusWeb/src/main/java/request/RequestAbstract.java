@@ -11,7 +11,7 @@ public abstract class RequestAbstract {
 		String url = "jdbc:mysql://vysus1.cw2j7jythjii.eu-west-2.rds.amazonaws.com:3306/vysusdb";
     	String username = "foxtrot";
     	String password = "vysusfoxtrotprojectdatabasepassword";
-
+		Class.forName("com.mysql.jdbc.Driver"); 
     	connection = (Connection) DriverManager.getConnection(url, username, password);
 	}
 	public User getActor() { return actor; }

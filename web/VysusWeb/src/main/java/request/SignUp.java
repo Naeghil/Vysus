@@ -25,10 +25,10 @@ public class SignUp extends RequestAbstract {
 	}
 	
 	public HashMap<String, Object> execute() throws StorageException {
-		if(!User.isUnique(username, connection)) throw InvalidDataException.invalidUser();
 		//validateAccountData();
 		try{
 			makeConnection();
+			if(!User.isUnique(username, connection)) throw InvalidDataException.invalidUser();
 			String accId = accType+username;
 			actor = new User(connection, username, password, userCreationData, accId);
 			return null;

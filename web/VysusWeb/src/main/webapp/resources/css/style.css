@@ -1,0 +1,162 @@
+.circle {
+  border-radius: 50%;
+  display: inline-block;
+  width: 10vw;
+  height: 10vw;
+  left: 40%;
+  display: flex;
+  /* width and height can be anything, as long as they're equal */
+}
+
+body, html, .allHeight {
+  height: 100%;
+}
+
+.background {
+  color: #999999;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -100;
+}
+
+.dot {
+    height: 200px;
+    width: 200px;
+    background-color: #FFFFFF;
+    border-radius: 50%;
+    display: inline-block;
+    border-style:solid;
+}
+
+.plsWork {
+  text-align: center
+}
+
+h1 {
+  font-family: 'Eczar',serif;
+}
+
+h2 {
+	font-family: 'Eczar',serif;
+}
+
+p {
+  	font-family: 'Gentium Basic',serif;
+}
+
+.pForm {
+	font-size: 4vh;
+}
+
+.sidebar {
+    background-color:#85E1E9;
+    height: 100%;
+}
+
+.smallScrollBar{
+  	overflow:auto;
+}
+
+.noSideScroll{
+	overflow-x:hidden;
+}
+
+.defaultOpacity{
+	opacity:100%;
+}
+
+/*Layout classes*/
+
+html {
+    height: 100%;
+}
+
+body {
+    height: 100%;
+    overflow:hidden;
+}
+
+.centertext {
+  text-align:center;
+}
+
+.lefttext {
+  text-align:left;
+}
+
+.textright {
+  text-align:right;
+}
+
+/*Height classes - try to keep them in order*/
+.h5 {
+  height:5%;
+}
+
+.h10 {
+    height:10%;
+}
+
+.h30 {
+    height:30%;
+}
+
+.h80 {
+  height:80%;
+}
+
+.h90 {
+  height:90%;
+}
+
+.h100 {
+    height:100%;
+}
+
+/*Width classes*/
+.w100{
+	width:100%;
+}
+
+/*Styling*/
+.border-Solid {
+    border-style: solid;
+}
+
+.paddingLeft5px {
+	padding-left:5px;
+}
+
+.profile-Img {
+    padding:10%;
+    height:90%;
+    width:auto;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+/*Background Styles*/
+
+.bg-bp-grad {
+      background-image:linear-gradient(to right,#c9c9fa,#fcccdc);
+}
+
+.bg-lightblue {
+    background-color:#c9c9fa;
+}
+
+.bg-lightpink {
+    background-color:#fcccdc;
+}
+
+.bg-lightgreen {
+    background-color:#ead084;
+}
+
+.bg-white {
+  background-color:#ffffff;
+}

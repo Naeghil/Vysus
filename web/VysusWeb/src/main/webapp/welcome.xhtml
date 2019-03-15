@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<!--Learn media queries for responsive design-->
+<html lang="en"     
+	xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://xmlns.jcp.org/jsf/html">
+<head>
+    <title>Homepage</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="resources/css/style.css"/>
+    <link href="https://fonts.googleapis.com/css?family=ZCOOL+KuaiLe|Cormorant+Garamond|Eczar|Gentium+Basic|Libre+Baskerville|Libre+Franklin|Proza+Libre|Rubik|Taviraj|Trirong|Work+Sans" rel="stylesheet"/>
+	<link rel="icon" href="resources/images/duck2.png"/>
+</head>
+<body>
+    <div class="container-fluid h10">
+        <div class="row h100 bg-lightgreen">
+          <h1>
+          <h:body>Hello, #{user.name}</h:body>
+          <br/>
+          </h1>
+        </div>
+    </div>
+    <div class="container-fluid h100">
+        <div class="row h100">
+            <div class="col-md-4 h100 bg-lightblue">
+                <h1>Teachers</h1>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce in libero vehicula, malesuada enim at, imperdiet diam. Nullam mattis non enim eu malesuada. Morbi interdum erat neque, ut aliquet est consequat ut. Proin augue enim, vehicula at erat non, maximus tempus nisi. Aliquam at auctor nisl. Praesent aliquet id nulla vel sollicitudin. Aenean eros ante, gravida id fringilla at, volutpat ut augue. Mauris nec feugiat nulla. Nullam mattis commodo justo, eget ullamcorper lorem imperdiet a. Nullam vitae felis leo. Etiam ac tincidunt neque. Donec eu scelerisque dui. Etiam laoreet metus tellus, quis porta ex tempus non. Nulla lacinia ipsum nibh, at tempor nulla eleifend sit amet. Quisque in diam in ex gravida convallis eu in nisl.</p>
+            </div>
+            <div class="col-md-4 bg-bp-grad centertext h100">
+
+              <div class="row">
+                <div class="col-md-12">
+                  <h1><br/></h1>
+                </div>
+              </div>
+              <div class="row">
+                  <div class="col-md-12">
+                      <div class="dot centertext">
+                            <img src="resources/images/duck2.png" style="height:50%;width:50%;margin:25%;" alt="Picture of a cute duck"/>
+                      </div>
+                  </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-12">
+                  <br/><br/>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-10">
+ 					<h:body>
+				      <h3>Welcome to Vysus #{user.name}! The password you entered is #{user.password}<br/>
+				      This was #{user.passwordCheck()} <br/>
+				      Result from hashmap was: #{user.getCustomerDataNoForm("Forename")} <br/>
+				      #{user.getCustomerDataNoForm("Surname")}
+				      </h3>
+				   </h:body>
+                </div>
+                <div class="col-md-1"></div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-12">
+                  <h1><br/></h1>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 bg-lightpink h100">
+                <h1 class="textright">Schools</h1>
+                <p class="textright">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce in libero vehicula, malesuada enim at, imperdiet diam. Nullam mattis non enim eu malesuada. Morbi interdum erat neque, ut aliquet est consequat ut. Proin augue enim, vehicula at erat non, maximus tempus nisi. Aliquam at auctor nisl. Praesent aliquet id nulla vel sollicitudin. Aenean eros ante, gravida id fringilla at, volutpat ut augue. Mauris nec feugiat nulla. Nullam mattis commodo justo, eget ullamcorper lorem imperdiet a. Nullam vitae felis leo. Etiam ac tincidunt neque. Donec eu scelerisque dui. Etiam laoreet metus tellus, quis porta ex tempus non. Nulla lacinia ipsum nibh, at tempor nulla eleifend sit amet. Quisque in diam in ex gravida convallis eu in nisl.</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+

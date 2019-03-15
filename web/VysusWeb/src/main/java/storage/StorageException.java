@@ -19,5 +19,5 @@ public class StorageException extends Exception {
 		nestedException = e; 
 	}
 	
-	Exception getNested() { return nestedException; }
+	public Exception getNested() { return nestedException; }
 }

@@ -8,16 +8,30 @@ package storage;
 //TODO: consider changing to "NotFoundException" to make it clearer what it means
 //Distinguish it from format problems such as "InvalidInputException"
  
- import storage.StorageException;
- 
+import storage.StorageException;
+import java.util.ArrayList; 
+
  public class InvalidDataException extends StorageException {
-	String invalidField;
+	private ArrayList<String> invalidFields;
 	
-	public InvalidDataException(Exception nested, String inv) {
+	public InvalidDataException(Exception nested) {
 		nestedException = nested;
-		invalidField = inv;
 	}
 	
-	String getField() { return invalidField; };
+	public void addField(String field) { invalidFields.add(field); }
+	public ArrayList<String> getFields() { return invalidFields; }
+	 
+	 //Common exceptions:
+	 public static InvalidDataException invalidUser() {
+		InvalidDataException e = new InvalidDataException(null);
+		e.addField("username");
+		return e;
+	 }
+	 public static InvalidDataException invalidPassword() {
+		InvalidDataException e = new InvalidDataException(null);
+		e.addField("password");
+		return e;
+	 }
+
  
  }

@@ -15,7 +15,7 @@ import org.mindrot.jbcrypt.BCrypt;
 public class User extends StorageAbstract {
 //User data:
 	private String accountId;
-	//Fields: firstNames, lastNames, address, email, phoneNo, mobile1, mobile2, dateOfBirth (dd-MM-yyyy)
+	//Keys: title, firstNames, lastNames, pa, email, phoneNo, mobile2, dateOfBirth (dd-MM-yyyy)
 	private HashMap<String, String> userData;
 	
 	//User has account?

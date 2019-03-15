@@ -5,7 +5,8 @@ import java.util.HashMap;
 
 import javax.faces.bean.ManagedBean; 
 import javax.faces.bean.SessionScoped; 
-
+import request.*;
+import storage.*;
 @ManagedBean(name="signup")
 @SessionScoped
 //username, title, password, firstNames, lastNames, houseIdentifier, postcode, email, phoneNo, dateOfBirth
@@ -20,6 +21,7 @@ public class UserSignup implements Serializable {
 	String email;
 	String phoneNo;
 	String dateOfBirth;
+	String type = "0";//0 = school 1 = teacher
 	HashMap<String, Object> userHash = new HashMap<String, Object>();
 	HashMap<String, String> userData = new HashMap<String, String>();
 	
@@ -110,6 +112,7 @@ public class UserSignup implements Serializable {
 	public void formHashmap() {
 		this.userHash.put("username", this.username);
 		this.userHash.put("password", this.password);
+		this.userHash.put("accType", this.type);
 		this.userData.put("title", this.title);
 		this.userData.put("firstNames", this.firstNames);
 		this.userData.put("lastNames", this.lastNames);
@@ -118,8 +121,27 @@ public class UserSignup implements Serializable {
 		this.userData.put("email", this.email);
 		this.userData.put("phoneNo", this.phoneNo);
 		this.userData.put("dateOfBirth", this.dateOfBirth);
-		this.userHash.put("userDetails", this.userData);
-		return;
+		this.userHash.put("userData", this.userData);
+	}
+	
+	public String signupUser() {
+		formHashmap();
+		request.SignUp newUser = new request.SignUp(this.userHash);
+		try {
+			newUser.execute();
+			storage.User user = newUser.getActor();
+		} catch(DBProblemException e1) {
+			Exception n = e1.getNested();
+			return "404"; 
+		} catch(InvalidDataException e2){
+			return "404";
+		} catch(StorageException ex) /*new catch for every different error*/ {
+			Exception n = ex.getNested();
+			if(ex!= null) {
+				//print getMessage
+			}
+		}
+		return "SignupTest";
 	}
 	
 	public String getHashData(String key) {

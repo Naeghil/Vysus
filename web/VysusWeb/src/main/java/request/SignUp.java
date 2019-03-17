@@ -13,21 +13,21 @@ public class SignUp extends RequestAbstract {
 	protected String accType;
 	//private HashMap<String, Object> accountCreationData;
 	
-	public SignUp(HashMap<String, Object> input) {
+	public SignUp(HashMap<String, Object> input, Connection con) {
 		//This is passed from the appropriate bean as HashMap<String, String> so whatever
 		this.userCreationData = (HashMap<String, String>)input.get("userData");
 		username = (String)input.get("username");
 		password = (String)input.get("password");
 		accType = (String)input.get("accType");
 		//accountCreationData = input.get("accountData");
-		connection = null;
+		connection = con;
 		actor = null;
 	}
 	
 	public HashMap<String, Object> execute() throws StorageException {
 		//validateAccountData();
 		try{
-			makeConnection();
+			//makeConnection();
 			if(!User.isUnique(username, connection)) throw InvalidDataException.invalidUser();
 			String accId = accType+username;
 			actor = new User(connection, username, password, userCreationData, accId);

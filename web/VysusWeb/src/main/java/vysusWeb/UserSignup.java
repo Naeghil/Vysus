@@ -130,6 +130,7 @@ public class UserSignup implements Serializable {
 		try {
 			newUser.execute();
 			storage.User user = newUser.getActor();
+			return "index";
 		} catch(DBProblemException e1) {
 			Exception n = e1.getNested();
 			return "404temp"; 

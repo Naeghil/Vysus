@@ -132,9 +132,9 @@ public class UserSignup implements Serializable {
 			storage.User user = newUser.getActor();
 		} catch(DBProblemException e1) {
 			Exception n = e1.getNested();
-			return "404"; 
+			return "404temp"; 
 		} catch(InvalidDataException e2) {
-			return "404";
+			return "404temp";
 		} catch(StorageException ex) /*new catch for every different error*/ {
 			Exception n = ex.getNested();
 			if(ex!= null) {

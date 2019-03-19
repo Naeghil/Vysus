@@ -117,7 +117,7 @@ public class User extends StorageAbstract {
 		try(PreparedStatement unique = con.prepareStatement(uniqueness);) {
 			unique.setString(1, username);
 			try(ResultSet rs = unique.executeQuery();) {
-				if(rs.getInt(1)!=0) return false;
+				if(rs.getRow()!=0) return false;
 			}
 		} catch (SQLException e) {
 			throw new DBProblemException(e);

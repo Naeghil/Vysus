@@ -26,19 +26,17 @@ public class SignUp extends RequestAbstract {
 	}
 	
 	public HashMap<String, Object> execute() throws DBProblemException, InvalidDataException {
-		System.out.println("1");
 		if(this.userCreationData == null) {
 			InvalidDataException e = new InvalidDataException(null);
 			e.addField("all");
 			throw e;
 		}
-		System.out.println("1");
 		try{
+			System.out.println("isUnique method called");
 			if(!User.isUnique(username, connection)) throw InvalidDataException.invalidUser();
-			System.out.println("1");
+			System.out.println("isUnique method ended");
 			String accId = accType+username;
 			actor = new User(connection, username, password, userCreationData, accId);
-			System.out.println("1");
 			return null;
 		} finally { } /*
 			try {

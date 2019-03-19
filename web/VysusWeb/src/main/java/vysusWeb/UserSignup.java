@@ -52,20 +52,17 @@ public class UserSignup implements Serializable {
 	public String signupUser() {
 		formHashmap(); //Gather data from the form
 		try {
-			System.out.println("1");
 			//Retrieve the database object
 			DataSource vysusdb = (DataSource)((Context)new InitialContext()).lookup("java:/vysusDB");
 			//Connect to the database
-			System.out.println("1");
 			Connection connection = null;
 			connection = vysusdb.getConnection();
 			//Initialise the request
-			System.out.println("1");
 			SignUp newUser = new SignUp(this.userHash, connection);
-			System.out.println("1");
-
+			
+			System.out.println("Starting execution");
 			newUser.execute();
-			System.out.println("1");
+			System.out.println("Execution ended");
 			//User user = newUser.getActor();
 			//TODO: save the user in the session context
 			return "SignupTest";

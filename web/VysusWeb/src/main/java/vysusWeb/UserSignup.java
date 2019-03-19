@@ -1,6 +1,12 @@
 package vysusWeb;
 
 import java.io.Serializable;
+import javax.sql.DataSource;
+import java.sql.Connection;
+import java.sql.SQLException;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import java.util.HashMap;
 
 import javax.faces.bean.ManagedBean; 
@@ -25,90 +31,9 @@ public class UserSignup implements Serializable {
 	HashMap<String, Object> userHash = new HashMap<String, Object>();
 	HashMap<String, String> userData = new HashMap<String, String>();
 	
-	public UserSignup(){
-		
-	}
+	public UserSignup(){ } //Default constructor
 
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
-	public String getTitle() {
-		return title;
-	}
-
-	public void setTitle(String title) {
-		this.title = title;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	public String getFirstNames() {
-		return firstNames;
-	}
-
-	public void setFirstNames(String firstNames) {
-		this.firstNames = firstNames;
-	}
-
-	public String getLastNames() {
-		return lastNames;
-	}
-
-	public void setLastNames(String lastNames) {
-		this.lastNames = lastNames;
-	}
-
-	public String getHouseIdentifier() {
-		return houseIdentifier;
-	}
-
-	public void setHouseIdentifier(String houseIdentifier) {
-		this.houseIdentifier = houseIdentifier;
-	}
-
-	public String getPostcode() {
-		return postcode;
-	}
-
-	public void setPostcode(String postcode) {
-		this.postcode = postcode;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public String getPhoneNo() {
-		return phoneNo;
-	}
-
-	public void setPhoneNo(String phoneNo) {
-		this.phoneNo = phoneNo;
-	}
-	
-	public String getDateOfBirth() {
-		return dateOfBirth;
-	}
-
-	public void setDateOfBirth(String dateOfBirth) {
-		this.dateOfBirth = dateOfBirth;
-	}
-	//username, title, password, firstNames, lastNames, houseIdentifier, postcode, email, phoneNo, dateOfBirth
+//username, title, password, firstNames, lastNames, houseIdentifier, postcode, email, phoneNo, dateOfBirth
 	public void formHashmap() {
 		this.userHash.put("username", this.username);
 		this.userHash.put("password", this.password);
@@ -125,29 +50,97 @@ public class UserSignup implements Serializable {
 	}
 	
 	public String signupUser() {
-		formHashmap();
-		request.SignUp newUser = new request.SignUp(this.userHash);
+		formHashmap(); //Gather data from the form
 		try {
+			//Retrieve the database object
+			DataSource vysusdb = (DataSource)((Context)new InitialContext()).lookup("java:/vysusDB");
+			//Connect to the database
+			Connection connection = null;
+			connection = vysusdb.getConnection();
+			if(connection == null) System.out.println("The connection is null");
+			//Initialise the request
+			SignUp newUser = new SignUp(this.userHash, connection);
+			
 			newUser.execute();
-			storage.User user = newUser.getActor();
-			return "index";
-		} catch(DBProblemException e1) {
-			Exception n = e1.getNested();
-			return "404temp"; 
-		} catch(InvalidDataException e2) {
+			//User user = newUser.getActor();
+			//TODO: save the user in the session context
+			return "SignupTest";
+		} catch(InvalidDataException e) {
+			return "signup"; // But set the flag saying the user is not unique
+		} catch(DBProblemException | NamingException | SQLException ex) {
+			String msg;
+			if(ex instanceof DBProblemException) msg = ((DBProblemException)ex).getNested().getMessage();
+			else msg = ex.getMessage();
+			System.out.println(msg);
+			//Print msg somewhere
 			return "404temp";
-		} catch(StorageException ex) /*new catch for every different error*/ {
-			Exception n = ex.getNested();
-			if(ex!= null) {
-				//print getMessage
-			}
-		}
-		return "SignupTest";
+		} 
 	}
 	
 	public String getHashData(String key) {
-		
-		return key;
+		return key; //?? Did you mean this.userData.get(key)?
+	}
+	
+//Getter & Setters as per jsf specification	
+	public String getUsername() {
+		return username;
+	}
+	public void setUsername(String username) {
+		this.username = username;
+	}
+	public String getTitle() {
+		return title;
+	}
+	public void setTitle(String title) {
+		this.title = title;
+	}
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	public String getFirstNames() {
+		return firstNames;
+	}
+	public void setFirstNames(String firstNames) {
+		this.firstNames = firstNames;
+	}
+	public String getLastNames() {
+		return lastNames;
+	}
+	public void setLastNames(String lastNames) {
+		this.lastNames = lastNames;
+	}
+	public String getHouseIdentifier() {
+		return houseIdentifier;
+	}
+	public void setHouseIdentifier(String houseIdentifier) {
+		this.houseIdentifier = houseIdentifier;
+	}
+	public String getPostcode() {
+		return postcode;
+	}
+	public void setPostcode(String postcode) {
+		this.postcode = postcode;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	public String getPhoneNo() {
+		return phoneNo;
+	}
+	public void setPhoneNo(String phoneNo) {
+		this.phoneNo = phoneNo;
+	}
+	public String getDateOfBirth() {
+		return dateOfBirth;
+	}
+	public void setDateOfBirth(String dateOfBirth) {
+		this.dateOfBirth = dateOfBirth;
 	}
 
 }

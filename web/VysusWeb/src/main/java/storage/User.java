@@ -80,7 +80,7 @@ public class User extends StorageAbstract {
 		hashedPW = null;
 	}
 	//Constructor for new user
-	public User(Connection connection, String username, String password, HashMap<String, String> data, String accountID) throws DBProblemException, InvalidDataException {
+	public User(Connection connection, String username, String password, HashMap<String, String> data, String accountID) throws DBProblemException {
 		con = connection;
 		id.add(username);
 		id.add(accountID);
@@ -118,8 +118,6 @@ public class User extends StorageAbstract {
 			unique.setString(1, username);
 			try(ResultSet rs = unique.executeQuery();) {
 				if(rs.getInt(1)!=0) return false;
-			} catch (SQLException e2) {
-				throw new DBProblemException(e2);
 			}
 		} catch (SQLException e) {
 			throw new DBProblemException(e);

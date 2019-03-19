@@ -68,9 +68,9 @@ public class UserSignup implements Serializable {
 		} catch(InvalidDataException e) {
 			return "signup"; // But set the flag saying the user is not unique
 		} catch(DBProblemException | NamingException | SQLException ex) {
-			String msg;
-			if(ex instanceof DBProblemException) msg = ((DBProblemException)ex).getNested().getMessage();
-			else msg = ex.getMessage();
+			String msg = "There was a problem:"+System.getProperty("line.separator");
+			if(ex instanceof DBProblemException) msg += ((DBProblemException)ex).getNested().getMessage();
+			else msg += ex.getMessage();
 			System.out.println(msg);
 			//Print msg somewhere
 			return "404temp";

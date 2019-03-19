@@ -22,18 +22,23 @@ public class SignUp extends RequestAbstract {
 		accType = (String)input.get("accType");
 		connection = con;
 		actor = null;
+		
 	}
 	
 	public HashMap<String, Object> execute() throws DBProblemException, InvalidDataException {
+		System.out.println("1");
 		if(this.userCreationData == null) {
 			InvalidDataException e = new InvalidDataException(null);
 			e.addField("all");
 			throw e;
 		}
+		System.out.println("1");
 		try{
 			if(!User.isUnique(username, connection)) throw InvalidDataException.invalidUser();
+			System.out.println("1");
 			String accId = accType+username;
 			actor = new User(connection, username, password, userCreationData, accId);
+			System.out.println("1");
 			return null;
 		} finally { } /*
 			try {

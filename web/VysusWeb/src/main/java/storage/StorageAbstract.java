@@ -6,31 +6,28 @@ package storage;
  * ***********************************************************/
 
 
-import java.util.ArrayList;
+import java.util.Map;
 import java.util.HashMap;
 import java.sql.*;
 
 
 public abstract class StorageAbstract {
-	//Some entities may have a composite private key
-	protected ArrayList<String> id;
-	
-	//Usually given at creation
-	protected Connection con;
+	//Some entities may have a composite private key, or foreign keys
+	protected Map<String, String> id = new HashMap<String, String>();
 	
 	//Creates a new record	
-	public abstract void create() throws StorageException;
+	protected abstract void create(Connection con) throws StorageException;
 	//Retrieve database record, populating the object fields
-	public abstract void retrieve() throws StorageException;
+	protected abstract void retrieve(Connection con) throws StorageException;
 	//Delete the object record
-	public abstract void delete() throws StorageException;
+	protected abstract void delete(Connection con) throws StorageException;
 	//Applies changes to the record
-	public abstract void update() throws StorageException;
+	protected abstract void update(Connection con) throws StorageException;
 //The following return null if not applicable
 	//Retrieves and shows minimal details doesn't need to be logged in
-	public abstract HashMap<String, Object> showMini();
+	public abstract Map<String, Object> showMini();
 	//Retrieves and shows medium details, as seen by non-owner users
-	public abstract HashMap<String, Object> show();
+	public abstract Map<String, Object> show();
 	//Retrieves and shows all data, as seen by owner users
-	public abstract HashMap<String, Object> showFull();
+	public abstract Map<String, Object> showFull();
 }

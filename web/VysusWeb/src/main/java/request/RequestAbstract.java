@@ -1,7 +1,7 @@
 package request;
 
 import java.sql.*;
-import java.util.HashMap;
+import java.util.Map;
 import storage.*;
 
 public abstract class RequestAbstract {
@@ -15,6 +15,6 @@ public abstract class RequestAbstract {
 	} */
 	public User getActor() { return actor; }
 	//public abstract String getLog() throws NoLogException; //What is this tho
-	public abstract HashMap<String, Object> execute() throws StorageException;
+	public abstract Map<String, Object> execute() throws StorageException;
 	
 }

@@ -60,9 +60,7 @@ public class UserSignup implements Serializable {
 			//Initialise the request
 			SignUp newUser = new SignUp(this.userHash, connection);
 			
-			System.out.println("Starting execution");
 			newUser.execute();
-			System.out.println("Execution ended");
 			//User user = newUser.getActor();
 			//TODO: save the user in the session context
 			return "SignupTest";

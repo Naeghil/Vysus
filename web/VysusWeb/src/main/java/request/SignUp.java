@@ -1,5 +1,6 @@
 package request;
 
+import java.util.Map;
 import java.util.HashMap;
 import java.sql.Connection;
 //import java.sql.SQLException;
@@ -7,14 +8,14 @@ import storage.*;
 
 public class SignUp extends RequestAbstract {
 	//Keys: title, firstNames, lastNames, houseIdentifier, postcode, email, phoneNo, dateOfBirth
-	protected HashMap<String, String> userCreationData;
+	protected Map<String, String> userCreationData;
+	//private Map<String, Object> accountCreationData;
 	protected String username;
 	protected String password;
 	protected String accType;
-	//private HashMap<String, Object> accountCreationData;
 	
-	public SignUp(HashMap<String, Object> input, Connection con) {
-		//This is passed from the appropriate bean as HashMap<String, String> so whatever
+	public SignUp(Map<String, Object> input, Connection con) {
+		//This is passed from the appropriate bean as HashMap<String, String>
 		this.userCreationData = getStringHash(input.get("userData"));
 		//this.accountCreationData = getStringHash(input.get("accountData"));
 		username = (String)input.get("username");
@@ -22,29 +23,18 @@ public class SignUp extends RequestAbstract {
 		accType = (String)input.get("accType");
 		connection = con;
 		actor = null;
-		
 	}
 	
-	public HashMap<String, Object> execute() throws DBProblemException, InvalidDataException {
+	public Map<String, Object> execute() throws DBProblemException, InvalidDataException {
 		if(this.userCreationData == null) {
 			InvalidDataException e = new InvalidDataException(null);
 			e.addField("all");
 			throw e;
 		}
-		try{
-			System.out.println("isUnique method called");
-			if(!User.isUnique(username, connection)) throw InvalidDataException.invalidUser();
-			System.out.println("isUnique method ended");
-			String accId = accType+username;
-			actor = new User(connection, username, password, userCreationData, accId);
-			return null;
-		} finally { } /*
-			try {
-				if(connection!=null) connection.close();
-			} catch (SQLException e) {
-				//Well it won't close, what do you want me to do?
-			}
-		} */ //TODO: find another way to close the connection
+		if(!User.isUnique(username, connection)) throw InvalidDataException.invalidUser();
+		String accId = accType+username;
+		actor = new User(connection, username, password, userCreationData, accId);
+		return null;
 	}
 	
 	public HashMap<String, String> getStringHash(Object hash) {

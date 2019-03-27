@@ -51,11 +51,11 @@ public class UserSignup implements Serializable {
 	
 	public String signupUser() {
 		formHashmap(); //Gather data from the form
+		Connection connection = null;
 		try {
 			//Retrieve the database object
 			DataSource vysusdb = (DataSource)((Context)new InitialContext()).lookup("java:/vysusDB");
 			//Connect to the database
-			Connection connection = null;
 			connection = vysusdb.getConnection();
 			//Initialise the request
 			SignUp newUser = new SignUp(this.userHash, connection);
@@ -73,7 +73,11 @@ public class UserSignup implements Serializable {
 			System.out.println(msg);
 			//Print msg somewhere
 			return "404temp";
-		} 
+		} finally {
+			try{ //TODO: what does this even mean?
+				if(connection!=null) connection.close();
+			}catch(SQLException e) {}
+		}
 	}
 	
 	public String getHashData(String key) {

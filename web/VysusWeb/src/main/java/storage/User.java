@@ -98,7 +98,6 @@ public class User extends StorageAbstract {
 		upd += "=? WHERE userID=?";
 		return upd;
 	}
-	
 	//Abstract implementation:
 	protected void create(Connection con) throws DBProblemException  {
 		try(PreparedStatement insert = con.prepareStatement(createUser);) {
@@ -150,7 +149,7 @@ public class User extends StorageAbstract {
 	}
 	//Ordered list of strings to loop into the user data map
 	protected List<String> keys = new ArrayList<String>(Arrays.asList(
-			"password", "title", "firstNames", "lastNames", "houseIdentifier", "postcode", "email", "phoneNo", "dateOfBirth"));
+			"title", "firstNames", "lastNames", "houseIdentifier", "postcode", "email", "phoneNo", "dateOfBirth"));
 	//TODO: show methods
 	public HashMap<String, Object> showMini() {return null;}
 	public HashMap<String, Object> show() { return null; }

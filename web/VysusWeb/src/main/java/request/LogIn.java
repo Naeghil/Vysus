@@ -21,7 +21,7 @@ public class LogIn extends RequestAbstract {
 		if(this.username == null) throw InvalidDataException.invalidUser();
 		if(this.password == null) throw InvalidDataException.invalidPassword();
 
-		actor = new User(username, password, connection);
+		actor = new User(connection, username, password);
 		return null;
 	}	
 }

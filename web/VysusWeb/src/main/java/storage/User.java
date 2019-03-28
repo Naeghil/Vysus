@@ -23,7 +23,7 @@ public class User extends StorageAbstract {
 	private Map<String, String> changes = new HashMap<String, String>(); 	//for modification purposes
 	
 	//Constructor for existing user
-	public User(String username, String password, Connection connection) 
+	public User(Connection connection, String username, String password) 
 		throws DBProblemException, InvalidDataException { 
 		id.put("user", username);
 		//Check credential
@@ -106,7 +106,8 @@ public class User extends StorageAbstract {
 			insert.setBytes(2, hashedPW.getBytes());
 			hashedPW = null;
 			insert.setString(3, id.get("account"));
-			for(int i=0; i<keys.size(); i++) insert.setString(i+4, userData.get(keys.get(i)));	
+			for(int i=0; i<keys.size(); i++) insert.setString(i+4, userData.get(keys.get(i)));
+			insert.executeUpdate();
 		} catch (SQLException e) { throw new DBProblemException(e); }
 	}
 	protected void retrieve(Connection con) throws InvalidDataException, DBProblemException {

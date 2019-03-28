@@ -26,6 +26,8 @@ public class SignUp extends RequestAbstract {
 	}
 	
 	public Map<String, Object> execute() throws DBProblemException, InvalidDataException {
+		if(this.username == null) throw InvalidDataException.invalidUser();
+		if(this.password == null) throw InvalidDataException.invalidPassword();
 		if(this.userCreationData == null) {
 			InvalidDataException e = new InvalidDataException(null);
 			e.addField("all");

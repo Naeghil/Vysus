@@ -78,7 +78,7 @@ public class UserSignup implements Serializable {
 			} catch (NullPointerException e) {
 				System.out.println("Oh no");
 			}
-			return "signup";
+			return "SignupTest";
 		} catch(InvalidDataException e) {
 			return "signup"; // But set the flag saying the user is not unique
 		} catch(DBProblemException | NamingException | SQLException ex) {

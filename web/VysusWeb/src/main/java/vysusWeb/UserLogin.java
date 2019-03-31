@@ -18,7 +18,7 @@ import javax.faces.bean.SessionScoped;
 
 import request.*;
 import storage.*;
-@ManagedBean(name="login")
+@ManagedBean(name="bananas")
 @SessionScoped
 //username, title, password, firstNames, lastNames, houseIdentifier, postcode, email, phoneNo, dateOfBirth
 public class UserLogin implements Serializable {

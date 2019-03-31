@@ -79,11 +79,7 @@ public class UserSignup implements Serializable {
 			}catch(SQLException e) {}
 		}
 	}
-	
-	public String getHashData(String key) {
-		return key; //?? Did you mean this.userData.get(key)?
-	}
-	
+
 //Getter & Setters as per jsf specification	
 	public String getUsername() {
 		return username;

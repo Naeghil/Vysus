@@ -75,6 +75,8 @@ public class UserSignup implements Serializable {
 				FacesContext.getCurrentInstance().getExternalContext().addResponseCookie("username", URLEncoder.encode(this.username, "UTF-8"), properties);
 			} catch (UnsupportedEncodingException e) {
 				e.printStackTrace();
+			} catch (NullPointerException e) {
+				System.out.println("Oh no");
 			}
 			return "signup";
 		} catch(InvalidDataException e) {

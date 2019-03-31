@@ -1,8 +1,8 @@
 package vysusWeb;
 
 import java.io.Serializable;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
+//import java.io.UnsupportedEncodingException;
+//import java.net.URLEncoder;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -14,7 +14,7 @@ import java.util.HashMap;
 
 import javax.faces.bean.ManagedBean; 
 import javax.faces.bean.SessionScoped;
-import javax.faces.context.FacesContext;
+//import javax.faces.context.FacesContext;
 
 import request.*;
 import storage.*;

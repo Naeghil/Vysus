@@ -1,7 +1,6 @@
 package request;
 
 import java.util.Map;
-import java.util.HashMap;
 import java.sql.Connection;
 //import java.sql.SQLException;
 import storage.*;

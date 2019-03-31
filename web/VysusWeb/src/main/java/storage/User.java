@@ -119,9 +119,7 @@ public class User extends StorageAbstract {
 					id.put("account", record.getString("accountID"));
 				} else throw InvalidDataException.invalidUser();
 			}
-		} catch (SQLException e) {
-			throw new DBProblemException(e);
-		}
+		} catch (SQLException e) { throw new DBProblemException(e); }
 	}
 	protected void update(Connection con) throws InvalidDataException, DBProblemException {
 		//Makes an ordered list to avoid potential problems with the Set class
@@ -144,15 +142,19 @@ public class User extends StorageAbstract {
 		try(PreparedStatement delete = con.prepareStatement(deleteUser);) {
 			delete.setString(1, id.get("user"));
 			if(delete.executeUpdate() != 1) throw InvalidDataException.invalidUser();
-		} catch (SQLException e) {
-			throw new DBProblemException(e);
-		}
+		} catch (SQLException e) { throw new DBProblemException(e); }
 	}
 	//Ordered list of strings to loop into the user data map
 	protected List<String> keys = new ArrayList<String>(Arrays.asList(
 			"title", "firstNames", "lastNames", "houseIdentifier", "postcode", "email", "phoneNo", "dateOfBirth"));
 	//TODO: show methods
-	public HashMap<String, Object> showMini() {return null;}
-	public HashMap<String, Object> show() { return null; }
-	public HashMap<String, Object> showFull() { return null; }
+	public Map<String, Object> showMini() {return null;}
+	public Map<String, Object> show() { return null; }
+	public Map<String, Object> showFull() {
+		Map<String, Object> show = new HashMap<String, Object>();
+		show.put("userData", userData);
+		show.put("username", id.get("user"));
+		//TODO: add accountData, which also contains (nested) other kind of information
+		return show;
+	}
 }

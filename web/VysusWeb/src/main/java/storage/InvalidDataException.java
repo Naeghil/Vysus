@@ -32,6 +32,10 @@ import java.util.ArrayList;
 		e.addField("password");
 		return e;
 	 }
-
+	 public static InvalidDataException invalidQualification() {
+		InvalidDataException e = new InvalidDataException(null);
+		e.addField("qualification");
+		return e;
+	 }
  
  }

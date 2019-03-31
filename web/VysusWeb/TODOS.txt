@@ -1,1 +1,8 @@
 - TODO: review the InvalidDataException; consider a Map<data, message>
+- TODO: User has protected account object
+	- Account is created in constructor before User.create method, with proper try-catch to abort user creation in case of failure
+	- Account is retrieved, updated and deleted inside User.retrieve method (?)
+	- Account is interacted with publicly through a "getAccount" method: this way account cannot be set externally, but only its methods can be used
+		- Alternatively, hold the account through an "AccountInterface" so that it's safer?
+- TODO: by holding the user in the session there needs to be means of synchronisation between devices; can "all sessions" be checked in wildfly?
+- TODO: consider having a different storage object for calendars

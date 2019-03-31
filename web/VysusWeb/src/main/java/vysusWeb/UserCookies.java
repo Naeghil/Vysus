@@ -28,7 +28,7 @@ public class UserCookies {
 	UserCookies(){ }
 	
 	public void getCookie() {
-		Cookie cookie = (Cookie) ExternalContext.getRequestCookieMap().get("username");
+		Cookie cookie = (Cookie) FacesContext.getCurrentInstance().getExternalContext().getRequestCookieMap().get("username");
 		String value = URLDecoder.decode(cookie.getValue(), "UTF-8");
 	}
 	

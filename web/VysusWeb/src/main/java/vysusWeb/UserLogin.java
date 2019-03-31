@@ -1,6 +1,9 @@
 package vysusWeb;
 
 import java.io.Serializable;
+//import java.io.UnsupportedEncodingException;
+//import java.net.URLEncoder;
+
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -10,10 +13,12 @@ import javax.naming.NamingException;
 import java.util.HashMap;
 
 import javax.faces.bean.ManagedBean; 
-import javax.faces.bean.SessionScoped; 
+import javax.faces.bean.SessionScoped;
+//import javax.faces.context.FacesContext;
+
 import request.*;
 import storage.*;
-@ManagedBean(name="login")
+@ManagedBean(name="bananas")
 @SessionScoped
 //username, title, password, firstNames, lastNames, houseIdentifier, postcode, email, phoneNo, dateOfBirth
 public class UserLogin implements Serializable {
@@ -44,7 +49,16 @@ public class UserLogin implements Serializable {
 			newLogin.execute();
 			//User user = newUser.getActor();
 			//TODO: save the user in the session context
+			/*HashMap<String, Object> properties = new HashMap<String,Object>();
+			properties.put("maxAge", 31536000);
+			properties.put("path", "/");
+			try {
+				FacesContext.getCurrentInstance().getExternalContext().addResponseCookie("username", URLEncoder.encode(this.username, "UTF-8"), properties);
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+			}*/
 			return "LoginSuccess";
+			
 		} catch(InvalidDataException e) {
 			return "index"; // But set the flag saying the user is not unique
 		} catch(DBProblemException | NamingException | SQLException ex) {
@@ -55,9 +69,9 @@ public class UserLogin implements Serializable {
 			//Print msg somewhere
 			return "404login";
 		} finally {
-			try{ //TODO: what does this even mean?
+			try { //TODO: what does this even mean?
 				if(connection!=null) connection.close();
-			}catch(SQLException e) {}
+			} catch(SQLException e) {}
 		}
 	}
 	

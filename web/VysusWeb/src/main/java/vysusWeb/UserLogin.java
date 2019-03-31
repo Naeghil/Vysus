@@ -49,14 +49,14 @@ public class UserLogin implements Serializable {
 			newLogin.execute();
 			//User user = newUser.getActor();
 			//TODO: save the user in the session context
-			HashMap<String, Object> properties = new HashMap<String,Object>();
+			/*HashMap<String, Object> properties = new HashMap<String,Object>();
 			properties.put("maxAge", 31536000);
 			properties.put("path", "/");
 			try {
 				FacesContext.getCurrentInstance().getExternalContext().addResponseCookie("username", URLEncoder.encode(this.username, "UTF-8"), properties);
 			} catch (UnsupportedEncodingException e) {
 				e.printStackTrace();
-			}
+			}*/
 			return "LoginSuccess";
 			
 		} catch(InvalidDataException e) {

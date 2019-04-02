@@ -18,6 +18,7 @@ import javax.faces.context.FacesContext;
 
 import request.*;
 import storage.*;
+
 @ManagedBean(name="signup")
 @SessionScoped
 //username, title, password, firstNames, lastNames, houseIdentifier, postcode, email, phoneNo, dateOfBirth

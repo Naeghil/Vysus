@@ -14,10 +14,11 @@ import java.util.HashMap;
 
 import javax.faces.bean.ManagedBean; 
 import javax.faces.bean.SessionScoped;
-//import javax.faces.context.FacesContext;
+import javax.faces.context.FacesContext;
 
 import request.*;
 import storage.*;
+
 @ManagedBean(name="bananas")
 @SessionScoped
 //username, title, password, firstNames, lastNames, houseIdentifier, postcode, email, phoneNo, dateOfBirth

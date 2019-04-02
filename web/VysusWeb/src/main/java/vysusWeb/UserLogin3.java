@@ -12,6 +12,8 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import java.util.HashMap;
 
+import javax.inject.Named; 
+
 import javax.faces.bean.ManagedBean; 
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
@@ -19,13 +21,13 @@ import javax.faces.context.FacesContext;
 import request.*;
 import storage.*;
 
-@ManagedBean(name="login")
+@Named
 @SessionScoped
 
 public class UserLogin3 implements Serializable{
 	
-	String username;
-	String password;
+	public String username;
+	public String password;
 	
 	public UserLogin3 () {
 		

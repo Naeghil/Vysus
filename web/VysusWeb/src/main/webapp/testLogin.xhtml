@@ -19,7 +19,7 @@
 							<p class="pForm">Username:</p>
 							</div>
 							<div class="col-md-7">
-							<h:inputText value="#{login.username}" styleClass="form-control w100" required="true" requiredMessage="Username is mandatory"/>
+							<h:inputText id="username" value="#{UserLogin3.username}" styleClass="form-control w100" required="true" requiredMessage="Username is mandatory"/>
 							</div>
 							<div class="col-md-1">
 							</div>  
@@ -31,7 +31,7 @@
 								<p class="pForm">Password:</p>
 							</div>
 							<div class="col-md-7">
-								<h:inputSecret id="password" value="#{login.password}" styleClass="form-control width100" required="true" requiredMessage="Mobile Name is mandatory"/>
+								<h:inputSecret id="password" value="#{UserLogin3.password}" styleClass="form-control width100" required="true" requiredMessage="Mobile Name is mandatory"/>
 							</div>
 							<div class="col-md-1">
 							</div>  
@@ -39,7 +39,7 @@
 						<div class="row">
 							<div class="col-md-1"></div>
 							<div class="col-md-3">
-								<p  class="pForm"><h:commandButton value="Login" action="#{login.loginUser}" styleClass="btn btn-primary"/></p>
+								<p  class="pForm"><h:commandButton value="Login" action="#{UserLogin3.loginUser}" styleClass="btn btn-primary"/></p>
 							</div>
 							<div class="col-md-5">
 								<a href="/VysusWeb/signup.jsf" class="btn btn-default">Create an account</a>

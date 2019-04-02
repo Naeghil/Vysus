@@ -21,7 +21,6 @@ import javax.faces.context.FacesContext;
 import request.*;
 import storage.*;
 
-@Named
 @SessionScoped
 
 public class UserLogin3 implements Serializable{

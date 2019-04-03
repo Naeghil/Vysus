@@ -1,5 +1,12 @@
 package storage;
 
+/*************************************************
+ * 					Qualification				 *
+ * These are associated to Teacher objects but 	 *
+ * have no nested data.							 *
+ * The corresponding table has auto-increment id *
+ ************************************************/
+
 import java.util.Map;
 import java.util.List;
 import java.sql.*;
@@ -15,48 +22,64 @@ public class Qualification extends StorageAbstract{
 	
 	// KISCourse.KISAIM valid entry --> basically level
 	
-	protected Map<String, String> qualificationData = new HashMap<String, String>();
-	//TODO: consider adding a "referee" name
 	protected static List<String> keys = new ArrayList<String>(Arrays.asList(
-			"title", "startDate", "endDate", "comment", "finalGrade", "institution", "institutionEmail", "institutionPhoneNo", "level"));
-	protected Map<String, String> changes = new HashMap<String, String>();
-	
+			"title", "startDate", "endDate", "comment", "finalGrade", "institution", "level", "institutionEmail", "institutionPhoneNo", "referee"));
 	protected Boolean verified;
+	//Existing constructor: give it null to avoid loading
+	public Qualification(String qID, Connection connection) throws InvalidDataException, DBProblemException {
+		id.put("qualification", qID);
+		if(connection!=null) retrieve(connection);
+	}
+	//Creating constructor: no qualification id will be available this way
+	public Qualification(Connection connection, String accountID, Map<String, String> data) throws DBProblemException {
+		id.put("account", accountID);
+		this.data = data;
+		create(connection);
+	}
+	//For now this is to enact changes to the qualifications
+	public void updateQualification(Map<String, String> changes, Connection con) throws InvalidDataException, DBProblemException {
+		this.changes = changes;
+		update(con);
+	}
+	public void verify(Connection connection) throws DBProblemException, InvalidDataException {
+		try(PreparedStatement verify = connection.prepareStatement("UPDATE Qualification SET verified=? WHERE qualificationID=?");) {
+			verified=true;
+			verify.setBoolean(1, verified);
+			verify.setString(2, id.get("qualification"));
+			if(verify.executeUpdate() != 1) throw InvalidDataException.invalidQualification();
+		} catch (SQLException e) { throw new DBProblemException(e); }
+	}
+	public boolean isVerified() { return verified; }
 		
 	//Queries:
-	// incremental number 
-	protected  String deleteQualification = "DELETE FROM Qualification WHERE qualificationID=?";
+	protected String deleteQualification = "DELETE FROM Qualification WHERE qualificationID=?";
 	protected String retrieveQualification = "SELECT * FROM Qualification WHERE qualificationID=?";
-	protected String createQualification = "INSERT INTO Qualification(qualificationID, accountID, title, startDate, endDate, comment, finalGrade, institution, institutionEmail, institutionPhoneNo, level, verified) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-	// isn't there a WHERE missing?
+	protected String createQualification = "INSERT INTO Qualification(accountID, title, startDate, endDate, comment, finalGrade, institution, level, institutionEmail, institutionPhoneNo, referee, verified) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	protected String updateQualification(List<String> changed) {
 		String upd = "UPDATE Qualification SET " + changed.get(0);
 		for(int i=1; i<changed.size(); i++) upd += "=?, " + changed.get(i);
 		upd += "=? WHERE qualificationID=?";
 		return upd;
 	}
-	
+	//Abstract implementation
 	protected void create(Connection con) throws DBProblemException {
 		try(PreparedStatement insert = con.prepareStatement(createQualification);) {
-			//the qualification
-			insert.setString(1, id.get("qualification"));
-			insert.setString(2, id.get("account"));
-			for(int i=0; i<keys.size(); i++) insert.setString(i+3, qualificationData.get(keys.get(i)));	
+			insert.setString(1, id.get("account"));
+			for(int i=0; i<keys.size(); i++) insert.setString(i+2, data.get(keys.get(i)));	
 		} catch (SQLException e) { throw new DBProblemException(e); }
 	}
-	
 	protected void retrieve(Connection con) throws InvalidDataException, DBProblemException {
 		try (PreparedStatement retrieve = con.prepareStatement(retrieveQualification);) {
 			retrieve.setString(1, id.get("qualification"));
 			try(ResultSet record = retrieve.executeQuery();){
 				if(record.next()){
-					for(String key : keys) qualificationData.put(key, record.getString(key));
+					for(String key : keys) data.put(key, record.getString(key));
 					id.put("account", record.getString("accountID"));
+					verified = record.getBoolean("verified");
 				} else throw InvalidDataException.invalidQualification();
 			}
 		} catch (SQLException e) { throw new DBProblemException(e); }
 	}
-	
 	protected void update(Connection con) throws InvalidDataException, DBProblemException {		
 		List<String> changedFields = new ArrayList<String>(changes.keySet());
 		try(PreparedStatement update = con.prepareStatement(updateQualification(changedFields));) {
@@ -69,7 +92,6 @@ public class Qualification extends StorageAbstract{
 			else changes = new HashMap<String, String>();
 		} catch (SQLException e) { throw new DBProblemException(e); }
 	}
-
 	protected void delete(Connection con) throws InvalidDataException, DBProblemException {
 		try(PreparedStatement delete = con.prepareStatement(deleteQualification);) {
 				delete.setString(1, id.get("qualification"));
@@ -77,81 +99,13 @@ public class Qualification extends StorageAbstract{
 		} catch (SQLException e) { throw new DBProblemException(e); }
 	}
 	
-	/**
-	public HashMap<String, String> getChanges() {
-		return changes;
-	}
-	public void setChanges(HashMap<String, String> changes) {
-		this.changes = changes;
-	}
-	public String getTitle() {
-		return title;
-	}
-	public void setTitle(String title) {
-		this.title = title;
-	}
-	public String getStartDate() {
-		return startDate;
-	}
-	public void setStartDate(String startDate) {
-		this.startDate = startDate;
-	}
-	public String getEndDate() {
-		return endDate;
-	}
-	public void setEndDate(String endDate) {
-		this.endDate = endDate;
-	}
-	public String getComment() {
-		return comment;
-	}
-	public void setComment(String comment) {
-		this.comment = comment;
-	}
-	public String getFinalGrade() {
-		return finalGrade;
-	}
-	public void setFinalGrade(String finalGrade) {
-		this.finalGrade = finalGrade;
-	}
-	public String getInstitution() {
-		return institution;
-	}
-	public void setInstitution(String institution) {
-		this.institution = institution;
-	}
-	public String getInstitutionEmail() {
-		return institutionEmail;
-	}
-	public void setInstitutionEmail(String institutionEmail) {
-		this.institutionEmail = institutionEmail;
-	}
-	public String getLevel() {
-		return level;
-	}
-	public void setLevel(String level) {
-		this.level = level;
-	}
-	public Boolean getVerified() {
-		return verified;
-	}
-	public void setVerified(Boolean verified) {
-		this.verified = verified;
-	}
-	public HashMap<String, String> getQualificationData() {
-		return qualificationData; 
-	} **/
-	
 	public Map<String, Object> showMini() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 	public Map<String, Object> show() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 	public Map<String, Object> showFull() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 }

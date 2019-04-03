@@ -1,4 +1,4 @@
-- TODO: review the InvalidDataException; consider a Map<data, message>
+- TODO: review the InvalidDataException; consider a Map<data, message> yes
 - TODO: User has protected account object
 	- Account is created in constructor before User.create method, with proper try-catch to abort user creation in case of failure
 	- Account is retrieved, updated and deleted inside User.retrieve method (?)

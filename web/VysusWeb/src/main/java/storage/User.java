@@ -15,43 +15,24 @@ import org.mindrot.jbcrypt.BCrypt;
 import java.sql.*;
 
 public class User extends StorageAbstract {
-//User data: this excludes the user and the account ids
-	protected Map<String, String> userData = new HashMap<String, String>();
-	
-//Operation data:
-	private String hashedPW = null; 									//for creation and modification purposes
-	private Map<String, String> changes = new HashMap<String, String>(); 	//for modification purposes
+	protected String hashedPW = null; 	//for creation and modification purposes
+	protected Account account = null;	//Associated account and related data
 	
 	//Constructor for existing user
-	public User(Connection connection, String username, String password) 
-		throws DBProblemException, InvalidDataException { 
+	public User(String username) { 
 		id.put("user", username);
-		//Check credential
-		checkPW(password, connection);
-		//Retrieve user data
-		retrieve(connection);
 	}
 	//Constructor for new user
-	public User(Connection connection, String username, String password, Map<String, String> data, String accountID) 
-		throws DBProblemException {
+	public User(Connection connection, String username, String password, Map<String, String> data, String accountID) throws DBProblemException {
 		id.put("user", username);
 		id.put("account", accountID);
-		userData = data;
+		this.data = data;
 		hashedPW = BCrypt.hashpw(password, BCrypt.gensalt());
-		
 		create(connection);
 	}
 	
-	public void deleteUser(String password, Connection connection) 
-		throws DBProblemException, InvalidDataException {
-		checkPW(password, connection);
-		delete(connection);
-	}
-	
-	//TODO: a method to enact changes
-
-	//Checks
-	private void checkPW(String password, Connection con) throws DBProblemException, InvalidDataException {
+	//Checks user's password, effectively "logging in" the user if execution normally terminates
+	public void login(String password, Connection con) throws DBProblemException, InvalidDataException {
 		try (PreparedStatement getHash = con.prepareStatement(retrievePassword);){
 			getHash.setString(1, id.get("user"));
 			try(ResultSet rs = getHash.executeQuery();) {
@@ -60,11 +41,19 @@ public class User extends StorageAbstract {
 					if(!BCrypt.checkpw(password, hash)) throw InvalidDataException.invalidPassword();
 				} else throw InvalidDataException.invalidUser();
 			}
-		} catch (SQLException e) {
-			throw new DBProblemException(e);
-		}
+		} catch (SQLException e) { throw new DBProblemException(e); }
 	}
-	//TODO: to check
+	//Enables user deletion
+	public void deleteUser(String password, Connection connection) throws DBProblemException, InvalidDataException {
+		login(password, connection); //Double checks password
+		delete(connection);
+	}
+	//For now this is to enact changes to the user account
+	public void updateProfile(Map<String, String> changes, Connection con) throws InvalidDataException, DBProblemException {
+		this.changes = changes;
+		update(con);
+	}
+	//Unneedingly complicated method to check uniqueness. 
 	public static boolean isUnique(String username, Connection con) throws DBProblemException {
 		try(PreparedStatement unique = con.prepareStatement(uniqueness);) {
 			unique.setString(1, username);
@@ -78,12 +67,8 @@ public class User extends StorageAbstract {
 		}
 		return true;
 	}
-	
-	
-	//Getters&Setters: assumes fields are vetted previously
-	public String getAccount() { return id.get("account"); }
-		//TODO: review this
-	public void changeField(String field, Object newValue) { changes.put(field, (String) newValue); }																	   
+	//Obtain the Account object
+	public Account getAccount() { return account; }
 	
 	//Queries:
 	protected static String uniqueness = "SELECT COUNT(*) FROM User WHERE userID=?";
@@ -106,16 +91,16 @@ public class User extends StorageAbstract {
 			insert.setBytes(2, hashedPW.getBytes());
 			hashedPW = null;
 			insert.setString(3, id.get("account"));
-			for(int i=0; i<keys.size(); i++) insert.setString(i+4, userData.get(keys.get(i)));
+			for(int i=0; i<keys.size(); i++) insert.setString(i+4, data.get(keys.get(i)));
 			insert.executeUpdate();
 		} catch (SQLException e) { throw new DBProblemException(e); }
 	}
-	protected void retrieve(Connection con) throws InvalidDataException, DBProblemException {
+	public void retrieve(Connection con) throws InvalidDataException, DBProblemException {
 		try (PreparedStatement retrieve = con.prepareStatement(retrieveUser);) {
 			retrieve.setString(1, id.get("user"));
 			try(ResultSet record = retrieve.executeQuery();){
 				if(record.next()){
-					for(String key : keys) userData.put(key, record.getString(key));
+					for(String key : keys) data.put(key, record.getString(key));
 					id.put("account", record.getString("accountID"));
 				} else throw InvalidDataException.invalidUser();
 			}
@@ -150,11 +135,12 @@ public class User extends StorageAbstract {
 	//TODO: show methods
 	public Map<String, Object> showMini() {return null;}
 	public Map<String, Object> show() { return null; }
+	//Should this also retrieve?
 	public Map<String, Object> showFull() {
 		Map<String, Object> show = new HashMap<String, Object>();
-		show.put("userData", userData);
+		show.put("userData", data);
 		show.put("username", id.get("user"));
-		//TODO: add accountData, which also contains (nested) other kind of information
+		show.put("accountData", account.showFull());
 		return show;
 	}
 }

@@ -8,7 +8,7 @@ import java.util.List;
 import java.sql.*;
 
 public class Teacher extends Account{
-	
+	//Yes store as strings
 	private String gender;
 	private double maxDistance;		//TODO: as string?
 	private double minRatePerHour;	//TODO: as string?

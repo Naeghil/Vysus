@@ -20,7 +20,8 @@ public class LogIn extends RequestAbstract {
 		if(this.username == null) throw InvalidDataException.invalidUser();
 		if(this.password == null) throw InvalidDataException.invalidPassword();
 
-		actor = new User(connection, username, password);
+		actor = new User(username);
+		actor.login(password, connection);
 		return null;
 	}	
 }

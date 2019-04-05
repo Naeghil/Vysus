@@ -25,11 +25,11 @@ import storage.*;
 public class UserCookies {
 	String username;
 	
-	UserCookies(){ }
+	public UserCookies(){ }
 	
 	public void getCookie() {
 		Cookie cookie = (Cookie) FacesContext.getCurrentInstance().getExternalContext().getRequestCookieMap().get("username");
-		String value = URLDecoder.decode(cookie.getValue(), "UTF-8");
+		//String value = URLDecoder.decode(cookie.getValue(), "UTF-8");
 	}
 	
 	

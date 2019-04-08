@@ -11,9 +11,12 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import java.util.HashMap;
+import java.util.Map;
 
 import javax.faces.bean.ManagedBean; 
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
+
 import request.*;
 import storage.*;
 
@@ -60,6 +63,12 @@ public class UserLogin implements Serializable {
 			} catch (UnsupportedEncodingException e) {
 				e.printStackTrace();
 			}*/
+			
+			FacesContext context = FacesContext.getCurrentInstance();
+			Map<String, Object> requestMap = context.getExternalContext().getSessionMap();
+			
+			System.out.println(requestMap);
+			
 			return "LoginSuccess";
 			
 		} catch(InvalidDataException e) {

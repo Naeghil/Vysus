@@ -30,11 +30,12 @@ public class SignUp extends RequestAbstract {
 		if(this.password == null) throw InvalidDataException.invalidPassword();
 		if(this.userCreationData == null) {
 			InvalidDataException e = new InvalidDataException(null);
-			e.addField("all");
+			e.addField("all", "Cannot find data.");
 			throw e;
 		}
 		if(!User.isUnique(username, connection)) throw InvalidDataException.invalidUser();
 		String accId = accType+username;
+		//TODO: the accountID for an institution should be independent from its own sysAdmin
 		actor = new User(connection, username, password, userCreationData, accId);
 		return null;
 	}

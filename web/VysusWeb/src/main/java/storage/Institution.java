@@ -9,21 +9,18 @@ import java.sql.*;
 
 //Also has sysAdmin as id
 
-public class Institution extends StorageAbstract{
-	protected Map<String, String> accountData = new HashMap<String, String>();
-	protected Map<String, String> changes;
+public class Institution extends Account{
 	protected static List<String> keys = new ArrayList<String>(Arrays.asList(
 			"name", "address", "email", "phoneNo"));
-	//TODO: consider adding an "institution type" to mean the level or collection of levels
+	//TODO: consider adding an "institution type" to mean the level or collection of levels/ yes
 	
 	//TODO: what exactly does it mean?
 	protected Object rankingPreferences;
-	//TODO: Consider using a map for the objects (Job, User):
-	protected List<String> offeredJobs;
-	protected List<String> staff;		
+	//protected List<Job> postedJobs = null;
+	//Consider extending the class user, privately, in this file
+	protected List<User> staff = null;		
 	
 	//Queries:
-	protected static String deleteInstitution = "DELETE FROM Institution WHERE accountID=?";
 	protected static String retrieveInstitution = "SELECT * FROM Institution WHERE accountID=?";
 	protected static String createInstitution = "INSERT INTO Institution(accountID, sysAdminID, name, address, email, phoneNo) VALUES(?, ?, ?, ?, ?, ?)";
 	protected String updateInstitution(List<String> changed) {
@@ -32,6 +29,8 @@ public class Institution extends StorageAbstract{
 		upd += "=? WHERE accountID=?";
 		return upd;
 	}
+	
+	//Constructor: Map<String, Object> additionalData
 	
 	// for Staff
 	//protected String createStaff = "INSERT INTO Staff(institutionID, name, address, email, rankingPreferences, systemAdministrator, finalGrade,) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -42,7 +41,7 @@ public class Institution extends StorageAbstract{
 		try(PreparedStatement insert = con.prepareStatement(createInstitution);) {
 			insert.setString(1, id.get("account"));
 			insert.setString(2, id.get("sysAdmin"));
-			for(int i=0; i<keys.size(); i++) insert.setString(i+3, accountData.get(keys.get(i)));
+			for(int i=0; i<keys.size(); i++) insert.setString(i+3, data.get(keys.get(i)));
 			//TODO: add staff creation; where do we get the data?
 		} catch (SQLException e) { throw new DBProblemException(e); }
 	}
@@ -52,17 +51,15 @@ public class Institution extends StorageAbstract{
 			retrieve.setString(1, id.get("account"));
 			try(ResultSet record = retrieve.executeQuery();){
 				if(record.next()){
-					for(String key : keys) accountData.put(key, record.getString(key));
+					for(String key : keys) data.put(key, record.getString(key));
 				} else throw new InvalidDataException(null); //TODO: what is invalid?
 			}
 		} catch (SQLException e) { throw new DBProblemException(e); }
 	}
 	
-	protected void delete(Connection con) throws StorageException, InvalidDataException, DBProblemException {
-		try(PreparedStatement delete = con.prepareStatement(deleteInstitution);) {
-			delete.setString(1, id.get("account"));
-			if(delete.executeUpdate() != 1) throw new InvalidDataException(null); //TODO: what is invalid?
-		} catch (SQLException e) { throw new DBProblemException(e); }
+	protected void delete(Connection con) throws StorageException, InvalidDataException, DBProblemException{
+		super.delete(con);
+		//Delete staff
 	}
 	
 	protected void update(Connection con) throws StorageException, InvalidDataException, DBProblemException {
@@ -74,7 +71,7 @@ public class Institution extends StorageAbstract{
 			//Execution:
 			if(update.executeUpdate() != 1) throw new InvalidDataException(null); //TODO: what is invalid?
 			else changes = new HashMap<String, String>();
-			//TODO: add other statements for the additional data, or make changes to other data atomic, e.g. sysAdmin etc
+			//TODO: other changes are atomic, e.g. sysAdmin etc
 		} catch (SQLException e) { throw new DBProblemException(e); }
 	}
 	

@@ -1,4 +1,4 @@
-- TODO: review the InvalidDataException; consider a Map<data, message>
+- TODO: have User.password possibly null at creation and use specific method to set it, dealing with the binary;
 - TODO: User has protected account object
 	- Account is created in constructor before User.create method, with proper try-catch to abort user creation in case of failure
 	- Account is retrieved, updated and deleted inside User.retrieve method (?)
@@ -6,3 +6,7 @@
 		- Alternatively, hold the account through an "AccountInterface" so that it's safer?
 - TODO: by holding the user in the session there needs to be means of synchronisation between devices; can "all sessions" be checked in wildfly?
 - TODO: consider having a different storage object for calendars
+
+
+
+!TODO: in the future, the data could be <String, Object> and the methods use PreparedStatement.setObject

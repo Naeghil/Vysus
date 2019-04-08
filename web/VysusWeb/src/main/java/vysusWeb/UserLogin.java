@@ -45,6 +45,12 @@ public class UserLogin implements Serializable {
 		formHashmap(); //Gather data from the form
 		Connection connection = null;
 		try {
+			
+			FacesContext context = FacesContext.getCurrentInstance();
+			Map<String, Object> requestMap = context.getExternalContext().getSessionMap();
+			
+			System.out.println(requestMap);
+			
 			//Retrieve the database object
 			DataSource vysusdb = (DataSource)((Context)new InitialContext()).lookup("java:/vysusDB");
 			//Connect to the database
@@ -63,12 +69,7 @@ public class UserLogin implements Serializable {
 			} catch (UnsupportedEncodingException e) {
 				e.printStackTrace();
 			}*/
-			
-			FacesContext context = FacesContext.getCurrentInstance();
-			Map<String, Object> requestMap = context.getExternalContext().getSessionMap();
-			
-			System.out.println(requestMap);
-			
+
 			return "LoginSuccess";
 			
 		} catch(InvalidDataException e) {

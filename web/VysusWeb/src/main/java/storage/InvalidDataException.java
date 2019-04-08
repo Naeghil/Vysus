@@ -19,7 +19,7 @@ import java.util.ArrayList;
 	}
 	
 	public void addField(String field) { invalidFields.add(field); }
-	public ArrayList<String> getFields() { return this.invalidFields; }
+	public ArrayList<String> getFields() { return invalidFields; }
 	 
 	 //Common exceptions:
 	 public static InvalidDataException invalidUser() {

@@ -14,8 +14,6 @@ import java.util.HashMap;
 
 import javax.faces.bean.ManagedBean; 
 import javax.faces.bean.SessionScoped;
-import javax.faces.context.FacesContext;
-
 import request.*;
 import storage.*;
 
@@ -23,6 +21,10 @@ import storage.*;
 @SessionScoped
 //username, title, password, firstNames, lastNames, houseIdentifier, postcode, email, phoneNo, dateOfBirth
 public class UserLogin implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	String username;
 	String password;
 
@@ -61,6 +63,7 @@ public class UserLogin implements Serializable {
 			return "LoginSuccess";
 			
 		} catch(InvalidDataException e) {
+			System.out.println("Invalid Data Exception");
 			return "index"; // But set the flag saying the user is not unique
 		} catch(DBProblemException | NamingException | SQLException ex) {
 			String msg = "There was a problem:"+System.getProperty("line.separator");

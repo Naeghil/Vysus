@@ -18,7 +18,9 @@ import java.util.ArrayList;
 		nestedException = nested;
 	}
 	
-	public void addField(String field) { invalidFields.add(field); }
+	public void addField(String field) { 
+		System.out.println(field);
+		invalidFields.add(field); }
 	public ArrayList<String> getFields() { return invalidFields; }
 	 
 	 //Common exceptions:

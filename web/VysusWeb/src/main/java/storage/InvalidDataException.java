@@ -18,10 +18,13 @@ import java.util.ArrayList;
 		nestedException = nested;
 	}
 	
-	public void addField(String field) { 
-		System.out.println(invalidFields);
-		invalidFields.add(field); 
-		System.out.println("x");}
+	public void addField(String field) {
+		if (invalidFields == null) {
+			return;
+		} else {
+			invalidFields.add(field); 
+		}
+		}
 	public ArrayList<String> getFields() { return invalidFields; }
 	 
 	 //Common exceptions:

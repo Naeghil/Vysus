@@ -18,23 +18,63 @@ public class User extends StorageAbstract {
 	protected String hashedPW = null; 	//for creation and modification purposes
 	protected Account account = null;	//Associated account and related data
 	
+	//Object-specific queries:
+	protected static String uniqueness = "SELECT COUNT(*) FROM User WHERE userID=?";
+	protected static String retrievePassword = "SELECT password FROM User WHERE userID=?";
+	protected static String updatePassword = "UPDATE User SET password=? WHERE userID=?";
+
+//Object initialization:
 	//Constructor for existing user
 	public User(String username) { 
-		id.put("user", username);
+		data.put("id", username); //this might need to be re-put; or alternatively use a separate variable
+		setDBVariables();
 	}
 	//Constructor for new user
 	public User(Connection connection, String username, String password, Map<String, String> data, String accountID) throws DBProblemException {
-		id.put("user", username);
-		id.put("account", accountID);
 		this.data = data;
-		hashedPW = BCrypt.hashpw(password, BCrypt.gensalt());
+		this.data.put("id", username);
+		this.data.put("accountID", accountID);
+		setDBVariables();
 		create(connection);
 	}
+	//Sets object-specific queries and keys:
+	protected void setDBVariables() {
+		keys = new ArrayList<String>(Arrays.asList(
+				"accountID", "title", "firstNames", "lastNames", "houseIdentifier", "postcode", "email", "phoneNo", "dateOfBirth"));
+		delete = "DELETE FROM User WHERE userID=?";
+		retrieve = "SELECT * FROM User WHERE userID=?";
+		//This excludes password:
+		create = "INSERT INTO User"
+				+ "(userID, accountID, title, firstNames, lastNames, houseIdentifier, postcode, email, phoneNo, dateOfBirth) "
+				+ "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+	}
+	//Implementation of the update query (excludes password):
+	protected String update(List<String> changed) {
+		String upd = "UPDATE User SET " + changed.get(0);
+		for(int i=1; i<changed.size(); i++) upd += "=?, " + changed.get(i);
+		upd += "=? WHERE userID=?";
+		return upd;
+	}
+
+//Object-specific querying methods:
+	//Special method to set password, as it's the only field stored as a binary and not a string
+	protected void setPassword(Connection con, String clear) throws DBProblemException  {
+		try(PreparedStatement pwUpdate = con.prepareStatement(updatePassword);) {
+			String hash = BCrypt.hashpw(clear, BCrypt.gensalt());
+			pwUpdate.setBytes(1, hash.getBytes());
+			pwUpdate.setString(2, data.get("id"));
+			pwUpdate.executeUpdate();
+		} catch (SQLException e) { throw new DBProblemException(e); }
+	}
+	
+	
+	
+	
 	
 	//Checks user's password, effectively "logging in" the user if execution normally terminates
 	public void login(String password, Connection con) throws DBProblemException, InvalidDataException {
 		try (PreparedStatement getHash = con.prepareStatement(retrievePassword);){
-			getHash.setString(1, id.get("user"));
+			getHash.setString(1, data.get("id"));
 			try(ResultSet rs = getHash.executeQuery();) {
 				if(rs.next()) {
 					String hash = new String(rs.getBytes("password"));
@@ -70,31 +110,10 @@ public class User extends StorageAbstract {
 	//Obtain the Account object
 	public Account getAccount() { return account; }
 	
-	//Queries:
-	protected static String uniqueness = "SELECT COUNT(*) FROM User WHERE userID=?";
-	protected String retrievePassword = "SELECT password FROM User WHERE userID=?";
-	protected String deleteUser = "DELETE FROM User WHERE userID=?";
-	protected String retrieveUser = "SELECT * FROM User WHERE userID=?";
-	protected String createUser = "INSERT INTO User(userID, password, accountID, title, firstNames, lastNames, houseIdentifier, postcode, email, phoneNo, dateOfBirth) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-	protected String updateUser(List<String> changed) {
-		String upd = "UPDATE User SET " + changed.get(0);
-		for(int i=1; i<changed.size(); i++) upd += "=?, " + changed.get(i);
-		if(hashedPW!=null) upd+= "=?, password";
-		upd += "=? WHERE userID=?";
-		return upd;
-	}
-	//Abstract implementation:
-	protected void create(Connection con) throws DBProblemException  {
-		try(PreparedStatement insert = con.prepareStatement(createUser);) {
-			insert.setString(1, id.get("user"));
-			//The hash is not normally stored in the object
-			insert.setBytes(2, hashedPW.getBytes());
-			hashedPW = null;
-			insert.setString(3, id.get("account"));
-			for(int i=0; i<keys.size(); i++) insert.setString(i+4, data.get(keys.get(i)));
-			insert.executeUpdate();
-		} catch (SQLException e) { throw new DBProblemException(e); }
-	}
+	
+	
+	
+	
 	public void retrieve(Connection con) throws InvalidDataException, DBProblemException {
 		try (PreparedStatement retrieve = con.prepareStatement(retrieveUser);) {
 			retrieve.setString(1, id.get("user"));
@@ -129,9 +148,6 @@ public class User extends StorageAbstract {
 			if(delete.executeUpdate() != 1) throw InvalidDataException.invalidUser();
 		} catch (SQLException e) { throw new DBProblemException(e); }
 	}
-	//Ordered list of strings to loop into the user data map
-	protected List<String> keys = new ArrayList<String>(Arrays.asList(
-			"title", "firstNames", "lastNames", "houseIdentifier", "postcode", "email", "phoneNo", "dateOfBirth"));
 	//TODO: show methods
 	public Map<String, Object> showMini() {return null;}
 	public Map<String, Object> show() { return null; }

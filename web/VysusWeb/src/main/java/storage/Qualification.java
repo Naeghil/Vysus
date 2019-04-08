@@ -92,7 +92,7 @@ public class Qualification extends StorageAbstract{
 			else changes = new HashMap<String, String>();
 		} catch (SQLException e) { throw new DBProblemException(e); }
 	}
-	protected void delete(Connection con) throws InvalidDataException, DBProblemException {
+	public void delete(Connection con) throws InvalidDataException, DBProblemException {
 		try(PreparedStatement delete = con.prepareStatement(deleteQualification);) {
 				delete.setString(1, id.get("qualification"));
 			if(delete.executeUpdate() != 1) throw InvalidDataException.invalidQualification();
@@ -106,6 +106,24 @@ public class Qualification extends StorageAbstract{
 		return null;
 	}
 	public Map<String, Object> showFull() {
-		return null;
+		Map<String, Object> show = new HashMap<String, Object>();
+		show.put("data", data);
+		show.put("id", id.get("qualification"));
+		show.put("verified", verified);
+		return show;
+	}
+	
+	//TODO: list string or list int?
+	public static List<String> qualificationList(Connection con, String account) throws DBProblemException {
+		List<String> list = new ArrayList<String>();
+		try(PreparedStatement qualifications = con.prepareStatement("SELECT qualificationID FROM Qualification WHERE accountID=?");) {
+			qualifications.setString(1, account);
+			try(ResultSet result = qualifications.executeQuery();){
+				while(result.next()) list.add(result.getString("qualificationID"));
+			}
+		} catch (SQLException e) { throw new DBProblemException(e); }
+		
+		
+		return list;
 	}
 }

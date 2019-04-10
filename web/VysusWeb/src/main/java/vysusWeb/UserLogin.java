@@ -51,7 +51,7 @@ public class UserLogin implements Serializable {
 			Map<String, Object> requestMap = context.getExternalContext().getSessionMap();
 			
 			System.out.println(requestMap.get("Username"));
-			
+			/* Temp commented out until fixed
 			//Retrieve the database object
 			DataSource vysusdb = (DataSource)((Context)new InitialContext()).lookup("java:/vysusDB");
 			//Connect to the database
@@ -72,6 +72,7 @@ public class UserLogin implements Serializable {
 			}*/
 
 			//return "LoginSuccess";
+			
 			return "indexLoggedIn";
 			
 		} catch(InvalidDataException e) {

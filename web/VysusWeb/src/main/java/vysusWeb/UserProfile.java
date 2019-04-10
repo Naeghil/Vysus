@@ -63,15 +63,9 @@ public class UserProfile implements Serializable {
 			//inside profileData is a map<string,string>, call method "getStringHash"
 			//getStringHash will take a map/hashmap object and return it as Map<String,String> if it is possible
 			Map<String, Object> profileData = profile.execute(); 
-<<<<<<< HEAD
 			System.out.println(profileData);
 			userData = DataConv.getStringMap(profileData.get("userData"));
 			System.out.println(userData);
-=======
-			//System.out.println(profileData);
-			userData = RequestAbstract.getStringHash(profileData.get("userData"));
-			//System.out.println(userData);
->>>>>>> c9223495b9be8648f95179008d33f004ff9a24b1
 			//User user = newUser.getActor();
 			return;
 		} catch(InvalidDataException e) {

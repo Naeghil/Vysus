@@ -64,7 +64,7 @@ public class UserLogin implements Serializable {
 			UIComponent testData2 = context.getViewRoot().findComponent("password");
 			//Map<String,Object> testData = context.getViewRoot().findComponent("password").getAttributes();
 			System.out.println(testData2);
-			System.out.println(testData3);
+			System.out.println(testData3.getViewId());
 			//System.out.println(requestMap.get("Username"));
 
 			return "myProfile";

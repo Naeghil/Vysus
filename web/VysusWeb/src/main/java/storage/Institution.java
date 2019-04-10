@@ -9,23 +9,20 @@ import java.sql.*;
 
 public class Institution extends Account{
 //Object-specific variables
+	
+	
 	//TODO: what exactly does it mean?
 	protected Object rankingPreferences;
-	//protected List<Job> postedJobs = null;
-	//Consider extending the class user, privately, in this file
-	protected List<User> staff = null; //TODO: make a staff private class that overrides login checking with the sysAdmin
 	//Object-specific queries:
 	protected String retrieveStaff = "SELECT * FROM User WHERE accountID=?";		
 	
 	
 //Initialisation: constructors and variables setup
 	//Uses super constructors
-	public Institution(String accountID) { 
-		super(accountID); 
-	}
-	public Institution(String accountID, Map<String, String> accountData, Map<String, Object> additionalData) {
-		super(accountID, accountData, additionalData);
-	}
+	public Institution(String accountID) { super(accountID); }
+	public Institution(String accountID, Map<String, String> accountData, Connection connection)
+		throws DBProblemException { super(accountID, accountData, connection); }
+		
 	protected void setDBVariables() {
 		keys = new ArrayList<String>(Arrays.asList(
 				"sysAdminID", "name", "type", "address", "email", "phoneNo"));
@@ -41,17 +38,11 @@ public class Institution extends Account{
 		upd += "=? WHERE accountID=?";
 		return upd;
 	}
-	protected void processAdditionalData(Map<String, Object> data) {
-		
-	}
-	
+
 //Object-specific querying methods
 	
 //Public interfaces of protected methods
-	public void makeHR() {
-		
-	}
-
+	//All the load methods
 //Getters and show methods	
 	public Map<String, Object> showMini() {
 		return null;
@@ -60,6 +51,59 @@ public class Institution extends Account{
 		return null;
 	}
 	public Map<String, Object> showFull() {
+		Map<String, Object> show = new HashMap<String, Object>();
+		/*show.put("accountData", data);
+		//show.put("staffData", value)
+		*/
+		return show;
+	}
+}
+
+class Staff extends User {
+	public Staff(Connection connection, String username, String password, Map<String, String> data, String accountID)
+			throws DBProblemException {
+		super(username);
+		this.data = data;
+		this.data.put("accountID", accountID);
+		create(connection);
+	}
+	public Staff(String username)
+			throws DBProblemException {
+		super(username);
+	}
+	
+//Show methods unusable:
+	public Map<String, Object> showFull(){
 		return null;
+	}
+	public Map<String, Object> show(){
+		return null;
+	}
+	public Map<String, Object> showMini() {
+		return null;
+	}
+	protected Map<String, String> getData() {
+		return data;
+	}
+//Static show methods to be used by the Institution object
+	public static Map<String, Object> showStaff(String accountID, Connection connection) throws DBProblemException, InvalidDataException {
+		Map<String, Object> staffData = new HashMap<String, Object>();
+		for(String staffID : Staff.staffList(accountID, connection)) {
+			Staff staff = new Staff(staffID);
+			staff.load(connection);
+			staffData.put(staffID, staff.getData());
+		}
+		return staffData;
+	}
+	public static List<String> staffList(String accountID, Connection connection) 
+		throws DBProblemException {
+		List<String> staffList = new ArrayList<String>();
+		try(PreparedStatement retList = connection.prepareStatement("SELECT userID FROM User WHERE accountID=?");) {
+			retList.setString(1, accountID);
+			try(ResultSet records = retList.executeQuery();) {
+				while(records.next()) staffList.add(records.getString("userID"));
+			}
+		} catch (SQLException e) { throw new DBProblemException(e); }
+		return staffList;
 	}
 }

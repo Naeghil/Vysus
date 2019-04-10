@@ -2,11 +2,6 @@ package storage;
 
 import java.sql.*;
 import java.util.Map;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.HashMap;
-
-//TODO: consider making this an interface
 
 /*******************************************
  * 				Account					   *
@@ -24,11 +19,12 @@ public abstract class Account extends StorageAbstract {
 		data.put("id", accountID);
 		setDBVariables();
 	}
-	public Account(String accountID, Map<String, String> accountData, Map<String, Object> additionalData) {
+	public Account(String accountID, Map<String, String> accountData, Connection connection)
+		throws DBProblemException {
 		data.put("id", accountID);
 		data = accountData;
 		setDBVariables();
-		processAdditionalData(additionalData);
+		create(connection);
 	}
 	//Masking constructor for existing accounts
 	public static Account getAccount(String accountID) throws InvalidDataException {
@@ -41,18 +37,17 @@ public abstract class Account extends StorageAbstract {
 		throw e;
 	}
 	//Masking constructor for new accounts
-	public static Account makeAccount(String accountID, Map<String, String> accountData, Map<String, Object> additionalData)
+	public static Account makeAccount(String accountID, Map<String, String> accountData, Connection connection)
 		throws InvalidDataException, DBProblemException {
 		char accType = accountID.charAt(0);
-		if(accType=='0') return new Teacher(accountID, accountData, additionalData);
-		if(accType=='1') return new Institution(accountID, accountData, additionalData);
+		if(accType=='0') return new Teacher(accountID, accountData, connection);
+		if(accType=='1') return new Institution(accountID, accountData, connection);
 		
 		InvalidDataException e = new InvalidDataException(null);
 		e.addField("accountID", "Unrecognised account type");
 		throw e;
 	}
 	//DB variables setup depends on the final account class
-	protected abstract void processAdditionalData(Map<String, Object> data);
 	
 //Object-specific querying methods
 

@@ -27,16 +27,6 @@ import storage.User;
 @ManagedBean(name="profile") // or @Named("user")
 @RequestScoped
 public class UserProfile implements Serializable {
-	String username;
-	String password;
-	String title;
-	String firstNames;
-	String lastNames;
-	String houseIdentifier;
-	String postcode;
-	String email;
-	String phoneNo;
-	String dateOfBirth;
 	Map<String,String> userData;
 	
 	public UserProfile() {
@@ -94,85 +84,7 @@ public class UserProfile implements Serializable {
 			} catch(SQLException e) {}
 		}
 	}
-
 	public String getUsername() {
-		return username;
+		return userData.get("username");
 	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	public String getTitle() {
-		return title;
-	}
-
-	public void setTitle(String title) {
-		this.title = title;
-	}
-
-	public String getFirstNames() {
-		return firstNames;
-	}
-
-	public void setFirstNames(String firstNames) {
-		this.firstNames = firstNames;
-	}
-
-	public String getLastNames() {
-		return lastNames;
-	}
-
-	public void setLastNames(String lastNames) {
-		this.lastNames = lastNames;
-	}
-
-	public String getHouseIdentifier() {
-		return houseIdentifier;
-	}
-
-	public void setHouseIdentifier(String houseIdentifier) {
-		this.houseIdentifier = houseIdentifier;
-	}
-
-	public String getPostcode() {
-		return postcode;
-	}
-
-	public void setPostcode(String postcode) {
-		this.postcode = postcode;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public String getPhoneNo() {
-		return phoneNo;
-	}
-
-	public void setPhoneNo(String phoneNo) {
-		this.phoneNo = phoneNo;
-	}
-
-	public String getDateOfBirth() {
-		return dateOfBirth;
-	}
-
-	public void setDateOfBirth(String dateOfBirth) {
-		this.dateOfBirth = dateOfBirth;
-	}
-	
 }

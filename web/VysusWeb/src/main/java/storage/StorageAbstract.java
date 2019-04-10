@@ -12,6 +12,11 @@ package storage;
  * - Public interfaces of protected methods					  *
  * - Getters and show methods								  *
  *************************************************************/
+//Object-specific variables
+//Initialisation: constructors and variables setup
+//Object-specific querying methods
+//Public interfaces of protected methods
+//Getters and show methods
 
 
 import java.util.Map;
@@ -66,12 +71,11 @@ public abstract class StorageAbstract {
 	//Applies changes to the record
 	protected void update(Connection con) throws InvalidDataException, DBProblemException {
 		//Makes an ordered list to avoid potential problems with the Set class
-		List<String> changedFields = new ArrayList<String>(changes.keySet());
-		try(PreparedStatement update = con.prepareStatement(update(changedFields));) {
+		List<String> changed = new ArrayList<String>(changes.keySet());
+		try(PreparedStatement update = con.prepareStatement(update(changed));) {
 			//Setting up the statement:
-			int i;
-			for(i=0; i<changedFields.size(); i++) update.setString(i+1, changes.get(changedFields.get(i)));
-			update.setString(i, data.get("id"));
+			for(int i=0; i<changed.size(); i++) update.setString(i+1, changes.get(changed.get(i)));
+			update.setString(changed.size()+1, data.get("id"));
 			//Execution:
 			if(update.executeUpdate() != 1) throw InvalidDataException.invalidId();
 			else changes = new HashMap<String, String>();

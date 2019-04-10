@@ -23,7 +23,7 @@ public class User extends StorageAbstract {
 	protected static String retrievePassword = "SELECT password FROM User WHERE userID=?";
 	protected static String updatePassword = "UPDATE User SET password=? WHERE userID=?";
 
-//Object initialization:
+//Object initialisation:
 	//Constructor for existing user
 	public User(String username) { 
 		data.put("id", username); //this might need to be re-put; or alternatively use a separate variable
@@ -66,11 +66,6 @@ public class User extends StorageAbstract {
 			pwUpdate.executeUpdate();
 		} catch (SQLException e) { throw new DBProblemException(e); }
 	}
-	
-	
-	
-	
-	
 	//Checks user's password, effectively "logging in" the user if execution normally terminates
 	public void login(String password, Connection con) throws DBProblemException, InvalidDataException {
 		try (PreparedStatement getHash = con.prepareStatement(retrievePassword);){
@@ -82,16 +77,6 @@ public class User extends StorageAbstract {
 				} else throw InvalidDataException.invalidUser();
 			}
 		} catch (SQLException e) { throw new DBProblemException(e); }
-	}
-	//Enables user deletion
-	public void deleteUser(String password, Connection connection) throws DBProblemException, InvalidDataException {
-		login(password, connection); //Double checks password
-		delete(connection);
-	}
-	//For now this is to enact changes to the user account
-	public void updateProfile(Map<String, String> changes, Connection con) throws InvalidDataException, DBProblemException {
-		this.changes = changes;
-		update(con);
 	}
 	//Unneedingly complicated method to check uniqueness. 
 	public static boolean isUnique(String username, Connection con) throws DBProblemException {
@@ -107,47 +92,32 @@ public class User extends StorageAbstract {
 		}
 		return true;
 	}
+
+//Public interfaces of protected methods:
+	//Enables loading user data
+	//TODO: better specify the role of this method
+	public void load(Connection connection) throws DBProblemException, InvalidDataException {
+		retrieve(connection);
+	}
+	//Enables user deletion
+	public void deleteUser(String password, Connection connection) throws DBProblemException, InvalidDataException {
+		login(password, connection); //Double checks password
+		delete(connection);
+	}
+	//For now this is to enact changes to the user account
+	public void updateProfile(Map<String, String> changes, Connection connection) throws InvalidDataException, DBProblemException {
+		if(changes.containsKey("newPassword") && changes.containsKey("oldPassword")) {
+			login(changes.remove("oldPassword"), connection);
+			setPassword(connection, changes.remove("newPassword"));
+		}
+		this.changes = changes;
+		update(connection);
+	}
+	
+//Getters & Shows:
 	//Obtain the Account object
 	public Account getAccount() { return account; }
 	
-	
-	
-	
-	
-	public void retrieve(Connection con) throws InvalidDataException, DBProblemException {
-		try (PreparedStatement retrieve = con.prepareStatement(retrieveUser);) {
-			retrieve.setString(1, id.get("user"));
-			try(ResultSet record = retrieve.executeQuery();){
-				if(record.next()){
-					for(String key : keys) data.put(key, record.getString(key));
-					id.put("account", record.getString("accountID"));
-				} else throw InvalidDataException.invalidUser();
-			}
-		} catch (SQLException e) { throw new DBProblemException(e); }
-	}
-	protected void update(Connection con) throws InvalidDataException, DBProblemException {
-		//Makes an ordered list to avoid potential problems with the Set class
-		List<String> changedFields = new ArrayList<String>(changes.keySet());
-		try(PreparedStatement update = con.prepareStatement(updateUser(changedFields));) {
-			//Setting up the statement:
-			int i;
-			for(i=0; i<changedFields.size(); i++) update.setString(i+1, changes.get(changedFields.get(i)));
-			if(hashedPW!=null) update.setString(i++, hashedPW);
-			update.setString(i, id.get("user"));
-			//Execution:
-			if(update.executeUpdate() != 1) throw InvalidDataException.invalidUser();
-			else {
-				hashedPW = null;
-				changes = new HashMap<String, String>();
-			}
-		} catch (SQLException e) { throw new DBProblemException(e); }
-	}
-	protected void delete(Connection con) throws InvalidDataException, DBProblemException {
-		try(PreparedStatement delete = con.prepareStatement(deleteUser);) {
-			delete.setString(1, id.get("user"));
-			if(delete.executeUpdate() != 1) throw InvalidDataException.invalidUser();
-		} catch (SQLException e) { throw new DBProblemException(e); }
-	}
 	//TODO: show methods
 	public Map<String, Object> showMini() {return null;}
 	public Map<String, Object> show() { return null; }
@@ -155,7 +125,6 @@ public class User extends StorageAbstract {
 	public Map<String, Object> showFull() {
 		Map<String, Object> show = new HashMap<String, Object>();
 		show.put("userData", data);
-		show.put("username", id.get("user"));
 		show.put("accountData", account.showFull());
 		return show;
 	}

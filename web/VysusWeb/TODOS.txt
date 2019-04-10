@@ -1,4 +1,4 @@
-- TODO: have User.password possibly null at creation and use specific method to set it, dealing with the binary;
+- TODO: public update methods should deal with multiple levels of changes with (HashMap<String, Object) as parameter, especially with common interface
 - TODO: User has protected account object
 	- Account is created in constructor before User.create method, with proper try-catch to abort user creation in case of failure
 	- Account is retrieved, updated and deleted inside User.retrieve method (?)

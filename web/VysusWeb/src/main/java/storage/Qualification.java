@@ -21,98 +21,62 @@ public class Qualification extends StorageAbstract{
 	// according to ucas there's 19839 undergraduate courses in the UK
 	
 	// KISCourse.KISAIM valid entry --> basically level
+
+//Object-specific variables
+	protected Boolean verified = null; //TODO: in db must default to false;
 	
-	protected static List<String> keys = new ArrayList<String>(Arrays.asList(
-			"title", "startDate", "endDate", "comment", "finalGrade", "institution", "level", "institutionEmail", "institutionPhoneNo", "referee"));
-	protected Boolean verified;
-	//Existing constructor: give it null to avoid loading
-	public Qualification(String qID, Connection connection) throws InvalidDataException, DBProblemException {
-		id.put("qualification", qID);
+	//Object-specific queries:
+	
+//Initialisation: constructors and variables setup
+	//Existing constructor, also enabling loading, if given a connection
+	public Qualification(String qualificationID, Connection connection) throws InvalidDataException, DBProblemException {
+		data.put("id", qualificationID);
+		setDBVariables();
 		if(connection!=null) retrieve(connection);
+		
 	}
 	//Creating constructor: no qualification id will be available this way
-	public Qualification(Connection connection, String accountID, Map<String, String> data) throws DBProblemException {
-		id.put("account", accountID);
+	public Qualification(Connection connection, Map<String, String> data) throws DBProblemException {
 		this.data = data;
+		setDBVariables();
 		create(connection);
 	}
-	//For now this is to enact changes to the qualifications
-	public void updateQualification(Map<String, String> changes, Connection con) throws InvalidDataException, DBProblemException {
-		this.changes = changes;
-		update(con);
+	public void setDBVariables() {
+		keys = new ArrayList<String>(Arrays.asList( //TODO: should this include the qualificationID?
+			"accountID", "title", "startDate", "endDate", "comment", "finalGrade", "institution", "level", "institutionEmail", "institutionPhoneNo", "referee"));
+		delete = "DELETE FROM Qualification WHERE qualificationID=?";
+		retrieve = "SELECT * FROM Qualification WHERE qualificationID=?";
+		create = "INSERT INTO Qualification"
+				+ "(accountID, title, startDate, endDate, comment, finalGrade, institution, level, institutionEmail, institutionPhoneNo, referee) "
+				+ "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	}
+	protected String update(List<String> changes) {
+		String upd = "UPDATE Qualification SET " + changes.get(0);
+		for(int i=1; i<changes.size(); i++) upd += "=?, " + changes.get(i);
+		upd += "=? WHERE qualificationID=?";
+		return upd;
+	}
+	
+//Object-specific querying methods
+	//Used to set the verified byte to true
 	public void verify(Connection connection) throws DBProblemException, InvalidDataException {
 		try(PreparedStatement verify = connection.prepareStatement("UPDATE Qualification SET verified=? WHERE qualificationID=?");) {
 			verified=true;
 			verify.setBoolean(1, verified);
-			verify.setString(2, id.get("qualification"));
+			verify.setString(2, data.get("id")); //TODO:This may return null;
 			if(verify.executeUpdate() != 1) throw InvalidDataException.invalidQualification();
 		} catch (SQLException e) { throw new DBProblemException(e); }
 	}
-	public boolean isVerified() { return verified; }
-		
-	//Queries:
-	protected String deleteQualification = "DELETE FROM Qualification WHERE qualificationID=?";
-	protected String retrieveQualification = "SELECT * FROM Qualification WHERE qualificationID=?";
-	protected String createQualification = "INSERT INTO Qualification(accountID, title, startDate, endDate, comment, finalGrade, institution, level, institutionEmail, institutionPhoneNo, referee, verified) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-	protected String updateQualification(List<String> changed) {
-		String upd = "UPDATE Qualification SET " + changed.get(0);
-		for(int i=1; i<changed.size(); i++) upd += "=?, " + changed.get(i);
-		upd += "=? WHERE qualificationID=?";
-		return upd;
-	}
-	//Abstract implementation
-	protected void create(Connection con) throws DBProblemException {
-		try(PreparedStatement insert = con.prepareStatement(createQualification);) {
-			insert.setString(1, id.get("account"));
-			for(int i=0; i<keys.size(); i++) insert.setString(i+2, data.get(keys.get(i)));	
-		} catch (SQLException e) { throw new DBProblemException(e); }
-	}
-	protected void retrieve(Connection con) throws InvalidDataException, DBProblemException {
-		try (PreparedStatement retrieve = con.prepareStatement(retrieveQualification);) {
-			retrieve.setString(1, id.get("qualification"));
-			try(ResultSet record = retrieve.executeQuery();){
-				if(record.next()){
-					for(String key : keys) data.put(key, record.getString(key));
-					id.put("account", record.getString("accountID"));
-					verified = record.getBoolean("verified");
-				} else throw InvalidDataException.invalidQualification();
+	public boolean isVerified(Connection connection) throws InvalidDataException, DBProblemException { 
+		if(verified!=null) return verified;
+		try(PreparedStatement veri = connection.prepareStatement("SELECT verified FROM Qualification WHERE qualificationID=?")) {
+			veri.setString(1, data.get("id")); //TODO:This can return null;
+			try(ResultSet record = veri.executeQuery()) {
+				if(record.next()) return record.getBoolean("verified");
+				else throw InvalidDataException.invalidQualification();
 			}
-		} catch (SQLException e) { throw new DBProblemException(e); }
+		} catch (SQLException e ) {throw new DBProblemException(e); }
 	}
-	protected void update(Connection con) throws InvalidDataException, DBProblemException {		
-		List<String> changedFields = new ArrayList<String>(changes.keySet());
-		try(PreparedStatement update = con.prepareStatement(updateQualification(changedFields));) {
-			//Setting up the statement:
-			int i;
-			for(i=0; i<changedFields.size(); i++) update.setString(i+1, changes.get(changedFields.get(i)));
-			update.setString(i, id.get("qualification"));
-			//Execution:
-			if(update.executeUpdate() != 1) throw InvalidDataException.invalidQualification();
-			else changes = new HashMap<String, String>();
-		} catch (SQLException e) { throw new DBProblemException(e); }
-	}
-	public void delete(Connection con) throws InvalidDataException, DBProblemException {
-		try(PreparedStatement delete = con.prepareStatement(deleteQualification);) {
-				delete.setString(1, id.get("qualification"));
-			if(delete.executeUpdate() != 1) throw InvalidDataException.invalidQualification();
-		} catch (SQLException e) { throw new DBProblemException(e); }
-	}
-	
-	public Map<String, Object> showMini() {
-		return null;
-	}
-	public Map<String, Object> show() {
-		return null;
-	}
-	public Map<String, Object> showFull() {
-		Map<String, Object> show = new HashMap<String, Object>();
-		show.put("data", data);
-		show.put("id", id.get("qualification"));
-		show.put("verified", verified);
-		return show;
-	}
-	
 	//TODO: list string or list int?
 	public static List<String> qualificationList(Connection con, String account) throws DBProblemException {
 		List<String> list = new ArrayList<String>();
@@ -122,8 +86,25 @@ public class Qualification extends StorageAbstract{
 				while(result.next()) list.add(result.getString("qualificationID"));
 			}
 		} catch (SQLException e) { throw new DBProblemException(e); }
-		
-		
 		return list;
+	}
+//Public interfaces of protected methods
+	//For now this is to enact changes to the qualifications
+	public void updateQualification(Map<String, String> changes, Connection con) throws InvalidDataException, DBProblemException {
+		this.changes = changes;
+		update(con);
+	}
+//Getters and show methods		
+	public Map<String, Object> showMini() {
+		return null;
+	}
+	public Map<String, Object> show() {
+		return null;
+	}
+	public Map<String, Object> showFull() {
+		Map<String, Object> show = new HashMap<String, Object>();
+		show.put("data", data);
+		show.put("verified", verified);
+		return show;
 	}
 }

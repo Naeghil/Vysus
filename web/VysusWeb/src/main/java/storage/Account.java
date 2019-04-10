@@ -16,44 +16,43 @@ import java.util.HashMap;
  ******************************************/
 
 public abstract class Account extends StorageAbstract {
-	
-	public Account(String accountID, Map<String, String> accountData) { 
-		id.put("account", accountID);
-		data = accountData;
+//Object-specific variables
+	//There are no object-specific variables
+
+//Initialisation: constructors and variables setup
+	public Account() {};
+	//Masking constructor for existing accounts
+	public static Account getAccount(String accountID) throws InvalidDataException {
+		char accType = accountID.charAt(0);
+		if(accType=='0') return new Teacher(accountID);
+		if(accType=='1') return new Institution(accountID);
+		
+		InvalidDataException e = new InvalidDataException(null);
+		e.addField("accountID", "Unrecognised account type");
+		throw e;
 	}
-	
-//Common implementations:
-	protected String updateAccount(List<String> changed) throws InvalidDataException {
-		String upd = "UPDATE "+ accType()+" SET " + changed.get(0);
-		for(int i=1; i<changed.size(); i++) upd += "=?, " + changed.get(i);
-		upd += "=? WHERE accountID=?";
-		return upd;
+	//Masking constructor for new accounts
+	public static Account makeAccount(String accountID, Map<String, String> accountData, Map<String, Object> additionalData)
+		throws InvalidDataException, DBProblemException {
+		char accType = accountID.charAt(0);
+		if(accType=='0') return new Teacher(accountID, accountData, additionalData);
+		if(accType=='1') return new Institution(accountID, accountData, additionalData);
+		
+		InvalidDataException e = new InvalidDataException(null);
+		e.addField("accountID", "Unrecognised account type");
+		throw e;
 	}
-	//Generic update based on the "changed fields"
-	protected void update(Connection con) throws StorageException, InvalidDataException, DBProblemException {
-		List<String> changedFields = new ArrayList<String>(changes.keySet());
-		try(PreparedStatement update = con.prepareStatement(updateAccount(changedFields));) {
-			//Setting up the statement:
-			int i;
-			for(i=0; i<changedFields.size(); i++) update.setString(i+1, changes.get(changedFields.get(i)));
-			update.setString(i, id.get("account"));
-			//Execution:
-			if(update.executeUpdate() != 1) throw InvalidDataException.invalidUser();
-			else changes = new HashMap<String, String>();
-		} catch (SQLException e) { throw new DBProblemException(e); }
-	}
+	//DB variables setup depends on the final account class
 	
-	protected void delete(Connection con) throws StorageException, InvalidDataException, DBProblemException {
-		String delAccount = "DELETE FROM "+accType()+" WHERE accountID=?";
-		try(PreparedStatement delete = con.prepareStatement(delAccount);) {
-			delete.setString(1, id.get("account"));
-			if(delete.executeUpdate() != 1) throw new InvalidDataException(null);
-		} catch (SQLException e) { throw new DBProblemException(e); }
-	}
-	
-	
+//Object-specific querying methods
+
+//Public interfaces of protected methods
+
+//Getters and show methods	
+
+
 	protected String accType() throws InvalidDataException {
-		char type = id.get("account").charAt(0);
+		char type = data.get("id").charAt(0);
 		if(type=='0') return "Teacher";
 		if(type=='1') return "Institution";
 		

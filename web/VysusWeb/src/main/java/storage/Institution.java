@@ -10,6 +10,20 @@ import java.sql.*;
 //Also has sysAdmin as id
 
 public class Institution extends Account{
+//Object-specific variables
+//Initialisation: constructors and variables setup
+	public Institution(String accountID) {
+		//TODO: this
+	}
+	public Institution(String accountID, Map<String, String> accountData, Map<String, Object> additionalData) {
+		//TODO: this
+	}
+//Object-specific querying methods
+//Public interfaces of protected methods
+//Getters and show methods
+	
+	
+	
 	protected static List<String> keys = new ArrayList<String>(Arrays.asList(
 			"name", "address", "email", "phoneNo"));
 	//TODO: consider adding an "institution type" to mean the level or collection of levels/ yes

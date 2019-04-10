@@ -8,6 +8,18 @@ import java.util.List;
 import java.sql.*;
 
 public class Teacher extends Account{
+//Object-specific variables
+//Initialisation: constructors and variables setup
+	public Teacher(String accountID) {
+		//TODO: this
+	}
+	public Teacher(String accountID, Map<String, String> accountData, Map<String, Object> additionalData) {
+		//TODO: this
+	}
+	
+//Object-specific querying methods
+//Public interfaces of protected methods
+//Getters and show methods
 	protected static List<String> keys = new ArrayList<String>(Arrays.asList(
 			"gender", "maxDistance", "minRatePerHour", "aboutMe"));
 	//Queries

@@ -22,20 +22,9 @@ import java.util.HashMap;
 		nestedException = nested;
 	}
 	
-<<<<<<< HEAD
 	public void addField(String field, String message) { invalidFields.put(field, message); }
 	public List<String> getFields() { return new ArrayList<String>(invalidFields.keySet()); }
 	public String getMessage(String field) { return invalidFields.get(field); }
-=======
-	public void addField(String field) {
-		if (invalidFields == null) {
-			return;
-		} else {
-			invalidFields.add(field); 
-		}
-		}
-	public ArrayList<String> getFields() { return invalidFields; }
->>>>>>> 659ccbe3b70f48fdf584e359382cf6c4711d662e
 	 
 	//Common exceptions:
 	public static InvalidDataException invalidUser() {
@@ -53,6 +42,7 @@ import java.util.HashMap;
 		e.addField("qualification", "This qualification doesn't exist");
 		return e;
 	}
+	//TODO: what did I make it for?
 	public static InvalidDataException invalidId() {
 		InvalidDataException e = new InvalidDataException(null);
 		e.addField("id", "Runtime class message");

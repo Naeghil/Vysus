@@ -56,10 +56,11 @@ public class UserLogin implements Serializable {
 			newLogin.execute();
 			
 			FacesContext context = FacesContext.getCurrentInstance();
-			System.out.println(context.getViewRoot().findComponent("password"));
 			context.getExternalContext().getSessionMap().put("Username", this.username);
 			Map<String, Object> requestMap = context.getExternalContext().getSessionMap();
 			
+			Map<String,Object> testData = context.getViewRoot().findComponent("password").getAttributes();
+			System.out.println(testData);
 			//System.out.println(requestMap.get("Username"));
 
 			return "myProfile";

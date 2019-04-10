@@ -87,4 +87,32 @@ public class UserProfile implements Serializable {
 	public String getTitle() {
 		return userData.get("title");
 	}
+	
+	public String getFirstNames() {
+		return userData.get("firstNames");
+	}
+	
+	public String getLastNames() {
+		return userData.get("lastNames");
+	}
+	
+	public String getHouseIdentifier() {
+		return userData.get("houseIdentifier");
+	}
+	
+	public String getPostcode() {
+		return userData.get("postcode");
+	}
+	
+	public String getEmail() {
+		return userData.get("email");
+	}
+	
+	public String getPhoneNo() {
+		return userData.get("phoneNo");
+	}
+	
+	public String getDateOfBirth() {
+		return userData.get("datOfBirth");
+	}
 }

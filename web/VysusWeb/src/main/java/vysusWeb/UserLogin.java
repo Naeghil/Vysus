@@ -61,7 +61,7 @@ public class UserLogin implements Serializable {
 			
 			System.out.println(requestMap.get("Username"));
 
-			return "LoginSuccess";
+			return "myProfile";
 			
 			//return "indexLoggedInTemp";	
 		} catch(InvalidDataException e) {

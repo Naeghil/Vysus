@@ -9,7 +9,7 @@
 	<f:event type="preRenderView" listener="#{profile.onPageLoad()}"/>
 </f:metadata>
 <head>
-    <title>Signup</title>
+    <title>profile</title>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css"/>
@@ -23,13 +23,13 @@
 	<p>
 		MYPROFILE PAGE <br/>
 		title = #{profile.getTitle()} <br/>
-		firstNames = #{signup.firstNames} <br/>
-		lastNames = #{signup.lastNames} <br/>
-		houseIdentifier = #{signup.houseIdentifier} <br/>
-		postcode = #{signup.postcode} <br/>
-		email = #{signup.email} <br/>
-		phoneNo = #{signup.phoneNo} <br/>
-		dateOfBirth = #{signup.dateOfBirth} <br/>
+		firstNames = #{profile.getFirstNames()} <br/>
+		lastNames = #{profile.getLastNames()} <br/>
+		houseIdentifier = #{profile.getHouseIdentifier()} <br/>
+		postcode = #{profile.getPostcode()} <br/>
+		email = #{profile.getEmail()} <br/>
+		phoneNo = #{profile.getPhoneNo()} <br/>
+		dateOfBirth = #{profile.getDateOfBirth()} <br/>
 	</p>	
 	</h:body>
 </body>

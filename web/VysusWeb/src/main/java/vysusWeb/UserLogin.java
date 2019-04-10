@@ -62,11 +62,13 @@ public class UserLogin implements Serializable {
 			Map<String, Object> requestMap = context.getExternalContext().getSessionMap();
 			UIViewRoot testData3 = context.getViewRoot();
 			UIComponent testData2 = context.getViewRoot().findComponent("password");
-			//Map<String,Object> testData = context.getViewRoot().findComponent("password").getAttributes();
+			Map<String,Object> testData = context.getViewRoot().findComponent("inputSecret").getAttributes();
+			System.out.println(testData);
+			
 			System.out.println(testData2);
 			//Printed /index.xhtml
 			//System.out.println(testData3.getViewId()); 
-			
+			//Printed {} why is this empty?
 			System.out.println(testData3.getViewMap());
 			//System.out.println(requestMap.get("Username"));
 

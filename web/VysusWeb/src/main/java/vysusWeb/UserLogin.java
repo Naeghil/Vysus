@@ -71,7 +71,8 @@ public class UserLogin implements Serializable {
 				e.printStackTrace();
 			}*/
 
-			return "LoginSuccess";
+			//return "LoginSuccess";
+			return "indexLoggedIn";
 			
 		} catch(InvalidDataException e) {
 			System.out.println("Invalid Data Exception");

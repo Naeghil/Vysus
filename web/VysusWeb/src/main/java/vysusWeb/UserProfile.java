@@ -84,7 +84,7 @@ public class UserProfile implements Serializable {
 			} catch(SQLException e) {}
 		}
 	}
-	public String getUsername() {
-		return userData.get("username");
+	public String getTitle() {
+		return userData.get("title");
 	}
 }

@@ -28,6 +28,7 @@ public class UserCookies {
 	public UserCookies(){ }
 	
 	public Object getCookie() {
+		System.out.println("Is this ever run?");
 		FacesContext context = FacesContext.getCurrentInstance();
 		
 		Map<String, Object> requestMap = context.getExternalContext().getSessionMap();

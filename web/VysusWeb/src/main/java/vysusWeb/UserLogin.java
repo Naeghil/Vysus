@@ -15,6 +15,7 @@ import java.util.Map;
 
 import javax.faces.bean.ManagedBean; 
 import javax.faces.bean.SessionScoped;
+import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 
 import request.*;
@@ -58,9 +59,9 @@ public class UserLogin implements Serializable {
 			FacesContext context = FacesContext.getCurrentInstance();
 			context.getExternalContext().getSessionMap().put("Username", this.username);
 			Map<String, Object> requestMap = context.getExternalContext().getSessionMap();
-			
-			Map<String,Object> testData = context.getViewRoot().findComponent("password").getAttributes();
-			System.out.println(testData);
+			UIComponent testData2 = context.getViewRoot().findComponent("password");
+			//Map<String,Object> testData = context.getViewRoot().findComponent("password").getAttributes();
+			System.out.println(testData2);
 			//System.out.println(requestMap.get("Username"));
 
 			return "myProfile";

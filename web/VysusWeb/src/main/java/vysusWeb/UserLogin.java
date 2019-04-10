@@ -46,13 +46,6 @@ public class UserLogin implements Serializable {
 		formHashmap(); //Gather data from the form
 		Connection connection = null;
 		try {
-			
-			FacesContext context = FacesContext.getCurrentInstance();
-			context.getExternalContext().getSessionMap().put("Username", this.username);
-			Map<String, Object> requestMap = context.getExternalContext().getSessionMap();
-			
-			System.out.println(requestMap.get("Username"));
-			/* Temp commented out until fixed
 			//Retrieve the database object
 			DataSource vysusdb = (DataSource)((Context)new InitialContext()).lookup("java:/vysusDB");
 			//Connect to the database
@@ -61,28 +54,19 @@ public class UserLogin implements Serializable {
 			LogIn newLogin = new LogIn(this.userHash, connection);
 			
 			newLogin.execute();
-			//User user = newUser.getActor();
-			//TODO: save the user in the session context
-			/*HashMap<String, Object> properties = new HashMap<String,Object>();
-			properties.put("maxAge", 31536000);
-			properties.put("path", "/");
-			try {
-				FacesContext.getCurrentInstance().getExternalContext().addResponseCookie("username", URLEncoder.encode(this.username, "UTF-8"), properties);
-			} catch (UnsupportedEncodingException e) {
-				e.printStackTrace();
-			}*/
-
-			//return "LoginSuccess";
 			
-			return "indexLoggedInTemp";
-		}
-			finally {
-				return "indexLoggedInTemp";
-			}
-		/*	
+			FacesContext context = FacesContext.getCurrentInstance();
+			context.getExternalContext().getSessionMap().put("Username", this.username);
+			Map<String, Object> requestMap = context.getExternalContext().getSessionMap();
+			
+			System.out.println(requestMap.get("Username"));
+
+			return "LoginSuccess";
+			
+			//return "indexLoggedInTemp";	
 		} catch(InvalidDataException e) {
 			System.out.println("Invalid Data Exception");
-			return "index"; // But set the flag saying the user is not unique
+			return "index"; //Username or password was incorrect
 		} catch(DBProblemException | NamingException | SQLException ex) {
 			String msg = "There was a problem:"+System.getProperty("line.separator");
 			if(ex instanceof DBProblemException) msg += ((DBProblemException)ex).getNested().getMessage();
@@ -95,7 +79,7 @@ public class UserLogin implements Serializable {
 				if(connection!=null) connection.close();
 			} catch(SQLException e) {}
 		}
-		*/
+		
 	}
 	
 //Getter & Setters as per jsf specification	

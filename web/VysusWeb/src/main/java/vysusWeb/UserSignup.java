@@ -60,13 +60,6 @@ public class UserSignup implements Serializable {
 		formHashmap(); //Gather data from the form
 		Connection connection = null;
 		try {
-			
-			FacesContext context = FacesContext.getCurrentInstance();
-			context.getExternalContext().getSessionMap().put("Username", this.username);
-			Map<String, Object> requestMap = context.getExternalContext().getSessionMap();
-			
-			System.out.println(requestMap.get("Username"));
-			
 			//Retrieve the database object
 			DataSource vysusdb = (DataSource)((Context)new InitialContext()).lookup("java:/vysusDB");
 			//Connect to the database
@@ -75,8 +68,14 @@ public class UserSignup implements Serializable {
 			SignUp newUser = new SignUp(this.userHash, connection);
 			
 			newUser.execute();
-			//User user = newUser.getActor();
-			//TODO: save the user in the session context
+
+			//add data to session
+			FacesContext context = FacesContext.getCurrentInstance();
+			context.getExternalContext().getSessionMap().put("Username", this.username);
+			Map<String, Object> requestMap = context.getExternalContext().getSessionMap();
+			
+			System.out.println(requestMap.get("Username"));
+			
 			return "SignupTest";
 		} catch(InvalidDataException e) {
 			return "signup"; // But set the flag saying the user is not unique

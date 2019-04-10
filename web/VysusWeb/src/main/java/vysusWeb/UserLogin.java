@@ -41,6 +41,7 @@ public class UserLogin implements Serializable {
 		this.userHash.put("password", this.password);
 	}
 	
+	@SuppressWarnings("finally")
 	public String loginUser() {
 		formHashmap(); //Gather data from the form
 		Connection connection = null;
@@ -74,7 +75,11 @@ public class UserLogin implements Serializable {
 			//return "LoginSuccess";
 			
 			return "indexLoggedIn";
-			
+		}
+			finally {
+				return "index";
+			}
+		/*	
 		} catch(InvalidDataException e) {
 			System.out.println("Invalid Data Exception");
 			return "index"; // But set the flag saying the user is not unique
@@ -90,6 +95,7 @@ public class UserLogin implements Serializable {
 				if(connection!=null) connection.close();
 			} catch(SQLException e) {}
 		}
+		*/
 	}
 	
 //Getter & Setters as per jsf specification	

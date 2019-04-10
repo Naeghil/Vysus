@@ -47,6 +47,7 @@ public class UserLogin implements Serializable {
 		try {
 			
 			FacesContext context = FacesContext.getCurrentInstance();
+			context.getExternalContext().getSessionMap().put("Username", this.username);
 			Map<String, Object> requestMap = context.getExternalContext().getSessionMap();
 			
 			System.out.println(requestMap);

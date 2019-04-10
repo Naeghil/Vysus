@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<!--Learn media queries for responsive design-->
+<html lang="en"
+	xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html">
+<head>
+    <title>Signup</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="resources/css/style.css"/>
+    <link href="https://fonts.googleapis.com/css?family=ZCOOL+KuaiLe|Cormorant+Garamond|Eczar|Gentium+Basic|Libre+Baskerville|Libre+Franklin|Proza+Libre|Rubik|Taviraj|Trirong|Work+Sans" rel="stylesheet"/>
+	<link rel="icon" href="resources/images/duck2.png"/>
+</head>
+<body>
+  	<div class="container-fluid h10">
+        <div class="row h100 bg-lightgreen">
+        	<div class="col-md-3"></div>
+        	<div class="col-md-6 h100">
+        		<div class="row h100 bg-white smallScrollBar noSideScroll" style="background: rgba(255, 255, 255, 0.3);"><h1>Signup Teachers</h1></div>
+        	</div>
+        	<div class="col-md-3"></div>
+        </div>
+    </div>
+    <div class="container-fluid h90">
+    <div class="row h100">
+          <div class="col-md-2 bg-lightblue h100">
+          	<div class="row h10">
+          	</div>
+          	<div class="row">
+          		<div class="col-md-1"></div>
+          		<div class="col-md-10">
+					<a href="/VysusWeb/index.jsf" class="btn btn-default">Take me back!</a>       		
+          		</div>
+				<div class="col-md-1"></div>
+          	</div>
+          
+          </div>
+
+          <div class="col-md-8 bg-bp-grad h100">
+            <div class="row h100 bg-white smallScrollBar noSideScroll" style="background: rgba(255, 255, 255, 0.3);">
+              <h:form>
+              		<div class="row"><br/></div>
+              		<div class="row">
+             			<div class="col-md-1">
+             			</div>
+              			<div class="col-md-10">
+              			<p class="pForm">Please sign up :)</p>
+              			</div>
+             			<div class="col-md-1">
+             			</div>
+              		</div>
+             		<div class="row">
+             			<div class="col-md-1">
+             			</div>
+             			<div class="col-md-4">
+             				<p class="pForm">Username</p>
+             			</div>
+             			<div class="col-md-3">
+             				<h:inputText id="username" value="#{signup.username}" styleClass="form-control" required="true"
+				requiredMessage="Make sure you enter a username" validatorMessage="Ensure your username is less than 60 characters">
+							<f:validateLength maximum="60" />
+							</h:inputText>
+						</div>
+						<div class="col-md-4">
+							<h:message for="username"/>
+             			</div>
+             		</div>
+              		<div class="row">
+             			<div class="col-md-1">
+             			</div>
+             			<div class="col-md-4">
+             				<p class="pForm">Password</p>
+             			</div>
+             			<div class="col-md-6">
+             				<h:inputSecret value="#{signup.password}" styleClass="form-control" required="true"
+				requiredMessage="Mobile Name is mandatory"/>
+             			</div>
+             			<div class="col-md-1">
+             			</div>
+             		</div>
+             		<div class="row">
+             			<div class="col-md-1">
+             			</div>
+             			<div class="col-md-4">
+             				<p  class="pForm">Title</p>
+             			</div>
+             			<div class="col-md-6">
+             				<h:inputText value="#{signup.title}" styleClass="form-control" required="true" requiredMessage="Mobile Name is mandatory"/>
+             			</div>
+             			<div class="col-md-1">
+             			</div>
+             		</div>
+              		<div class="row">
+             			<div class="col-md-1">
+             			</div>
+             			<div class="col-md-4">
+             				<p  class="pForm">Forename</p>
+             			</div>
+             			<div class="col-md-6">
+             				<h:inputText value="#{signup.firstNames}" styleClass="form-control" required="true" requiredMessage="Mobile Name is mandatory"/>
+             			</div>
+             			<div class="col-md-1">
+             			</div>
+             		</div>
+              		<div class="row">
+             			<div class="col-md-1">
+             			</div>
+             			<div class="col-md-4">
+             				<p  class="pForm">Surname</p>
+             			</div>
+             			<div class="col-md-6">
+             				<h:inputText value="#{signup.lastNames}" styleClass="form-control" required="true" requiredMessage="Mobile Name is mandatory"/>
+             			</div>
+             			<div class="col-md-1">
+             			</div>
+             		</div>
+              		<div class="row">
+             			<div class="col-md-1">
+             			</div>
+             			<div class="col-md-4">
+             				<p  class="pForm">House number</p>
+             			</div>
+             			<div class="col-md-6">
+             				<h:inputText value="#{signup.houseIdentifier}" styleClass="form-control" required="true" requiredMessage="Mobile Name is mandatory"/>
+             			</div>
+             			<div class="col-md-1">
+             			</div>
+             		</div>
+              		<div class="row">
+             			<div class="col-md-1">
+             			</div>
+             			<div class="col-md-4">
+             				<p  class="pForm">Postcode</p>
+             			</div>
+             			<div class="col-md-6">
+             				<h:inputText value="#{signup.postcode}" styleClass="form-control" required="true" requiredMessage="Mobile Name is mandatory"/>
+             			</div>
+             			<div class="col-md-1">
+             			</div>
+             		</div>
+              		<div class="row">
+             			<div class="col-md-1">
+             			</div>
+             			<div class="col-md-4">
+             				<p  class="pForm">Email Address</p>
+             			</div>
+             			<div class="col-md-6">
+             				<h:inputText value="#{signup.email}" styleClass="form-control" required="true" requiredMessage="Mobile Name is mandatory"/>
+             			</div>
+             			<div class="col-md-1">
+             			</div>
+             		</div>
+              		<div class="row">
+             			<div class="col-md-1">
+             			</div>
+             			<div class="col-md-4">
+             				<p  class="pForm">Phone number</p>
+             			</div>
+             			<div class="col-md-6">
+             				<h:inputText value="#{signup.phoneNo}" styleClass="form-control" required="true" requiredMessage="Mobile Name is mandatory"/>
+             			</div>
+             			<div class="col-md-1">
+             			</div>
+             		</div>
+              		<div class="row">
+             			<div class="col-md-1">
+             			</div>
+             			<div class="col-md-4">
+             				<p  class="pForm">Date of Birth</p>
+             			</div>
+             			<div class="col-md-6">
+             				<h:inputText value="#{signup.dateOfBirth}" styleClass="form-control" required="true" requiredMessage="Mobile Name is mandatory"/>
+             			</div>
+             			<div class="col-md-1">
+             			</div>
+             		</div>
+             		<div class="row">
+             			<div class="col-md-1">
+             			</div>
+             			<div class="col-md-10">
+              			<p  class="pForm"><h:commandButton value="Signup" action="#{signup.signupUser}" styleClass="btn btn-primary"/></p>
+              			</div>
+             			<div class="col-md-1">
+             			</div>
+              		</div>
+              </h:form>
+            </div>
+          </div>
+          <div class="col-md-2 bg-lightpink h100">
+          </div>
+    </div>
+  </div>
+</body>
+</html>

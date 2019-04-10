@@ -15,7 +15,7 @@ import org.mindrot.jbcrypt.BCrypt;
 import java.sql.*;
 
 public class User extends StorageAbstract {
-	protected String hashedPW = null; 	//for creation and modification purposes
+//Object-specific variables:	
 	protected Account account = null;	//Associated account and related data
 	
 	//Object-specific queries:

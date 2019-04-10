@@ -1,9 +1,7 @@
 package request;
 
 import java.util.Map;
-import java.util.HashMap;
 import java.sql.Connection;
-//import java.sql.SQLException;
 import storage.*;
 
 public class SignUp extends RequestAbstract {
@@ -22,7 +20,6 @@ public class SignUp extends RequestAbstract {
 		password = (String)input.get("password");
 		accType = (String)input.get("accType");
 		connection = con;
-		actor = null;
 	}
 	
 	public Map<String, Object> execute() throws DBProblemException, InvalidDataException {
@@ -40,23 +37,6 @@ public class SignUp extends RequestAbstract {
 		return null;
 	}
 	
-	public HashMap<String, String> getStringHash(Object hash) {
-		HashMap<?, ?> temp;
-		HashMap<String, String> converted = new HashMap<String, String>();
-		String key;
-		String value;
-		if(hash instanceof HashMap<?,?>) temp = (HashMap<?, ?>)hash;
-		else return null;
-		for(Object keyO : temp.keySet()) {
-			if(keyO instanceof String) key = (String)keyO;
-			else continue;
-			Object valueO = temp.get(keyO);
-			if(valueO instanceof String) value = (String)valueO;
-			else continue;
-			converted.put(key, value);
-		}
-		if(converted.size()==0) return null;
-		else return converted;
-	}
+	
 	
 }

@@ -20,7 +20,16 @@ public abstract class Account extends StorageAbstract {
 	//There are no object-specific variables
 
 //Initialisation: constructors and variables setup
-	public Account() {};
+	public Account(String accountID) {
+		data.put("id", accountID);
+		setDBVariables();
+	}
+	public Account(String accountID, Map<String, String> accountData, Map<String, Object> additionalData) {
+		data.put("id", accountID);
+		data = accountData;
+		setDBVariables();
+		processAdditionalData(additionalData);
+	}
 	//Masking constructor for existing accounts
 	public static Account getAccount(String accountID) throws InvalidDataException {
 		char accType = accountID.charAt(0);
@@ -43,6 +52,7 @@ public abstract class Account extends StorageAbstract {
 		throw e;
 	}
 	//DB variables setup depends on the final account class
+	protected abstract void processAdditionalData(Map<String, Object> data);
 	
 //Object-specific querying methods
 

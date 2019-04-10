@@ -7,166 +7,59 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.sql.*;
 
-//Also has sysAdmin as id
-
 public class Institution extends Account{
 //Object-specific variables
-//Initialisation: constructors and variables setup
-	public Institution(String accountID) {
-		//TODO: this
-	}
-	public Institution(String accountID, Map<String, String> accountData, Map<String, Object> additionalData) {
-		//TODO: this
-	}
-//Object-specific querying methods
-//Public interfaces of protected methods
-//Getters and show methods
-	
-	
-	
-	protected static List<String> keys = new ArrayList<String>(Arrays.asList(
-			"name", "address", "email", "phoneNo"));
-	//TODO: consider adding an "institution type" to mean the level or collection of levels/ yes
-	
 	//TODO: what exactly does it mean?
 	protected Object rankingPreferences;
 	//protected List<Job> postedJobs = null;
 	//Consider extending the class user, privately, in this file
-	protected List<User> staff = null;		
+	protected List<User> staff = null; //TODO: make a staff private class that overrides login checking with the sysAdmin
+	//Object-specific queries:
+	protected String retrieveStaff = "SELECT * FROM User WHERE accountID=?";		
 	
-	//Queries:
-	protected static String retrieveInstitution = "SELECT * FROM Institution WHERE accountID=?";
-	protected static String createInstitution = "INSERT INTO Institution(accountID, sysAdminID, name, address, email, phoneNo) VALUES(?, ?, ?, ?, ?, ?)";
-	protected String updateInstitution(List<String> changed) {
+	
+//Initialisation: constructors and variables setup
+	//Uses super constructors
+	public Institution(String accountID) { 
+		super(accountID); 
+	}
+	public Institution(String accountID, Map<String, String> accountData, Map<String, Object> additionalData) {
+		super(accountID, accountData, additionalData);
+	}
+	protected void setDBVariables() {
+		keys = new ArrayList<String>(Arrays.asList(
+				"sysAdminID", "name", "type", "address", "email", "phoneNo"));
+		delete = "DELETE FROM Qualification WHERE qualificationID=?";
+		retrieve = "SELECT * FROM Institution WHERE accountID=?";
+		create = "INSERT INTO Institution"
+				+ "(accountID, sysAdminID, name, type, address, email, phoneNo) "
+				+ "VALUES(?, ?, ?, ?, ?, ?)";
+	}
+	protected String update(List<String> changed) {
 		String upd = "UPDATE Institution SET " + changed.get(0);
 		for(int i=1; i<changed.size(); i++) upd += "=?, " + changed.get(i);
 		upd += "=? WHERE accountID=?";
 		return upd;
 	}
-	
-	//Constructor: Map<String, Object> additionalData
-	
-	// for Staff
-	//protected String createStaff = "INSERT INTO Staff(institutionID, name, address, email, rankingPreferences, systemAdministrator, finalGrade,) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-	protected String retrieveStaff = "SELECT * FROM User WHERE accountID=?";
-	
-	//Abstract implementation
-	protected void create(Connection con) throws DBProblemException {
-		try(PreparedStatement insert = con.prepareStatement(createInstitution);) {
-			insert.setString(1, id.get("account"));
-			insert.setString(2, id.get("sysAdmin"));
-			for(int i=0; i<keys.size(); i++) insert.setString(i+3, data.get(keys.get(i)));
-			//TODO: add staff creation; where do we get the data?
-		} catch (SQLException e) { throw new DBProblemException(e); }
-	}
-	
-	protected void retrieve(Connection con) throws InvalidDataException, DBProblemException {
-		try (PreparedStatement retrieve = con.prepareStatement(retrieveInstitution);) {
-			retrieve.setString(1, id.get("account"));
-			try(ResultSet record = retrieve.executeQuery();){
-				if(record.next()){
-					for(String key : keys) data.put(key, record.getString(key));
-				} else throw new InvalidDataException(null); //TODO: what is invalid?
-			}
-		} catch (SQLException e) { throw new DBProblemException(e); }
-	}
-	
-	protected void delete(Connection con) throws StorageException, InvalidDataException, DBProblemException{
-		super.delete(con);
-		//Delete staff
-	}
-	
-	protected void update(Connection con) throws StorageException, InvalidDataException, DBProblemException {
-		ArrayList<String> changedFields = new ArrayList<String>(changes.keySet());
-		try(PreparedStatement update = con.prepareStatement(updateInstitution(changedFields));) {
-			int i;
-			for(i=0; i<changedFields.size(); i++) update.setString(i+1, changes.get(changedFields.get(i)));
-			update.setString(i, id.get("account"));
-			//Execution:
-			if(update.executeUpdate() != 1) throw new InvalidDataException(null); //TODO: what is invalid?
-			else changes = new HashMap<String, String>();
-			//TODO: other changes are atomic, e.g. sysAdmin etc
-		} catch (SQLException e) { throw new DBProblemException(e); }
-	}
-	
-	//make retrieve method call this automatically
-	//TODO: consider using a special user constructor instead, taking in their id and the sysAdmin id
-	//sysAdmin is the only one who can actually visualize/retrieve the data for all the staff
-	protected void retrieveStaff(Connection con) throws InvalidDataException, DBProblemException {
-		try (PreparedStatement retrieve = con.prepareStatement(retrieveStaff);) {
-			/* retrieve.setString(1, id.get(staffID));
-			try(ResultSet record = retrieve.executeQuery();){
-				if(record.next()){
-					//??
-				}
-			} */
-		} catch (SQLException e) {
-			throw new DBProblemException(e);
-		}
-	}
-	
-	// METHODS FOR INSTITUTIONS LIKE MAKE HR - IF YOU HAVE ADMIN RIGHTS THAT IS - AND OTHER FUNKY METHODS TO BE ADDED SHORTLY
-	
-	public void makeHR() {
+	protected void processAdditionalData(Map<String, Object> data) {
 		
 	}
 	
-	// FUNKY METHODS END
-	/**
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
-	public String getAddress() {
-		return address;
-	}
-	public void setAddress(String address) {
-		this.address = address;
-	}
-	public String getEmail() {
-		return email;
-	}
-	public void setEmail(String email) {
-		this.email = email;
-	}
-	public Object getRankingPreferences() {
-		return rankingPreferences;
-	}
-	public void setRankingPreferences(Object rankingPreferences) {
-		this.rankingPreferences = rankingPreferences;
-	}
-	public String getSystemAdministrator() {
-		return systemAdministrator;
-	}
-	public void setSystemAdministrator(String systemAdministrator) {
-		this.systemAdministrator = systemAdministrator;
-	}
+//Object-specific querying methods
 	
-	// Related To Staff
-	public ArrayList<String> getStaff() {
-		return staff;
-	}
-	public void setStaff(ArrayList<String> staff) {
-		this.staff = staff;
-	}
-	TODO: getters and setters might not be necessary:
-	display is achieved through the abstract methods "show"
-	changes should be made more complex, as they depend on whether one is sysAdmin or not **/
-	
-	public HashMap<String, Object> showMini() {
-		// TODO Auto-generated method stub
-		return null;
+//Public interfaces of protected methods
+	public void makeHR() {
+		
 	}
 
-	public HashMap<String, Object> show() {
-		// TODO Auto-generated method stub
+//Getters and show methods	
+	public Map<String, Object> showMini() {
 		return null;
 	}
-
-	public HashMap<String, Object> showFull() {
-		// TODO Auto-generated method stub
+	public Map<String, Object> show() {
+		return null;
+	}
+	public Map<String, Object> showFull() {
 		return null;
 	}
 }

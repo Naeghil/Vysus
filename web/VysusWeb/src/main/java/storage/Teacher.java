@@ -2,7 +2,6 @@ package storage;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.Map;
 import java.util.List;
 import java.sql.*;
@@ -13,8 +12,9 @@ public class Teacher extends Account{
 //Initialisation: constructors and variables setup
 	//Uses super constructors:
 	public Teacher(String accountID) { super(accountID); }
-	public Teacher(String accountID, Map<String, String> accountData, Map<String, Object> additionalData) {
-		super(accountID, accountData, additionalData);
+	public Teacher(String accountID, Map<String, String> accountData, Connection connection)
+		throws DBProblemException {
+		super(accountID, accountData, connection);
 		//TODO: Create the calendar
 	}
 	protected void setDBVariables() {

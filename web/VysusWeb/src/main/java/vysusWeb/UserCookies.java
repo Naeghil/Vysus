@@ -15,16 +15,17 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.*;
 
 import request.*;
 import storage.*;
 @ManagedBean(name="UserCookies")
-@SessionScoped
+@RequestScoped
 
 public class UserCookies {
-	
+	String username;
 	public UserCookies(){ }
 	
 	public Object getCookie() {
@@ -32,7 +33,7 @@ public class UserCookies {
 		FacesContext context = FacesContext.getCurrentInstance();
 		
 		Map<String, Object> requestMap = context.getExternalContext().getSessionMap();
-		
+		System.out.println(requestMap.get("Username"));
 		return requestMap.get("Username");
 	}
 

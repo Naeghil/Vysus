@@ -74,10 +74,10 @@ public class UserLogin implements Serializable {
 
 			//return "LoginSuccess";
 			
-			return "indexLoggedIn";
+			return "indexLoggedInTemp";
 		}
 			finally {
-				return "index";
+				return "indexLoggedInTemp";
 			}
 		/*	
 		} catch(InvalidDataException e) {

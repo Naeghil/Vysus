@@ -113,6 +113,6 @@ public class UserProfile implements Serializable {
 	}
 	
 	public String getDateOfBirth() {
-		return userData.get("datOfBirth");
+		return userData.get("dateOfBirth");
 	}
 }

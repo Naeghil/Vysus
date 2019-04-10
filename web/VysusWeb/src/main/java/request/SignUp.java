@@ -3,6 +3,7 @@ package request;
 import java.util.Map;
 import java.sql.Connection;
 import storage.*;
+import util.DataConv;
 
 public class SignUp extends RequestAbstract {
 	//Keys: title, firstNames, lastNames, houseIdentifier, postcode, email, phoneNo, dateOfBirth
@@ -14,7 +15,7 @@ public class SignUp extends RequestAbstract {
 	
 	public SignUp(Map<String, Object> input, Connection con) {
 		//This is passed from the appropriate bean as HashMap<String, String>
-		this.userCreationData = getStringHash(input.get("userData"));
+		this.userCreationData = DataConv.getStringMap(input.get("userData"));
 		//this.accountCreationData = getStringHash(input.get("accountData"));
 		username = (String)input.get("username");
 		password = (String)input.get("password");

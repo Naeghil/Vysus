@@ -23,6 +23,7 @@ import storage.DBProblemException;
 import storage.InvalidDataException;
 import storage.StorageException;
 import storage.User;
+import util.DataConv;
 
 @ManagedBean(name="profile") // or @Named("user")
 @RequestScoped
@@ -63,7 +64,7 @@ public class UserProfile implements Serializable {
 			//getStringHash will take a map/hashmap object and return it as Map<String,String> if it is possible
 			Map<String, Object> profileData = profile.execute(); 
 			System.out.println(profileData);
-			userData = RequestAbstract.getStringHash(profileData.get("userData"));
+			userData = DataConv.getStringMap(profileData.get("userData"));
 			System.out.println(userData);
 			//User user = newUser.getActor();
 			return;

@@ -125,7 +125,7 @@ public class User extends StorageAbstract {
 	public Map<String, Object> showFull() {
 		Map<String, Object> show = new HashMap<String, Object>();
 		show.put("userData", data);
-		show.put("accountData", account.showFull());
+		//show.put("accountData", account.showFull());
 		return show;
 	}
 }

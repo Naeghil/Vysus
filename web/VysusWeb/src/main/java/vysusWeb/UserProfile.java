@@ -16,6 +16,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+import request.RequestAbstract;
 import request.ShowProfile;
 import request.SignUp;
 import storage.DBProblemException;
@@ -36,6 +37,7 @@ public class UserProfile implements Serializable {
 	String email;
 	String phoneNo;
 	String dateOfBirth;
+	Map<String,String> userData;
 	
 	public UserProfile() {
 		
@@ -49,6 +51,7 @@ public class UserProfile implements Serializable {
 		try {
 			//Retrieve the database object
 			DataSource vysusdb = (DataSource)((Context)new InitialContext()).lookup("java:/vysusDB");
+			
 			//Connect to the database
 			connection = vysusdb.getConnection();
 			
@@ -70,6 +73,8 @@ public class UserProfile implements Serializable {
 			//getStringHash will take a map/hashmap object and return it as Map<String,String> if it is possible
 			Map<String, Object> profileData = profile.execute(); 
 			System.out.println(profileData);
+			userData = RequestAbstract.getStringHash(profileData);
+			System.out.println(userData);
 			//User user = newUser.getActor();
 			return;
 		} catch(InvalidDataException e) {

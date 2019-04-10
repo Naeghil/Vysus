@@ -12,32 +12,29 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import java.util.HashMap;
+import java.util.Map;
 
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.*;
 
 import request.*;
 import storage.*;
 @ManagedBean(name="UserCookies")
-@SessionScoped
+@RequestScoped
 
 public class UserCookies {
 	String username;
-	
 	public UserCookies(){ }
 	
-	public void getCookie() {
-		Cookie cookie = (Cookie) FacesContext.getCurrentInstance().getExternalContext().getRequestCookieMap().get("username");
-		//String value = URLDecoder.decode(cookie.getValue(), "UTF-8");
-	}
-	
-	
-	public String getUsername() {
+	public Object getCookie() {
+		System.out.println("Is this ever run?");
+		FacesContext context = FacesContext.getCurrentInstance();
 		
-		return username;
+		Map<String, Object> requestMap = context.getExternalContext().getSessionMap();
+		System.out.println(requestMap.get("Username"));
+		return requestMap.get("Username");
 	}
-	public void setUsername(String username) {
-		this.username = username;
-	}
+
 }

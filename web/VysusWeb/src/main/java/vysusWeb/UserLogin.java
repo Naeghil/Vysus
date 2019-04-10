@@ -11,9 +11,12 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import java.util.HashMap;
+import java.util.Map;
 
 import javax.faces.bean.ManagedBean; 
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
+
 import request.*;
 import storage.*;
 
@@ -38,10 +41,18 @@ public class UserLogin implements Serializable {
 		this.userHash.put("password", this.password);
 	}
 	
+	@SuppressWarnings("finally")
 	public String loginUser() {
 		formHashmap(); //Gather data from the form
 		Connection connection = null;
 		try {
+			
+			FacesContext context = FacesContext.getCurrentInstance();
+			context.getExternalContext().getSessionMap().put("Username", this.username);
+			Map<String, Object> requestMap = context.getExternalContext().getSessionMap();
+			
+			System.out.println(requestMap.get("Username"));
+			/* Temp commented out until fixed
 			//Retrieve the database object
 			DataSource vysusdb = (DataSource)((Context)new InitialContext()).lookup("java:/vysusDB");
 			//Connect to the database
@@ -60,8 +71,15 @@ public class UserLogin implements Serializable {
 			} catch (UnsupportedEncodingException e) {
 				e.printStackTrace();
 			}*/
-			return "LoginSuccess";
+
+			//return "LoginSuccess";
 			
+			return "indexLoggedInTemp";
+		}
+			finally {
+				return "indexLoggedInTemp";
+			}
+		/*	
 		} catch(InvalidDataException e) {
 			System.out.println("Invalid Data Exception");
 			return "index"; // But set the flag saying the user is not unique
@@ -77,6 +95,7 @@ public class UserLogin implements Serializable {
 				if(connection!=null) connection.close();
 			} catch(SQLException e) {}
 		}
+		*/
 	}
 	
 //Getter & Setters as per jsf specification	

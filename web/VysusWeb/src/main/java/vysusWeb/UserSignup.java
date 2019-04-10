@@ -11,6 +11,7 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import java.util.HashMap;
+import java.util.Map;
 
 import javax.faces.bean.ManagedBean; 
 import javax.faces.bean.SessionScoped;
@@ -59,6 +60,13 @@ public class UserSignup implements Serializable {
 		formHashmap(); //Gather data from the form
 		Connection connection = null;
 		try {
+			
+			FacesContext context = FacesContext.getCurrentInstance();
+			context.getExternalContext().getSessionMap().put("Username", this.username);
+			Map<String, Object> requestMap = context.getExternalContext().getSessionMap();
+			
+			System.out.println(requestMap.get("Username"));
+			
 			//Retrieve the database object
 			DataSource vysusdb = (DataSource)((Context)new InitialContext()).lookup("java:/vysusDB");
 			//Connect to the database

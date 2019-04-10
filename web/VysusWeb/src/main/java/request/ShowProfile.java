@@ -22,4 +22,5 @@ public class ShowProfile extends RequestAbstract {
 		newUser.load(this.connection);
 		return newUser.showFull();
 	}
+	
 }

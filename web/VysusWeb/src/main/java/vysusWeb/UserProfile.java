@@ -16,6 +16,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+import request.RequestAbstract;
 import request.ShowProfile;
 import request.SignUp;
 import storage.DBProblemException;
@@ -26,16 +27,7 @@ import storage.User;
 @ManagedBean(name="profile") // or @Named("user")
 @RequestScoped
 public class UserProfile implements Serializable {
-	String username;
-	String password;
-	String title;
-	String firstNames;
-	String lastNames;
-	String houseIdentifier;
-	String postcode;
-	String email;
-	String phoneNo;
-	String dateOfBirth;
+	Map<String,String> userData;
 	
 	public UserProfile() {
 		
@@ -49,6 +41,7 @@ public class UserProfile implements Serializable {
 		try {
 			//Retrieve the database object
 			DataSource vysusdb = (DataSource)((Context)new InitialContext()).lookup("java:/vysusDB");
+			
 			//Connect to the database
 			connection = vysusdb.getConnection();
 			
@@ -70,6 +63,8 @@ public class UserProfile implements Serializable {
 			//getStringHash will take a map/hashmap object and return it as Map<String,String> if it is possible
 			Map<String, Object> profileData = profile.execute(); 
 			System.out.println(profileData);
+			userData = RequestAbstract.getStringHash(profileData.get("userData"));
+			System.out.println(userData);
 			//User user = newUser.getActor();
 			return;
 		} catch(InvalidDataException e) {
@@ -89,85 +84,35 @@ public class UserProfile implements Serializable {
 			} catch(SQLException e) {}
 		}
 	}
-
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
 	public String getTitle() {
-		return title;
-	}
-
-	public void setTitle(String title) {
-		this.title = title;
-	}
-
-	public String getFirstNames() {
-		return firstNames;
-	}
-
-	public void setFirstNames(String firstNames) {
-		this.firstNames = firstNames;
-	}
-
-	public String getLastNames() {
-		return lastNames;
-	}
-
-	public void setLastNames(String lastNames) {
-		this.lastNames = lastNames;
-	}
-
-	public String getHouseIdentifier() {
-		return houseIdentifier;
-	}
-
-	public void setHouseIdentifier(String houseIdentifier) {
-		this.houseIdentifier = houseIdentifier;
-	}
-
-	public String getPostcode() {
-		return postcode;
-	}
-
-	public void setPostcode(String postcode) {
-		this.postcode = postcode;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public String getPhoneNo() {
-		return phoneNo;
-	}
-
-	public void setPhoneNo(String phoneNo) {
-		this.phoneNo = phoneNo;
-	}
-
-	public String getDateOfBirth() {
-		return dateOfBirth;
-	}
-
-	public void setDateOfBirth(String dateOfBirth) {
-		this.dateOfBirth = dateOfBirth;
+		return userData.get("title");
 	}
 	
+	public String getFirstNames() {
+		return userData.get("firstNames");
+	}
+	
+	public String getLastNames() {
+		return userData.get("lastNames");
+	}
+	
+	public String getHouseIdentifier() {
+		return userData.get("houseIdentifier");
+	}
+	
+	public String getPostcode() {
+		return userData.get("postcode");
+	}
+	
+	public String getEmail() {
+		return userData.get("email");
+	}
+	
+	public String getPhoneNo() {
+		return userData.get("phoneNo");
+	}
+	
+	public String getDateOfBirth() {
+		return userData.get("dateOfBirth");
+	}
 }

@@ -76,7 +76,7 @@ public class UserSignup implements Serializable {
 			
 			System.out.println(requestMap.get("Username"));
 			
-			return "myProfile";
+			return "myProfile.jsf";
 		} catch(InvalidDataException e) {
 			return "signup"; // But set the flag saying the user is not unique
 		} catch(DBProblemException | NamingException | SQLException ex) {

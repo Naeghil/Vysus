@@ -9,7 +9,7 @@
 	<f:event type="preRenderView" listener="#{profile.onPageLoad()}"/>
 </f:metadata>
 <head>
-    <title>profile</title>
+    <title>Signup</title>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css"/>
@@ -17,20 +17,8 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="resources/css/style.css"/>
     <link href="https://fonts.googleapis.com/css?family=ZCOOL+KuaiLe|Cormorant+Garamond|Eczar|Gentium+Basic|Libre+Baskerville|Libre+Franklin|Proza+Libre|Rubik|Taviraj|Trirong|Work+Sans" rel="stylesheet"/>
+	<meta http-equiv="Refresh" content="0; URL=myProfile.jsf"/>
 </head>
 <body>
-	<h:body>
-	<p>
-		MYPROFILE PAGE <br/>
-		title = #{profile.getTitle()} <br/>
-		firstNames = #{profile.getFirstNames()} <br/>
-		lastNames = #{profile.getLastNames()} <br/>
-		houseIdentifier = #{profile.getHouseIdentifier()} <br/>
-		postcode = #{profile.getPostcode()} <br/>
-		email = #{profile.getEmail()} <br/>
-		phoneNo = #{profile.getPhoneNo()} <br/>
-		dateOfBirth = #{profile.getDateOfBirth()} <br/>
-	</p>	
-	</h:body>
 </body>
 </html>

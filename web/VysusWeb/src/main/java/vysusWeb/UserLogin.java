@@ -50,7 +50,7 @@ public class UserLogin implements Serializable {
 			context.getExternalContext().getSessionMap().put("Username", this.username);
 			Map<String, Object> requestMap = context.getExternalContext().getSessionMap();
 			
-			System.out.println(requestMap);
+			System.out.println(requestMap.get("Username"));
 			
 			//Retrieve the database object
 			DataSource vysusdb = (DataSource)((Context)new InitialContext()).lookup("java:/vysusDB");

@@ -63,6 +63,7 @@ public class UserSignup implements Serializable {
 		formHashmap(); //Gather data from the form
 		Connection connection = null;
 		try {
+			System.out.println(this.year + "-" + this.month + "-" + this.day);
 			//Retrieve the database object
 			DataSource vysusdb = (DataSource)((Context)new InitialContext()).lookup("java:/vysusDB");
 			//Connect to the database

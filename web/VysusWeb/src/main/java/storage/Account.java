@@ -19,7 +19,7 @@ public abstract class Account extends StorageAbstract {
 		data.put("id", accountID);
 		setDBVariables();
 	}
-	public Account(String accountID, Map<String, String> accountData, Connection connection)
+	public Account(String accountID, Map<String, Object> accountData, Connection connection)
 		throws DBProblemException {
 		data.put("id", accountID);
 		data = accountData;
@@ -37,7 +37,7 @@ public abstract class Account extends StorageAbstract {
 		throw e;
 	}
 	//Masking constructor for new accounts
-	public static Account makeAccount(String accountID, Map<String, String> accountData, Connection connection)
+	public static Account makeAccount(String accountID, Map<String, Object> accountData, Connection connection)
 		throws InvalidDataException, DBProblemException {
 		char accType = accountID.charAt(0);
 		if(accType=='0') return new Teacher(accountID, accountData, connection);
@@ -54,10 +54,10 @@ public abstract class Account extends StorageAbstract {
 //Public interfaces of protected methods
 
 //Getters and show methods	
-
-
+	//This relies on the proper conversion between VARCHAR() and String by jdbc
 	protected String accType() throws InvalidDataException {
-		char type = data.get("id").charAt(0);
+		char type = 'x';
+		if(data.get("id") instanceof String) type = ((String)data.get("id")).charAt(0);
 		if(type=='0') return "Teacher";
 		if(type=='1') return "Institution";
 		

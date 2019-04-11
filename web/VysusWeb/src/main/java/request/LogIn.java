@@ -19,7 +19,7 @@ public class LogIn extends RequestAbstract {
 	public Map<String, Object> execute() throws DBProblemException, InvalidDataException {
 		if(this.username == null) throw InvalidDataException.invalidUser();
 		if(this.password == null) throw InvalidDataException.invalidPassword();
-		actor = new User(username);
+		actor = new User(username, null);
 		actor.login(password, connection);
 		return null;
 	}	

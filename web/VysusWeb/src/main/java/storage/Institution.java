@@ -20,16 +20,16 @@ public class Institution extends Account{
 //Initialisation: constructors and variables setup
 	//Uses super constructors
 	public Institution(String accountID) { super(accountID); }
-	public Institution(String accountID, Map<String, String> accountData, Connection connection)
+	public Institution(String accountID, Map<String, Object> accountData, Connection connection)
 		throws DBProblemException { super(accountID, accountData, connection); }
 		
 	protected void setDBVariables() {
 		keys = new ArrayList<String>(Arrays.asList(
-				"sysAdminID", "name", "type", "address", "email", "phoneNo"));
+				"sysAdminID", "name", "type", "buildingIdentifier", "postcode", "email", "phoneNo"));
 		delete = "DELETE FROM Qualification WHERE qualificationID=?";
 		retrieve = "SELECT * FROM Institution WHERE accountID=?";
 		create = "INSERT INTO Institution"
-				+ "(accountID, sysAdminID, name, type, address, email, phoneNo) "
+				+ "(accountID, sysAdminID, name, type, buildingIdentifier, postcode, email, phoneNo) "
 				+ "VALUES(?, ?, ?, ?, ?, ?)";
 	}
 	protected String update(List<String> changed) {
@@ -60,16 +60,16 @@ public class Institution extends Account{
 }
 
 class Staff extends User {
-	public Staff(Connection connection, String username, String password, Map<String, String> data, String accountID)
-			throws DBProblemException {
-		super(username);
+	public Staff(Connection connection, String username, String password, Map<String, Object> data, String accountID)
+			throws DBProblemException, InvalidDataException {
+		super(username, null);
 		this.data = data;
 		this.data.put("accountID", accountID);
 		create(connection);
 	}
 	public Staff(String username)
-			throws DBProblemException {
-		super(username);
+			throws DBProblemException, InvalidDataException {
+		super(username, null);
 	}
 	
 //Show methods unusable:
@@ -82,7 +82,7 @@ class Staff extends User {
 	public Map<String, Object> showMini() {
 		return null;
 	}
-	protected Map<String, String> getData() {
+	protected Map<String, Object> getData() {
 		return data;
 	}
 //Static show methods to be used by the Institution object

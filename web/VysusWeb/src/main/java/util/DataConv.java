@@ -38,4 +38,15 @@ public class DataConv {
 		}
 		return converted;
 	}
+	//Used for display purposes:
+	public static Map<String, String> makeStringMap(Map<String, Object> map) {
+		Map<String, String> converted = new HashMap<String, String>();
+		for(String key : map.keySet()) converted.put(key, map.get(key).toString());
+		return converted;
+	}
+	//??
+	public static String getString(Object string) {
+		if(string instanceof String) return (String)string;
+		else return null;
+	}
 }

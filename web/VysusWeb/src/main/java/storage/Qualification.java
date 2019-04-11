@@ -8,6 +8,9 @@ package storage;
  ************************************************/
 
 import java.util.Map;
+
+import util.DataConv;
+
 import java.util.List;
 import java.sql.*;
 import java.util.ArrayList;
@@ -29,14 +32,14 @@ public class Qualification extends StorageAbstract{
 	
 //Initialisation: constructors and variables setup
 	//Existing constructor, also enabling loading, if given a connection
-	public Qualification(String qualificationID, Connection connection) throws InvalidDataException, DBProblemException {
+	public Qualification(Integer qualificationID, Connection connection) throws InvalidDataException, DBProblemException {
 		data.put("id", qualificationID);
 		setDBVariables();
 		if(connection!=null) retrieve(connection);
 		
 	}
 	//Creating constructor: no qualification id will be available this way
-	public Qualification(Connection connection, Map<String, String> data) throws DBProblemException {
+	public Qualification(Connection connection, Map<String, Object> data) throws DBProblemException {
 		this.data = data;
 		setDBVariables();
 		create(connection);
@@ -63,14 +66,14 @@ public class Qualification extends StorageAbstract{
 		try(PreparedStatement verify = connection.prepareStatement("UPDATE Qualification SET verified=? WHERE qualificationID=?");) {
 			verified=true;
 			verify.setBoolean(1, verified);
-			verify.setString(2, data.get("id")); //TODO:This may return null;
+			verify.setObject(2, data.get("id")); //TODO:This may return null;
 			if(verify.executeUpdate() != 1) throw InvalidDataException.invalidQualification();
 		} catch (SQLException e) { throw new DBProblemException(e); }
 	}
 	public boolean isVerified(Connection connection) throws InvalidDataException, DBProblemException { 
 		if(verified!=null) return verified;
 		try(PreparedStatement veri = connection.prepareStatement("SELECT verified FROM Qualification WHERE qualificationID=?")) {
-			veri.setString(1, data.get("id")); //TODO:This can return null;
+			veri.setObject(1, data.get("id")); //TODO:This can return null;
 			try(ResultSet record = veri.executeQuery()) {
 				if(record.next()) return record.getBoolean("verified");
 				else throw InvalidDataException.invalidQualification();
@@ -78,22 +81,22 @@ public class Qualification extends StorageAbstract{
 		} catch (SQLException e ) {throw new DBProblemException(e); }
 	}
 	//TODO: list string or list int?
-	public static List<String> qualificationList(Connection con, String account) throws DBProblemException {
-		List<String> list = new ArrayList<String>();
+	public static List<Integer> qualificationList(Connection con, String account) throws DBProblemException {
+		List<Integer> list = new ArrayList<Integer>();
 		try(PreparedStatement qualifications = con.prepareStatement("SELECT qualificationID FROM Qualification WHERE accountID=?");) {
-			qualifications.setString(1, account);
+			qualifications.setObject(1, account);
 			try(ResultSet result = qualifications.executeQuery();){
-				while(result.next()) list.add(result.getString("qualificationID"));
+				while(result.next()) list.add(result.getInt("qualificationID"));
 			}
 		} catch (SQLException e) { throw new DBProblemException(e); }
 		return list;
 	}
 //Public interfaces of protected methods
 	//For now this is to enact changes to the qualifications
-	public void updateQualification(Map<String, String> changes, Connection con) throws InvalidDataException, DBProblemException {
+	/**public void updateQualification(Map<String, String> changes, Connection con) throws InvalidDataException, DBProblemException {
 		this.changes = changes;
 		update(con);
-	}
+	} **/
 //Getters and show methods		
 	public Map<String, Object> showMini() {
 		return null;
@@ -103,7 +106,7 @@ public class Qualification extends StorageAbstract{
 	}
 	public Map<String, Object> showFull() {
 		Map<String, Object> show = new HashMap<String, Object>();
-		show.put("data", data);
+		show.put("data", DataConv.makeStringMap(data));
 		show.put("verified", verified);
 		return show;
 	}

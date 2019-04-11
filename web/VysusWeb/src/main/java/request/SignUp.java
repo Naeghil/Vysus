@@ -7,7 +7,7 @@ import util.DataConv;
 
 public class SignUp extends RequestAbstract {
 	//Keys: title, firstNames, lastNames, houseIdentifier, postcode, email, phoneNo, dateOfBirth
-	protected Map<String, String> userCreationData;
+	protected Map<String, Object> userCreationData;
 	//private Map<String, Object> accountCreationData;
 	protected String username;
 	protected String password;
@@ -15,8 +15,8 @@ public class SignUp extends RequestAbstract {
 	
 	public SignUp(Map<String, Object> input, Connection con) {
 		//This is passed from the appropriate bean as HashMap<String, String>
-		this.userCreationData = DataConv.getStringMap(input.get("userData"));
-		//this.accountCreationData = getStringHash(input.get("accountData"));
+		this.userCreationData = DataConv.getObjectMap(input.get("userData"));
+		//this.accountCreationData = DataConv.getObjectMap(input.get("accountData"));
 		username = (String)input.get("username");
 		password = (String)input.get("password");
 		accType = (String)input.get("accType");

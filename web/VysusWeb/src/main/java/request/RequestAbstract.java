@@ -1,7 +1,6 @@
 package request;
 
 import java.sql.*;
-import java.util.HashMap;
 import java.util.Map;
 import storage.*;
 

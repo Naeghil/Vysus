@@ -25,12 +25,13 @@ public class User extends StorageAbstract {
 
 //Object initialisation:
 	//Constructor for existing user
-	public User(String username) { 
+	public User(String username, Connection connection) throws DBProblemException, InvalidDataException { 
 		data.put("id", username); //this might need to be re-put; or alternatively use a separate variable
 		setDBVariables();
+		if(connection!=null) retrieve(connection);
 	}
 	//Constructor for new user
-	public User(Connection connection, String username, String password, Map<String, String> data, String accountID) throws DBProblemException {
+	public User(Connection connection, String username, String password, Map<String, Object> data, String accountID) throws DBProblemException {
 		this.data = data;
 		this.data.put("id", username);
 		this.data.put("accountID", accountID);
@@ -62,14 +63,14 @@ public class User extends StorageAbstract {
 		try(PreparedStatement pwUpdate = con.prepareStatement(updatePassword);) {
 			String hash = BCrypt.hashpw(clear, BCrypt.gensalt());
 			pwUpdate.setBytes(1, hash.getBytes());
-			pwUpdate.setString(2, data.get("id"));
+			pwUpdate.setObject(2, data.get("id"));
 			pwUpdate.executeUpdate();
 		} catch (SQLException e) { throw new DBProblemException(e); }
 	}
 	//Checks user's password, effectively "logging in" the user if execution normally terminates
 	public void login(String password, Connection con) throws DBProblemException, InvalidDataException {
 		try (PreparedStatement getHash = con.prepareStatement(retrievePassword);){
-			getHash.setString(1, data.get("id"));
+			getHash.setObject(1, data.get("id"));
 			try(ResultSet rs = getHash.executeQuery();) {
 				if(rs.next()) {
 					String hash = new String(rs.getBytes("password"));
@@ -105,10 +106,10 @@ public class User extends StorageAbstract {
 		delete(connection);
 	}
 	//For now this is to enact changes to the user account
-	public void updateProfile(Map<String, String> changes, Connection connection) throws InvalidDataException, DBProblemException {
+	public void updateProfile(Map<String, Object> changes, Connection connection) throws InvalidDataException, DBProblemException {
 		if(changes.containsKey("newPassword") && changes.containsKey("oldPassword")) {
-			login(changes.remove("oldPassword"), connection);
-			setPassword(connection, changes.remove("newPassword"));
+			login((String)changes.remove("oldPassword"), connection);
+			setPassword(connection, (String)changes.remove("newPassword"));
 		}
 		this.changes = changes;
 		update(connection);

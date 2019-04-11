@@ -1,5 +1,13 @@
 package storage;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
 /**************************************************************
  *						StorageAbstract						  *
  * Summarises features of objects representing DB entities.   *
@@ -8,6 +16,9 @@ package storage;
  * The format of a storage object is:						  *
  * - Object-specific variables								  *
  * - Initialisation: constructors and variables setup		  *
+ * 	- A constructor for existing objects, with retrieve option*
+ * 	- A constructor for new objects							  *
+ * 	- A setDBVariables method								  *
  * - Object-specific querying methods						  *
  * - Public interfaces of protected methods					  *
  * - Getters and show methods								  *
@@ -20,17 +31,13 @@ package storage;
 
 
 import java.util.Map;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.sql.*;
 
 
 public abstract class StorageAbstract {
 	//The data corresponding to the object, including their primary key as "id";
-	protected Map<String, String> data = new HashMap<String, String>();
+	protected Map<String, Object> data = new HashMap<String, Object>();
 	//Used to enact changes
-	protected Map<String, String> changes = new HashMap<String, String>();
+	protected Map<String, Object> changes = new HashMap<String, Object>();
 	//List of known keys for the object, excluding the primary key;
 	protected List<String> keys;
 	//Statements:
@@ -45,18 +52,18 @@ public abstract class StorageAbstract {
 	//Creates a new record	
 	protected void create(Connection con) throws DBProblemException {
 		try(PreparedStatement insert = con.prepareStatement(create);) {
-			insert.setString(1, data.get("id"));
-			for(int i=0; i<keys.size(); i++) insert.setString(i+2, data.get(keys.get(i)));
+			insert.setObject(1, data.get("id"));
+			for(int i=0; i<keys.size(); i++) insert.setObject(i+2, data.get(keys.get(i)));
 			insert.executeUpdate();
 		} catch (SQLException e) { throw new DBProblemException(e); }
 	}
 	//Retrieve database record, populating the object fields
 	protected void retrieve(Connection con) throws DBProblemException, InvalidDataException {
 		try (PreparedStatement select = con.prepareStatement(retrieve);) {
-			select.setString(1, data.get("id"));
+			select.setObject(1, data.get("id"));
 			try(ResultSet record = select.executeQuery();){
 				if(record.next()){
-					for(String key : keys) data.put(key, record.getString(key));
+					for(String key : keys) data.put(key, record.getObject(key));
 				} else throw InvalidDataException.invalidId();
 			}
 		} catch (SQLException e) { throw new DBProblemException(e); }
@@ -64,7 +71,7 @@ public abstract class StorageAbstract {
 	//Delete the object record
 	protected void delete(Connection con) throws InvalidDataException, DBProblemException {
 		try(PreparedStatement remove = con.prepareStatement(delete);) {
-			remove.setString(1, data.get("id"));
+			remove.setObject(1, data.get("id"));
 			if(remove.executeUpdate() != 1) throw InvalidDataException.invalidId();
 		} catch (SQLException e) { throw new DBProblemException(e); }
 	}
@@ -74,11 +81,11 @@ public abstract class StorageAbstract {
 		List<String> changed = new ArrayList<String>(changes.keySet());
 		try(PreparedStatement update = con.prepareStatement(update(changed));) {
 			//Setting up the statement:
-			for(int i=0; i<changed.size(); i++) update.setString(i+1, changes.get(changed.get(i)));
-			update.setString(changed.size()+1, data.get("id"));
+			for(int i=0; i<changed.size(); i++) update.setObject(i+1, changes.get(changed.get(i)));
+			update.setObject(changed.size()+1, data.get("id"));
 			//Execution:
 			if(update.executeUpdate() != 1) throw InvalidDataException.invalidId();
-			else changes = new HashMap<String, String>();
+			else changes = new HashMap<String, Object>();
 		} catch (SQLException e) { throw new DBProblemException(e); }
 	}
 	

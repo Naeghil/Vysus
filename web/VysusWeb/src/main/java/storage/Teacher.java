@@ -12,7 +12,7 @@ public class Teacher extends Account{
 //Initialisation: constructors and variables setup
 	//Uses super constructors:
 	public Teacher(String accountID) { super(accountID); }
-	public Teacher(String accountID, Map<String, String> accountData, Connection connection)
+	public Teacher(String accountID, Map<String, Object> accountData, Connection connection)
 		throws DBProblemException {
 		super(accountID, accountData, connection);
 		//TODO: Create the calendar

@@ -18,8 +18,7 @@ public class ShowProfile extends RequestAbstract {
 	}
 	
 	public Map<String, Object> execute() throws StorageException {
-		User newUser = new User(this.actorID);
-		newUser.load(this.connection);
+		User newUser = new User(this.actorID, this.connection);
 		return newUser.showFull();
 	}
 	

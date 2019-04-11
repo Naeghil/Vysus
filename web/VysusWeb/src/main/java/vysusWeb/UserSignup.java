@@ -55,7 +55,6 @@ public class UserSignup implements Serializable {
 		this.userData.put("postcode", this.postcode);
 		this.userData.put("email", this.email);
 		this.userData.put("phoneNo", this.phoneNo);
-		this.userData.put("dateOfBirth", this.dateOfBirth);
 		this.userHash.put("userData", this.userData);
 	}
 	

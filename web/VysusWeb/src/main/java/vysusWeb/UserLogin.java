@@ -15,6 +15,8 @@ import java.util.Map;
 
 import javax.faces.bean.ManagedBean; 
 import javax.faces.bean.SessionScoped;
+import javax.faces.component.UIComponent;
+import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
 
 import request.*;
@@ -58,9 +60,16 @@ public class UserLogin implements Serializable {
 			FacesContext context = FacesContext.getCurrentInstance();
 			context.getExternalContext().getSessionMap().put("Username", this.username);
 			Map<String, Object> requestMap = context.getExternalContext().getSessionMap();
-			
-			Map<String,Object> testData = context.getViewRoot().findComponent("password").getAttributes();
+			UIViewRoot testData3 = context.getViewRoot();
+			UIComponent testData2 = context.getViewRoot().findComponent("loginForm");
+			Map<String,Object> testData = context.getViewRoot().findComponent("loginForm").getAttributes();
 			System.out.println(testData);
+			
+			System.out.println(testData2);
+			//Printed /index.xhtml
+			//System.out.println(testData3.getViewId()); 
+			//Printed {} why is this empty?
+			System.out.println(testData3.getViewMap());
 			//System.out.println(requestMap.get("Username"));
 
 			return "myProfile";

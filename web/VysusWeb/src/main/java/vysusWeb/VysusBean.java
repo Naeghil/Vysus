@@ -49,9 +49,9 @@ public class VysusBean implements Serializable {
 		}
 	}
 //Adds a message to a component:
-	protected void message(String message) { message(null, message); }
-	protected void message(String clientID, String message) {
-		FacesContext.getCurrentInstance().addMessage(clientID, new FacesMessage(message));
+	protected void message(String message, String detail) { message(null, message, detail); }
+	protected void message(String clientID, String message, String detail) {
+		FacesContext.getCurrentInstance().addMessage(clientID, new FacesMessage(message, detail));
 	}
 //Get current viewID:
 	protected String viewID() {
@@ -63,7 +63,7 @@ public class VysusBean implements Serializable {
 			DataSource vysusdb = (DataSource)((Context)new InitialContext()).lookup("java:/vysusDB");
 			return vysusdb.getConnection();
 		} catch(NamingException | SQLException e) {
-			message(null, "Sorry, a database connection could not be established");
+			message("No connection", "Sorry, a database connection could not be established");
 		}
 		return null;
 	}

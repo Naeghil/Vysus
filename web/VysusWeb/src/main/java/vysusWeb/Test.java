@@ -29,8 +29,8 @@ public class Test extends VysusBean {
 
     public void press() {
        String id = test.getClientId(getContext());
-       message(id, "this is a message");
-       message(null, "this is a null message");
+       message(id, "Message:", "this is a message");
+       message("Message:", "this is a global message");
     }
 
     public void setTest(UIComponent test) {

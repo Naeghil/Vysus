@@ -88,7 +88,7 @@
              				value="#{signup.password}" 
              				styleClass="form-control" 
              				required="true"
-							requiredMessage="Mobile Name is required">
+							requiredMessage="Password is required">
 							</h:inputSecret>
              			</div>
              			<div class="col-md-3">
@@ -159,7 +159,6 @@
              				required="true" 
              				requiredMessage="Surname is required."
              				validatorMessage="Please ensure your surname is less than 64 characters.">
-             					<f:validateRegex pattern="/^[a-z ,.'-]+$/i"></f:validateRegex>
              					<f:validateLength maximum="64"></f:validateLength>
              				</h:inputText>
              			</div>

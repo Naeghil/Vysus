@@ -34,6 +34,9 @@ public class UserSignup implements Serializable {
 	String email;
 	String phoneNo;
 	String dateOfBirth;
+	String day;
+	String month;
+	String year;
 	String type = "0";//0 = school 1 = teacher
 	HashMap<String, Object> userHash = new HashMap<String, Object>();
 	HashMap<String, String> userData = new HashMap<String, String>();
@@ -153,6 +156,30 @@ public class UserSignup implements Serializable {
 	}
 	public void setDateOfBirth(String dateOfBirth) {
 		this.dateOfBirth = dateOfBirth;
+	}
+
+	public String getDay() {
+		return day;
+	}
+
+	public void setDay(String day) {
+		this.day = day;
+	}
+
+	public String getMonth() {
+		return month;
+	}
+
+	public void setMonth(String month) {
+		this.month = month;
+	}
+
+	public String getYear() {
+		return year;
+	}
+
+	public void setYear(String year) {
+		this.year = year;
 	}
 
 }

@@ -4,7 +4,8 @@
 	xmlns="http://www.w3.org/1999/xhtml"
     xmlns:ui="http://java.sun.com/jsf/facelets"
     xmlns:f="http://java.sun.com/jsf/core"
-    xmlns:h="http://java.sun.com/jsf/html">
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
 <head>
     <title>Signup</title>
     <meta charset="utf-8"/>
@@ -41,10 +42,11 @@
           
           </div>
 
-          <div class="col-md-8 bg-bp-grad h100">
+          <div class="col-md-10 bg-bp-grad h100">
             <div class="row h100 bg-white smallScrollBar noSideScroll" style="background: rgba(255, 255, 255, 0.3);">
               <h:form>
-              		<div class="row"><br/></div>
+              		<div class="row"><br/>
+              		</div>
               		<div class="row">
              			<div class="col-md-1">
              			</div>
@@ -61,13 +63,18 @@
              				<p class="pForm">Username</p>
              			</div>
              			<div class="col-md-3">
-             				<h:inputText id="username" value="#{signup.username}" styleClass="form-control" required="true"
-				requiredMessage="Make sure you enter a username" validatorMessage="Ensure your username is less than 60 characters">
-							<f:validateLength maximum="60" />
+             				<h:inputText id="username" 
+             				value="#{signup.username}" 
+             				styleClass="form-control" 
+             				required="true"
+							requiredMessage="Username is required." 
+							validatorMessage="Ensure your username is less than 60 characters">
+								<f:validateLength maximum="60"></f:validateLength>
 							</h:inputText>
 						</div>
 						<div class="col-md-4">
-							<h:message for="username"/>
+							<h:message for="username">
+							</h:message>
              			</div>
              		</div>
               		<div class="row">
@@ -76,9 +83,16 @@
              			<div class="col-md-4">
              				<p class="pForm">Password</p>
              			</div>
-             			<div class="col-md-6">
-             				<h:inputSecret value="#{signup.password}" styleClass="form-control" required="true"
-				requiredMessage="Mobile Name is mandatory"/>
+             			<div class="col-md-3">
+             				<h:inputSecret id="userPassword" 
+             				value="#{signup.password}" 
+             				styleClass="form-control" 
+             				required="true"
+							requiredMessage="Mobile Name is required">
+							</h:inputSecret>
+             			</div>
+             			<div class="col-md-3">
+             				<h:message for="userPassword"></h:message>
              			</div>
              			<div class="col-md-1">
              			</div>
@@ -89,8 +103,23 @@
              			<div class="col-md-4">
              				<p  class="pForm">Title</p>
              			</div>
-             			<div class="col-md-6">
-             				<h:inputText value="#{signup.title}" styleClass="form-control" required="true" requiredMessage="Mobile Name is mandatory"/>
+             			<div class="col-md-3">
+             				<h:selectOneMenu id="userTitle" 
+             				value="#{signup.title}" 
+             				styleClass="form-control">
+	             					<f:selectItem itemValue="Mr" itemLabel="Mr"/>
+	             					<f:selectItem itemValue="Mrs" itemLabel="Mrs"/>
+	             					<f:selectItem itemValue="03" itemLabel="March"/>
+	             					<f:selectItem itemValue="04" itemLabel="April"/>
+	             					<f:selectItem itemValue="05" itemLabel="May"/>
+	             					<f:selectItem itemValue="06" itemLabel="June"/>
+	             					<f:selectItem itemValue="07" itemLabel="July"/>
+	             					<f:selectItem itemValue="08" itemLabel="August"/>
+	             					<f:selectItem itemValue="09" itemLabel="September"/>
+	             					<f:selectItem itemValue="10" itemLabel="October"/>
+	             					<f:selectItem itemValue="11" itemLabel="November"/>
+	             					<f:selectItem itemValue="12" itemLabel="December"/>
+	             			</h:selectOneMenu>
              			</div>
              			<div class="col-md-1">
              			</div>
@@ -101,8 +130,18 @@
              			<div class="col-md-4">
              				<p  class="pForm">Forename</p>
              			</div>
-             			<div class="col-md-6">
-             				<h:inputText value="#{signup.firstNames}" styleClass="form-control" required="true" requiredMessage="Mobile Name is mandatory"/>
+             			<div class="col-md-3">
+             				<h:inputText id="userForename" 
+             				value="#{signup.firstNames}" 
+             				styleClass="form-control" 
+             				required="true" 
+             				requiredMessage="Forename is required."
+             				validatorMessage="Please ensure your forename is less than 128 characters.">
+             					<f:validateLength maximum="128"></f:validateLength>
+             				</h:inputText>
+             			</div>
+             			<div>
+             				<h:message for="userForename"></h:message>
              			</div>
              			<div class="col-md-1">
              			</div>
@@ -113,20 +152,40 @@
              			<div class="col-md-4">
              				<p  class="pForm">Surname</p>
              			</div>
-             			<div class="col-md-6">
-             				<h:inputText value="#{signup.lastNames}" styleClass="form-control" required="true" requiredMessage="Mobile Name is mandatory"/>
+             			<div class="col-md-3">
+             				<h:inputText id="userSurname"
+             				value="#{signup.lastNames}" 
+             				styleClass="form-control" 
+             				required="true" 
+             				requiredMessage="Surname is required."
+             				validatorMessage="Please ensure your surname is less than 64 characters.">
+             					<f:validateRegex pattern="/^[a-z ,.'-]+$/i"></f:validateRegex>
+             					<f:validateLength maximum="64"></f:validateLength>
+             				</h:inputText>
              			</div>
-             			<div class="col-md-1">
+             			<div class="col-md-4">
+             				<h:message for="userSurname"></h:message>
              			</div>
+<!--              			<div class="col-md-1"> -->
+<!--              			</div> -->
              		</div>
               		<div class="row">
              			<div class="col-md-1">
              			</div>
              			<div class="col-md-4">
-             				<p  class="pForm">House number</p>
+             				<p  class="pForm">House number/name</p>
              			</div>
-             			<div class="col-md-6">
-             				<h:inputText value="#{signup.houseIdentifier}" styleClass="form-control" required="true" requiredMessage="Mobile Name is mandatory"/>
+             			<div class="col-md-3">
+             				<h:inputText id="userHouseNo"
+             				value="#{signup.houseIdentifier}" 
+             				styleClass="form-control" 
+             				required="true" 
+             				requiredMessage="House number/name is required">
+             				</h:inputText>
+             			</div>
+             			<div>
+             				<h:message for="userHouseNo">
+             				</h:message>
              			</div>
              			<div class="col-md-1">
              			</div>
@@ -137,20 +196,42 @@
              			<div class="col-md-4">
              				<p  class="pForm">Postcode</p>
              			</div>
-             			<div class="col-md-6">
-             				<h:inputText value="#{signup.postcode}" styleClass="form-control" required="true" requiredMessage="Mobile Name is mandatory"/>
+             			<div class="col-md-3">
+             				<h:inputText id="postcode" 
+             				value="#{signup.postcode}" 
+             				styleClass="form-control" 
+             				required="true" 
+             				requiredMessage="Postcode is required."
+             				validatorMessage="Please ensure your postcode is in the correct UK format.">
+             				<f:validateRegex pattern="([Gg][Ii][Rr] 0[Aa]{2})|((([A-Za-z][0-9]{1,2})|(([A-Za-z][A-Ha-hJ-Yj-y][0-9]{1,2})|(([A-Za-z][0-9][A-Za-z])|([A-Za-z][A-Ha-hJ-Yj-y][0-9][A-Za-z]?))))\s?[0-9][A-Za-z]{2})"></f:validateRegex>
+             				</h:inputText>
+             			</div>
+             			<div class="col-md-4">
+							<h:message for="postcode">
+							</h:message>
              			</div>
              			<div class="col-md-1">
              			</div>
              		</div>
               		<div class="row">
              			<div class="col-md-1">
+          				</div>
+             			<div class="col-md-4">
+             			
+             				<p class="pForm">Email Address</p>
+             			</div>
+             			<div class="col-md-3">
+             				<h:inputText id="userEmail" 
+             				value="#{signup.email}" 
+             				styleClass="form-control" 
+             				required="true" 
+             				requiredMessage="Email address is required"
+             				validatorMessage="Please ensure your email address is in the correct format..">
+             					<f:validateRegex pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]"></f:validateRegex>
+             				</h:inputText>
              			</div>
              			<div class="col-md-4">
-             				<p  class="pForm">Email Address</p>
-             			</div>
-             			<div class="col-md-6">
-             				<h:inputText value="#{signup.email}" styleClass="form-control" required="true" requiredMessage="Mobile Name is mandatory"/>
+							<h:message for="userEmail"/>
              			</div>
              			<div class="col-md-1">
              			</div>
@@ -161,8 +242,18 @@
              			<div class="col-md-4">
              				<p  class="pForm">Phone number</p>
              			</div>
-             			<div class="col-md-6">
-             				<h:inputText value="#{signup.phoneNo}" styleClass="form-control" required="true" requiredMessage="Mobile Name is mandatory"/>
+             			<div class="col-md-3">
+             				<h:inputText id="userPhone" 
+             				value="#{signup.phoneNo}" 
+             				styleClass="form-control" 
+             				required="true" 
+             				requiredMessage="Phone number is required."
+             				validatorMessage="Please ensure your phone number is in the correct format.">
+             				<f:validateRegex pattern="^(((\+44\s?\d{4}|\(?0\d{4}\)?)\s?\d{3}\s?\d{3})|((\+44\s?\d{3}|\(?0\d{3}\)?)\s?\d{3}\s?\d{4})|((\+44\s?\d{2}|\(?0\d{2}\)?)\s?\d{4}\s?\d{4}))(\s?\#(\d{4}|\d{3}))?$"/>
+             				</h:inputText>
+             			</div>
+             			<div class="col-md-3">
+             				<h:message for="userPhone"/>
              			</div>
              			<div class="col-md-1">
              			</div>
@@ -173,11 +264,51 @@
              			<div class="col-md-4">
              				<p  class="pForm">Date of Birth</p>
              			</div>
-             			<div class="col-md-6">
-             				<h:inputText value="#{signup.dateOfBirth}" styleClass="form-control" required="true" requiredMessage="Mobile Name is mandatory"/>
-             			</div>
-             			<div class="col-md-1">
-             			</div>
+             			<div class="col-md-5">
+             			<div class="row">
+	             			<div class="col-md-2" style="padding-right:5px;">
+	             				<h:inputText id="dobDay" 
+	             				value="#{signup.day}" 
+	             				styleClass="form-control" 
+	             				required="true" 
+	             				requiredMessage="Day in format DD must be input."
+	             				a:placeholder="DD">
+	             					<f:validateLength maximum="2"/>
+								</h:inputText>
+								<h:message for="dobDay"/>
+	             			</div>
+	             			<div class="col-md-3" style="padding-right:5px; padding-left:5px; padding-bottom:0px">
+	             				<h:selectOneMenu id="dobMonth" 
+	             				value="#{signup.month}" 
+	             				styleClass="form-control">
+	             					<f:selectItem itemValue="01" itemLabel="January"/>
+	             					<f:selectItem itemValue="02" itemLabel="February"/>
+	             					<f:selectItem itemValue="03" itemLabel="March"/>
+	             					<f:selectItem itemValue="04" itemLabel="April"/>
+	             					<f:selectItem itemValue="05" itemLabel="May"/>
+	             					<f:selectItem itemValue="06" itemLabel="June"/>
+	             					<f:selectItem itemValue="07" itemLabel="July"/>
+	             					<f:selectItem itemValue="08" itemLabel="August"/>
+	             					<f:selectItem itemValue="09" itemLabel="September"/>
+	             					<f:selectItem itemValue="10" itemLabel="October"/>
+	             					<f:selectItem itemValue="11" itemLabel="November"/>
+	             					<f:selectItem itemValue="12" itemLabel="December"/>
+	             				</h:selectOneMenu>
+	             			</div>
+	             			<div class="col-md-3" style="padding-left:5px;">
+	             				<h:inputText id="dobYear" 
+	             				value="#{signup.day}" 
+	             				styleClass="form-control" 
+	             				required="true" 
+	             				requiredMessage="Year in format YYYY must be input."
+	             				a:placeholder="YYYY">
+	             				<f:validateLength maximum="4"/>
+	             				<f:validateRegex pattern = "\d{4}"/>
+             					</h:inputText>
+             					<h:message for="dobYear"/>
+	             			</div>
+	             		</div>
+             		</div>
              		</div>
              		<div class="row">
              			<div class="col-md-1">
@@ -191,8 +322,8 @@
               </h:form>
             </div>
           </div>
-          <div class="col-md-2 bg-lightpink h100">
-          </div>
+          <!--<div class="col-md-2 bg-lightpink h100">
+          </div>-->
     </div>
   </div>
 </body>

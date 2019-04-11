@@ -174,12 +174,14 @@
              				<p  class="pForm">Date of Birth</p>
              			</div>
              			<div class="col-md-6">
-             				<h:inputText value="#{signup.dateOfBirth}" styleClass="form-control" required="true" requiredMessage="Mobile Name is mandatory"/>
+             				<h:inputText value="#{signup.day}" styleClass="form-control" 
+             				required="true" requiredMessage="Mobile Name is mandatory">
+             				<f:validateLength maximum="2"/>
+							</h:inputText>
              			</div>
              			<div class="col-md-1">
              			</div>
              		</div>
-             		<div class="row">
              			<div class="col-md-1">
              			</div>
              			<div class="col-md-10">
@@ -194,6 +196,6 @@
           <div class="col-md-2 bg-lightpink h100">
           </div>
     </div>
-  </div>
+  <!-- </div> -->
 </body>
 </html>

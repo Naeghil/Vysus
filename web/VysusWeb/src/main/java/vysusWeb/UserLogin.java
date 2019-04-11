@@ -62,8 +62,8 @@ public class UserLogin implements Serializable {
 			Map<String, Object> requestMap = context.getExternalContext().getSessionMap();
 			UIViewRoot testData3 = context.getViewRoot();
 			UIComponent testData2 = context.getViewRoot().findComponent("loginForm");
-			Map<String,Object> testData = context.getViewRoot().findComponent("loginForm").getAttributes();
-			System.out.println(testData);
+			//Map<String,Object> testData = context.getViewRoot().findComponent("loginForm").getAttributes();
+			//System.out.println(testData);
 			
 			System.out.println(testData2);
 			//Printed /index.xhtml

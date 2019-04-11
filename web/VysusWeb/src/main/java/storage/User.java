@@ -14,6 +14,8 @@ import java.util.Arrays;
 import org.mindrot.jbcrypt.BCrypt;
 import java.sql.*;
 
+//TODO: make changes for account creation/retrieve
+
 public class User extends StorageAbstract {
 //Object-specific variables:	
 	protected Account account = null;	//Associated account and related data

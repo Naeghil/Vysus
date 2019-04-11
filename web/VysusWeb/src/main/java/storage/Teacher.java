@@ -8,10 +8,14 @@ import java.sql.*;
 
 public class Teacher extends Account{
 //Object-specific variables
+	List<Qualification> qualifications = new ArrayList<Qualification>();
 	//TODO: protected Calendar calendar;
 //Initialisation: constructors and variables setup
 	//Uses super constructors:
-	public Teacher(String accountID) { super(accountID); }
+	public Teacher(String accountID, Connection connection) throws DBProblemException, InvalidDataException { 
+		super(accountID); 
+		if(connection!=null) retrieve(connection);
+	}
 	public Teacher(String accountID, Map<String, Object> accountData, Connection connection)
 		throws DBProblemException {
 		super(accountID, accountData, connection);
@@ -36,7 +40,11 @@ public class Teacher extends Account{
 //Object-specific querying methods
 	
 //Public interfaces of protected methods
-
+	public void loadDeep(Connection connection)
+		throws DBProblemException, InvalidDataException {
+		qualifications = Qualification.allQualifications((String)data.get("id"), connection);
+	}
+	
 //Getters and show methods
 	public Map<String, Object> showMini() {
 		return null;

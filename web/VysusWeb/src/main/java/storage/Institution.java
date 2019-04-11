@@ -2,6 +2,9 @@ package storage;
 
 import java.util.List;
 import java.util.Map;
+
+import util.DataConv;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -9,8 +12,9 @@ import java.sql.*;
 
 public class Institution extends Account{
 //Object-specific variables
-	
-	
+	boolean admin = false;
+	List<Staff> staff = new ArrayList<Staff>();
+	//List<Job> jobs = new ArrayList<Job>();
 	//TODO: what exactly does it mean?
 	protected Object rankingPreferences;
 	//Object-specific queries:
@@ -19,10 +23,12 @@ public class Institution extends Account{
 	
 //Initialisation: constructors and variables setup
 	//Uses super constructors
-	public Institution(String accountID) { super(accountID); }
+	public Institution(String accountID, Connection connection) throws DBProblemException, InvalidDataException { 
+		super(accountID); 
+		if(connection!=null) retrieve(connection);
+	}
 	public Institution(String accountID, Map<String, Object> accountData, Connection connection)
 		throws DBProblemException { super(accountID, accountData, connection); }
-		
 	protected void setDBVariables() {
 		keys = new ArrayList<String>(Arrays.asList(
 				"sysAdminID", "name", "type", "buildingIdentifier", "postcode", "email", "phoneNo"));
@@ -40,9 +46,45 @@ public class Institution extends Account{
 	}
 
 //Object-specific querying methods
-	
+	//There are no specific querying methods for this class
 //Public interfaces of protected methods
-	//All the load methods
+	//Sets admin to true if the person making the request is the sysAdmin
+	public void requestAdminRights(String actor) {
+		if(data.get("sysAdminID")!=null) admin = actor.equals(data.get("sysAdminID"));
+	}
+	//The following methods handle the account's staff
+	public void addStaff(String staffID, String password, Map<String, Object> staffData, Connection connection)
+		throws DBProblemException, InvalidDataException {
+		if(!admin) throw InvalidDataException.noRights();
+		@SuppressWarnings("unused")
+		Staff newStaff = new Staff(connection, staffID, password, staffData, (String)data.get("id"));
+	}
+	public void deleteStaff(String staffID, Connection connection)
+		throws InvalidDataException, DBProblemException {
+		if(!admin) throw InvalidDataException.noRights();
+		Staff toDelete = new Staff(staffID, null);
+		toDelete.delete(connection);
+	}
+	//The following methods handle the account's jobs
+	public void postJob(Map<String, Object> jobData, Connection connection)
+		throws DBProblemException, InvalidDataException {
+		if(admin) throw InvalidDataException.noRights();
+		//@SuppressWarnings("unused")
+		//Job newJob = new Job(jobData, connection)
+	}
+	public void deleteJob(Integer jobID, Connection connection)
+		throws DBProblemException, InvalidDataException {
+		if(admin) throw InvalidDataException.noRights();
+		//Job toDelete = new Job(jobID, null);
+		//toDelete.delete(connection);
+	}
+	
+	public void loadDeep(Connection connection)
+		throws DBProblemException, InvalidDataException {
+		if(admin) this.staff = Staff.allStaff((String)data.get("id"), connection);
+		//else this.jobs = Job.allJobs((String)data.get("id"), connection);
+	}
+	
 //Getters and show methods	
 	public Map<String, Object> showMini() {
 		return null;
@@ -52,9 +94,23 @@ public class Institution extends Account{
 	}
 	public Map<String, Object> showFull() {
 		Map<String, Object> show = new HashMap<String, Object>();
-		/*show.put("accountData", data);
-		//show.put("staffData", value)
-		*/
+		show.put("accountData", data);
+		if(admin) {
+			Map<String, Object> staffData = new HashMap<String, Object>();
+			for(Staff staff : this.staff) {
+				Map<String, Object> data = staff.getData();
+				staffData.put((String)data.get("id"), DataConv.makeStringMap(data));
+			}
+			show.put("staffData", staffData);
+		} else {
+			//Map<String, Object> jobData = new HashMap<String, Object>();
+			//for(Job job : this.job) {
+			//	Map<String, Object> data = job.getData();
+			//	jobData.put((String)data.get("id"), DataConv.makeStringMap(data));
+			//}
+			//show.put("jobData", jobData);
+		}
+		
 		return show;
 	}
 }
@@ -67,9 +123,9 @@ class Staff extends User {
 		this.data.put("accountID", accountID);
 		create(connection);
 	}
-	public Staff(String username)
+	public Staff(String username, Connection connection)
 			throws DBProblemException, InvalidDataException {
-		super(username, null);
+		super(username, connection);
 	}
 	
 //Show methods unusable:
@@ -86,14 +142,12 @@ class Staff extends User {
 		return data;
 	}
 //Static show methods to be used by the Institution object
-	public static Map<String, Object> showStaff(String accountID, Connection connection) throws DBProblemException, InvalidDataException {
-		Map<String, Object> staffData = new HashMap<String, Object>();
+	public static List<Staff> allStaff(String accountID, Connection connection) throws DBProblemException, InvalidDataException {
+		List<Staff> allStaff = new ArrayList<Staff>();
 		for(String staffID : Staff.staffList(accountID, connection)) {
-			Staff staff = new Staff(staffID);
-			staff.load(connection);
-			staffData.put(staffID, staff.getData());
+			allStaff.add(new Staff(staffID, connection));
 		}
-		return staffData;
+		return allStaff;
 	}
 	public static List<String> staffList(String accountID, Connection connection) 
 		throws DBProblemException {

@@ -27,10 +27,10 @@ public abstract class Account extends StorageAbstract {
 		create(connection);
 	}
 	//Masking constructor for existing accounts
-	public static Account getAccount(String accountID) throws InvalidDataException {
+	public static Account getAccount(String accountID, Connection connection) throws DBProblemException, InvalidDataException {
 		char accType = accountID.charAt(0);
-		if(accType=='0') return new Teacher(accountID);
-		if(accType=='1') return new Institution(accountID);
+		if(accType=='0') return new Teacher(accountID, connection);
+		if(accType=='1') return new Institution(accountID, connection);
 		
 		InvalidDataException e = new InvalidDataException(null);
 		e.addField("accountID", "Unrecognised account type");
@@ -52,9 +52,8 @@ public abstract class Account extends StorageAbstract {
 //Object-specific querying methods
 
 //Public interfaces of protected methods
-
+	public abstract void loadDeep(Connection connection) throws DBProblemException, InvalidDataException;
 //Getters and show methods	
-	//This relies on the proper conversion between VARCHAR() and String by jdbc
 	protected String accType() throws InvalidDataException {
 		char type = 'x';
 		if(data.get("id") instanceof String) type = ((String)data.get("id")).charAt(0);

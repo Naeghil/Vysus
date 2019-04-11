@@ -18,17 +18,11 @@ import java.util.Arrays;
 import java.util.HashMap;
 
 public class Qualification extends StorageAbstract{
-
 	// https://www.gov.uk/what-different-qualification-levels-mean/list-of-qualification-levels
-	
 	// according to ucas there's 19839 undergraduate courses in the UK
-	
 	// KISCourse.KISAIM valid entry --> basically level
-
 //Object-specific variables
-	protected Boolean verified = null; //TODO: in db must default to false;
-	
-	//Object-specific queries:
+	protected Boolean verified = null; //Defaults to false in DB
 	
 //Initialisation: constructors and variables setup
 	//Existing constructor, also enabling loading, if given a connection
@@ -39,8 +33,9 @@ public class Qualification extends StorageAbstract{
 		
 	}
 	//Creating constructor: no qualification id will be available this way
-	public Qualification(Connection connection, Map<String, Object> data) throws DBProblemException {
+	public Qualification(Map<String, Object> data, Connection connection) throws DBProblemException {
 		this.data = data;
+		verified = false;
 		setDBVariables();
 		create(connection);
 	}
@@ -51,7 +46,7 @@ public class Qualification extends StorageAbstract{
 		retrieve = "SELECT * FROM Qualification WHERE qualificationID=?";
 		create = "INSERT INTO Qualification"
 				+ "(accountID, title, startDate, endDate, comment, finalGrade, institution, level, institutionEmail, institutionPhoneNo, referee) "
-				+ "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+				+ "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	}
 	protected String update(List<String> changes) {
 		String upd = "UPDATE Qualification SET " + changes.get(0);
@@ -70,17 +65,19 @@ public class Qualification extends StorageAbstract{
 			if(verify.executeUpdate() != 1) throw InvalidDataException.invalidQualification();
 		} catch (SQLException e) { throw new DBProblemException(e); }
 	}
+	
+	//This method can always be called because data.get("id") returns null only at creation, when verified is false;
 	public boolean isVerified(Connection connection) throws InvalidDataException, DBProblemException { 
 		if(verified!=null) return verified;
 		try(PreparedStatement veri = connection.prepareStatement("SELECT verified FROM Qualification WHERE qualificationID=?")) {
-			veri.setObject(1, data.get("id")); //TODO:This can return null;
+			veri.setObject(1, data.get("id"));
 			try(ResultSet record = veri.executeQuery()) {
 				if(record.next()) return record.getBoolean("verified");
 				else throw InvalidDataException.invalidQualification();
 			}
 		} catch (SQLException e ) {throw new DBProblemException(e); }
 	}
-	//TODO: list string or list int?
+	
 	public static List<Integer> qualificationList(Connection con, String account) throws DBProblemException {
 		List<Integer> list = new ArrayList<Integer>();
 		try(PreparedStatement qualifications = con.prepareStatement("SELECT qualificationID FROM Qualification WHERE accountID=?");) {
@@ -90,6 +87,14 @@ public class Qualification extends StorageAbstract{
 			}
 		} catch (SQLException e) { throw new DBProblemException(e); }
 		return list;
+	}
+	public static List<Qualification> allQualifications(String accountID, Connection connection) 
+		throws DBProblemException, InvalidDataException {
+		List<Qualification> allQualifications = new ArrayList<Qualification>();
+		for(Integer qualificationID : qualificationList(connection, accountID)) {
+			allQualifications.add(new Qualification(qualificationID, connection));
+		}
+		return allQualifications;
 	}
 //Public interfaces of protected methods
 	//For now this is to enact changes to the qualifications

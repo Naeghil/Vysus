@@ -42,10 +42,15 @@ import java.util.HashMap;
 		e.addField("qualification", "This qualification doesn't exist");
 		return e;
 	}
-	//TODO: what did I make it for?
+	public static InvalidDataException noRights() {
+		InvalidDataException e = new InvalidDataException(null);
+		e.addField("rights", "You don't have the rights to perform this operation");
+		return e;
+	}
+	//This should not happen at all
 	public static InvalidDataException invalidId() {
 		InvalidDataException e = new InvalidDataException(null);
-		e.addField("id", "Runtime class message");
+		e.addField("id", "Record not found");
 		return e;
 	}
 

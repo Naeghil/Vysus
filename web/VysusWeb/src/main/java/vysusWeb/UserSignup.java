@@ -72,9 +72,10 @@ public class UserSignup implements Serializable {
 			
 			
 			//Change date to correct format
-			Date newDate;
+			
 			try {
-				newDate = new SimpleDateFormat().parse(this.year + "-" + this.month + "-" + this.day);
+				//Date newDate = new SimpleDateFormat().parse(this.year + "-" + this.month + "-" + this.day);
+				Date newDate = new SimpleDateFormat().parse("1996-02-22");
 				this.dateOfBirth = new java.sql.Date(newDate.getTime());
 			} catch (ParseException e) {
 				// TODO Auto-generated catch block

@@ -24,18 +24,20 @@ import storage.*;
 @SuppressWarnings("unused")
 @ManagedBean(name="test")
 @SessionScoped
-public class Test implements Serializable {
-	private static final long serialVersionUID = 1L;
-	public List<String> list = new ArrayList<String>();
-	
-	
-	public Test(){
-		list.add("first element");
-		list.add("second element");
-		list.add("third element");
-	}
-//Getter & Setters as per jsf specification	
-	public List<String> getList(){
-		return list;
-	}
+public class Test extends VysusBean {
+	private UIComponent test;
+
+    public void press() {
+       String id = test.getClientId(getContext());
+       message(id, "this is a message");
+       message(null, "this is a null message");
+    }
+
+    public void setTest(UIComponent test) {
+        this.test= test;
+    }
+
+    public UIComponent getTest() {
+        return test;
+    }
 }

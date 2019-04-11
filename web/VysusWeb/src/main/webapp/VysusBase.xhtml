@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<!--Learn media queries for responsive design-->
+<html lang="en"     
+	xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html">
+<head>
+    <title>Vysus</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="resources/css/style.css"/>
+    <link href="https://fonts.googleapis.com/css?family=ZCOOL+KuaiLe|Cormorant+Garamond|Eczar|Gentium+Basic|Libre+Baskerville|Libre+Franklin|Proza+Libre|Rubik|Taviraj|Trirong|Work+Sans" rel="stylesheet"/>
+	<link rel="icon" href="resources/images/duck2.png"/>
+</head>
+<h:body>
+	<!-- Message Display -->
+	<h:panelGrid styleClass="group" columns="2" cellpadding="2" cellspacing="0"
+		width="100%" columnClasses="buttonCol, leftAlignCol"
+		rowClasses="vertAlignTop" rendered="#{! empty facesContext.maximumSeverity}" >
+	    <h:graphicImage value="#{PageMessages.messageImage}" style="float: left; vertical-align: top;" />       
+	    <h:panelGrid columns="1" cellpadding="2" cellspacing="2"
+			columnClasses="leftAlignCol" rowClasses="vertAlignTop" width="100%">   
+	        <h:outputText value="#{PageMessages.messageHeader}" escape="false" rendered="#{PageMessages.renderMessage}"/>
+	        <h:messages errorClass="errorMessage" infoClass="infoMessage" layout="table" globalOnly="true" showDetail="false" showSummary="true"/>
+	    </h:panelGrid>
+	</h:panelGrid>
+	
+	<div class="container-fluid h100 w100 background">
+		<div class="row h100">
+			<div class="col-md-4 h100 bg-lightblue"></div>
+			<div class="col-md-4 bg-bp-grad  h100"></div>
+			<div class="col-md-4 bg-lightpink h100"></div>
+		</div>
+	</div>
+	
+    <div id="header">
+        <ui:insert name="commonHeader">
+            <ui:include src="header.xhtml" />
+        </ui:insert>
+    </div>
+    <div id="content" class="container-fluid h100 w100 background">
+        <ui:insert name="bodyContent"></ui:insert>
+    </div>
+    <div id="footer">
+        <ui:insert name="commonFooter">
+            <ui:include src="footer.xhtml" />
+        </ui:insert>
+    </div>
+</h:body>
+</html>

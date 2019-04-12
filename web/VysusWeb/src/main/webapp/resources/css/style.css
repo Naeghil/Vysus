@@ -45,9 +45,7 @@ p {
   	font-family: 'Gentium Basic',serif;
 }
 
-.pForm {
-	font-size: 4vh;
-}
+
 
 .sidebar {
     background-color:#85E1E9;
@@ -160,3 +158,18 @@ body {
 .bg-white {
   background-color:#ffffff;
 }
+
+/* index.xhtml styling */
+#central-index-div {
+	padding-top:15%;
+	padding-right:10%;
+	padding-left:10%;
+}
+.index-form-element {
+	margin: 1%;
+}
+
+.index-form-message {
+	
+}
+

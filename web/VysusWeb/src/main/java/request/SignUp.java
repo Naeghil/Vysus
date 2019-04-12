@@ -24,16 +24,11 @@ public class SignUp extends RequestAbstract {
 	}
 	
 	public void execute() throws DBProblemException, InvalidDataException {
-		if(this.username == null) throw InvalidDataException.invalidUser();
-		if(this.password == null) throw InvalidDataException.invalidPassword();
 		if(this.userCreationData == null) {
-			InvalidDataException e = new InvalidDataException(null);
-			e.addField(null, "Cannot find data.");
-			throw e;
+			throw new InvalidDataException(null, "Data has not been submitted properly.");
 		}
-		if(!User.isUnique(username, connection)) throw InvalidDataException.invalidUser();
+		if(!User.isUnique(username, connection)) throw new InvalidDataException("username", "This username already exists.");
 		String accId = accType+username;
-		//TODO: the accountID for an institution should be independent from its own sysAdmin
 		actor = new User(connection, username, password, userCreationData, accId);
 	}
 	

@@ -51,11 +51,7 @@ public class UserProfile implements Serializable {
 			Object uNameO = requestMap.get("Username");
 			if(uNameO instanceof String) {
 				username = (String)uNameO;
-			} else {
-				InvalidDataException e = new InvalidDataException(null);
-				e.addField("username", "invalid user data");
-				throw e;
-			}
+			} else throw new InvalidDataException("username", "Invalid user data");
 			
 			//Initialise the request
 			ShowProfile profile = new ShowProfile(username, username, connection);

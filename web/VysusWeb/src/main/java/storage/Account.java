@@ -32,9 +32,7 @@ public abstract class Account extends StorageAbstract {
 		if(accType=='0') return new Teacher(accountID, connection);
 		if(accType=='1') return new Institution(accountID, connection);
 		
-		InvalidDataException e = new InvalidDataException(null);
-		e.addField("accountID", "Unrecognised account type");
-		throw e;
+		throw new InvalidDataException(null, "Unrecognised account type");
 	}
 	//Masking constructor for new accounts
 	public static Account makeAccount(String accountID, Map<String, Object> accountData, Connection connection)
@@ -43,9 +41,7 @@ public abstract class Account extends StorageAbstract {
 		if(accType=='0') return new Teacher(accountID, accountData, connection);
 		if(accType=='1') return new Institution(accountID, accountData, connection);
 		
-		InvalidDataException e = new InvalidDataException(null);
-		e.addField("accountID", "Unrecognised account type");
-		throw e;
+		throw new InvalidDataException(null, "Unrecognised account type");
 	}
 	//DB variables setup depends on the final account class
 	
@@ -60,8 +56,6 @@ public abstract class Account extends StorageAbstract {
 		if(type=='0') return "Teacher";
 		if(type=='1') return "Institution";
 		
-		InvalidDataException e = new InvalidDataException(null);
-		e.addField("accountID", "Unrecognised account type");
-		throw e;
+		throw new InvalidDataException(null, "Unrecognised account type");
 	}
 }

@@ -64,7 +64,7 @@ public abstract class StorageAbstract {
 			try(ResultSet record = select.executeQuery();){
 				if(record.next()){
 					for(String key : keys) data.put(key, record.getObject(key));
-				} else throw InvalidDataException.invalidId();
+				} else throw new InvalidDataException("id", "Record not found");
 			}
 		} catch (SQLException e) { throw new DBProblemException(e); }
 	}
@@ -72,7 +72,7 @@ public abstract class StorageAbstract {
 	protected void delete(Connection con) throws InvalidDataException, DBProblemException {
 		try(PreparedStatement remove = con.prepareStatement(delete);) {
 			remove.setObject(1, data.get("id"));
-			if(remove.executeUpdate() != 1) throw InvalidDataException.invalidId();
+			if(remove.executeUpdate() != 1) throw new InvalidDataException("id", "Record not found");
 		} catch (SQLException e) { throw new DBProblemException(e); }
 	}
 	//Applies changes to the record
@@ -84,7 +84,7 @@ public abstract class StorageAbstract {
 			for(int i=0; i<changed.size(); i++) update.setObject(i+1, changes.get(changed.get(i)));
 			update.setObject(changed.size()+1, data.get("id"));
 			//Execution:
-			if(update.executeUpdate() != 1) throw InvalidDataException.invalidId();
+			if(update.executeUpdate() != 1) throw new InvalidDataException("id", "Record not found");
 			else changes = new HashMap<String, Object>();
 		} catch (SQLException e) { throw new DBProblemException(e); }
 	}

@@ -55,26 +55,26 @@ public class Institution extends Account{
 	//The following methods handle the account's staff
 	public void addStaff(String staffID, String password, Map<String, Object> staffData, Connection connection)
 		throws DBProblemException, InvalidDataException {
-		if(!admin) throw InvalidDataException.noRights();
+		if(!admin) throw new InvalidDataException(null, "You don't have the rights to perform this operation");
 		@SuppressWarnings("unused")
 		Staff newStaff = new Staff(connection, staffID, password, staffData, (String)data.get("id"));
 	}
 	public void deleteStaff(String staffID, Connection connection)
 		throws InvalidDataException, DBProblemException {
-		if(!admin) throw InvalidDataException.noRights();
+		if(!admin) throw new InvalidDataException(null, "You don't have the rights to perform this operation");
 		Staff toDelete = new Staff(staffID, null);
 		toDelete.delete(connection);
 	}
 	//The following methods handle the account's jobs
 	public void postJob(Map<String, Object> jobData, Connection connection)
 		throws DBProblemException, InvalidDataException {
-		if(admin) throw InvalidDataException.noRights();
+		if(admin) throw new InvalidDataException(null, "You don't have the rights to perform this operation");
 		//@SuppressWarnings("unused")
 		//Job newJob = new Job(jobData, connection)
 	}
 	public void deleteJob(Integer jobID, Connection connection)
 		throws DBProblemException, InvalidDataException {
-		if(admin) throw InvalidDataException.noRights();
+		if(admin) throw new InvalidDataException(null, "You don't have the rights to perform this operation");
 		//Job toDelete = new Job(jobID, null);
 		//toDelete.delete(connection);
 	}

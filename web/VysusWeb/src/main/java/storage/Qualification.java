@@ -62,7 +62,7 @@ public class Qualification extends StorageAbstract{
 			verified=true;
 			verify.setBoolean(1, verified);
 			verify.setObject(2, data.get("id")); //TODO:This may return null;
-			if(verify.executeUpdate() != 1) throw InvalidDataException.invalidQualification();
+			if(verify.executeUpdate() != 1) throw new InvalidDataException(null, "Record not found");
 		} catch (SQLException e) { throw new DBProblemException(e); }
 	}
 	
@@ -73,7 +73,7 @@ public class Qualification extends StorageAbstract{
 			veri.setObject(1, data.get("id"));
 			try(ResultSet record = veri.executeQuery()) {
 				if(record.next()) return record.getBoolean("verified");
-				else throw InvalidDataException.invalidQualification();
+				else throw new InvalidDataException(null, "Record not found");
 			}
 		} catch (SQLException e ) {throw new DBProblemException(e); }
 	}

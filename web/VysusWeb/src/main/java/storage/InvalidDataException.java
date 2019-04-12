@@ -9,49 +9,34 @@ package storage;
 //Distinguish it from format problems such as "InvalidInputException"
  
 import storage.StorageException;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Map;
-import java.util.HashMap;
 
  public class InvalidDataException extends StorageException {
-	//This map is <field, message>
-	private Map<String, String> invalidFields = new HashMap<String, String>();
-	
-	public InvalidDataException(Exception nested) {
+	 String field;
+	 String message;
+	 
+	public InvalidDataException(Exception nested, String field, String message) {
 		nestedException = nested;
+		this.field = field;
+		this.message = message;
+	}
+	public InvalidDataException(String field, String message) {
+		nestedException = null;
+		this.field = field;
+		this.message = message;
 	}
 	
-	public void addField(String field, String message) { invalidFields.put(field, message); }
-	public List<String> getFields() { return new ArrayList<String>(invalidFields.keySet()); }
-	public String getMessage(String field) { return invalidFields.get(field); }
+	public String field() { return field; }
+	public String message() { return message; }
 	 
 	//Common exceptions:
-	public static InvalidDataException invalidUser() {
-		InvalidDataException e = new InvalidDataException(null);
-		e.addField("username", "Wrong username");
-		return e;
-	}
-	public static InvalidDataException invalidPassword() {
-		InvalidDataException e = new InvalidDataException(null);
-		e.addField("password", "Wrong password");
-		return e;
-	}
-	public static InvalidDataException invalidQualification() {
-		InvalidDataException e = new InvalidDataException(null);
-		e.addField("qualification", "This qualification doesn't exist");
-		return e;
-	}
-	public static InvalidDataException noRights() {
-		InvalidDataException e = new InvalidDataException(null);
-		e.addField("rights", "You don't have the rights to perform this operation");
-		return e;
-	}
-	//This should not happen at all
-	public static InvalidDataException invalidId() {
-		InvalidDataException e = new InvalidDataException(null);
-		e.addField("id", "Record not found");
-		return e;
-	}
+	//"username", "No such user");
+	
+	//("password", "Wrong password");
+
+	//("qualification", "This qualification doesn't exist");
+
+	//("rights", "You don't have the rights to perform this operation");
+
+	//("id", "Record not found");
 
 }

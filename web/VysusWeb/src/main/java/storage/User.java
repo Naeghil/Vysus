@@ -76,8 +76,8 @@ public class User extends StorageAbstract {
 			try(ResultSet rs = getHash.executeQuery();) {
 				if(rs.next()) {
 					String hash = new String(rs.getBytes("password"));
-					if(!BCrypt.checkpw(password, hash)) throw InvalidDataException.invalidPassword();
-				} else throw InvalidDataException.invalidUser();
+					if(!BCrypt.checkpw(password, hash)) throw new InvalidDataException("password", "Wrong password");
+				} else throw new InvalidDataException("username", "No such user");
 			}
 		} catch (SQLException e) { throw new DBProblemException(e); }
 	}

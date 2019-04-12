@@ -34,8 +34,7 @@ public class SignupBase extends VysusBean {
 		try {
 			userDOB = new Date(format.parse(dateText).getTime()); 
 		} catch(ParseException e) {
-			InvalidDataException ex = new InvalidDataException(e);
-			ex.addField("year", "This is an invalid date");
+			throw new InvalidDataException(e, "year", "This is an invalid date");
 		}
 		userData.put("dateOfBirth", userDOB);
 		

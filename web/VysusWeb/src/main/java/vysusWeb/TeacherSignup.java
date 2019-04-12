@@ -51,10 +51,10 @@ public class TeacherSignup extends VysusBean {
 			redirect("myProfile.jsf");
 			
 		} catch(InvalidDataException e) {
-			String invalidField = e.getFields().get(0);
-			String msg = e.getMessage(invalidField);
-			if(invalidField!=null) if(invalidField.equals("userID")) invalidField = "username";
-			message(invalidField, "Invalid field", msg);
+			String field = e.field();
+			String msg = e.message();
+			if(field!=null) if(field.equals("userID")) field= "username";
+			message(field, "Invalid field", msg);
 		} catch(DBProblemException e) {
 			message("Uh-oh", "We had a problem executing your request");
 		}catch(SQLException e) {}

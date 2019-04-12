@@ -17,8 +17,8 @@ public class LogIn extends RequestAbstract {
 	}
 	
 	public void execute() throws DBProblemException, InvalidDataException {
-		if(this.username == null) throw InvalidDataException.invalidUser();
-		if(this.password == null) throw InvalidDataException.invalidPassword();
+		if(this.username == null) throw new InvalidDataException("username", "Username not received");
+		if(this.password == null) throw new InvalidDataException("password", "Password not received");
 		actor = new User(username, null);
 		actor.login(password, connection);
 	}	

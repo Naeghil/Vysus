@@ -7,20 +7,15 @@
     template="VysusBase.xhtml">
 	<ui:define name="bodyContent">
 		
-<div class="container-fluid h100">
-	<div class="row h100">
-		<div class="col-md-1"></div>
-		<div class="col-md-3" id="sidebar-column">
-			<ui:include src="sidebar.xhtml"/>
-		</div>
-		<div class="col-md-7" id="content column">
-			<ui:insert name="content"/>
-		</div>
-		<div class="col-md-1"></div>
+
+	<div class="col-md-1"></div>
+	<div class="col-md-2 h100 content-panel" id="sidebar-column">
+		<ui:include src="sidebar.xhtml"/>
 	</div>
-	<!-- Will need a clearfix for the footer -->
-	
-</div>
+	<div class="col-md-8 h100 content-panel" id="content column">
+		<ui:insert name="content"/>
+	</div>
+	<div class="col-md-1"></div>
 	
 	</ui:define>
 </ui:composition>

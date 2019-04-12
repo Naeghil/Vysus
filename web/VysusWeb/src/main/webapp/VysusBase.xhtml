@@ -32,17 +32,17 @@
 	<!-- Page body -->
 	<div class="container-fluid h100 w100 centertext">
 		<!-- Header -->
-	    <div id="header" class="row h10">
+	    <div id="header" class="row">
 	        <ui:insert name="commonHeader">
 	            <ui:include src="header.xhtml" />
 	        </ui:insert>
 	    </div>
 		<!-- Content -->
-	    <div id="content" class="row h85">
+	    <div id="contentBase" class="row">
 	        <ui:insert name="bodyContent"></ui:insert>
 	    </div>
 	    <!-- Footer -->
-    	<div class="row h5 centertext" id="footer">
+    	<div class="row centertext" id="footer">
         	<ui:insert name="commonFooter">
             	<ui:include src="footer.xhtml" />
         	</ui:insert>

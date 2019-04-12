@@ -1,1 +1,14 @@
-<div></div>
+<div id="sidebar-content" class="centertext" xmlns:h="http://java.sun.com/jsf/html">
+	<h:graphicImage id="user-picture" styleClass="square" value="#{navigation.userPicture}" />
+	
+	<!-- All the buttons -->
+	<h:link id="profile-page" value="Profile"
+		outcome="profile.xhtml" styleClass="btn btn-primary sidebar-element"/>
+	
+	
+	<h:commandButton id="logout-button" value="Logout"
+		action="#{navigation.logout}" styleClass="btn btn-primary w100 sidebar-element"/>
+
+
+
+</div>

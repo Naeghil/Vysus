@@ -16,11 +16,14 @@ import java.sql.SQLException;
 
 public class VysusBean implements Serializable {
 	protected String actor = null;
+	protected String account = null;
 	
 	public VysusBean() {
 		//Set the actor to the currently logged user, if any:
 		Object actorO = getSessionMap().get("username");
 		if(actorO!=null) actor = (String)actorO;
+		Object accountO = getSessionMap().get("account");
+		if(accountO!=null) account = (String)accountO;
 	}
 	
 //Methods to retrieve session objects:

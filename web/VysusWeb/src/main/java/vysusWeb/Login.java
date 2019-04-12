@@ -2,15 +2,16 @@ package vysusWeb;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+
+import javax.enterprise.context.RequestScoped;
 import javax.faces.bean.ManagedBean; 
-import javax.faces.bean.SessionScoped;
 import request.*;
 import storage.*;
 
 //TODO: add a logger class that records database errors somewhere
 
 @ManagedBean(name="login")
-@SessionScoped
+@RequestScoped
 public class Login extends VysusBean{
 	String username;
 	String password;

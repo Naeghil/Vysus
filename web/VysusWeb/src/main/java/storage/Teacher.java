@@ -44,6 +44,9 @@ public class Teacher extends Account{
 		throws DBProblemException, InvalidDataException {
 		qualifications = Qualification.allQualifications((String)data.get("id"), connection);
 	}
+	public void deleteAccount(Connection connection) throws DBProblemException, InvalidDataException {
+		for(Qualification qualification : Qualification.allQualifications(getID(), connection)) qualification.delete(connection);
+	}
 	
 //Getters and show methods
 	public Map<String, Object> showMini() {

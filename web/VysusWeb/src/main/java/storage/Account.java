@@ -49,6 +49,9 @@ public abstract class Account extends StorageAbstract {
 
 //Public interfaces of protected methods
 	public abstract void loadDeep(Connection connection) throws DBProblemException, InvalidDataException;
+	
+	public abstract void deleteAccount(Connection connection) throws DBProblemException, InvalidDataException;
+	
 //Getters and show methods	
 	protected String accType() throws InvalidDataException {
 		char type = 'x';
@@ -58,4 +61,8 @@ public abstract class Account extends StorageAbstract {
 		
 		throw new InvalidDataException(null, "Unrecognised account type");
 	}
+	public String getID() {
+		return (String)data.get("id");
+	}
+	
 }

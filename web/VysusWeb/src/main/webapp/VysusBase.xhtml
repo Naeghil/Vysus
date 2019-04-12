@@ -28,21 +28,28 @@
 			<div class="col-md-3 bg-lightpink h100"></div>
 		</div>
 	</div>
-	<!-- Header -->
-    <div id="header">
-        <ui:insert name="commonHeader">
-            <ui:include src="header.xhtml" />
-        </ui:insert>
-    </div>
-    <!-- Content -->
-    <div id="content">
-        <ui:insert name="bodyContent"></ui:insert>
-    </div>
-    <!-- Footer -->
-    <div id="footer">
-        <ui:insert name="commonFooter">
-            <ui:include src="footer.xhtml" />
-        </ui:insert>
-    </div>
+	
+	<!-- Page body -->
+	<div class="container-fluid h100 w100 centertext">
+		<!-- Header -->
+	    <div id="header" class="row h10">
+	        <ui:insert name="commonHeader">
+	            <ui:include src="header.xhtml" />
+	        </ui:insert>
+	    </div>
+		<!-- Content -->
+	    <div id="content" class="row h85">
+	        <ui:insert name="bodyContent"></ui:insert>
+	    </div>
+	    <!-- Footer -->
+    	<div class="row h5 centertext" id="footer">
+        	<ui:insert name="commonFooter">
+            	<ui:include src="footer.xhtml" />
+        	</ui:insert>
+    	</div>
+	</div>
+	
+    
+    
 </h:body>
 </html>

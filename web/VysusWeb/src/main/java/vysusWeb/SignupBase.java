@@ -2,7 +2,9 @@ package vysusWeb;
 
 
 import java.util.List;
+import java.sql.Connection;
 import java.sql.Date;
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -13,6 +15,8 @@ import java.util.Map;
 import javax.faces.bean.ManagedBean; 
 import javax.faces.bean.SessionScoped;
 
+import request.SignUp;
+import storage.DBProblemException;
 import storage.InvalidDataException;
 
 @ManagedBean(name="signup")
@@ -27,7 +31,7 @@ public class SignupBase extends VysusBean {
 
 	public SignupBase(){}
 
-	public Map<String, Object> dataForSignup() throws InvalidDataException {
+	public Map<String, Object> userData() throws InvalidDataException {
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 		String dateText = getYear()+"-"+getMonth()+"-"+getDay(); 
 		Date userDOB = null;
@@ -39,6 +43,26 @@ public class SignupBase extends VysusBean {
 		userData.put("dateOfBirth", userDOB);
 		
 		return userData;
+	}
+	
+	public void signup(Map<String, Object> accountData) {
+		try (Connection connection = getConnection()){
+			SignUp newUser = new SignUp(userData(), accountData, connection);
+			newUser.execute();
+			//Login:
+			getSessionMap().put("username", userData.get("username"));
+			getSessionMap().put("account", newUser.getAccountID());
+			
+			redirect("myProfile.jsf");
+			
+		} catch(InvalidDataException e) {
+			String field = e.field();
+			String msg = e.message();
+			if(field!=null) if(field.equals("userID")) field= "username";
+			message(field, "Invalid field", msg);
+		} catch(DBProblemException e) {
+			message("Uh-oh", "We had a problem executing your request");
+		}catch(SQLException e) {}
 	}
 	
 //Getter and setters

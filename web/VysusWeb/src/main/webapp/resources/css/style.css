@@ -98,9 +98,13 @@ p {
 .h80 {
   height:80%;
 }
+}
+.h85 {
+	height:85%;
+}
 
 .h90 {
-  height:90%;
+	height:90%;
 }
 
 .h100 {

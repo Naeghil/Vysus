@@ -27,7 +27,9 @@ public class Login extends VysusBean{
 			//Initialise the request
 			LogIn login = new LogIn(username, password, getConnection());
 			login.execute();
+			
 			getSessionMap().put("username", this.username);
+			getSessionMap().put("account", login.getAccountID());
 			
 			redirect("myProfile.jsf");
 		} catch(InvalidDataException e) {

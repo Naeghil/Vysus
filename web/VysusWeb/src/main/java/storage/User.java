@@ -21,24 +21,38 @@ public class User extends StorageAbstract {
 	protected Account account = null;	//Associated account and related data
 	
 	//Object-specific queries:
-	protected static String uniqueness = "SELECT COUNT(*) FROM User WHERE userID=?";
-	protected static String retrievePassword = "SELECT password FROM User WHERE userID=?";
+	protected static String uniqueness = "SELECT userID FROM User WHERE userID=?";
+	protected static String retrievePassword = "SELECT password, accountID FROM User WHERE userID=?";
 	protected static String updatePassword = "UPDATE User SET password=? WHERE userID=?";
 
 //Object initialisation:
-	//Constructor for existing user
-	public User(String username, Connection connection) throws DBProblemException, InvalidDataException { 
-		data.put("id", username); //this might need to be re-put; or alternatively use a separate variable
+	//Constructors for existing user
+	public User(String username) {
+		data.put("id", username);
+		setDBVariables();
+	}
+	public User(String username, Connection connection) throws DBProblemException, InvalidDataException {
+		data.put("id", username);
 		setDBVariables();
 		if(connection!=null) retrieve(connection);
 	}
+	public User(String username, String accountID, Connection connection) throws DBProblemException, InvalidDataException { 
+		data.put("id", username); //this might need to be re-put; or alternatively use a separate variable
+		setDBVariables();
+		if(accountID!=null) account = Account.getAccount(accountID, connection);
+		if(connection!=null) retrieve(connection);
+	}
 	//Constructor for new user
-	public User(Connection connection, String username, String password, Map<String, Object> data, String accountID) throws DBProblemException {
+	public User(Connection connection, String username, String password, 
+			Map<String, Object> data, Map<String, Object> accountData, 
+			String accountID) throws DBProblemException, InvalidDataException {
 		this.data = data;
 		this.data.put("id", username);
 		this.data.put("accountID", accountID);
 		setDBVariables();
+		account = Account.makeAccount(accountID, accountData, connection);
 		create(connection);
+		setPassword(connection, password);
 	}
 	//Sets object-specific queries and keys:
 	protected void setDBVariables() {
@@ -70,41 +84,35 @@ public class User extends StorageAbstract {
 		} catch (SQLException e) { throw new DBProblemException(e); }
 	}
 	//Checks user's password, effectively "logging in" the user if execution normally terminates
-	public void login(String password, Connection con) throws DBProblemException, InvalidDataException {
+	public String login(String password, Connection con) throws DBProblemException, InvalidDataException {
 		try (PreparedStatement getHash = con.prepareStatement(retrievePassword);){
 			getHash.setObject(1, data.get("id"));
 			try(ResultSet rs = getHash.executeQuery();) {
 				if(rs.next()) {
 					String hash = new String(rs.getBytes("password"));
 					if(!BCrypt.checkpw(password, hash)) throw new InvalidDataException("password", "Wrong password");
+					return rs.getString("accountID");
 				} else throw new InvalidDataException("username", "No such user");
 			}
 		} catch (SQLException e) { throw new DBProblemException(e); }
 	}
-	//Unneedingly complicated method to check uniqueness. 
+	//Checks uniqueness 
 	public static boolean isUnique(String username, Connection con) throws DBProblemException {
 		try(PreparedStatement unique = con.prepareStatement(uniqueness);) {
 			unique.setString(1, username);
 			try(ResultSet rs = unique.executeQuery();) {
-				if(rs.next()) {
-					if(rs.getInt(1)!=0) return false;
-				} else throw new DBProblemException(null);
+				return rs.next();
 			}
 		} catch (SQLException e) {
 			throw new DBProblemException(e);
 		}
-		return true;
 	}
 
 //Public interfaces of protected methods:
-	//Enables loading user data
-	//TODO: better specify the role of this method
-	public void load(Connection connection) throws DBProblemException, InvalidDataException {
-		retrieve(connection);
-	}
 	//Enables user deletion
 	public void deleteUser(String password, Connection connection) throws DBProblemException, InvalidDataException {
 		login(password, connection); //Double checks password
+		account.deleteAccount(connection);
 		delete(connection);
 	}
 	//For now this is to enact changes to the user account

@@ -18,6 +18,7 @@ public class ShowProfile extends RequestAbstract {
 	}
 	
 	public void execute() throws StorageException {
+		//Needs to retrieve the accountID as well
 		User newUser = new User(this.actorID, this.connection);
 		//return newUser.showFull();
 	}

@@ -24,6 +24,11 @@ import storage.StorageException;
 		this.field = field;
 		this.message = message;
 	}
+	public InvalidDataException(String message) {
+		nestedException = null;
+		this.field = null;
+		this.message = message;
+	}
 	
 	public String field() { return field; }
 	public String message() { return message; }

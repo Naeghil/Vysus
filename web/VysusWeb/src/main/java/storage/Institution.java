@@ -81,8 +81,13 @@ public class Institution extends Account{
 	
 	public void loadDeep(Connection connection)
 		throws DBProblemException, InvalidDataException {
-		if(admin) this.staff = Staff.allStaff((String)data.get("id"), connection);
-		//else this.jobs = Job.allJobs((String)data.get("id"), connection);
+		if(admin) this.staff = Staff.allStaff(getID(), connection);
+		//else this.jobs = Job.allJobs(getID(), connection);
+	}
+	public void deleteAccount(Connection connection) throws DBProblemException, InvalidDataException{
+		for(Staff staff : Staff.allStaff(getID(), connection)) staff.delete(connection);
+		//for(Job job : Job.allJobs(getID(), connection)) job.delete(connection);
+		this.delete(connection);
 	}
 	
 //Getters and show methods	
@@ -116,16 +121,16 @@ public class Institution extends Account{
 }
 
 class Staff extends User {
-	public Staff(Connection connection, String username, String password, Map<String, Object> data, String accountID)
-			throws DBProblemException, InvalidDataException {
-		super(username, null);
-		this.data = data;
-		this.data.put("accountID", accountID);
-		create(connection);
-	}
 	public Staff(String username, Connection connection)
 			throws DBProblemException, InvalidDataException {
 		super(username, connection);
+	}
+	public Staff(Connection connection, String username, String password, Map<String, Object> data, String accountID)
+			throws DBProblemException, InvalidDataException {
+		super(username);
+		this.data = data;
+		this.data.put("accountID", accountID);
+		create(connection);
 	}
 	
 //Show methods unusable:

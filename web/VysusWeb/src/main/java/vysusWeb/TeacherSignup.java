@@ -7,12 +7,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 
-import java.sql.Connection;
-import java.sql.SQLException;
-
-import request.SignUp;
-import storage.*;
-
 @ManagedBean(name="teacherSignup")
 @SessionScoped
 public class TeacherSignup extends VysusBean {
@@ -33,31 +27,12 @@ public class TeacherSignup extends VysusBean {
 		data.put("maxDistance", maxDistance);
 		data.put("minRatePerHour", minRatePerHour);
 		data.put("aboutMe", aboutMe);
-		data.put("accType", 0);
+		data.put("accType", new Integer(0));
 		return data;
 	}
 	
 	public void signupTeacher() {
-		try (Connection connection = getConnection()){
-			Map<String, Object> userData = signup.dataForSignup();
-			Map<String, Object> accountData = this.accountData();
-			//TODO: this doesn't take into account... the account!
-			SignUp newUser = new SignUp(userData, accountData, connection);
-			newUser.execute();
-			
-			getSessionMap().put("username", userData.get("username"));
-			getSessionMap().put("accountType", 0);
-			
-			redirect("myProfile.jsf");
-			
-		} catch(InvalidDataException e) {
-			String field = e.field();
-			String msg = e.message();
-			if(field!=null) if(field.equals("userID")) field= "username";
-			message(field, "Invalid field", msg);
-		} catch(DBProblemException e) {
-			message("Uh-oh", "We had a problem executing your request");
-		}catch(SQLException e) {}
+		signup.signup(accountData());
 	}
 	
 

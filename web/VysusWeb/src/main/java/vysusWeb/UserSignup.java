@@ -7,9 +7,14 @@ import java.net.URLEncoder;
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
+
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -33,13 +38,13 @@ public class UserSignup implements Serializable {
 	String postcode;
 	String email;
 	String phoneNo;
-	String dateOfBirth;
+	java.sql.Date dateOfBirth;
 	String day;
 	String month;
 	String year;
 	String type = "0";//0 = school 1 = teacher
 	HashMap<String, Object> userHash = new HashMap<String, Object>();
-	HashMap<String, String> userData = new HashMap<String, String>();
+	HashMap<String, Object> userData = new HashMap<String, Object>();
 	
 	public UserSignup(){ } //Default constructor
 
@@ -63,6 +68,20 @@ public class UserSignup implements Serializable {
 		formHashmap(); //Gather data from the form
 		Connection connection = null;
 		try {
+			//System.out.println(this.year + "-" + this.month + "-" + this.day);
+			
+			
+			//Change date to correct format
+			
+			try {
+				//Date newDate = new SimpleDateFormat().parse(this.year + "-" + this.month + "-" + this.day);
+				Date newDate = new SimpleDateFormat("yyyy-MM-dd").parse("1996-02-22");
+				this.dateOfBirth = new java.sql.Date(newDate.getTime());
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
 			//Retrieve the database object
 			DataSource vysusdb = (DataSource)((Context)new InitialContext()).lookup("java:/vysusDB");
 			//Connect to the database
@@ -150,12 +169,6 @@ public class UserSignup implements Serializable {
 	}
 	public void setPhoneNo(String phoneNo) {
 		this.phoneNo = phoneNo;
-	}
-	public String getDateOfBirth() {
-		return dateOfBirth;
-	}
-	public void setDateOfBirth(String dateOfBirth) {
-		this.dateOfBirth = dateOfBirth;
 	}
 
 	public String getDay() {

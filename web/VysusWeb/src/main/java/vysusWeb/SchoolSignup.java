@@ -51,26 +51,7 @@ public class SchoolSignup extends VysusBean {
 	}
 	
 	public void signupSchool() {
-		try (Connection connection = getConnection()){
-			Map<String, Object> userData = signup.dataForSignup();
-			Map<String, Object> accountData = this.accountData();
-			//TODO: this doesn't take into account... the account!
-			SignUp newUser = new SignUp(userData, accountData, connection);
-			newUser.execute();
-			
-			getSessionMap().put("username", userData.get("username"));
-			getSessionMap().put("accountType", 1);
-			
-			redirect("myProfile.jsf");
-			
-		} catch(InvalidDataException e) {
-			String field = e.field();
-			String msg = e.message();
-			if(field!=null) if(field.equals("userID")) field= "username";
-			message(field, "Invalid field", msg);
-		} catch(DBProblemException e) {
-			message("Uh-oh", "We had a problem executing your request");
-		}catch(SQLException e) {}
+		signup.signup(accountData());
 	}
 	
 	//Getters and setters

@@ -56,7 +56,8 @@
          		<h4 class="inline-block w15 form-element">Date of Birth</h4>
 				<h:inputText id="dobDay" value="#{signup.day}" a:placeholder="DD"
 					styleClass="form-control inline-block form-element w10" required="true" 
-					requiredMessage="Day in format DD must be input.">
+					requiredMessage="Day in format DD must be input."
+					onkeypress="if(event.which &lt; 48 || event.which &gt; 57) return false;">
 					<f:validateLength maximum="2" minimum="2"/>
 				</h:inputText>
 				<h:message for="dobDay"/>
@@ -69,7 +70,8 @@
 					requiredMessage="Year in format YYYY must be input.">
 					<f:validateLength maximum="4" minimum="4"/>
 					<!-- A better regex should be used: we don't want people born in 1568, nor in 3002 -->
-					<f:validateRegex pattern = "\d{4}"/>
+					<!-- <f:validateRegex pattern = "\d{4}"/> -->
+					<f:validateRegex pattern="^(19|20)\d{2}$"/>
 				</h:inputText>
 				<h:message for="dobYear"/>
          		

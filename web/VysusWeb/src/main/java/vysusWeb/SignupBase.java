@@ -38,6 +38,11 @@ public class SignupBase implements Serializable {
 	static List<String> monthNo = new ArrayList<String>(Arrays.asList(
 			"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12" ));
 	
+	static List<String> institutionText = new ArrayList<String>(Arrays.asList(
+			"Primary eduction","Secondary education","College","Sixth Form","University"));
+	static List<String> institutionData = new ArrayList<String>(Arrays.asList(
+			"Primary eduction","Secondary education","College","Sixth Form","University"));
+	
 	String username;
 	String password;
 	String title;
@@ -79,8 +84,8 @@ public class SignupBase implements Serializable {
 			//Change date to correct format
 			
 			try {
-				//Date newDate = new SimpleDateFormat().parse(this.year + "-" + this.month + "-" + this.day);
-				Date newDate = new SimpleDateFormat("yyyy-MM-dd").parse("1996-02-22");
+				Date newDate = new SimpleDateFormat().parse(this.year + "-" + this.month + "-" + this.day);
+				//Date newDate = new SimpleDateFormat("yyyy-MM-dd").parse("1996-02-22");
 				this.dateOfBirth = new java.sql.Date(newDate.getTime());
 			} catch (ParseException e) {
 				// TODO Auto-generated catch block
@@ -198,5 +203,12 @@ public class SignupBase implements Serializable {
 	}
 	public String monthToNo(String month) {
 		return monthNo.get(monthWord.indexOf(month));
+	}
+	
+	public List<String> getInstitutionText() {
+		return institutionText;
+	}
+	public String instituonToData(String institution) {
+		return institutionData.get(institutionText.indexOf(institution));
 	}
 }

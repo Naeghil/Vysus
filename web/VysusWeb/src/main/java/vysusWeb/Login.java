@@ -32,7 +32,7 @@ public class Login extends VysusBean{
 	public void login() {
 		formHashmap(); //Gather data from the form
 		try(Connection connection = getConnection()) {
-			if(connection==null) throw new DBProblemException(null);
+			if(connection==null) return;
 			//Initialise the request
 			LogIn login = new LogIn(this.userHash, getConnection());
 			login.execute();

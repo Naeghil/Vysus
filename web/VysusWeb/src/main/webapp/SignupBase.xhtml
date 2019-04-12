@@ -1,0 +1,119 @@
+<ui:composition lang="en"     
+	xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+    template="VysusBase.xhtml">
+	<ui:define name="bodyContent">
+
+
+<div class="container-fluid h100">
+	<div class="row h100">
+		<div class="col-md-2 h100"></div>
+		<div class="col-md-8 h100 bg-white smallScrollBar noSideScroll"
+			id="signup-form-column" 
+			style="background: rgba(255, 255, 255, 0.4)">
+			<a href="/VysusWeb/index.jsf" class="btn btn-default">Home</a>
+			<h:form>
+				<!-- User part -->
+				<h3 class="w100 centertext"> Tell us something about yourself</h3>
+         		<div id="login-data">
+         			<h:inputText id="username" value="#{signup.username}" a:placeholder="Username"
+	         			styleClass="form-control form-element w40" required="true"
+						requiredMessage="Make sure you enter a username" 
+						validatorMessage="Ensure your username is less than 59 characters">
+						<f:validateLength maximum="59" />
+					</h:inputText>
+					<h:message for="username"/>
+					<h:inputSecret id="password" value="#{signup.password}" a:placeholder="Password"
+						styleClass="form-control form-element w40" required="true"
+						requiredMessage="Password is mandatory"
+						validatorMessage="Ensure your password is less than 58 characters">
+						<f:validateLength maximum="58"/>
+					</h:inputSecret>
+					<h:message for="password"/>
+         		</div>
+				
+				<!-- Personal data -->
+         		<h:selectOneMenu id="title"
+      				value="#{signup.title}" 
+      				styleClass="form-control inline-block form-element w10">
+       					<f:selectItem itemValue="Mr" itemLabel="Mr"/>
+       					<f:selectItem itemValue="Mrs" itemLabel="Mrs"/>
+       					<f:selectItem itemValue="Ms" itemLabel="Ms"/>
+       					<f:selectItem itemValue="Sir" itemLabel="Sir"/>
+       					<f:selectItem itemValue="Mme" itemLabel="Mme"/>
+          		</h:selectOneMenu>
+         		<h:inputText value="#{signup.fullName}" styleClass="form-control inline-block w80" a:placeholder="Full Name"
+         			required="true" requiredMessage="Your full name is mandatory"
+         			validatorMessage="Do not exceed 1020 characters">
+         			<f:validateLength maximum="1020" />
+         		</h:inputText>
+         		<h:message for="fullName"/>
+         		
+         		<h4 class="inline-block w15 form-element">Date of Birth</h4>
+				<h:inputText id="dobDay" value="#{signup.day}" a:placeholder="DD"
+					styleClass="form-control inline-block form-element w10" required="true" 
+					requiredMessage="Day in format DD must be input.">
+					<f:validateLength maximum="2" minimum="2"/>
+				</h:inputText>
+				<h:message for="dobDay"/>
+				<h:selectOneMenu id="dobMonth" value="#{signup.month}" 
+					styleClass="form-control inline-block form-element w15">
+         			<f:selectItems value="#{signup.monthWord}" var="m" itemLabel="#{m}" itemValue="#{signup.monthToNo(m)}" />
+				</h:selectOneMenu>
+				<h:inputText id="dobYear" value="#{signup.year}" a:placeholder="YYYY"
+					styleClass="form-control inline-block form-element w10" required="true" 
+					requiredMessage="Year in format YYYY must be input.">
+					<f:validateLength maximum="4" minimum="4"/>
+					<!-- A better regex should be used: we don't want people born in 1568, nor in 3002 -->
+					<f:validateRegex pattern = "\d{4}"/>
+				</h:inputText>
+				<h:message for="dobYear"/>
+         		
+         		<!-- Contacts -->
+          		<h:inputText id="userHouseId" value="#{signup.houseIdentifier}" a:placeholder="House Number/Name"
+					styleClass="form-control form-element inline-block w60" required="true" 
+					requiredMessage="House number/name is required"
+					validatorMessage="Do not exceed 64 characters">
+					<f:validateLength maximum="64"/>
+				</h:inputText>
+				<h:message for="userHouseID"/>
+          		<h:inputText id="userPostcode" value="#{signup.postcode}" a:placeholder="Postcode"
+					styleClass="form-control form-element inline-block w20" required="true" 
+					requiredMessage="Postcode is required."
+					validatorMessage="Please ensure your postcode is in the correct UK format.">
+					<f:validateRegex pattern="([Gg][Ii][Rr] 0[Aa]{2})|((([A-Za-z][0-9]{1,2})|(([A-Za-z][A-Ha-hJ-Yj-y][0-9]{1,2})|(([A-Za-z][0-9][A-Za-z])|([A-Za-z][A-Ha-hJ-Yj-y][0-9][A-Za-z]?))))\s?[0-9][A-Za-z]{2})"></f:validateRegex>
+				</h:inputText>
+             	<h:message for="userPostcode"/>
+          		
+          		<h:inputText id="userEmail" value="#{signup.email}" a:placeholder="Email"
+          			styleClass="form-control form-element inline-block w60" required="true" 
+					requiredMessage="Email address is required"
+					validatorMessage="Please ensure your email address is in the correct format and does not exceed 300 characters">
+					<f:validateRegex pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]"></f:validateRegex>
+             		<f:validateLength maximum="300"/>
+				</h:inputText>
+             	<h:message for="userEmail"/>
+          		<h:inputText id="userPhone" value="#{signup.phoneNo}" a:placeholder="Phone Number" 
+					styleClass="form-control form-element inline-block w40" required="true" 
+					requiredMessage="Phone number is required."
+					validatorMessage="Please ensure your phone number is in the correct format.">
+					<f:validateRegex pattern="^(((\+44\s?\d{4}|\(?0\d{4}\)?)\s?\d{3}\s?\d{3})|((\+44\s?\d{3}|\(?0\d{3}\)?)\s?\d{3}\s?\d{4})|((\+44\s?\d{2}|\(?0\d{2}\)?)\s?\d{4}\s?\d{4}))(\s?\#(\d{4}|\d{3}))?$"/>
+				</h:inputText>
+				<h:message for="userPhone"/>
+				
+				
+				<!-- Account part -->
+				<ui:insert name="accountForm"></ui:insert>
+				
+            </h:form>
+        </div>
+        <div class="col-md-2 h100"></div>
+  </div>
+</div>
+
+	</ui:define>
+</ui:composition>

@@ -14,6 +14,9 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -28,12 +31,17 @@ import storage.*;
 @ManagedBean(name="signup")
 @SessionScoped
 //username, title, password, firstNames, lastNames, houseIdentifier, postcode, email, phoneNo, dateOfBirth
-public class UserSignup implements Serializable {
+public class SignupBase implements Serializable {
+	//The reason why this is not a map is because there is no way to make it static:
+	static List<String> monthWord = new ArrayList<String>(Arrays.asList(
+			"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"));
+	static List<String> monthNo = new ArrayList<String>(Arrays.asList(
+			"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12" ));
+	
 	String username;
 	String password;
 	String title;
-	String firstNames;
-	String lastNames;
+	String fullName;
 	String houseIdentifier;
 	String postcode;
 	String email;
@@ -46,16 +54,13 @@ public class UserSignup implements Serializable {
 	HashMap<String, Object> userHash = new HashMap<String, Object>();
 	HashMap<String, Object> userData = new HashMap<String, Object>();
 	
-	public UserSignup(){ } //Default constructor
+	public SignupBase(){ } //Default constructor
 
-//username, title, password, firstNames, lastNames, houseIdentifier, postcode, email, phoneNo, dateOfBirth
 	public void formHashmap() {
 		this.userHash.put("username", this.username);
 		this.userHash.put("password", this.password);
 		this.userHash.put("accType", this.type);
-		this.userData.put("title", this.title);
-		this.userData.put("firstNames", this.firstNames);
-		this.userData.put("lastNames", this.lastNames);
+		this.userData.put("fullName", this.title+" "+this.fullName);
 		this.userData.put("houseIdentifier", this.houseIdentifier);
 		this.userData.put("postcode", this.postcode);
 		this.userData.put("email", this.email);
@@ -134,17 +139,11 @@ public class UserSignup implements Serializable {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public String getFirstNames() {
-		return firstNames;
+	public String getFullName() {
+		return fullName;
 	}
-	public void setFirstNames(String firstNames) {
-		this.firstNames = firstNames;
-	}
-	public String getLastNames() {
-		return lastNames;
-	}
-	public void setLastNames(String lastNames) {
-		this.lastNames = lastNames;
+	public void setFullName(String fullName) {
+		this.fullName = fullName;
 	}
 	public String getHouseIdentifier() {
 		return houseIdentifier;
@@ -194,5 +193,10 @@ public class UserSignup implements Serializable {
 	public void setYear(String year) {
 		this.year = year;
 	}
-
+	public List<String> getMonthWord() {
+		return monthWord;
+	}
+	public String monthToNo(String month) {
+		return monthNo.get(monthWord.indexOf(month));
+	}
 }

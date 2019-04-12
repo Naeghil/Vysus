@@ -9,18 +9,17 @@ public class LogIn extends RequestAbstract {
 	protected String username;
 	protected String password;
 	
-	public LogIn(Map<String, Object> input, Connection con) {
-		username = (String)input.get("username");
-		password = (String)input.get("password");
+	public LogIn(String username, String password, Connection con) {
+		this.username = username;
+		this.password = password;
 		connection = con;
 		actor = null;
 	}
 	
-	public Map<String, Object> execute() throws DBProblemException, InvalidDataException {
+	public void execute() throws DBProblemException, InvalidDataException {
 		if(this.username == null) throw InvalidDataException.invalidUser();
 		if(this.password == null) throw InvalidDataException.invalidPassword();
 		actor = new User(username, null);
 		actor.login(password, connection);
-		return null;
 	}	
 }

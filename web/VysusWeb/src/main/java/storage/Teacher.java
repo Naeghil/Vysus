@@ -23,12 +23,12 @@ public class Teacher extends Account{
 	}
 	protected void setDBVariables() {
 		keys = new ArrayList<String>(Arrays.asList(
-				"gender", "maxDistance", "minRatePerHour", "aboutMe"));
+				"maxDistance", "minRatePerHour", "aboutMe"));
 		delete = "DELETE FROM Qualification WHERE qualificationID=?";
 		retrieve = "SELECT * FROM Teacher WHERE accountID=?";
 		create = "INSERT INTO Teacher"
-				+ "(accountID, gender, maxDistance, minRatePerHour, aboutMe) "
-				+ "VALUES(?, ?, ?, ?, ?)";
+				+ "(accountID, maxDistance, minRatePerHour, aboutMe) "
+				+ "VALUES(?, ?, ?, ?)";
 	}
 	protected String update(List<String> changed) {
 		String upd = "UPDATE Teacher SET " + changed.get(0);

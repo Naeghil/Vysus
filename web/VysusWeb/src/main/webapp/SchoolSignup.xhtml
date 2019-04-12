@@ -1,0 +1,59 @@
+<ui:composition lang="en"     
+	xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:p="http://primefaces.org/ui"
+    template="SignupBase.xhtml">
+	<ui:define name="accountForm">
+				<!-- User part -->
+				<h3 class="w100 centertext"> Institution Details</h3>
+         		<div id="institution-data">
+         			<h:inputText id="institutionName" value="#{schoolSignup.institutionName}" a:placeholder="Institution name"
+	         			styleClass="form-control form-element w90" required="true"
+						requiredMessage="Make sure you enter an institution name" 
+						validatorMessage="Ensure your username is less than 257 characters">
+						<f:validateLength maximum="257" />
+					</h:inputText>
+				<h:message for="institutionName"/>
+				
+				<h4 class="inline-block w15 form-element">Institution type: </h4>
+				<h:selectOneMenu id="institutionType" value="#{schoolSignup.institutionType}" 
+					styleClass="form-control inline-block form-element w40">
+         			<f:selectItems  value="#{schoolSignup.types}"/>
+				</h:selectOneMenu>
+				
+				<h:inputText id="institutionHouseId" value="#{schoolSignup.institutionNo}" a:placeholder="Building Number/Name"
+					styleClass="form-control form-element inline-block w60" required="true" 
+					requiredMessage="Institution building number/name is required"
+					validatorMessage="Do not exceed 64 characters">
+					<f:validateLength maximum="64"/>
+				</h:inputText>
+				<h:message for="institutionHouseID"/>
+          		<h:inputText id="institutionPostcode" value="#{schoolSignup.institutionPostcode}" a:placeholder="Postcode"
+					styleClass="form-control form-element inline-block w20" required="true" 
+					requiredMessage="Postcode is required."
+					validatorMessage="Please ensure your postcode is in the correct UK format.">
+					<f:validateRegex pattern="([Gg][Ii][Rr] 0[Aa]{2})|((([A-Za-z][0-9]{1,2})|(([A-Za-z][A-Ha-hJ-Yj-y][0-9]{1,2})|(([A-Za-z][0-9][A-Za-z])|([A-Za-z][A-Ha-hJ-Yj-y][0-9][A-Za-z]?))))\s?[0-9][A-Za-z]{2})"></f:validateRegex>
+				</h:inputText>
+             	<h:message for="institutionPostcode"/>
+				
+          		<h:inputText id="institutionEmail" value="#{schoolSignup.institutionEmail}" a:placeholder="Email"
+          			styleClass="form-control form-element inline-block w60" required="true" 
+					requiredMessage="Email address is required"
+					validatorMessage="Please ensure your email address is in the correct format and does not exceed 300 characters">
+					<f:validateRegex pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]"></f:validateRegex>
+             		<f:validateLength maximum="300"/>
+				</h:inputText>
+             	<h:message for="institutionEmail"/>
+          		<h:inputText id="institutionPhone" value="#{schoolSignup.institutionPhone}" a:placeholder="Phone Number" 
+					styleClass="form-control form-element inline-block w30" required="true" 
+					requiredMessage="Phone number is required."
+					validatorMessage="Please ensure your phone number is in the correct format.">
+					<f:validateRegex pattern="^(((\+44\s?\d{4}|\(?0\d{4}\)?)\s?\d{3}\s?\d{3})|((\+44\s?\d{3}|\(?0\d{3}\)?)\s?\d{3}\s?\d{4})|((\+44\s?\d{2}|\(?0\d{2}\)?)\s?\d{4}\s?\d{4}))(\s?\#(\d{4}|\d{3}))?$"/>
+				</h:inputText>
+				<h:message for="institutionPhone"/>
+				</div>
+	</ui:define>
+</ui:composition>

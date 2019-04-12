@@ -11,12 +11,15 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+import storage.User;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 
 public class VysusBean implements Serializable {
 	protected String actor = null;
 	protected String account = null;
+	User user = null;
 	
 	public VysusBean() {
 		//Set the actor to the currently logged user, if any:

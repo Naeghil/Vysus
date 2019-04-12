@@ -57,12 +57,12 @@ public class User extends StorageAbstract {
 	//Sets object-specific queries and keys:
 	protected void setDBVariables() {
 		keys = new ArrayList<String>(Arrays.asList(
-				"accountID", "title", "firstNames", "lastNames", "houseIdentifier", "postcode", "email", "phoneNo", "dateOfBirth"));
+				"accountID", "fullName", "houseIdentifier", "postcode", "email", "phoneNo", "dateOfBirth"));
 		delete = "DELETE FROM User WHERE userID=?";
 		retrieve = "SELECT * FROM User WHERE userID=?";
 		//This excludes password:
 		create = "INSERT INTO User"
-				+ "(userID, accountID, title, firstNames, lastNames, houseIdentifier, postcode, email, phoneNo, dateOfBirth) "
+				+ "(userID, accountID, fullName, houseIdentifier, postcode, email, phoneNo, dateOfBirth) "
 				+ "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	}
 	//Implementation of the update query (excludes password):
@@ -136,7 +136,7 @@ public class User extends StorageAbstract {
 	public Map<String, Object> showFull() {
 		Map<String, Object> show = new HashMap<String, Object>();
 		show.put("userData", data);
-		//show.put("accountData", account.showFull());
+		if(account!=null) show.put("accountData", account.showFull());
 		return show;
 	}
 }

@@ -7,26 +7,25 @@
 	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
     template="VysusInternal.xhtml">
 	<ui:define name="content">
-		<p:tabView>
-        	<ui:repeat items="#{profile.tabs}" var="tab" varStatus="vs">
-            	<p:tab title="#{tab.title}">
-                	<ui:include src="#{tab.page}"/>
-            	</p:tab>
-            </ui:repeat>
-    	</p:tabView>
+		<div class="container-fluid h100 w100">
+			<div id="profile-content" class="row h80">
+				<div id="user-side" class="col-6-md">
+					<h2>#{profile.fullName} </h2>
+					<p>Date of Birth: #{profile.dateOfBirth}</p>
+					<p>Address: #{profile.userAddress}</p>
+					<p>Email: #{profile.userEmail}</p>
+					<p>Phone Number: #{profile.userPhoneNo}</p>
+					
+				</div>
+				<div id="account-side" class="col-6-md">
+					
+				</div>
+			</div>
+			
+			<!-- the changes button will be here -->
+			<div class="row h20 centertext">
+			</div>
+		</div>
 		
 	</ui:define>
-</ui:composition>
-
-		
-<!-- 
-		MYPROFILE PAGE <br/>
-		title = #{profile.getTitle()} <br/>
-		firstNames = #{profile.getFirstNames()} <br/>
-		lastNames = #{profile.getLastNames()} <br/>
-		houseIdentifier = #{profile.getHouseIdentifier()} <br/>
-		postcode = #{profile.getPostcode()} <br/>
-		email = #{profile.getEmail()} <br/>
-		phoneNo = #{profile.getPhoneNo()} <br/>
-		dateOfBirth = #{profile.getDateOfBirth()} <br/>
- -->		
+</ui:composition>		

@@ -8,41 +8,45 @@
     xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
     template="VysusBase.xhtml">
 	<ui:define name="bodyContent">
-<div class="row h100">
-	<div class="col-md-4 h100">
-		<h1>Teachers</h1>
-		<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce in libero vehicula, malesuada enim at, imperdiet diam. Nullam mattis non enim eu malesuada. Morbi interdum erat neque, ut aliquet est consequat ut. Proin augue enim, vehicula at erat non, maximus tempus nisi. Aliquam at auctor nisl. Praesent aliquet id nulla vel sollicitudin. Aenean eros ante, gravida id fringilla at, volutpat ut augue. Mauris nec feugiat nulla. Nullam mattis commodo justo, eget ullamcorper lorem imperdiet a. Nullam vitae felis leo. Etiam ac tincidunt neque. Donec eu scelerisque dui. Etiam laoreet metus tellus, quis porta ex tempus non. Nulla lacinia ipsum nibh, at tempor nulla eleifend sit amet. Quisque in diam in ex gravida convallis eu in nisl.</p>
-		<div class="col-md-5">
-			<a href="/VysusWeb/signupTeachers.jsf" class="btn btn-default">Create an account</a>
-		</div>
-	</div>
-	<div class="col-md-4 bg-bp-grad centertext h100">
-		<div id="central-index-div">
-			<div class="dot centertext">
-					<img src="resources/images/duck2.png" style="height:50%;width:50%;margin:25%;" alt="Picture of a cute duck"/>
+	
+<div class="container-fluid h100 w100">
+	<div class="row h100">
+		<div class="col-md-4 h100">
+			<h1>Teachers</h1>
+			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce in libero vehicula, malesuada enim at, imperdiet diam. Nullam mattis non enim eu malesuada. Morbi interdum erat neque, ut aliquet est consequat ut. Proin augue enim, vehicula at erat non, maximus tempus nisi. Aliquam at auctor nisl. Praesent aliquet id nulla vel sollicitudin. Aenean eros ante, gravida id fringilla at, volutpat ut augue. Mauris nec feugiat nulla. Nullam mattis commodo justo, eget ullamcorper lorem imperdiet a. Nullam vitae felis leo. Etiam ac tincidunt neque. Donec eu scelerisque dui. Etiam laoreet metus tellus, quis porta ex tempus non. Nulla lacinia ipsum nibh, at tempor nulla eleifend sit amet. Quisque in diam in ex gravida convallis eu in nisl.</p>
+			<div class="col-md-5">
+				<a href="/VysusWeb/signupTeachers.jsf" class="btn btn-default">Create an account</a>
 			</div>
-			<h:form id="loginForm">
-				<h2>Please enter your username and password.</h2>
-				<h:inputText id="username" value="#{login.username}" styleClass="form-control index-form-element" 
-					a:placeholder="Username"
-					required="true" requiredMessage="Username is mandatory"/>
-				<h:message for="username" styleClass="index-form-message"/>
-				<h:inputSecret id="password" value="#{login.password}" styleClass="form-control index-form-element"
-					a:placeholder="Password"
-					required="true" requiredMessage="Password is mandatory"/> 
-				<h:message for="password" styleClass="index-form-message"/>
-				<p></p>
-				<h:commandButton value="Login" action="#{login.login}" styleClass="btn btn-primary index-form-element"/>
-			</h:form>
+		</div>
+		<div class="col-md-4 bg-bp-grad centertext h100">
+			<div id="central-index-div">
+				<div class="dot centertext">
+						<img src="resources/images/duck2.png" style="height:50%;width:50%;margin:25%;" alt="Picture of a cute duck"/>
+				</div>
+				<h:form id="loginForm">
+					<h2>Please enter your username and password.</h2>
+					<h:inputText id="username" value="#{login.username}" styleClass="form-control index-form-element" 
+						a:placeholder="Username"
+						required="true" requiredMessage="Username is mandatory"/>
+					<h:message for="username" styleClass="form-message"/>
+					<h:inputSecret id="password" value="#{login.password}" styleClass="form-control index-form-element"
+						a:placeholder="Password"
+						required="true" requiredMessage="Password is mandatory"/> 
+					<h:message for="password" styleClass="form-message"/>
+					<p></p>
+					<h:commandButton value="Login" action="#{login.login}" styleClass="btn btn-primary index-form-element"/>
+				</h:form>
+			</div>
+		</div>	
+		<div class="col-md-4 h100">
+			<h1>School</h1>
+			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce in libero vehicula, malesuada enim at, imperdiet diam. Nullam mattis non enim eu malesuada. Morbi interdum erat neque, ut aliquet est consequat ut. Proin augue enim, vehicula at erat non, maximus tempus nisi. Aliquam at auctor nisl. Praesent aliquet id nulla vel sollicitudin. Aenean eros ante, gravida id fringilla at, volutpat ut augue. Mauris nec feugiat nulla. Nullam mattis commodo justo, eget ullamcorper lorem imperdiet a. Nullam vitae felis leo. Etiam ac tincidunt neque. Donec eu scelerisque dui. Etiam laoreet metus tellus, quis porta ex tempus non. Nulla lacinia ipsum nibh, at tempor nulla eleifend sit amet. Quisque in diam in ex gravida convallis eu in nisl.</p>
+			<div class="col-md-5">
+				<a href="/VysusWeb/signupSchools.jsf" class="btn btn-default">Create an account</a>
+			</div>
 		</div>
 	</div>	
-	<div class="col-md-4 h100">
-		<h1>School</h1>
-		<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce in libero vehicula, malesuada enim at, imperdiet diam. Nullam mattis non enim eu malesuada. Morbi interdum erat neque, ut aliquet est consequat ut. Proin augue enim, vehicula at erat non, maximus tempus nisi. Aliquam at auctor nisl. Praesent aliquet id nulla vel sollicitudin. Aenean eros ante, gravida id fringilla at, volutpat ut augue. Mauris nec feugiat nulla. Nullam mattis commodo justo, eget ullamcorper lorem imperdiet a. Nullam vitae felis leo. Etiam ac tincidunt neque. Donec eu scelerisque dui. Etiam laoreet metus tellus, quis porta ex tempus non. Nulla lacinia ipsum nibh, at tempor nulla eleifend sit amet. Quisque in diam in ex gravida convallis eu in nisl.</p>
-		<div class="col-md-5">
-			<a href="/VysusWeb/signupSchools.jsf" class="btn btn-default">Create an account</a>
-		</div>
-	</div>
-</div>	
+</div>
+
 	</ui:define>
 </ui:composition>

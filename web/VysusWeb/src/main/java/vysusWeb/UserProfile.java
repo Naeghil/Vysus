@@ -62,7 +62,7 @@ public class UserProfile implements Serializable {
 			
 			//inside profileData is a map<string,string>, call method "getStringHash"
 			//getStringHash will take a map/hashmap object and return it as Map<String,String> if it is possible
-			Map<String, Object> profileData = profile.execute(); 
+			Map<String, Object> profileData = null; //profile.execute(); 
 			System.out.println(profileData);
 			userData = DataConv.getStringMap(profileData.get("userData"));
 			System.out.println(userData);
@@ -70,7 +70,7 @@ public class UserProfile implements Serializable {
 			return;
 		} catch(InvalidDataException e) {
 			return; // But set the flag saying the user is not unique
-		} catch(DBProblemException | NamingException | SQLException ex) {
+		} catch(/*DBProblemException |*/ NamingException | SQLException ex) {
 			String msg = "There was a problem:"+System.getProperty("line.separator");
 			if(ex instanceof DBProblemException) msg += ((DBProblemException)ex).getNested().getMessage();
 			else msg += ex.getMessage();

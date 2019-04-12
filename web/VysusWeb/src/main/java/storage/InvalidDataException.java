@@ -32,16 +32,5 @@ import storage.StorageException;
 	
 	public String field() { return field; }
 	public String message() { return message; }
-	 
-	//Common exceptions:
-	//"username", "No such user");
-	
-	//("password", "Wrong password");
-
-	//("qualification", "This qualification doesn't exist");
-
-	//("rights", "You don't have the rights to perform this operation");
-
-	//("id", "Record not found");
 
 }

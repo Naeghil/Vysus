@@ -14,7 +14,8 @@
 <h:inputText id="maxDistance" value="#{teacherSignup.maxDistance}"
 	styleClass="form-control form-element inline-block w20" required="true"
 	requiredMessage="Please input a number"
-	validatorMessage="Please input a number">
+	validatorMessage="Please input a positive number">
+	<h:validateRegex pattern="/^\d+$/"/>
 </h:inputText>
 <h:message for="maxDistance"/>
 
@@ -22,7 +23,8 @@
 <h:inputText id="minRatePerHour" value="#{teacherSignup.minRatePerHour}"
 	styleClass="form-control form-element inline-block w20" required="true"
 	requiredMessage="Please input a number"
-	validatorMessage="Please input a number">                     
+	validatorMessage="Please input a positive number">  
+	<h:validateRegex pattern="/^\d+$/"/>                   
 </h:inputText>
 <h:message for="minRatePerHour"/>
 				

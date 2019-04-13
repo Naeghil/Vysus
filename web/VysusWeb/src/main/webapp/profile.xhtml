@@ -12,35 +12,34 @@
 		
 		
 		<div class="container-fluid h100 w100">
-			<div id="profile-content" class="row h80">
-				<p:tabView>
+			<div id="profile-content" class="row h90 lefttext">
+				<p:tabView styleClass="h100">
 					<p:tab title="You">
-						<h2>#{profile.fullName} </h2>
+						<h4>#{profile.fullName} </h4>
 						<p>Date of Birth: #{profile.dateOfBirth}</p>
 						<p>Address: #{profile.userAddress}</p>
 						<p>Email: #{profile.userEmail}</p>
 						<p>Phone Number: #{profile.userPhoneNo}</p>			
 					</p:tab>
-					<!-- p:tab render="#{profile.accType eq 1}" title="Institution"-->
-					<p:tab title="Institution">
-						<p>Hello, I'm an Institution tab</p>
+					< p:tab render="#{profile.accType eq 1}" title="Institution">
+					<!--p:tab title="Institution"-->
 						<ui:include src="resources/includes/school-profile.xhtml"/>
 					</p:tab>
-					<!-- p:tab render="#{profile.accType eq 1 and profile.isAdmin()}" title="Staff"-->
-					<p:tab title="Staff"> 
-						<p>Hello, I'm the staff page</p>
+					<p:tab render="#{profile.accType eq 1 and profile.isAdmin()}" title="Staff">
+					<!-- p:tab title="Staff"--> 
 						<ui:include src="resources/includes/staff-profile.xhtml"/>
 					</p:tab>
-					<!--p:tab render="#{profile.accType eq 0}" title="Work"-->
-					<p:tab title="Work">
-						<p>Hello, I'm the teacher page</p>		
+					<p:tab render="#{profile.accType eq 0}" title="Work">
+					<!--p:tab title="Work"-->
 						<ui:include src="resources/includes/teacher-profile.xhtml"/>	
 					</p:tab>
 		    	</p:tabView>
 			</div>
 			
 			<!-- the changes button will be here -->
-			<div class="row h20 centertext">
+			<div class="row h10 centertext">
+				<h:commandButton action="idkAskMiles" value="Edit" styleClass="btn btn-primary form-element"/>
+				<h:commandButton action="#{profile.changes()}" value="Submit" styleClass="btn btn-primary form-element"/>
 			</div>
 		</div>
 		

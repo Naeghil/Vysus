@@ -1,6 +1,8 @@
 package util;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /*************************************
@@ -23,6 +25,14 @@ public class DataConv {
 			else return null;
 			converted.put(key, value);
 		}
+		return converted;
+	}
+	public static List<Object> getList(Object list) {
+		List<?> temp;
+		List<Object> converted = new ArrayList<Object>();
+		if(list instanceof ArrayList<?>) temp = (ArrayList<?>) list;
+		else return null;
+		for(Object item : temp) converted.add(item);
 		return converted;
 	}
 	public static Map<String, Object> getObjectMap(Object map){

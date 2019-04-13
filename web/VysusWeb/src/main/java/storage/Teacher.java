@@ -2,6 +2,7 @@ package storage;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.List;
 import java.sql.*;
@@ -53,10 +54,12 @@ public class Teacher extends Account{
 		return null;
 	}
 	public Map<String, Object> show() {
-		return null;
+		Map<String, Object> show = new HashMap<String, Object>();
+		show.put("aboutMe", data.get("aboutMe"));
+		return show;
 	}
 	public Map<String, Object> showFull() {
-		return null;
+		return data;
 	}
 	
 }

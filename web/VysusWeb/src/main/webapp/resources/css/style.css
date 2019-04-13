@@ -194,6 +194,11 @@ p {
 .form-element {
 	margin: 1%;
 }
+.data-box {
+	width:100%;
+	border-style: solid;
+	border-width: 2px;
+}
 
 .content-panel {
 	background: rgba(255, 255, 255, 0.5);

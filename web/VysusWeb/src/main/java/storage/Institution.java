@@ -3,8 +3,6 @@ package storage;
 import java.util.List;
 import java.util.Map;
 
-import util.DataConv;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -102,14 +100,12 @@ public class Institution extends Account{
 		return null;
 	}
 	public Map<String, Object> showFull() {
-		Map<String, Object> show = new HashMap<String, Object>();
-		show.put("accountData", data);
+		Map<String, Object> show = new HashMap<String, Object>(data);
 		show.put("admin", admin);
 		if(admin) {
-			Map<String, Object> staffData = new HashMap<String, Object>();
+			List<Object> staffData = new ArrayList<Object>();
 			for(Staff staff : this.staff) {
-				Map<String, Object> data = staff.getData();
-				staffData.put((String)data.get("id"), DataConv.makeStringMap(data));
+				staffData.add(staff.showFull());
 			}
 			show.put("staffData", staffData);
 		}
@@ -133,7 +129,7 @@ class Staff extends User {
 	
 //Show methods unusable:
 	public Map<String, Object> showFull(){
-		return null;
+		return data;
 	}
 	public Map<String, Object> show(){
 		return null;
@@ -141,9 +137,7 @@ class Staff extends User {
 	public Map<String, Object> showMini() {
 		return null;
 	}
-	protected Map<String, Object> getData() {
-		return data;
-	}
+	
 //Static show methods to be used by the Institution object
 	public static List<Staff> allStaff(String accountID, Connection connection) throws DBProblemException, InvalidDataException {
 		List<Staff> allStaff = new ArrayList<Staff>();

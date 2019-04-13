@@ -13,12 +13,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.enterprise.context.RequestScoped;
-import javax.faces.bean.ManagedBean; 
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 
 import storage.*;
 
 @ManagedBean(name="signup")
-@RequestScoped
+@SessionScoped
 
 public class SignupBase extends VysusBean {
 	//The reason why this is not a map is because there is no way to make it static:

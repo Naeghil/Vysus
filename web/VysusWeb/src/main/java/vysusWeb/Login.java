@@ -5,7 +5,7 @@ import java.sql.SQLException;
 
 import javax.enterprise.context.RequestScoped;
 import javax.faces.bean.ManagedBean; 
-import request.*;
+
 import storage.*;
 
 //TODO: add a logger class that records database errors somewhere
@@ -25,12 +25,10 @@ public class Login extends VysusBean{
 	public void login() {
 		try(Connection connection = getConnection()) {
 			if(connection==null) return;
-			//Initialise the request
-			LogIn login = new LogIn(username, password, getConnection());
-			login.execute();
-			
+
+			User toLogin = new User(username);
+			getSessionMap().put("account", toLogin.login(password, connection));
 			getSessionMap().put("username", this.username);
-			getSessionMap().put("account", login.getAccountID());
 			
 			redirect("myProfile.jsf");
 		} catch(InvalidDataException e) {

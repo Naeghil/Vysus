@@ -19,7 +19,6 @@ import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.*;
 
-import request.*;
 import storage.*;
 @ManagedBean(name="UserCookies")
 @RequestScoped

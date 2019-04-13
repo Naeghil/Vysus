@@ -13,7 +13,6 @@ import javax.faces.bean.SessionScoped;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-import request.SignUp;
 import storage.*;
 
 @ManagedBean(name="schoolSignup")

@@ -12,15 +12,13 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.enterprise.context.RequestScoped;
 import javax.faces.bean.ManagedBean; 
-import javax.faces.bean.SessionScoped;
 
-import request.SignUp;
-import storage.DBProblemException;
-import storage.InvalidDataException;
+import storage.*;
 
 @ManagedBean(name="signup")
-@SessionScoped
+@RequestScoped
 
 public class SignupBase extends VysusBean {
 	//The reason why this is not a map is because there is no way to make it static:
@@ -47,11 +45,17 @@ public class SignupBase extends VysusBean {
 	
 	public void signup(Map<String, Object> accountData) {
 		try (Connection connection = getConnection()){
-			SignUp newUser = new SignUp(userData(), accountData, connection);
-			newUser.execute();
+			String username = (String)userData.get("username");
+			String password = (String)userData.get("password");
+			String accountID = (Integer)accountData.get("accType")+username;
+			
+			if(!User.isUnique(username, connection)) throw new InvalidDataException("username", "This username already exists.");
+			
+			new User(connection, username, password, userData(), accountData, accountID);
+			
 			//Login:
-			getSessionMap().put("username", userData.get("username"));
-			getSessionMap().put("account", newUser.getAccountID());
+			getSessionMap().put("username", username);
+			getSessionMap().put("account", accountID);
 			
 			redirect("myProfile.jsf");
 			

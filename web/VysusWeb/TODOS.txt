@@ -1,9 +1,8 @@
 - TODO: public update methods should deal with multiple levels of changes with (HashMap<String, Object) as parameter, especially with common interface
-- TODO: User has protected account object
-- TODO: by holding the user in the session there needs to be means of synchronisation between devices; can "all sessions" be checked in wildfly?
 - TODO: consider having a different storage object for calendars
 - TODO: take out gender from the DB; girlpow@
+- TODO: if failure to retrieve the user data from internal beans, invalidate session and do the login thing
+- TODO: merge request with the beans
 
 
 !TODO: the accountID for an institution should be independent from its own sysAdmin, so they can change
-		

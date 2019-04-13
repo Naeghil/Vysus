@@ -50,7 +50,7 @@ public class Profile extends VysusBean {
 		accountData = DataConv.getObjectMap(fullData.get("accountData"));
 		if(isAdmin()) additionalData = DataConv.getList(accountData.remove("staffData"));
 		accType = Account.accType(account);
-		System.out.println(accType);
+		System.out.println("From extract: " + accType);
 	}
 //Changes:
 	public void changes() {
@@ -72,7 +72,7 @@ public class Profile extends VysusBean {
 	
 //Getters and setters
 	public int getAccType() {
-		System.out.println(this.accType);
+		System.out.println("From getAccType: " + this.accType);
 		return this.accType;
 	}
 	public String getFullName() {

@@ -49,7 +49,7 @@ public class SignupBase extends VysusBean {
 			String username = (String)userData.get("username");
 			String password = (String)userData.get("password");
 			String accountID = (Integer)accountData.get("accType")+username;
-			
+			System.out.println("Acc data created");
 			if(!User.isUnique(username, connection)) throw new InvalidDataException("username", "This username already exists.");
 			
 			new User(connection, username, password, userData(), accountData, accountID);
@@ -57,7 +57,7 @@ public class SignupBase extends VysusBean {
 			//Login:
 			getSessionMap().put("username", username);
 			getSessionMap().put("account", accountID);
-			
+			System.out.println("Acc created");
 			redirect("myProfile.jsf");
 			
 		} catch(InvalidDataException e) {
@@ -65,6 +65,7 @@ public class SignupBase extends VysusBean {
 			String msg = e.message();
 			if(field!=null) if(field.equals("userID")) field= "username";
 			message(field, "Invalid field", msg);
+			System.out.println("Invalid data exception " + msg + " " + field);
 		} catch(DBProblemException e) {
 			message("Uh-oh", "We had a problem executing your request");
 		}catch(SQLException e) {}

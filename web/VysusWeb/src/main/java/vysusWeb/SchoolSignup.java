@@ -46,6 +46,7 @@ public class SchoolSignup extends VysusBean {
 		data.put("email", this.institutionEmail);
 		data.put("phoneNo", this.institutionPhone);
 		data.put("accType", 1);
+		data.put("sysAdminID", signup.getUsername());
 		return data;
 	}
 	

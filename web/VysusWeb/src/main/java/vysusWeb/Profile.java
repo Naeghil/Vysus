@@ -72,6 +72,7 @@ public class Profile extends VysusBean {
 	
 //Getters and setters
 	public int getAccType() {
+		System.out.println(this.accType);
 		return this.accType;
 	}
 	public String getFullName() {

@@ -92,7 +92,7 @@ public class SchoolSignup extends VysusBean {
 	}
 
 	public void setInstitutionPostcode(String institutionPostcode) {
-		this.institutionPostcode = institutionPostcode;
+		this.institutionPostcode = institutionPostcode.replaceAll("\\s+","");
 	}
 
 	public String getInstitutionEmail() {

@@ -52,7 +52,7 @@ public class SignupBase extends VysusBean {
 			String password = (String)userData.get("password");
 			String accountID = (Integer)accountData.get("accType")+username;
 			System.out.println("Acc data created");
-			if(User.exists(username, connection)) throw new InvalidDataException("username", "This username already exists.");
+			if(User.exists(username, connection)) throw new InvalidDataException(null, "This username already exists.");
 			System.out.println(username);
 			System.out.println(accountID);
 			
@@ -122,7 +122,7 @@ public class SignupBase extends VysusBean {
 		return (String)userData.get("postcode");
 	}
 	public void setPostcode(String postcode) {
-		userData.put("postcode", postcode);
+		userData.put("postcode", postcode.replaceAll("\\s+",""));
 	}
 	public String getEmail() {
 		return (String)userData.get("email");
@@ -140,6 +140,9 @@ public class SignupBase extends VysusBean {
 		return (String)userData.get("day");
 	}
 	public void setDay(String day) {
+		if (day.length() == 1) {
+			day = "0" + day;
+		}
 		userData.put("day", day);
 	}
 	public String getMonth() {

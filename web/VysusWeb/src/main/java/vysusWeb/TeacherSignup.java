@@ -10,7 +10,7 @@ import javax.faces.bean.SessionScoped;
 @ManagedBean(name="teacherSignup")
 @SessionScoped
 public class TeacherSignup extends VysusBean {
-	int maxDistance;
+	float maxDistance;
 	float minRatePerHour;
 	String aboutMe;
 	
@@ -37,10 +37,10 @@ public class TeacherSignup extends VysusBean {
 	
 
 //Getters and setters
-	public int getMaxDistance() {
+	public float getMaxDistance() {
 		return this.maxDistance;
 	}
-	public void setMaxDistance(int maxDistance) {
+	public void setMaxDistance(float maxDistance) {
 		this.maxDistance = maxDistance;
 	}
 	public float getMinRatePerHour() {

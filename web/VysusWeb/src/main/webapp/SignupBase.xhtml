@@ -54,7 +54,8 @@
 					styleClass="form-control inline-block form-element w10" required="true" 
 					requiredMessage="Day in format DD must be input."
 					onkeypress="if(event.which &lt; 48 || event.which &gt; 57) return false;">
-					<f:validateLength maximum="2" minimum="2"/>
+					<!-- validateLength originally had a minimum of 1 which meant we couldn't enter 1 -->
+					<f:validateLength maximum="2" minimum="1"/>
 				</h:inputText>
 				<h:message for="dobDay"/>
 				<h:selectOneMenu id="dobMonth" value="#{signup.month}" 

@@ -140,6 +140,9 @@ public class SignupBase extends VysusBean {
 		return (String)userData.get("day");
 	}
 	public void setDay(String day) {
+		if (day.length() == 1) {
+			day = "0" + day;
+		}
 		userData.put("day", day);
 	}
 	public String getMonth() {

@@ -63,7 +63,7 @@ public class User extends StorageAbstract {
 		//This excludes password:
 		create = "INSERT INTO User"
 				+ "(userID, accountID, fullName, houseIdentifier, postcode, email, phoneNo, dateOfBirth) "
-				+ "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+				+ "VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
 	}
 	//Implementation of the update query (excludes password):
 	protected String update(List<String> changed) {

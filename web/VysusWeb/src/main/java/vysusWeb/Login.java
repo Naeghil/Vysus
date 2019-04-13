@@ -19,7 +19,7 @@ public class Login extends VysusBean{
 	public Login(){
 		super();
 		//Avoid session conflict not allowing a logged user to login again
-		if(actor!=null) redirect("myProfile.jsf");
+		if(actor!=null) redirect("Profile.jsf");
 	}
 	
 	public void login() {
@@ -30,7 +30,7 @@ public class Login extends VysusBean{
 			getSessionMap().put("account", toLogin.login(password, connection));
 			getSessionMap().put("username", this.username);
 			
-			redirect("myProfile.jsf");
+			redirect("Profile.jsf");
 		} catch(InvalidDataException e) {
 			String field = e.field();
 			String msg = e.message();

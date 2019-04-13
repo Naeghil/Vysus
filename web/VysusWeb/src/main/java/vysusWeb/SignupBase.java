@@ -68,6 +68,9 @@ public class SignupBase extends VysusBean {
 			System.out.println("Invalid data exception " + msg + " " + field);
 		} catch(DBProblemException e) {
 			message("Uh-oh", "We had a problem executing your request");
+			if (e.getNested() != null) {
+				System.out.println(e.getNested().getMessage());
+			}
 		}catch(SQLException e) {}
 	}
 	

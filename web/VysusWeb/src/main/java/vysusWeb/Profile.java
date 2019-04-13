@@ -99,7 +99,7 @@ public class Profile extends VysusBean {
 	
 	//Getters for teachers:
 	public String getMaxDistance() {
-		if(accType==0) return ((Integer)accountData.get("maxDistance")).toString();
+		if(accType==0) return ((Float)accountData.get("maxDistance")).toString();
 		else return "";
 	}
 	public String getMinRate() {

@@ -13,12 +13,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.enterprise.context.RequestScoped;
-import javax.faces.bean.ManagedBean; 
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 
 import storage.*;
 
 @ManagedBean(name="signup")
-@RequestScoped
+@SessionScoped
 
 public class SignupBase extends VysusBean {
 	//The reason why this is not a map is because there is no way to make it static:
@@ -50,24 +51,30 @@ public class SignupBase extends VysusBean {
 			String username = (String)userData.get("username");
 			String password = (String)userData.get("password");
 			String accountID = (Integer)accountData.get("accType")+username;
-			
-			if(!User.isUnique(username, connection)) throw new InvalidDataException("username", "This username already exists.");
+			System.out.println("Acc data created");
+			if(User.exists(username, connection)) throw new InvalidDataException("username", "This username already exists.");
+			System.out.println(username);
+			System.out.println(accountID);
 			
 			new User(connection, username, password, userData(), accountData, accountID);
 			
 			//Login:
 			getSessionMap().put("username", username);
 			getSessionMap().put("account", accountID);
-			
-			redirect("myProfile.jsf");
+			System.out.println("Acc created");
+			redirect("profile.jsf");
 			
 		} catch(InvalidDataException e) {
 			String field = e.field();
 			String msg = e.message();
 			if(field!=null) if(field.equals("userID")) field= "username";
 			message(field, "Invalid field", msg);
+			System.out.println("Invalid data exception " + msg + " " + field);
 		} catch(DBProblemException e) {
 			message("Uh-oh", "We had a problem executing your request");
+			if (e.getNested() != null) {
+				System.out.println(e.getNested().getMessage());
+			}
 		}catch(SQLException e) {}
 	}
 	

@@ -21,8 +21,8 @@ public abstract class Account extends StorageAbstract {
 	}
 	public Account(String accountID, Map<String, Object> accountData, Connection connection)
 		throws DBProblemException {
-		data.put("id", accountID);
 		data = accountData;
+		data.put("id", accountID);
 		setDBVariables();
 		create(connection);
 	}

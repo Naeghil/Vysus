@@ -15,7 +15,9 @@ public class Navigation extends VysusBean{
 	}
 	
 	public void logout() {
+		System.out.println("1");
 		getExternalContext().invalidateSession();
+		System.out.println("2");
 		redirect("index.jsf");
 	}
 //Sidebar buttons rendering:

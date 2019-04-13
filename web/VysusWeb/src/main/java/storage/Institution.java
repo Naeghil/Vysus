@@ -40,7 +40,7 @@ public class Institution extends Account{
 		retrieve = "SELECT * FROM Institution WHERE accountID=?";
 		create = "INSERT INTO Institution"
 				+ "(accountID, sysAdminID, name, type, buildingIdentifier, postcode, email, phoneNo) "
-				+ "VALUES(?, ?, ?, ?, ?, ?)";
+				+ "VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
 	}
 	protected String update(List<String> changed) {
 		String upd = "UPDATE Institution SET " + changed.get(0);

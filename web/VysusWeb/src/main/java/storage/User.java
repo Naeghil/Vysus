@@ -49,9 +49,14 @@ public class User extends StorageAbstract {
 		this.data = data;
 		this.data.put("id", username);
 		this.data.put("accountID", accountID);
+		System.out.println("User: " + accountID);
+		System.out.println("username: " + username);
 		setDBVariables();
+		System.out.println("1");
 		account = Account.makeAccount(accountID, accountData, connection);
+		System.out.println("2");
 		create(connection);
+		System.out.println("3");
 		setPassword(connection, password);
 	}
 	//Sets object-specific queries and keys:
@@ -63,7 +68,7 @@ public class User extends StorageAbstract {
 		//This excludes password:
 		create = "INSERT INTO User"
 				+ "(userID, accountID, fullName, houseIdentifier, postcode, email, phoneNo, dateOfBirth) "
-				+ "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+				+ "VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
 	}
 	//Implementation of the update query (excludes password):
 	protected String update(List<String> changed) {
@@ -97,7 +102,7 @@ public class User extends StorageAbstract {
 		} catch (SQLException e) { throw new DBProblemException(e); }
 	}
 	//Checks uniqueness 
-	public static boolean isUnique(String username, Connection con) throws DBProblemException {
+	public static boolean exists(String username, Connection con) throws DBProblemException {
 		try(PreparedStatement unique = con.prepareStatement(uniqueness);) {
 			unique.setString(1, username);
 			try(ResultSet rs = unique.executeQuery();) {

@@ -19,7 +19,7 @@ public class TeacherSignup extends VysusBean {
 	
 	public TeacherSignup(){
 		super();
-		if(actor!=null) redirect("Profile.jsf");
+		if(actor!=null) redirect("profile.jsf");
 	}
 	
 	public Map<String, Object> accountData() {

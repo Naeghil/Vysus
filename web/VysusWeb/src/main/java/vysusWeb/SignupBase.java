@@ -122,7 +122,7 @@ public class SignupBase extends VysusBean {
 		return (String)userData.get("postcode");
 	}
 	public void setPostcode(String postcode) {
-		userData.put("postcode", postcode);
+		userData.put("postcode", postcode.replaceAll("\\s+",""));
 	}
 	public String getEmail() {
 		return (String)userData.get("email");

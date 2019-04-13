@@ -61,6 +61,7 @@ public class Profile extends VysusBean {
 		accountData = DataConv.getObjectMap(fullData.get("accountData"));
 		if(isAdmin()) additionalData = DataConv.getList(accountData.remove("staffData"));
 		accType = Account.accType(account);
+		System.out.println("From extract: " + accType);
 	}
 //Changes:
 	public void changes() {
@@ -96,6 +97,7 @@ public class Profile extends VysusBean {
 		return true;
 	}
 	public int getAccType() {
+		System.out.println("From getAccType: " + this.accType);
 		return this.accType;
 	}
 	
@@ -160,7 +162,7 @@ public class Profile extends VysusBean {
 	
 	//Getters for teachers:
 	public String getMaxDistance() {
-		if(accType==0) return ((Integer)accountData.get("maxDistance")).toString();
+		if(accType==0) return ((Float)accountData.get("maxDistance")).toString();
 		else return "";
 	}
 	public void setMaxDistance(float maxDistance) {

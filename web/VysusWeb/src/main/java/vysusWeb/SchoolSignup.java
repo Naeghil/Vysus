@@ -19,7 +19,7 @@ import storage.*;
 @SessionScoped
 public class SchoolSignup extends VysusBean {
 	
-	List<String> types = new ArrayList<String>(Arrays.asList("Primary School","Secondary School","Further Education","University"));
+	static List<String> types = new ArrayList<String>(Arrays.asList("Primary School","Secondary School","Further Education","University"));
 	
 	String institutionName;
 	String institutionType;
@@ -113,12 +113,7 @@ public class SchoolSignup extends VysusBean {
 
 	public List<String> getTypes() {
 		return types;
-	}
-
-	public void setTypes(List<String> types) {
-		this.types = types;
-	}
-	
+	}	
 
 
 

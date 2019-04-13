@@ -5,6 +5,8 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -22,8 +24,17 @@ import util.DataConv;
 public class Profile extends VysusBean {
 	Map<String, Object> userData = null;
 	Map<String, Object> accountData = null;
+	Map<String, Object> userChanges = new HashMap<String, Object>();
+	Map<String, Object> accountChanges = new HashMap<String, Object>();
+	
 	List<Object> additionalData = null;
 	int accType = -1; //0 = Teachers 1 = Institutions 
+	
+	static List<String> monthWord = new ArrayList<String>(Arrays.asList("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"));
+	static List<String> monthNo = new ArrayList<String>(Arrays.asList("01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12" ));
+	static List<String> types = new ArrayList<String>(Arrays.asList("Primary School","Secondary School","Further Education","University"));
+	
+	
 	
 	public Profile() {
 		super();
@@ -53,8 +64,25 @@ public class Profile extends VysusBean {
 	}
 //Changes:
 	public void changes() {
-		//Do the thing where you submit a map to the user, and then it divides the changes for the account and then the account takes care of it
-		//Or use getAccount() to submit the changes to the account
+		try (Connection connection = getConnection()){
+			if(connection == null) return;
+			this.user = new User(actor, account, null);
+			user.updateProfile(userChanges, connection);
+			user.getAccount().updateAccount(accountChanges, connection);
+			
+			redirect("profile.jsf");
+		} catch(InvalidDataException e) {
+			String field = e.field();
+			String msg = e.message();
+			if(field!=null) if(field.equals("userID")) field= "username";
+			message(field, "Invalid field", msg);
+			System.out.println("Invalid data exception " + msg + " " + field);
+		} catch(DBProblemException e) {
+			message("Uh-oh", "We had a problem executing your request");
+			if (e.getNested() != null) {
+				System.out.println(e.getNested().getMessage());
+			}
+		}catch(SQLException e) {}
 	}
 	
 	
@@ -67,34 +95,67 @@ public class Profile extends VysusBean {
 		if(additionalData!=null) return additionalData.size()==0;
 		return true;
 	}
-	
-	
-//Getters and setters
 	public int getAccType() {
 		return this.accType;
 	}
+	
+//Getters and setters
 	public String getFullName() {
-		//return "Herr. Otto Renfield";
 		return (String)userData.get("fullName");
 	}
+	
 	public String getDateOfBirth() {
-		//return "20-02-1962";
 		SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
 		Date dbDOB = (Date)userData.get("dateOfBirth");
 		return format.format(new java.util.Date(dbDOB.getTime()));
 	}
+	public String getDay() {
+		return "";
+	}
+	public void setDay(String day) {
+		if(day!=null) if(day!="") userChanges.put("day", day);
+	}
+	public String getMonth() {
+		return "";
+	}
+	public void setMonth(String month) {
+		if(month!=null) if(month!="") userChanges.put("month", month);
+	}
+	public String getYear() {
+		return "";
+	}
+	public void setYear(String year) {
+		if(year!=null) if(year!="") userChanges.put("year", year);
+	}
+	
 	public String getUserAddress() {
-		//return "sqrt(-1), Neverwhere Street </br> NVWHR, Notown";
 		//This should use the address finding service tbh:
 		return (String)userData.get("houseIdentifier")+", "+(String)userData.get("postcode");
 	}
+	public void setHouseIdentifier(String houseIdentifier) {
+		if(houseIdentifier!=null) if(houseIdentifier!="") userChanges.put("houseIdentifier", houseIdentifier);
+	}
+	public String getHouseIdentifier() {
+		return "";
+	}
+	public void setUserPostcode(String userPostcode) {
+		if(userPostcode!=null) if(userPostcode!="") userChanges.put("postcode", userPostcode);
+	}
+	public String getUserPostcode() {
+		return "";
+	}
+	
 	public String getUserEmail() {
-		//return "o.ren.24@realprovider.nope";
 		return (String)userData.get("email");
 	}
+	public void setUserEmail(String userEmail) {
+		userChanges.put("email", userEmail);
+	}
 	public String getUserPhoneNo() {
-		//return "+00 0000000000";
 		return (String)userData.get("phoneNo");
+	}
+	public void setUserPhoneNo(String userPhoneNo) {
+		userChanges.put("phoneNo", userPhoneNo);
 	}
 	
 	//Getters for teachers:
@@ -102,13 +163,22 @@ public class Profile extends VysusBean {
 		if(accType==0) return ((Integer)accountData.get("maxDistance")).toString();
 		else return "";
 	}
+	public void setMaxDistance(float maxDistance) {
+		if(accType==0) accountChanges.put("maxDistance", maxDistance);
+	}
 	public String getMinRate() {
 		if(accType==0) return ((Float)accountData.get("minRatePerHour")).toString();
 		else return "";
 	}
+	public void setMinRate(float minRate) {
+		if(accType==0) accountChanges.put("minRatePerHour", minRate);
+	}
 	public String getAboutMe() {
 		if(accType==0) return (String)accountData.get("aboutMe");
 		else return "";
+	}
+	public void setAboutMe(String aboutMe) {
+		if(accType==0 && aboutMe!=null) accountChanges.put("aboutMe", aboutMe);
 	}
 	//Getters for Institutions:
 	public String getInstName() {
@@ -119,19 +189,42 @@ public class Profile extends VysusBean {
 		if(accType==1) return (String)accountData.get("type");
 		else return "";
 	}
+	public void setInstType(String instType) {
+		if(accType==1) accountChanges.put("type", instType);
+	}
+	
 	public String getInstAddress() {
 		//Again, this should use the address service:
 		if(accType==1) return (String)accountData.get("buildingIdentifier")+" "+(String)accountData.get("postcode");
 		else return "";
 	}
+	public String getInstitutionNo() {
+		return "";		
+	}
+	public void setInstitutionNo(String institutionNo) {
+		if(accType==1) accountChanges.put("buldingIdentifier", institutionNo);
+	}
+	public String getInstitutionPostcode() {
+		return "";
+	}
+	public void setInstitutionPostcode(String institutionPostcode) {
+		if(accType==1) accountChanges.put("postcode", institutionPostcode);
+	}
+	
 	public String getInstEmail() {
 		if(accType==1) return (String)accountData.get("email");
 		else return "";
 	}
+	public void setInstEmail(String email) {
+		if(accType==1) accountChanges.put("email", email);
+	}
 	public String getInstPhoneNo() {
 		if(accType==1) return (String)accountData.get("phoneNo");
 		else return "";
-	}	
+	}
+	public void setInstPhoneNo(String phoneNo) {
+		if(accType==1) accountChanges.put("phoneNo", phoneNo);
+	}
 	//Getters for InstitutionAdmin:
 
 	public List<DispStaff> getStaff() {
@@ -143,6 +236,17 @@ public class Profile extends VysusBean {
 			}
 		}
 		return staff;
+	}
+	
+	//For dropdown
+	public List<String> getMonthWord() {
+		return monthWord;
+	}
+	public String monthToNo(String month) {
+		return monthNo.get(monthWord.indexOf(month));
+	}
+	public List<String> getTypes() {
+		return types;
 	}
 }
 

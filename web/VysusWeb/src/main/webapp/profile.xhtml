@@ -7,30 +7,86 @@
 	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
     template="VysusInternal.xhtml">
 	<ui:define name="content">
-		
-		
-		
-		
+	
 		<div class="container-fluid h100 w100">
 			<div id="profile-content" class="row h90 lefttext">
 				<p:tabView styleClass="h100">
 					<p:tab title="You">
-						<h4>#{profile.fullName} </h4>
-						<p>Date of Birth: #{profile.dateOfBirth}</p>
-						<p>Address: #{profile.userAddress}</p>
-						<p>Email: #{profile.userEmail}</p>
-						<p>Phone Number: #{profile.userPhoneNo}</p>			
+						<h4>#{profile.fullName} </h4>Cap
+						<div id="uDOB">
+							<p class="inline-block">Date of Birth:</p>
+							<p class="profile-element inline-block">#{profile.dateOfBirth}</p>
+							<h:inputText id="dobDay" value="#{profile.day}" a:placeholder="DD"
+								styleClass="form-control form-element w10 profile-element hidden" required="true" 
+								requiredMessage="Day in format DD must be input."
+								onkeypress="if(event.which &lt; 48 || event.which &gt; 57) return false;">
+								<!-- validateLength originally had a minimum of 1 which meant we couldn't enter 1 -->
+								<f:validateLength maximum="2" minimum="1"/>
+							</h:inputText>
+							<h:message for="dobDay"/>
+							<h:selectOneMenu id="dobMonth" value="#{profile.month}" 
+								styleClass="form-control form-element w15 profile-element hidden">
+			         			<f:selectItems value="#{profile.monthWord}" var="m" itemLabel="#{m}" itemValue="#{profile.monthToNo(m)}" />
+							</h:selectOneMenu>
+							<h:inputText id="dobYear" value="#{profile.year}" a:placeholder="YYYY"
+								styleClass="form-control form-element w10 profile-element hidden" required="true" 
+								requiredMessage="Year in format YYYY must be input.">
+								<f:validateLength maximum="4" minimum="4"/>
+								<f:validateRegex pattern="^(19|20)\d{2}$"/>
+							</h:inputText>
+							<h:message for="dobYear"/>
+						</div>
+						<div id="uAddress">
+							<p class="inline-block">Address:</p>
+							<p class="profile-element inline-block">#{profile.userAddress}</p>
+							<h:inputText id="userHouseId" value="#{profile.houseIdentifier}" a:placeholder="House Number/Name"
+								styleClass="form-control form-element profile-element hidden w60" required="true" 
+								requiredMessage="House number/name is required"
+								validatorMessage="Do not exceed 64 characters">
+								<f:validateLength maximum="64"/>
+							</h:inputText>
+							<h:message for="userHouseID"/>
+			          		<h:inputText id="userPostcode" value="#{profile.userPostcode}" a:placeholder="Postcode"
+								styleClass="form-control form-element profile-element hidden w20" required="true" 
+								requiredMessage="Postcode is required."
+								validatorMessage="Please ensure your postcode is in the correct UK format.">
+								<f:validateRegex pattern="([Gg][Ii][Rr] 0[Aa]{2})|((([A-Za-z][0-9]{1,2})|(([A-Za-z][A-Ha-hJ-Yj-y][0-9]{1,2})|(([A-Za-z][0-9][A-Za-z])|([A-Za-z][A-Ha-hJ-Yj-y][0-9][A-Za-z]?))))\s?[0-9][A-Za-z]{2})"></f:validateRegex>
+							</h:inputText>
+			             	<h:message for="userPostcode"/>
+						</div>
+						<div id="uEmail">
+							<p class="inline-block">Email:</p> 
+							<p class="profile-element inline-block">#{profile.userEmail}</p>
+							<h:inputText id="userEmail" value="#{profile.userEmail}" a:placeholder="Email"
+			          			styleClass="form-control form-element inline-block w60" required="true" 
+								requiredMessage="Email address is required"
+								validatorMessage="Please ensure your email address is in the correct format and does not exceed 300 characters">
+								<f:validateRegex pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]"></f:validateRegex>
+			             		<f:validateLength maximum="300"/>
+							</h:inputText>
+			             	<h:message for="userEmail"/>
+						</div>
+						<div id="uPhoneNo">
+							<p class="inline-block">Phone Number:</p>
+							<p class="profile-element inline-block">#{profile.userPhoneNo}</p>
+							<h:inputText id="userPhone" value="#{profile.userPhoneNo}" a:placeholder="Phone Number" 
+								styleClass="form-control form-element inline-block w40" required="true" 
+								requiredMessage="Phone number is required."
+								validatorMessage="Please ensure your phone number is in the correct format.">
+								<f:validateRegex pattern="^(((\+44\s?\d{4}|\(?0\d{4}\)?)\s?\d{3}\s?\d{3})|((\+44\s?\d{3}|\(?0\d{3}\)?)\s?\d{3}\s?\d{4})|((\+44\s?\d{2}|\(?0\d{2}\)?)\s?\d{4}\s?\d{4}))(\s?\#(\d{4}|\d{3}))?$"/>
+							</h:inputText>
+							<h:message for="userPhone"/>
+						</div>
 					</p:tab>
-					< p:tab render="#{profile.accType eq 1}" title="Institution">
-					<!--p:tab title="Institution"-->
+					
+					
+					<p:tab render="#{profile.accType eq 1}" title="Institution">
 						<ui:include src="resources/includes/school-profile.xhtml"/>
 					</p:tab>
 					<p:tab render="#{profile.accType eq 1 and profile.isAdmin()}" title="Staff">
-					<!-- p:tab title="Staff"--> 
 						<ui:include src="resources/includes/staff-profile.xhtml"/>
 					</p:tab>
 					<p:tab render="#{profile.accType eq 0}" title="Work">
-					<!--p:tab title="Work"-->
 						<ui:include src="resources/includes/teacher-profile.xhtml"/>	
 					</p:tab>
 		    	</p:tabView>
@@ -38,10 +94,24 @@
 			
 			<!-- the changes button will be here -->
 			<div class="row h10 centertext">
-				<h:commandButton action="idkAskMiles" value="Edit" styleClass="btn btn-primary form-element"/>
-				<h:commandButton action="#{profile.changes()}" value="Submit" styleClass="btn btn-primary form-element"/>
+				<h:form>
+					<h:commandButton id="edit-button" onclick="toggle()" value="Edit" styleClass="btn btn-primary form-element"/>
+					<h:commandButton action="#{profile.changes()}" value="Submit" styleClass="btn btn-primary form-element"/>
+				</h:form>
 			</div>
 		</div>
+		<script type="text/javascript">
+			function toggle() {
+				var els = document.getElementsByClassName("profile-element");
+				[].forEach.call(els, function (el) {
+					if(el.style.display == 'none') {
+						el.style.display = 'inline-block';
+					} else {
+						el.style.display = 'none';
+					}
+				});
+			}
+		</script>
 		
 	</ui:define>
 </ui:composition>		

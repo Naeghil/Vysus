@@ -52,6 +52,12 @@ public abstract class Account extends StorageAbstract {
 	
 	public abstract void deleteAccount(Connection connection) throws DBProblemException, InvalidDataException;
 	
+	public void updateAccount(Map<String, Object> changes, Connection connection)
+		throws DBProblemException, InvalidDataException {
+		this.changes = changes;
+		update(connection);
+	}
+	
 //Getters and show methods	
 	public static int accType(String accountID) throws InvalidDataException {
 		int type = Character.getNumericValue(accountID.charAt(0));

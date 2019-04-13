@@ -86,6 +86,11 @@ p {
 .inline-block {
 	display:inline-block;
 }
+
+.hidden {
+	display:none;
+}
+
 .block {
 	display:block;
 }
@@ -241,3 +246,5 @@ p {
 	margin-left:0;
 	display:block;
 }
+
+/* profile.xhtml styling */

@@ -52,7 +52,7 @@ public class SignupBase extends VysusBean {
 			String password = (String)userData.get("password");
 			String accountID = (Integer)accountData.get("accType")+username;
 			System.out.println("Acc data created");
-			if(User.exists(username, connection)) throw new InvalidDataException("username", "This username already exists.");
+			if(User.exists(username, connection)) throw new InvalidDataException(null, "This username already exists.");
 			System.out.println(username);
 			System.out.println(accountID);
 			

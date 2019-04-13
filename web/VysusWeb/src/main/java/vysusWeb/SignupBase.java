@@ -60,7 +60,7 @@ public class SignupBase extends VysusBean {
 			getSessionMap().put("username", username);
 			getSessionMap().put("account", accountID);
 			System.out.println("Acc created");
-			redirect("myProfile.jsf");
+			redirect("Profile.jsf");
 			
 		} catch(InvalidDataException e) {
 			String field = e.field();

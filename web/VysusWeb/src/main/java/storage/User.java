@@ -97,7 +97,7 @@ public class User extends StorageAbstract {
 		} catch (SQLException e) { throw new DBProblemException(e); }
 	}
 	//Checks uniqueness 
-	public static boolean isUnique(String username, Connection con) throws DBProblemException {
+	public static boolean exists(String username, Connection con) throws DBProblemException {
 		try(PreparedStatement unique = con.prepareStatement(uniqueness);) {
 			unique.setString(1, username);
 			try(ResultSet rs = unique.executeQuery();) {

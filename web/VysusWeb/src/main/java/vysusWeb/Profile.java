@@ -9,7 +9,7 @@ import java.util.Map;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 
-
+import storage.Account;
 import storage.DBProblemException;
 import storage.InvalidDataException;
 import storage.User;
@@ -20,6 +20,7 @@ import util.DataConv;
 public class Profile extends VysusBean {
 	Map<String, Object> userData = null;
 	Map<String, Object> accountData = null;
+	int accType; //0 = Teachers 1 = Institutions 
 	
 	public Profile() {
 		super();
@@ -28,25 +29,35 @@ public class Profile extends VysusBean {
 		gatherData();
 	}
 	
+	//TODO: should this invalidate the session and redirect to the index.xhtml?
 	void gatherData() {
 		try(Connection connection = getConnection()){
 			if(connection==null) return;
-			user = new User(actor, account, connection);
-			Map<String, Object> fullData = user.showFull();
+			Map<String, Object> fullData = new User(actor, account, connection).showFull();
 			userData = DataConv.getObjectMap(fullData.get("userData"));
 			accountData = DataConv.getObjectMap(fullData.get("accountData"));
+			accType = Account.accType(account);
 		} catch(InvalidDataException e) {
 			String field = e.field();
-			String msg = e.message();
-			if(field!=null) if(field.equals("userID")) field = "username";
-			message(field, "Invalid field", msg);
+			if(field!=null) if(field.equals("userID") || field.equals("username")) field = null;
+			message(field, "Invalid field", e.message());
 		} catch(DBProblemException e) {
 			message("Uh-oh", "We had a problem executing your request");
 		} catch (SQLException e) { }
-
 	}
 
+//Tab renderers:
+	
+	
+	public boolean isAdmin() {
+		if(accountData.get("admin")!=null) return (boolean)accountData.get("admin");
+		else return false;
+	}
+	
 //Getters and setters
+	public int getAccType() {
+		return this.accType;
+	}
 	public String getFullName() {
 		return "Herr. Otto Renfield";
 		//return (String)userData.get("fullName");

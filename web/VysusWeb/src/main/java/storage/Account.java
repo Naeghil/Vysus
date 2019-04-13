@@ -27,10 +27,10 @@ public abstract class Account extends StorageAbstract {
 		create(connection);
 	}
 	//Masking constructor for existing accounts
-	public static Account getAccount(String accountID, Connection connection) throws DBProblemException, InvalidDataException {
+	public static Account getAccount(String accountID, String actor, Connection connection) throws DBProblemException, InvalidDataException {
 		char accType = accountID.charAt(0);
 		if(accType=='0') return new Teacher(accountID, connection);
-		if(accType=='1') return new Institution(accountID, connection);
+		if(accType=='1') return new Institution(accountID, actor, connection);
 		
 		throw new InvalidDataException(null, "Unrecognised account type");
 	}
@@ -53,11 +53,9 @@ public abstract class Account extends StorageAbstract {
 	public abstract void deleteAccount(Connection connection) throws DBProblemException, InvalidDataException;
 	
 //Getters and show methods	
-	protected String accType() throws InvalidDataException {
-		char type = 'x';
-		if(data.get("id") instanceof String) type = ((String)data.get("id")).charAt(0);
-		if(type=='0') return "Teacher";
-		if(type=='1') return "Institution";
+	public static int accType(String accountID) throws InvalidDataException {
+		int type = Character.getNumericValue(accountID.charAt(0));
+		if(type>=0 && type<=1) return type;
 		
 		throw new InvalidDataException(null, "Unrecognised account type");
 	}

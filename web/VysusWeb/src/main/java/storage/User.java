@@ -39,7 +39,7 @@ public class User extends StorageAbstract {
 	public User(String username, String accountID, Connection connection) throws DBProblemException, InvalidDataException { 
 		data.put("id", username); //this might need to be re-put; or alternatively use a separate variable
 		setDBVariables();
-		if(accountID!=null) account = Account.getAccount(accountID, connection);
+		if(accountID!=null) account = Account.getAccount(accountID, username, connection);
 		if(connection!=null) retrieve(connection);
 	}
 	//Constructor for new user

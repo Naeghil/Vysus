@@ -45,6 +45,8 @@ public class SignupBase extends VysusBean {
 	
 	public void signup(Map<String, Object> accountData) {
 		try (Connection connection = getConnection()){
+			if(connection == null) return;
+			
 			String username = (String)userData.get("username");
 			String password = (String)userData.get("password");
 			String accountID = (Integer)accountData.get("accType")+username;

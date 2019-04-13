@@ -23,12 +23,16 @@ public class Institution extends Account{
 	
 //Initialisation: constructors and variables setup
 	//Uses super constructors
-	public Institution(String accountID, Connection connection) throws DBProblemException, InvalidDataException { 
+	public Institution(String accountID, String actor, Connection connection) throws DBProblemException, InvalidDataException { 
 		super(accountID); 
-		if(connection!=null) retrieve(connection);
+		if(connection!=null) {
+			retrieve(connection);
+			requestAdminRights(actor);
+		}
 	}
 	public Institution(String accountID, Map<String, Object> accountData, Connection connection)
-		throws DBProblemException { super(accountID, accountData, connection); }
+		throws DBProblemException { super(accountID, accountData, connection);}
+	
 	protected void setDBVariables() {
 		keys = new ArrayList<String>(Arrays.asList(
 				"sysAdminID", "name", "type", "buildingIdentifier", "postcode", "email", "phoneNo"));
@@ -100,6 +104,7 @@ public class Institution extends Account{
 	public Map<String, Object> showFull() {
 		Map<String, Object> show = new HashMap<String, Object>();
 		show.put("accountData", data);
+		show.put("admin", admin);
 		if(admin) {
 			Map<String, Object> staffData = new HashMap<String, Object>();
 			for(Staff staff : this.staff) {
@@ -107,13 +112,6 @@ public class Institution extends Account{
 				staffData.put((String)data.get("id"), DataConv.makeStringMap(data));
 			}
 			show.put("staffData", staffData);
-		} else {
-			//Map<String, Object> jobData = new HashMap<String, Object>();
-			//for(Job job : this.job) {
-			//	Map<String, Object> data = job.getData();
-			//	jobData.put((String)data.get("id"), DataConv.makeStringMap(data));
-			//}
-			//show.put("jobData", jobData);
 		}
 		
 		return show;

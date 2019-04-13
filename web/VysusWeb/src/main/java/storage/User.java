@@ -49,9 +49,14 @@ public class User extends StorageAbstract {
 		this.data = data;
 		this.data.put("id", username);
 		this.data.put("accountID", accountID);
+		System.out.println("User: " + accountID);
+		System.out.println("username: " + username);
 		setDBVariables();
+		System.out.println("1");
 		account = Account.makeAccount(accountID, accountData, connection);
+		System.out.println("2");
 		create(connection);
+		System.out.println("3");
 		setPassword(connection, password);
 	}
 	//Sets object-specific queries and keys:

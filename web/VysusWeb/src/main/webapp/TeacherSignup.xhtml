@@ -11,7 +11,7 @@
 <h3 class="w100 centertext"> Tell us about your work preferences</h3>
 
 <h5 class="w40 inline-block form-element">The maximum distance you're willing to travel in meters (you can change this later)</h5>
-<h:inputText id="maxDistance" value="#{teacherSignup.maxDistance}"
+<h:inputText id="maxDistance" value="#{teacherGet.maxDistance}"
 	styleClass="form-control form-element inline-block w20" required="true"
 	requiredMessage="Please input a number"
 	validatorMessage="Please input a positive number">
@@ -19,7 +19,7 @@
 <h:message for="maxDistance"/>
 
 <h5 class="w40 inline-block form-element">The minimum wage per hour you're willing to accept (you can change this later)</h5>
-<h:inputText id="minRatePerHour" value="#{teacherSignup.minRatePerHour}"
+<h:inputText id="minRatePerHour" value="#{teacherGet.minRatePerHour}"
 	styleClass="form-control form-element inline-block w20" required="true"
 	requiredMessage="Please input a number"
 	validatorMessage="Please input a positive number">                    
@@ -27,11 +27,12 @@
 <h:message for="minRatePerHour"/>
 				
 <h5 class="w40 form-element">Tell the employers about yourself (you can change this later)</h5>
-<h:inputTextarea id="aboutMe" value="#{teacherSignup.aboutMe}" a:placeholder="Make yourself look good!"
+<h:inputTextarea id="aboutMe" value="#{teacherGet.aboutMe}" a:placeholder="Make yourself look good!"
 	styleClass="form-control form-element w60 h20" required="false" />
 
-<h:commandButton value="Sign Up" action="#{teacherSignup.signupTeacher()}" styleClass="btn btn-primary form-element"/>
-	
+<div class="w100 centertext">
+	<h:commandButton value="Sign Up" action="#{teacherGet.signupTeacher()}" styleClass="btn btn-primary form-element"/>
+</div>	
 	</ui:define>
 </ui:composition>
 

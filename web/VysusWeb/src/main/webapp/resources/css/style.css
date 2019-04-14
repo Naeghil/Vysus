@@ -15,7 +15,7 @@
 
 body, html, .allHeight {
 	height: 100%;
-	overflow-y:auto;
+	overflow-y:hidden;
 }
 
 .background {
@@ -234,8 +234,7 @@ p {
 	
 /* signup.xhtml styling */
 #signup-form-column {
-	margin-top:3%;
-	padding:1%;
+	padding:2%;
 }
 
 /* sidebar.xhtml styling */

@@ -1,17 +1,18 @@
 package vysusWeb;
 
+import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Map;
 
-import javax.faces.bean.SessionScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 
 import storage.*;
 
 @Named("actor")
 @SessionScoped
-public class Actor extends VysusBase {
+public class Actor extends VysusBase implements Serializable {
 	String actor = null;
 	String account = null;
 	Map<String, String> userData = null;
@@ -62,13 +63,10 @@ public class Actor extends VysusBase {
 		return (getSessionMap().get("actor")!=null && getSessionMap().get("account")!=null);
 	}
 	
-	public String onLoad() {
-		if (getSessionMap().containsKey("actor")) {
-			return "profile.jsf";
-		} else {
-			return "index.jsf";
-		}
-	
+	public String onLoad(boolean internal) {
+		if(internal && !getSessionMap().containsKey("actor")) return "index.jsf";
+		if(!internal && getSessionMap().containsKey("actor")) return "profile.jsf";
+		return "";
 	}
 //Refreshing data:
 	public void requestUserData() {
@@ -114,7 +112,7 @@ public class Actor extends VysusBase {
 	public int accType() throws InvalidDataException {
 		//System.out.println("Actor.AccType: " + account);
 		//System.out.println("Actor.Actor: " + actor);
-		return Account.accType((String)getSessionMap().get("account"));
+		return isIn() ? Account.accType((String)getSessionMap().get("account")) : -1;
 	}
 	
 	public String getUserPicture() { 

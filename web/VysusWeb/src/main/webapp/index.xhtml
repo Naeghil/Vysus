@@ -8,6 +8,9 @@
     xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
     template="VysusBase.xhtml">
 	<ui:define name="bodyContent">
+	<f:metadata>
+		<f:viewAction action="#{actor.onLoad(false)}"/>
+	</f:metadata>
 	
 <div class="col-md-4 h100 centertext">
 	<h1>Teachers</h1>

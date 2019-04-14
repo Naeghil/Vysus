@@ -7,6 +7,9 @@
 	xmlns:p="http://primefaces.org/ui"
     template="SignupBase.xhtml">
 	<ui:define name="accountForm">
+	<f:metadata>
+		<f:viewAction action="#{actor.onLoad(false)}"/>
+	</f:metadata>
 				<!-- User part -->
 				<h3 class="w100 centertext"> Institution Details</h3>
          		<div id="institution-data">

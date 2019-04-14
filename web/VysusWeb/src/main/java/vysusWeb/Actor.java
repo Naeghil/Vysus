@@ -21,7 +21,7 @@ public class Actor extends VysusBase {
 	public void login(String username, String password)  {
 		try(Connection connection = getConnection()){
 			if(connection==null) return;
-			account = (new User(username)).login(password, connection);
+			this.account = (new User(username)).login(password, connection);
 			System.out.println("Test: " + account);
 			actor = username;
 			redirect("profile.jsf");

@@ -26,10 +26,11 @@ public class Qualification extends StorageAbstract{
 	
 //Initialisation: constructors and variables setup
 	//Existing constructor, also enabling loading, if given a connection
-	public Qualification(Integer qualificationID, Connection connection) throws InvalidDataException, DBProblemException {
+	public Qualification(int qualificationID, Connection connection) throws InvalidDataException, DBProblemException {
 		data.put("id", qualificationID);
 		setDBVariables();
-		if(connection!=null) retrieve(connection);
+		retrieve(connection);
+		data.put("verified", isVerified(connection));
 		
 	}
 	//Creating constructor: no qualification id will be available this way
@@ -40,8 +41,8 @@ public class Qualification extends StorageAbstract{
 		create(connection);
 	}
 	public void setDBVariables() {
-		keys = new ArrayList<String>(Arrays.asList( //TODO: should this include the qualificationID?
-			"accountID", "title", "startDate", "endDate", "comment", "finalGrade", "institution", "level", "institutionEmail", "institutionPhoneNo", "referee"));
+		keys = new ArrayList<String>(Arrays.asList(
+			"title", "startDate", "endDate", "comment", "finalGrade", "institution", "level", "institutionEmail", "institutionPhoneNo", "referee"));
 		delete = "DELETE FROM Qualification WHERE qualificationID=?";
 		retrieve = "SELECT * FROM Qualification WHERE qualificationID=?";
 		create = "INSERT INTO Qualification"
@@ -61,12 +62,11 @@ public class Qualification extends StorageAbstract{
 		try(PreparedStatement verify = connection.prepareStatement("UPDATE Qualification SET verified=? WHERE qualificationID=?");) {
 			verified=true;
 			verify.setBoolean(1, verified);
-			verify.setObject(2, data.get("id")); //TODO:This may return null;
+			verify.setObject(2, data.get("id"));
 			if(verify.executeUpdate() != 1) throw new InvalidDataException(null, "Record not found");
 		} catch (SQLException e) { throw new DBProblemException(e); }
 	}
 	
-	//This method can always be called because data.get("id") returns null only at creation, when verified is false;
 	public boolean isVerified(Connection connection) throws InvalidDataException, DBProblemException { 
 		if(verified!=null) return verified;
 		try(PreparedStatement veri = connection.prepareStatement("SELECT verified FROM Qualification WHERE qualificationID=?")) {
@@ -96,11 +96,21 @@ public class Qualification extends StorageAbstract{
 		}
 		return allQualifications;
 	}
-//Public interfaces of protected methods
-	//For now this is to enact changes to the qualifications
-	/**public void updateQualification(Map<String, String> changes, Connection con) throws InvalidDataException, DBProblemException {
-		this.changes = changes;
-		update(con);
-	} **/
-//Getters and show methods		
+
+//Getters and show methods
+	public Map<String, String> show() {
+		Map<String, String> show = new HashMap<String, String>();
+		show.put("title", (String)data.get("title"));
+		show.put("from", Conv.dateToString((Date)data.get("startDate")));
+		show.put("to", Conv.dateToString((Date)data.get("endDate")));
+		show.put("comment", (String)data.get("comment"));
+		show.put("eval", (String)data.get("finalGrade"));
+		show.put("where", (String)data.get("institution"));
+		show.put("type", (String)data.get("level"));
+		show.put("email", (String)data.get("institutionEmail"));
+		show.put("phoneNo", (String)data.get("institutionPhoneNo"));
+		show.put("referee", (String)data.get("referee"));
+			
+		return show;
+	}
 }

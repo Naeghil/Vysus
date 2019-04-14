@@ -107,4 +107,8 @@ public class Actor extends VysusBase {
 		//System.out.println("Actor.Actor: " + actor);
 		return Account.accType((String)getSessionMap().get("account"));
 	}
+	
+	public String getUserPicture() { 
+		return "resources/images/propic-default.jpg";
+	}
 }

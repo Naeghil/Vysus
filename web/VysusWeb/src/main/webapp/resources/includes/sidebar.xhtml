@@ -1,13 +1,25 @@
 <div id="sidebar-content" class="centertext" xmlns:h="http://java.sun.com/jsf/html">
-	<h:graphicImage id="user-picture" styleClass="square" value="#{navigation.userPicture}" />
+	<h:graphicImage id="user-picture" styleClass="square" value="#{actor.userPicture}" />
 	
 	<!-- All the buttons -->
 	<h:link id="profile-page" value="Profile"
 		outcome="profile.xhtml" styleClass="btn btn-primary sidebar-element"/>
 	
+	<h:link id="qualifications" value="Qualifications" rendered="#{actor.accType() eq 0}"
+		outcome="qualifications.xhtml" styleClass="btn btn-primary sidebar-element"/>
+	
+	<h:link id="calendar" value="Calendar" rendered="#{actor.accType() eq 0}"
+		outcome="calendar.xhtml" styleClass="btn btn-primary sidebar-element"/>
+	
+	
+	
+	<h:link id="jobs" value="Jobs" rendered="#{actor.accType() eq 1}"
+		outcome="jobs.xhtml" styleClass="btn btn-primary sidebar-element"/>
+	
+	
 	<h:form>
-	<h:commandButton id="logout-button" value="Logout"
-		action="#{actor.logout}" styleClass="btn btn-primary w100 sidebar-element"/>
+	<h:commandButton id="logout-button" value="Logout" 
+		action="#{actor.logout}" styleClass="btn btn-primary sidebar-element logout-button"/>
 	</h:form>
 
 

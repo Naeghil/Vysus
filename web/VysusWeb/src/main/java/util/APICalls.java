@@ -64,6 +64,7 @@ public class APICalls {
 			    		response.append(line);
 			    	}
 			    	reader.close();
+			    	return "error";
 			    }
 			    con.disconnect();
 			    //System.out.println(response.toString());
@@ -79,6 +80,15 @@ public class APICalls {
 		}
 		
 		public static Map<String, String> parseAddress(String response) {
+			Map<String, String> fullAddress = new HashMap<String, String>();
+			if (response.equals("error")) {
+				fullAddress.put("Identifier", "WE RAN OUT OF API CALLS");
+				fullAddress.put("Town", "WE RAN OUT OF API CALLS");
+				fullAddress.put("City", "WE RAN OUT OF API CALLS");
+				fullAddress.put("County", "WE RAN OUT OF API CALLS");
+				System.out.println(fullAddress);
+				return fullAddress;
+			}
 			JSONObject data = new JSONObject(response);
 			JSONArray innerData = (JSONArray) data.get("addresses"); 
 			System.out.println(data.toString());
@@ -89,7 +99,6 @@ public class APICalls {
 			for (int i = 0; i < result.length; i++) {
 				System.out.println(i + " " + result[i]);
 			}
-			Map<String, String> fullAddress = new HashMap<String, String>();
 			fullAddress.put("Identifier", result[0]);
 			fullAddress.put("Town", result[4]);
 			fullAddress.put("City", result[5]);

@@ -22,7 +22,7 @@ public class TeacherGet extends VysusBean {
 	public TeacherGet(){}
 	@PostConstruct
 	void onInit() {
-		//if(actor.isIn()) redirect("profile.jsf");
+		if(actor.isIn()) redirect("profile.jsf");
 	}
 	
 	public void signupTeacher() {

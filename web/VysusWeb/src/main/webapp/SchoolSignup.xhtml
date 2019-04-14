@@ -10,7 +10,7 @@
 				<!-- User part -->
 				<h3 class="w100 centertext"> Institution Details</h3>
          		<div id="institution-data">
-         			<h:inputText id="institutionName" value="#{schoolSignup.institutionName}" a:placeholder="Institution name"
+         			<h:inputText id="institutionName" value="#{institutionGet.instName}" a:placeholder="Institution name"
 	         			styleClass="form-control form-element w90" required="true"
 						requiredMessage="Make sure you enter an institution name" 
 						validatorMessage="Ensure your username is less than 257 characters">
@@ -19,19 +19,19 @@
 				<h:message for="institutionName"/>
 				
 				<h4 class="inline-block w15 form-element">Institution type: </h4>
-				<h:selectOneMenu id="institutionType" value="#{schoolSignup.institutionType}" 
+				<h:selectOneMenu id="institutionType" value="#{institutionGet.instType}" 
 					styleClass="form-control inline-block form-element w40">
-         			<f:selectItems  value="#{schoolSignup.types}"/>
+         			<f:selectItems  value="#{institutionGet.types}"/>
 				</h:selectOneMenu>
 				
-				<h:inputText id="institutionHouseId" value="#{schoolSignup.institutionNo}" a:placeholder="Building Number/Name"
+				<h:inputText id="institutionHouseId" value="#{institutionGet.buildNo}" a:placeholder="Building Number/Name"
 					styleClass="form-control form-element inline-block w60" required="true" 
 					requiredMessage="Institution building number/name is required"
 					validatorMessage="Do not exceed 64 characters">
 					<f:validateLength maximum="64"/>
 				</h:inputText>
 				<h:message for="institutionHouseID"/>
-          		<h:inputText id="institutionPostcode" value="#{schoolSignup.institutionPostcode}" a:placeholder="Postcode"
+          		<h:inputText id="institutionPostcode" value="#{institutionGet.instPostcode}" a:placeholder="Postcode"
 					styleClass="form-control form-element inline-block w20" required="true" 
 					requiredMessage="Postcode is required."
 					validatorMessage="Please ensure your postcode is in the correct UK format.">
@@ -39,7 +39,7 @@
 				</h:inputText>
              	<h:message for="institutionPostcode"/>
 				
-          		<h:inputText id="institutionEmail" value="#{schoolSignup.institutionEmail}" a:placeholder="Email"
+          		<h:inputText id="institutionEmail" value="#{institutionGet.instEmail}" a:placeholder="Email"
           			styleClass="form-control form-element inline-block w60" required="true" 
 					requiredMessage="Email address is required"
 					validatorMessage="Please ensure your email address is in the correct format and does not exceed 300 characters">
@@ -47,7 +47,7 @@
              		<f:validateLength maximum="300"/>
 				</h:inputText>
              	<h:message for="institutionEmail"/>
-          		<h:inputText id="institutionPhone" value="#{schoolSignup.institutionPhone}" a:placeholder="Phone Number" 
+          		<h:inputText id="institutionPhone" value="#{institutionGet.instPhoneNo}" a:placeholder="Phone Number" 
 					styleClass="form-control form-element inline-block w30" required="true" 
 					requiredMessage="Phone number is required."
 					validatorMessage="Please ensure your phone number is in the correct format.">
@@ -55,7 +55,7 @@
 				</h:inputText>
 				<h:message for="institutionPhone"/>
 				
-				<h:commandButton value="Sign Up" action="#{schoolSignup.signupSchool()}" styleClass="btn btn-primary form-element"/>
+				<h:commandButton value="Sign Up" action="#{institutionGet.signupInstitution}" styleClass="btn btn-primary form-element"/>
 	
 				</div>
 	</ui:define>

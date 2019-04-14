@@ -52,7 +52,7 @@ public class Actor extends VysusBase {
 		redirect("index.jsf");
 	}
 	public boolean isIn() {
-		return actor!=null;
+		return (actor!=null && account!=null);
 	}
 //Refreshing data:
 	public void requestUserData() {
@@ -93,5 +93,9 @@ public class Actor extends VysusBase {
 	public String accountField(String key) {
 		if(accountData!=null && accountData.containsKey(key)) return userData.get(key);
 		return "";
+	}
+	
+	public int accType() throws InvalidDataException {
+		return Account.accType(account);
 	}
 }

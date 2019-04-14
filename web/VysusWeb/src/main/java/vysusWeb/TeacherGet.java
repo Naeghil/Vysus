@@ -25,7 +25,6 @@ public class TeacherGet extends VysusBean implements Serializable {
 	public TeacherGet(){}
 	@PostConstruct
 	void onInit() {
-		//if(actor.isIn()) redirect("profile.jsf"); //What
 		actor.requestAccountData();
 	}
 	
@@ -33,7 +32,6 @@ public class TeacherGet extends VysusBean implements Serializable {
 		try {
 			Map<String, Object> userData = uGet.userData();
 			String accountID = '0'+(String)userData.get("username");
-			System.out.println("signupTeacher: " + accountID);
 			actor.signup((String)userData.remove("username"), (String)userData.remove("password"), accountID, userData, newData);
 		} catch (InvalidDataException e) {
 			actor.handleException(e, false);

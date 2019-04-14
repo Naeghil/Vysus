@@ -26,7 +26,6 @@ public class Actor extends VysusBase implements Serializable {
 		try(Connection connection = getConnection()){
 			if(connection==null) return;
 			account = (new User(username)).login(password, connection);
-			System.out.println("Test: " + account);
 			actor = username;
 			
 			redirect("profile.jsf");
@@ -75,15 +74,17 @@ public class Actor extends VysusBase implements Serializable {
 		 } catch(InvalidDataException | DBProblemException | SQLException e) {
 			 handleException(e, true);
 		 }
+		System.out.println(userData);
 	}
 	public void requestAccountData() {
 		System.out.println("account data requested");
 		if(!isIn()) return;
 		try(Connection connection = getConnection()){
-			 userData = Account.getAccount(account, actor, connection).showFull();
+			 accountData = Account.getAccount(account, actor, connection).showFull();
 		} catch(InvalidDataException | DBProblemException | SQLException e) {
 			handleException(e, true);
 		}
+		System.out.println(accountData);
 	}
 	
 	public void handleException(Exception ex, boolean fatal) {

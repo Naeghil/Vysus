@@ -27,7 +27,6 @@ public class UserGet extends VysusBean implements Serializable {
 	
 	@PostConstruct
 	void onInit() {
-		System.out.println(actor);
 		actor.requestUserData();
 	}
 
@@ -155,7 +154,6 @@ public class UserGet extends VysusBean implements Serializable {
 	}
 	public void setYear(String year) {
 		newData.put("year", year);
-		System.out.println(newData);
 	}
 	
 	public Map<String, Object> getData(){

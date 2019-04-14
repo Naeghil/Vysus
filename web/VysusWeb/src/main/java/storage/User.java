@@ -14,6 +14,7 @@ import java.util.Arrays;
 import org.mindrot.jbcrypt.BCrypt;
 
 import util.Conv;
+import util.APICalls;
 
 import java.sql.*;
 
@@ -123,8 +124,8 @@ public class User extends StorageAbstract {
 	public Map<String, String> showFull() {
 		Map<String, String> show = show();
 		show.put("DOB", Conv.dateToString((Date)data.get("dateOfBirth")));
-		//TODO: api call should go here
-		String address = ((String)data.get("houseIdentifier")+", "+(String)data.get("postcode"));
+		Map<String, String> fullAddress = APICalls.fullAddress((String)data.get("postcode"),(String)data.get("houseIdentifier"));
+		String address = (fullAddress.get("Identifier")+"\n"+fullAddress.get("Town")+"\n"+fullAddress.get("City")+"\n"+fullAddress.get("County"));
 		show.put("address", address);
 		
 		return show;

@@ -3,6 +3,8 @@ package storage;
 import java.util.List;
 import java.util.Map;
 
+import util.APICalls;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -110,7 +112,9 @@ public class Institution extends Account{
 			}
 			show.put("staffData", staffData);
 		}
-		
+		Map<String, String> fullAddress = APICalls.fullAddress((String)show.get("postcode"),(String)show.get("houseIdentifier"));
+		String address = (fullAddress.get("Identifier")+"\n"+fullAddress.get("Town")+"\n"+fullAddress.get("City")+"\n"+fullAddress.get("County"));
+		show.put("address", address);
 		return show;
 	}
 }

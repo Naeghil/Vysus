@@ -1,5 +1,6 @@
 package vysusWeb;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -7,15 +8,15 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
-import javax.faces.bean.RequestScoped;
+import javax.enterprise.context.ConversationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
 import storage.*;
 
 @Named("institutionGet")
-@RequestScoped
-public class InstitutionGet extends VysusBean {
+@ConversationScoped
+public class InstitutionGet extends VysusBean implements Serializable {
 	static List<String> types = new ArrayList<String>(Arrays.asList("Primary School","Secondary School","Further Education","University"));
 	
 	Map<String, Object> newData = new HashMap<String, Object>();

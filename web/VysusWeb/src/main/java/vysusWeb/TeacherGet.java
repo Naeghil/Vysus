@@ -1,18 +1,19 @@
 package vysusWeb;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
-import javax.faces.bean.RequestScoped;
+import javax.enterprise.context.ConversationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
 import storage.InvalidDataException;
 
 @Named("teacherGet")
-@RequestScoped
-public class TeacherGet extends VysusBean {
+@ConversationScoped
+public class TeacherGet extends VysusBean implements Serializable {
 	Map<String, Object> newData = new HashMap<String, Object>();
 
 	@Inject

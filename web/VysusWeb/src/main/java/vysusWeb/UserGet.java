@@ -1,5 +1,6 @@
 package vysusWeb;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -7,15 +8,15 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
-import javax.faces.bean.RequestScoped;
+import javax.enterprise.context.ConversationScoped;
 import javax.inject.Named;
 
 import storage.InvalidDataException;
 import util.Conv;
 
 @Named("uGet")
-@RequestScoped
-public class UserGet extends VysusBean {
+@ConversationScoped
+public class UserGet extends VysusBean implements Serializable {
 	//The reason why this is not a map is because there is no way to make it static:
 	static List<String> monthWord = new ArrayList<String>(Arrays.asList("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"));
 	static List<String> monthNo = new ArrayList<String>(Arrays.asList("01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12" ));
@@ -35,6 +36,7 @@ public class UserGet extends VysusBean {
 	}
 	
 	protected void checkDate() throws InvalidDataException {
+		System.out.println(newData.toString());
 		String date = newData.remove("year")+"-"+newData.remove("month")+"-"+newData.remove("day");
 		if(!actor.userField("DOB").equals(date)) {
 			newData.put("dateOfBirth", Conv.stringToDate(date));
@@ -151,5 +153,10 @@ public class UserGet extends VysusBean {
 	}
 	public void setYear(String year) {
 		newData.put("year", year);
+		System.out.println(newData);
+	}
+	
+	public Map<String, Object> getData(){
+		return newData;
 	}
 }

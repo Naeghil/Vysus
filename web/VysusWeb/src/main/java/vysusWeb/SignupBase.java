@@ -62,7 +62,7 @@ public class SignupBase extends VysusBean {
 			System.out.println(username);
 			System.out.println(accountID);
 			
-			new User(connection, username, password, userData(), accountData, accountID);
+			new User(connection, username, password, userData());
 			
 			//Login:
 			getSessionMap().put("username", username);

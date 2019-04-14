@@ -52,7 +52,7 @@
 		<p class="inline-block">Phone Number: </p>
 		<p class="#{profile.isAdmin() ? 'profile-element' :''} inline-block">#{actor.accountField("phoneNo")}</p>	
 		<h:inputText id="institutionPhone" value="#{institutionGet.instPhoneNo}"
-			styleClass="form-control form-element inline-block w30" required="true" 
+			styleClass="form-control form-element #{profile.isAdmin() ? 'profile-element' :''} hidden w30" required="true" 
 			requiredMessage="Phone number is required."
 			validatorMessage="Please ensure your phone number is in the correct format.">
 			<f:validateRegex pattern="^(((\+44\s?\d{4}|\(?0\d{4}\)?)\s?\d{3}\s?\d{3})|((\+44\s?\d{3}|\(?0\d{3}\)?)\s?\d{3}\s?\d{4})|((\+44\s?\d{2}|\(?0\d{2}\)?)\s?\d{4}\s?\d{4}))(\s?\#(\d{4}|\d{3}))?$"/>

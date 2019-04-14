@@ -62,7 +62,7 @@
 							<p class="inline-block">Email:</p> 
 							<p class="profile-element inline-block">#{actor.accountField("email")}</p>
 							<h:inputText id="userEmail" value="#{uGet.email}" a:placeholder="Email"
-			          			styleClass="form-control form-element inline-block w60" required="true" 
+			          			styleClass="form-control form-element hidden w60" required="true" 
 								requiredMessage="Email address is required"
 								validatorMessage="Please ensure your email address is in the correct format and does not exceed 300 characters">
 								<f:validateRegex pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]"></f:validateRegex>
@@ -74,7 +74,7 @@
 							<p class="inline-block">Phone Number:</p>
 							<p class="profile-element inline-block">#{actor.accountField("phoneNo")}</p>
 							<h:inputText id="userPhone" value="#{uGet.phoneNo}" a:placeholder="Phone Number" 
-								styleClass="form-control form-element inline-block w40" required="true" 
+								styleClass="form-control form-element hidden w40" required="true" 
 								requiredMessage="Phone number is required."
 								validatorMessage="Please ensure your phone number is in the correct format.">
 								<f:validateRegex pattern="^(((\+44\s?\d{4}|\(?0\d{4}\)?)\s?\d{3}\s?\d{3})|((\+44\s?\d{3}|\(?0\d{3}\)?)\s?\d{3}\s?\d{4})|((\+44\s?\d{2}|\(?0\d{2}\)?)\s?\d{4}\s?\d{4}))(\s?\#(\d{4}|\d{3}))?$"/>
@@ -82,10 +82,10 @@
 							<h:message for="userPhone"/>
 						</div>
 					</p:tab>
-					<p:tab render="#{profile.accType eq 1}" title="Institution">
+					<p:tab rendered="#{profile.accType eq 1}" title="Institution">
 						<ui:include src="resources/includes/school-profile.xhtml"/>
 					</p:tab>
-					<p:tab render="#{profile.accType eq 1 and profile.isAdmin()}" title="Staff">
+					<p:tab rendered="#{profile.accType eq 1 and profile.isAdmin()}" title="Staff">
 						<ui:include src="resources/includes/staff-profile.xhtml"/>
 					</p:tab>
 					<p:tab rendered="#{profile.accType eq 0}" title="Work">

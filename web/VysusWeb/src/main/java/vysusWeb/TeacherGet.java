@@ -18,7 +18,8 @@ public class TeacherGet extends VysusBean {
 	@Inject
 	@Named("uGet")
 	private UserGet uGet;
-	
+	float maxDistance;
+	float minRatePerHour;
 	public TeacherGet(){}
 	@PostConstruct
 	void onInit() {

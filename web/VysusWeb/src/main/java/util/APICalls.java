@@ -16,14 +16,20 @@ import org.json.*;
 public class APICalls {
 
 	public static void main(String[] args) {
-		System.out.println(fullAddress("cm34qw","Danbury Fryer"));
+		//System.out.println(fullAddress("cm34qw","Danbury Fryer"));
 		//System.out.println(getDistance("cm34rl","ab245dj",1000	));
 	}
 	
 		public static Map<String,String> fullAddress(String postcode, String identifier){
 			String identifierFix = identifier.replaceAll("\\s","");
-			String APIData = APICalls.getData("https://api.getAddress.io/find/"+postcode+"/"+identifierFix+"?api-key=GJUIdYuj6UiW-Atc5lR_uQ18432");
-			return parseAddress(APIData);
+			String APIData = APICalls.getData("https://api.getAddress.io/find/"+postcode+"/"+identifierFix+"?api-key=xDg38fqBR02Bgpr1KgDhVw18443");
+			Map<String,String> testData = new HashMap<String,String>();
+			testData.put("Identifier", "WE RAN OUT OF API CALLS");
+			testData.put("Town", "WE RAN OUT OF API CALLS");
+			testData.put("City", "WE RAN OUT OF API CALLS");
+			testData.put("County", "WE RAN OUT OF API CALLS");
+			//return parseAddress(APIData);
+			return testData;
 		}
 		
 		public static boolean getDistance(String start, String destination, int minimumDistance) {
@@ -58,13 +64,14 @@ public class APICalls {
 			    		response.append(line);
 			    	}
 			    	reader.close();
+			    	return "error";
 			    } else {
 			    	reader = new BufferedReader(new InputStreamReader(con.getInputStream()));
 			    	while((line = reader.readLine()) != null) {
 			    		response.append(line);
 			    	}
 			    	reader.close();
-			    	return "error";
+			    	
 			    }
 			    con.disconnect();
 			    //System.out.println(response.toString());

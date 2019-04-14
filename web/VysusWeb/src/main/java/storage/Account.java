@@ -65,6 +65,7 @@ public abstract class Account extends StorageAbstract {
 	
 //Getters and show methods	
 	public static int accType(String accountID) throws InvalidDataException {
+		System.out.println(Character.getNumericValue(accountID.charAt(0)));
 		int type = Character.getNumericValue(accountID.charAt(0));
 		if(type>=0 && type<=1) return type;
 		

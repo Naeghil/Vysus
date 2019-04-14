@@ -72,8 +72,4 @@ public class Profile extends VysusBean implements Serializable {
 	public boolean isAdmin() {
 		return (actor.accountField("admin").equals("yes"));
 	}
-	public int getAccType() {
-		System.out.println("From getAccType: " + this.accType);
-		return this.accType;
-	}	
 }

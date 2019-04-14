@@ -28,6 +28,7 @@ public class InstitutionGet extends VysusBean {
 	@PostConstruct
 	void onInit() {
 		if(actor.isIn()) redirect("profile.jsf");
+		actor.requestAccountData();
 	}
 	
 	public void signupInstitution() {
@@ -91,6 +92,10 @@ public class InstitutionGet extends VysusBean {
 	public List<String> getTypes() {
 		return types;
 	}
+	public Map<String, Object> changes(){
+		return newData;
+	}
+	
 }
 
 

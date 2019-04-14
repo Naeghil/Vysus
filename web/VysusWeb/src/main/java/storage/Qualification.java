@@ -103,16 +103,4 @@ public class Qualification extends StorageAbstract{
 		update(con);
 	} **/
 //Getters and show methods		
-	public Map<String, Object> showMini() {
-		return null;
-	}
-	public Map<String, Object> show() {
-		return null;
-	}
-	public Map<String, Object> showFull() {
-		Map<String, Object> show = new HashMap<String, Object>();
-		show.put("data", Conv.makeStringMap(data));
-		show.put("verified", verified);
-		return show;
-	}
 }

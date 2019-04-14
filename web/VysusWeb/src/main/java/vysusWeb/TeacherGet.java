@@ -20,10 +20,12 @@ public class TeacherGet extends VysusBean {
 	private UserGet uGet;
 	float maxDistance;
 	float minRatePerHour;
+	
 	public TeacherGet(){}
 	@PostConstruct
 	void onInit() {
-		if(actor.isIn()) redirect("profile.jsf");
+		if(actor.isIn()) redirect("profile.jsf"); //What
+		actor.requestAccountData();
 	}
 	
 	public void signupTeacher() {
@@ -72,6 +74,10 @@ public class TeacherGet extends VysusBean {
 	}
 	public void setAboutMe(String aboutMe) {
 		if(hasChanged(aboutMe) && aboutMe.equals(getAboutMe()))  newData.put("aboutMe", aboutMe);
+	}
+	
+	public Map<String, Object> changes(){
+		return newData;
 	}
 }
 

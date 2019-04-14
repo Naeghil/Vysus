@@ -12,11 +12,11 @@
 			<div id="profile-content" class="row h90 lefttext">
 				<p:tabView styleClass="h100">
 					<p:tab title="You">
-						<h4>#{profile.fullName} </h4>Cap
+						<h4>#{actor.userField("fullName")} </h4>
 						<div id="uDOB">
 							<p class="inline-block">Date of Birth:</p>
-							<p class="profile-element inline-block">#{profile.dateOfBirth}</p>
-							<h:inputText id="dobDay" value="#{profile.day}" a:placeholder="DD"
+							<p class="profile-element inline-block">#{actor.userField("DOB")}</p>
+							<h:inputText id="dobDay" value="#{uGet.day}" a:placeholder="DD"
 								styleClass="form-control form-element w10 profile-element hidden" required="true" 
 								requiredMessage="Day in format DD must be input."
 								onkeypress="if(event.which &lt; 48 || event.which &gt; 57) return false;">
@@ -24,11 +24,11 @@
 								<f:validateLength maximum="2" minimum="1"/>
 							</h:inputText>
 							<h:message for="dobDay"/>
-							<h:selectOneMenu id="dobMonth" value="#{profile.month}" 
+							<h:selectOneMenu id="dobMonth" value="#{uGet.month}" 
 								styleClass="form-control form-element w15 profile-element hidden">
-			         			<f:selectItems value="#{profile.monthWord}" var="m" itemLabel="#{m}" itemValue="#{profile.monthToNo(m)}" />
+			         			<f:selectItems value="#{uGet.monthWord}" var="m" itemLabel="#{m}" itemValue="#{uGet.monthToNo(m)}" />
 							</h:selectOneMenu>
-							<h:inputText id="dobYear" value="#{profile.year}" a:placeholder="YYYY"
+							<h:inputText id="dobYear" value="#{uGet.year}" a:placeholder="YYYY"
 								styleClass="form-control form-element w10 profile-element hidden" required="true" 
 								requiredMessage="Year in format YYYY must be input.">
 								<f:validateLength maximum="4" minimum="4"/>
@@ -38,15 +38,15 @@
 						</div>
 						<div id="uAddress">
 							<p class="inline-block">Address:</p>
-							<p class="profile-element inline-block">#{profile.userAddress}</p>
-							<h:inputText id="userHouseId" value="#{profile.houseIdentifier}" a:placeholder="House Number/Name"
+							<p class="profile-element inline-block">#{actor.accountField("address")}</p>
+							<h:inputText id="userHouseId" value="#{uGet.houseIdentifier}" a:placeholder="House Number/Name"
 								styleClass="form-control form-element profile-element hidden w60" required="true" 
 								requiredMessage="House number/name is required"
 								validatorMessage="Do not exceed 64 characters">
 								<f:validateLength maximum="64"/>
 							</h:inputText>
 							<h:message for="userHouseID"/>
-			          		<h:inputText id="userPostcode" value="#{profile.userPostcode}" a:placeholder="Postcode"
+			          		<h:inputText id="userPostcode" value="#{uGet.postcode}" a:placeholder="Postcode"
 								styleClass="form-control form-element profile-element hidden w20" required="true" 
 								requiredMessage="Postcode is required."
 								validatorMessage="Please ensure your postcode is in the correct UK format.">
@@ -56,8 +56,8 @@
 						</div>
 						<div id="uEmail">
 							<p class="inline-block">Email:</p> 
-							<p class="profile-element inline-block">#{profile.userEmail}</p>
-							<h:inputText id="userEmail" value="#{profile.userEmail}" a:placeholder="Email"
+							<p class="profile-element inline-block">#{actor.accountField("email")}</p>
+							<h:inputText id="userEmail" value="#{uGet.email}" a:placeholder="Email"
 			          			styleClass="form-control form-element inline-block w60" required="true" 
 								requiredMessage="Email address is required"
 								validatorMessage="Please ensure your email address is in the correct format and does not exceed 300 characters">
@@ -68,8 +68,8 @@
 						</div>
 						<div id="uPhoneNo">
 							<p class="inline-block">Phone Number:</p>
-							<p class="profile-element inline-block">#{profile.userPhoneNo}</p>
-							<h:inputText id="userPhone" value="#{profile.userPhoneNo}" a:placeholder="Phone Number" 
+							<p class="profile-element inline-block">#{actor.accountField("phoneNo")}</p>
+							<h:inputText id="userPhone" value="#{uGet.phoneNo}" a:placeholder="Phone Number" 
 								styleClass="form-control form-element inline-block w40" required="true" 
 								requiredMessage="Phone number is required."
 								validatorMessage="Please ensure your phone number is in the correct format.">
@@ -89,10 +89,9 @@
 					<!--p:tab title="Institution"-->
 						<ui:include src="resources/includes/school-profile.xhtml"/>
 					</p:tab>
-					<p:tab rendered="#{profile.accType eq 1 and profile.isAdmin()}" title="Staff">
-					<!-- p:tab title="Staff"--> 
+					<!--p:tab rendered="#{profile.accType eq 1 and profile.isAdmin()}" title="Staff">
 						<ui:include src="resources/includes/staff-profile.xhtml"/>
-					</p:tab>
+					</p:tab-->
 					<p:tab rendered="#{profile.accType eq 0}" title="Work">
 					<!--p:tab title="Work"-->
 						<ui:include src="resources/includes/teacher-profile.xhtml"/>	
@@ -103,8 +102,9 @@
 			<!-- the changes button will be here -->
 			<div class="row h10 centertext">
 				<h:form>
-					<h:commandButton id="edit-button" onclick="toggle()" value="Edit" styleClass="btn btn-primary form-element"/>
-					<h:commandButton action="#{profile.changes()}" value="Submit" styleClass="btn btn-primary form-element"/>
+					<h:commandButton id="edit-button" onclick="toggle()" value="Edit Details" styleClass="btn btn-primary form-element profile-element inline-block"/>
+					<h:commandButton id="no-edit-button" onclick="toggle()" value="Stop Editing" styleClass="btn btn-primary form-element profile-element hidden"/>
+					<h:commandButton action="#{profile.update}" value="Submit" styleClass="btn btn-primary form-element profile-element hidden"/>
 				</h:form>
 			</div>
 		</div>

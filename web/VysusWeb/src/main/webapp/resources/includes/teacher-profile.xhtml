@@ -2,8 +2,8 @@
 	<h4>Your work preferences:</h4>
 	<div id="maxDist">
 		<p class="inline-block">Maximum Distance: </p>
-		<p class="profile-element inline-block">#{profile.maxDistance}</p>
-		<h:inputText id="maxDistance" value="#{profile.maxDistance}"
+		<p class="profile-element inline-block">#{actor.accountField("maxDistance")}</p>
+		<h:inputText id="maxDistance" value="#{teacherGet.maxDistance}"
 			styleClass="form-control form-element w20 profile-element hidden" required="true"
 			requiredMessage="Please input a number"
 			validatorMessage="Please input a positive number">
@@ -12,8 +12,8 @@
 	</div>
 	<div id="minRate">
 		<p class="inline-block">Minimum Rate per Hour: </p>
-		<p class="profile-element inline-block">#{profile.minRate}</p>
-		<h:inputText id="minRatePerHour" value="#{profile.minRate}"
+		<p class="profile-element inline-block">#{actor.accountField("minRatePerHour")}</p>
+		<h:inputText id="minRatePerHour" value="#{teacherGet.minRatePerHour}"
 			styleClass="form-control form-element w20 profile-element hidden" required="true"
 			requiredMessage="Please input a number"
 			validatorMessage="Please input a positive number">                    
@@ -22,8 +22,8 @@
 	</div>
 	<div id="aboutMe">
 		<p>About You:</p>
-		<p class="inline-block">#{profile.aboutMe}</p>
-		<h:inputTextarea id="aboutMe" value="#{profile.aboutMe}"
+		<p class="inline-block">#{actor.accountField("aboutMe")}</p>
+		<h:inputTextarea id="aboutMe" value="#{teacherGet.aboutMe}"
 			styleClass="form-control form-element w60 h20 profile-element hidden" required="false" />	
 	</div>	
 </div>

@@ -43,15 +43,5 @@ public class Job extends StorageAbstract{
 //Public interfaces of protected methods
 	//Add the all jobs and job list
 //Getters and show methods
-	public HashMap<String, Object> showMini() {
-		return null;
-	}
-	public HashMap<String, Object> show() {
-		return null;
-	}
-
-	public HashMap<String, Object> showFull() {
-		return null;
-	}
 
 }

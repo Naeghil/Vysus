@@ -38,7 +38,7 @@ public class Actor extends VysusBase {
 			
 			actor = username;
 			account = accountID;
-			
+			System.out.println("actor.Signup: " + account);
 			redirect("profile.jsf");
 		} catch(InvalidDataException | DBProblemException | SQLException e) {
 			handleException(e, false);

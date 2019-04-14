@@ -15,13 +15,14 @@ import org.json.*;
 
 public class APICalls {
 
-	/*public static void main(String[] args) {
-		//System.out.println(fullAddress("cm34rl","45"));
-		System.out.println(getDistance("cm34rl","ab245dj",1000	));
-	}*/
+	public static void main(String[] args) {
+		System.out.println(fullAddress("cm34qw","Danbury Fryer"));
+		//System.out.println(getDistance("cm34rl","ab245dj",1000	));
+	}
 	
 		public static Map<String,String> fullAddress(String postcode, String identifier){
-			String APIData = APICalls.getData("https://api.getAddress.io/find/"+postcode+"/"+identifier+"?api-key=GJUIdYuj6UiW-Atc5lR_uQ18432");
+			String identifierFix = identifier.replaceAll("\\s","");
+			String APIData = APICalls.getData("https://api.getAddress.io/find/"+postcode+"/"+identifierFix+"?api-key=GJUIdYuj6UiW-Atc5lR_uQ18432");
 			return parseAddress(APIData);
 		}
 		

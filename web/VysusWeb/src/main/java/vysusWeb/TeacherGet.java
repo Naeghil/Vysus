@@ -45,17 +45,19 @@ public class TeacherGet extends VysusBean {
 		return actor.accountField("maxDistance");
 	}
 	public void setMaxDistance(float maxDistance) {
-		if(Float.parseFloat(getMaxDistance()) != maxDistance) {
+		/*if(Float.parseFloat(getMaxDistance()) != maxDistance) {
 			newData.put("maxDistance", maxDistance);
-		}
+		}*/
+		this.maxDistance = maxDistance;
 	}
 	public String getMinRatePerHour() {
 		return actor.accountField("minRatePerHour");
 	}
 	public void setMinRatePerHour(float minimumRatePerHour) {
-		if(Float.parseFloat(getMinRatePerHour()) != minimumRatePerHour) {
+		/*if(Float.parseFloat(getMinRatePerHour()) != minimumRatePerHour) {
 			newData.put("minRatePerHour", minimumRatePerHour);
-		}
+		}*/
+		this.minRatePerHour = minimumRatePerHour;
 	}
 	public String getAboutMe() {
 		return actor.accountField("aboutMe");

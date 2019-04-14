@@ -51,7 +51,6 @@ public abstract class StorageAbstract {
 	
 	//Creates a new record	
 	protected void create(Connection con) throws DBProblemException {
-		System.out.println(data);
 		try(PreparedStatement insert = con.prepareStatement(create);) {
 			insert.setObject(1, data.get("id"));
 			for(int i=0; i<keys.size(); i++) insert.setObject(i+2, data.get(keys.get(i)));

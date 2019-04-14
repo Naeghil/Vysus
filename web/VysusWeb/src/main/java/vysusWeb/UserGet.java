@@ -132,8 +132,8 @@ public class UserGet extends VysusBean implements Serializable {
 	}
 	//The date is checked separately
 	public String getDay() {
-		if(actor.isIn()) return actor.userField("DOB").split("-")[2];
-		else return "";
+		String[] date = actor.userField("DOB").split("-");
+		return (actor.isIn() && date.length>1) ? date[2] : "";
 	}
 	//The date is checked separately
 	public void setDay(String day) {
@@ -143,15 +143,15 @@ public class UserGet extends VysusBean implements Serializable {
 		newData.put("day", day);
 	}
 	public String getMonth() {
-		if(actor.isIn()) return actor.userField("DOB").split("-")[2];
-		else return "";
+		String[] date = actor.userField("DOB").split("-");
+		return (actor.isIn() && date.length>1) ? date[1] : "";
 	}
 	public void setMonth(String month) {
 		newData.put("month", month);
 	}
 	public String getYear() {
-		if(actor.isIn()) return actor.userField("DOB").split("-")[2];
-		else return "";
+		String[] date = actor.userField("DOB").split("-");
+		return (actor.isIn() && date.length>1) ? date[0] : "";
 	}
 	public void setYear(String year) {
 		newData.put("year", year);

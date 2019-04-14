@@ -18,6 +18,9 @@ public class Actor extends VysusBase implements Serializable {
 	Map<String, String> userData = null;
 	Map<String, String> accountData = null;
 
+	public Actor() {
+		System.out.println("Actor Instantiated");
+	}
 //User session:
 	public void login(String username, String password)  {
 		try(Connection connection = getConnection()){

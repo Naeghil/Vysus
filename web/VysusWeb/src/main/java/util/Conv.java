@@ -20,7 +20,7 @@ public class Conv {
 		try { 
 			return new Date(format.parse(date).getTime()); 
 		} catch(ParseException e) {
-			throw new InvalidDataException(e, "date", "This is an invalid date");
+			throw new InvalidDataException(e, "date", "This is an invalid dateAAAAAAAAAAAaa");
 		}
 	}
 	public static String dateToString(Date date) {

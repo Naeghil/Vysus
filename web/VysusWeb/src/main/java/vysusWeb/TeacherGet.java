@@ -74,7 +74,9 @@ public class TeacherGet extends VysusBean implements Serializable {
 		return actor.accountField("aboutMe");
 	}
 	public void setAboutMe(String aboutMe) {
-		if(hasChanged(aboutMe) && aboutMe.equals(getAboutMe()))  newData.put("aboutMe", aboutMe);
+		//if(hasChanged(aboutMe) && aboutMe.equals(getAboutMe()))  newData.put("aboutMe", aboutMe);
+		newData.put("aboutMe", aboutMe);
+		System.out.println(newData);
 	}
 	
 	public Map<String, Object> changes(){

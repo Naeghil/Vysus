@@ -64,13 +64,14 @@ public class APICalls {
 			    		response.append(line);
 			    	}
 			    	reader.close();
+			    	return "error";
 			    } else {
 			    	reader = new BufferedReader(new InputStreamReader(con.getInputStream()));
 			    	while((line = reader.readLine()) != null) {
 			    		response.append(line);
 			    	}
 			    	reader.close();
-			    	return "error";
+			    	
 			    }
 			    con.disconnect();
 			    //System.out.println(response.toString());

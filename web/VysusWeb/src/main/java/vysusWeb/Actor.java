@@ -53,6 +53,8 @@ public class Actor extends VysusBase {
 		redirect("index.jsf");
 	}
 	public boolean isIn() {
+		System.out.println("isIn.Actor: " + actor);
+		System.out.println("isIn.Account: " + account);
 		return (actor!=null && account!=null);
 	}
 //Refreshing data:

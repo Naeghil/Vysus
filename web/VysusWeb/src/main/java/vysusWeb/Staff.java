@@ -33,6 +33,10 @@ public class Staff extends VysusBean implements Serializable {
 	public boolean noStaff() {
 		return staff.size()==0;
 	}
+	
+	public List<DispStaff> getStaff(){
+		return staff;
+	}
 }
 
 class DispStaff {

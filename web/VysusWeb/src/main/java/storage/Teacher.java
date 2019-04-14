@@ -53,16 +53,16 @@ public class Teacher extends Account{
 	}
 	
 //Getters and show methods
-	public Map<String, String> showMini() {
-		return null;
-	}
 	public Map<String, String> show() {
 		Map<String, String> show = new HashMap<String, String>();
-		//show.put("aboutMe", data.get("aboutMe"));
-		return null;
+		show.put("aboutMe", (String)data.get("aboutMe"));
+		return show;
 	}
 	public Map<String, String> showFull() {
-		return null;
+		Map<String, String> show = show();
+		show.put("maxDistance", Float.toString((float)data.get("maxDistance")));
+		show.put("minRatePerHour", Float.toString((float)data.get("minRatePerHour")));
+		return show;
 	}
 	
 }

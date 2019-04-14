@@ -28,7 +28,7 @@ public class InstitutionGet extends VysusBean implements Serializable {
 	public InstitutionGet(){}
 	@PostConstruct
 	void onInit() {
-		if(actor.isIn()) redirect("profile.jsf");
+		//if(actor.isIn()) redirect("profile.jsf");
 		actor.requestAccountData();
 	}
 	

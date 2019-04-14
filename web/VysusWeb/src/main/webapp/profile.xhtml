@@ -7,6 +7,10 @@
 	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
     template="VysusInternal.xhtml">
 	<ui:define name="content">
+	<f:metadata>
+		<f:viewAction action="#{actor.onLoad()}"/>
+	</f:metadata>
+	
 	
 		<div class="container-fluid h100 w100">
 			<div id="profile-content" class="row h90 lefttext">

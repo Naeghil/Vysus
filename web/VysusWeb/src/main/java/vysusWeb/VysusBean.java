@@ -14,6 +14,7 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 import storage.InvalidDataException;
+import vysusWeb.Actor;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -88,6 +89,8 @@ class VysusBase implements Serializable {
 		}
 		return null;
 	}
+	
+
 }
 
 

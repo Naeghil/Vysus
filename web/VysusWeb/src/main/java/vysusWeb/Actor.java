@@ -59,7 +59,16 @@ public class Actor extends VysusBase {
 	public boolean isIn() {
 		//System.out.println("isIn.Actor: " + actor);
 		//System.out.println("isIn.Account: " + account);
-		return (actor!=null && getSessionMap().get("account")!=null);
+		return (getSessionMap().get("actor")!=null && getSessionMap().get("account")!=null);
+	}
+	
+	public String onLoad() {
+		if (getSessionMap().containsKey("actor")) {
+			return "profile.jsf";
+		} else {
+			return "index.jsf";
+		}
+	
 	}
 //Refreshing data:
 	public void requestUserData() {

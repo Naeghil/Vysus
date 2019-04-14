@@ -55,14 +55,13 @@ public class Institution extends Account{
 //Public interfaces of protected methods
 	//Sets admin to true if the person making the request is the sysAdmin
 	public void requestAdminRights(String actor) {
-		if(data.get("sysAdminID")!=null) admin = actor.equals(data.get("sysAdminID"));
+		admin = actor.equals(data.get("sysAdminID"));
 	}
 	//The following methods handle the account's staff
 	public void addStaff(String staffID, String password, Map<String, Object> staffData, Connection connection)
 		throws DBProblemException, InvalidDataException {
 		if(!admin) throw new InvalidDataException(null, "You don't have the rights to perform this operation");
-		@SuppressWarnings("unused")
-		Staff newStaff = new Staff(connection, staffID, password, staffData, (String)data.get("id"));
+		new Staff(connection, staffID, password, staffData, (String)data.get("id"));
 	}
 	public void deleteStaff(String staffID, Connection connection)
 		throws InvalidDataException, DBProblemException {
@@ -96,26 +95,27 @@ public class Institution extends Account{
 	}
 	
 //Getters and show methods	
-	public Map<String, String> showMini() {
-		return null;
-	}
-	public Map<String, String> show() {
-		return null;
-	}
-	public Map<String, String> showFull() {
-		/*
-		Map<String, String> show = new HashMap<String, String>(data);
-		show.put("admin", admin);
-		if(admin) {
-			List<Object> staffData = new ArrayList<Object>();
-			for(Staff staff : this.staff) {
-				staffData.add(staff.showFull());
-			}
-			show.put("staffData", staffData);
-		}
+	public Map<String, String> showMini(){
+		Map<String, String> show = new HashMap<String, String>();
+		show.put("name", (String)data.get("name"));
+		show.put("type", (String)data.get("type"));
 		Map<String, String> fullAddress = APICalls.fullAddress((String)show.get("postcode"),(String)show.get("houseIdentifier"));
 		String address = (fullAddress.get("Identifier")+"\n"+fullAddress.get("Town")+"\n"+fullAddress.get("City")+"\n"+fullAddress.get("County"));
-		show.put("address", address); */
+		show.put("address", address);
+		return show;
+	}
+	//Only show contacts after started talking/accepted the job:
+	public Map<String, String> show() {
+		Map<String, String> show = showMini();
+		show.put("email", (String)data.get("email"));
+		show.put("phoneNo", (String)data.get("phoneNo"));
+		return show;
+	}
+	//You get staff data separately
+	public Map<String, String> showFull() {
+		Map<String, String> show = show();
+		//If there is such a field, then it's admin:
+		if(admin) show.put("admin", "yes");
 		return null;
 	}
 }
@@ -131,17 +131,6 @@ class Staff extends User {
 		this.data = data;
 		this.data.put("accountID", accountID);
 		create(connection);
-	}
-	
-//Show methods unusable:
-	public Map<String, Object> showFull(){
-		return data;
-	}
-	public Map<String, Object> show(){
-		return null;
-	}
-	public Map<String, Object> showMini() {
-		return null;
 	}
 	
 //Static show methods to be used by the Institution object

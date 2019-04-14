@@ -1,11 +1,12 @@
 package vysusWeb;
 
+import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
-import javax.faces.bean.RequestScoped;
+import javax.enterprise.context.ConversationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -17,8 +18,8 @@ import storage.User;
 //Data has been refreshed by the *Get beans
 
 @Named("profile")
-@RequestScoped
-public class Profile extends VysusBean {
+@ConversationScoped
+public class Profile extends VysusBean implements Serializable {
 //The gets:
 	@Inject
 	@Named("uGet")

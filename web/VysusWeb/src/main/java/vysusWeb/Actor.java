@@ -63,11 +63,11 @@ public class Actor extends VysusBase {
 	}
 	
 	public String onLoad() {
-	if(this.isIn()) {
-		return null;
-	} else {
-		return "index.jsf";
-	}
+		if (getSessionMap().containsKey("actor")) {
+			return "profile.jsf";
+		} else {
+			return "index.jsf";
+		}
 	
 	}
 //Refreshing data:

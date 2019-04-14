@@ -26,6 +26,7 @@ public class UserGet extends VysusBean implements Serializable {
 	public UserGet(){}
 	@PostConstruct
 	void onInit() {
+		System.out.println(actor);
 		actor.requestUserData();
 	}
 

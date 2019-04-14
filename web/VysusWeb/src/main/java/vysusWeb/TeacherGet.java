@@ -42,7 +42,11 @@ public class TeacherGet extends VysusBean {
 	
 //Getters and setters
 	public float getMaxDistance() {
-		return Float.parseFloat(actor.accountField("maxDistance"));
+		if (!(actor.accountField("maxDistance").equals(""))) {
+			return Float.parseFloat(actor.accountField("maxDistance"));
+		} else {
+			return 0;
+		}
 	}
 	public void setMaxDistance(float maxDistance) {
 		if(getMaxDistance() != maxDistance) {

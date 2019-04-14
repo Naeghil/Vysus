@@ -36,10 +36,6 @@ public class Profile extends VysusBean implements Serializable {
 	public Profile() {}
 	@PostConstruct
 	void onInit() {
-		/*if(!actor.isIn()) {
-			redirect("index.jsf");
-			return;
-		}*/
 		try {
 			accType = actor.accType();
 		} catch (InvalidDataException e) {

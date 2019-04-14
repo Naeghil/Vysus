@@ -28,10 +28,7 @@ public class Actor extends VysusBase implements Serializable {
 			account = (new User(username)).login(password, connection);
 			System.out.println("Test: " + account);
 			actor = username;
-			getSessionMap().put("account", account);
-			getSessionMap().put("actor", actor);
-			//System.out.print("Account from sessionMap: " + getSessionMap().get("account"));
-			//System.out.print("Actor from sessionMap: " + getSessionMap().get("actor"));
+			
 			redirect("profile.jsf");
 		} catch(InvalidDataException | DBProblemException | SQLException e) {
 			 handleException(e, false);
@@ -47,9 +44,9 @@ public class Actor extends VysusBase implements Serializable {
 			userData.put("accountID", accountID);
 			new User(connection, username, password, userData);
 			
-			getSessionMap().put("account", accountID);
-			getSessionMap().put("actor", username);
-			//System.out.println("actor.Signup: " + account);
+			actor = username;
+			account = accountID;
+			
 			redirect("profile.jsf");
 		} catch(InvalidDataException | DBProblemException | SQLException e) {
 			handleException(e, false);
@@ -61,14 +58,12 @@ public class Actor extends VysusBase implements Serializable {
 		redirect("index.jsf");
 	}
 	public boolean isIn() {
-		//System.out.println("isIn.Actor: " + actor);
-		//System.out.println("isIn.Account: " + account);
-		return (getSessionMap().get("actor")!=null && getSessionMap().get("account")!=null);
+		return actor!=null;
 	}
 	
 	public String onLoad(boolean internal) {
-		if(internal && !getSessionMap().containsKey("actor")) return "index.jsf";
-		if(!internal && getSessionMap().containsKey("actor")) return "profile.jsf";
+		if(internal && actor==null) return "index.jsf";
+		if(!internal && actor!=null) return "profile.jsf";
 		return "";
 	}
 //Refreshing data:
@@ -76,7 +71,7 @@ public class Actor extends VysusBase implements Serializable {
 		System.out.println("user data requested");
 		if(!isIn()) return;
 		try(Connection connection = getConnection()){
-			 userData = new User((String)getSessionMap().get("actor"), connection).showFull();
+			 userData = new User(actor, connection).showFull();
 		 } catch(InvalidDataException | DBProblemException | SQLException e) {
 			 handleException(e, true);
 		 }
@@ -85,7 +80,7 @@ public class Actor extends VysusBase implements Serializable {
 		System.out.println("account data requested");
 		if(!isIn()) return;
 		try(Connection connection = getConnection()){
-			 userData = Account.getAccount((String)getSessionMap().get("account"), (String)getSessionMap().get("actor"), connection).showFull();
+			 userData = Account.getAccount(account, actor, connection).showFull();
 		} catch(InvalidDataException | DBProblemException | SQLException e) {
 			handleException(e, true);
 		}
@@ -115,9 +110,7 @@ public class Actor extends VysusBase implements Serializable {
 	}
 	
 	public int accType() throws InvalidDataException {
-		System.out.println("Actor.AccType: " + account);
-		System.out.println("Actor.Actor: " + actor);
-		return isIn() ? Account.accType((String)getSessionMap().get("account")) : -1;
+		return Account.accType(account);
 	}
 	
 	public String getUserPicture() { 

@@ -24,6 +24,10 @@ public class Actor extends VysusBase {
 			account = (new User(username)).login(password, connection);
 			System.out.println("Test: " + account);
 			actor = username;
+			getSessionMap().put("account", account);
+			getSessionMap().put("actor", actor);
+			//System.out.print("Account from sessionMap: " + getSessionMap().get("account"));
+			//System.out.print("Actor from sessionMap: " + getSessionMap().get("actor"));
 			redirect("profile.jsf");
 		} catch(InvalidDataException | DBProblemException | SQLException e) {
 			 handleException(e, false);
@@ -39,9 +43,9 @@ public class Actor extends VysusBase {
 			userData.put("accountID", accountID);
 			new User(connection, username, password, userData);
 			
-			actor = username;
-			account = accountID;
-			System.out.println("actor.Signup: " + account);
+			getSessionMap().put("account", accountID);
+			getSessionMap().put("actor", username);
+			//System.out.println("actor.Signup: " + account);
 			redirect("profile.jsf");
 		} catch(InvalidDataException | DBProblemException | SQLException e) {
 			handleException(e, false);
@@ -53,13 +57,15 @@ public class Actor extends VysusBase {
 		redirect("index.jsf");
 	}
 	public boolean isIn() {
-		return (actor!=null && account!=null);
+		//System.out.println("isIn.Actor: " + actor);
+		//System.out.println("isIn.Account: " + account);
+		return (actor!=null && getSessionMap().get("account")!=null);
 	}
 //Refreshing data:
 	public void requestUserData() {
 		if(!isIn()) return;
 		try(Connection connection = getConnection()){
-			 userData = new User(actor, connection).showFull();
+			 userData = new User((String)getSessionMap().get("actor"), connection).showFull();
 		 } catch(InvalidDataException | DBProblemException | SQLException e) {
 			 handleException(e, true);
 		 }
@@ -67,7 +73,7 @@ public class Actor extends VysusBase {
 	public void requestAccountData() {
 		if(!isIn()) return;
 		try(Connection connection = getConnection()){
-			 userData = Account.getAccount(account, actor, connection).showFull();
+			 userData = Account.getAccount((String)getSessionMap().get("account"), (String)getSessionMap().get("actor"), connection).showFull();
 		} catch(InvalidDataException | DBProblemException | SQLException e) {
 			handleException(e, true);
 		}
@@ -97,6 +103,8 @@ public class Actor extends VysusBase {
 	}
 	
 	public int accType() throws InvalidDataException {
-		return Account.accType(account);
+		//System.out.println("Actor.AccType: " + account);
+		//System.out.println("Actor.Actor: " + actor);
+		return Account.accType((String)getSessionMap().get("account"));
 	}
 }

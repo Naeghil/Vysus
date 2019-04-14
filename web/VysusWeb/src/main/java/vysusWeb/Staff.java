@@ -1,20 +1,38 @@
 package vysusWeb;
 
-import java.sql.Date;
-import java.text.SimpleDateFormat;
+import java.io.Serializable;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
+import javax.annotation.PostConstruct;
+import javax.enterprise.context.ConversationScoped;
 import javax.inject.Named;
+import storage.*;
 
 @Named("staff")
-public class Staff extends VysusBean {
+@ConversationScoped
+public class Staff extends VysusBean implements Serializable {
+	List<DispStaff> staff = new ArrayList<DispStaff>();
 	
-	
-	
-	public boolean getNoStaff() {
-		return true;
+	public Staff() {}
+	@PostConstruct
+	void onInit() {
+		try(Connection connection = getConnection()){
+			for(storage.Staff staff : storage.Staff.allStaff(actor.account, connection)) {
+				this.staff.add(new DispStaff(staff.showFull()));
+			}
+		} catch(DBProblemException | InvalidDataException | SQLException e) {
+			actor.handleException(e, false);
+		}
 	}
-
+	
+	
+	public boolean noStaff() {
+		return staff.size()==0;
+	}
 }
 
 class DispStaff {
@@ -25,15 +43,12 @@ class DispStaff {
 	public String email;
 	public String phoneNo;
 	
-	public DispStaff(Map<String, Object> data) {
-		id = (String)data.get("id");
-		fullName = (String)data.get("fullName");
-		SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
-		Date dbDOB = (Date)data.get("dateOfBirth");
-		DOB = format.format(new java.util.Date(dbDOB.getTime()));
-		//Again, service:
-		address = (String)data.get("houseIdentifier")+" "+(String)data.get("postcode");
-		email = (String)data.get("email");
-		phoneNo = (String)data.get("phoneNo");
+	public DispStaff(Map<String, String> data) {
+		id = data.get("username");
+		fullName = data.get("fullName");
+		DOB = data.get("DOB");
+		address = data.get("address");
+		email = data.get("email");
+		phoneNo = data.get("phoneNo");
 	}
 }

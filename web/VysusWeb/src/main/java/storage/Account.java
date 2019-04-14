@@ -54,8 +54,6 @@ public abstract class Account extends StorageAbstract {
 //Object-specific querying methods
 
 //Public interfaces of protected methods
-	public abstract void loadDeep(Connection connection) throws DBProblemException, InvalidDataException;
-	
 	public abstract void deleteAccount(Connection connection) throws DBProblemException, InvalidDataException;
 	
 	public void updateAccount(Map<String, Object> changes, Connection connection)

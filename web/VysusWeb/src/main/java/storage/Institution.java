@@ -13,13 +13,9 @@ import java.sql.*;
 public class Institution extends Account{
 //Object-specific variables
 	boolean admin = false;
-	List<Staff> staff = new ArrayList<Staff>();
-	//List<Job> jobs = new ArrayList<Job>();
 	//TODO: what exactly does it mean?
 	protected Object rankingPreferences;
 	//Object-specific queries:
-	protected String retrieveStaff = "SELECT * FROM User WHERE accountID=?";		
-	
 	
 //Initialisation: constructors and variables setup
 	//Uses super constructors
@@ -83,11 +79,6 @@ public class Institution extends Account{
 		//toDelete.delete(connection);
 	}
 	
-	public void loadDeep(Connection connection)
-		throws DBProblemException, InvalidDataException {
-		if(admin) this.staff = Staff.allStaff(getID(), connection);
-		//else this.jobs = Job.allJobs(getID(), connection);
-	}
 	public void deleteAccount(Connection connection) throws DBProblemException, InvalidDataException{
 		for(Staff staff : Staff.allStaff(getID(), connection)) staff.delete(connection);
 		//for(Job job : Job.allJobs(getID(), connection)) job.delete(connection);
@@ -117,39 +108,5 @@ public class Institution extends Account{
 		//If there is such a field, then it's admin:
 		if(admin) show.put("admin", "yes");
 		return null;
-	}
-}
-
-class Staff extends User {
-	public Staff(String username, Connection connection)
-			throws DBProblemException, InvalidDataException {
-		super(username, connection);
-	}
-	public Staff(Connection connection, String username, String password, Map<String, Object> data, String accountID)
-			throws DBProblemException, InvalidDataException {
-		super(username);
-		this.data = data;
-		this.data.put("accountID", accountID);
-		create(connection);
-	}
-	
-//Static show methods to be used by the Institution object
-	public static List<Staff> allStaff(String accountID, Connection connection) throws DBProblemException, InvalidDataException {
-		List<Staff> allStaff = new ArrayList<Staff>();
-		for(String staffID : Staff.staffList(accountID, connection)) {
-			allStaff.add(new Staff(staffID, connection));
-		}
-		return allStaff;
-	}
-	public static List<String> staffList(String accountID, Connection connection) 
-		throws DBProblemException {
-		List<String> staffList = new ArrayList<String>();
-		try(PreparedStatement retList = connection.prepareStatement("SELECT userID FROM User WHERE accountID=?");) {
-			retList.setString(1, accountID);
-			try(ResultSet records = retList.executeQuery();) {
-				while(records.next()) staffList.add(records.getString("userID"));
-			}
-		} catch (SQLException e) { throw new DBProblemException(e); }
-		return staffList;
 	}
 }

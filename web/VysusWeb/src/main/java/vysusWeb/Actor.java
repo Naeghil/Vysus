@@ -34,6 +34,8 @@ public class Actor extends VysusBase {
 			if(connection == null) return;
 			if(User.exists(username, connection)) throw new InvalidDataException("username", "This username already exists.");
 			Account.makeAccount(accountID, accountData, connection);
+			
+			userData.put("accountID", accountID);
 			new User(connection, username, password, userData);
 			
 			actor = username;

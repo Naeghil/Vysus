@@ -21,9 +21,13 @@ public class Actor extends VysusBase {
 	public void login(String username, String password)  {
 		try(Connection connection = getConnection()){
 			if(connection==null) return;
-			this.account = (new User(username)).login(password, connection);
+			account = (new User(username)).login(password, connection);
 			System.out.println("Test: " + account);
 			actor = username;
+			getSessionMap().put("account", account);
+			getSessionMap().put("actor", actor);
+			System.out.print("Account from sessionMap: " + getSessionMap().get("account"));
+			System.out.print("Actor from sessionMap: " + getSessionMap().get("actor"));
 			redirect("profile.jsf");
 		} catch(InvalidDataException | DBProblemException | SQLException e) {
 			 handleException(e, false);

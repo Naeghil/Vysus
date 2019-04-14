@@ -96,14 +96,15 @@ public class Institution extends Account{
 	}
 	
 //Getters and show methods	
-	public Map<String, Object> showMini() {
+	public Map<String, String> showMini() {
 		return null;
 	}
-	public Map<String, Object> show() {
+	public Map<String, String> show() {
 		return null;
 	}
-	public Map<String, Object> showFull() {
-		Map<String, Object> show = new HashMap<String, Object>(data);
+	public Map<String, String> showFull() {
+		/*
+		Map<String, String> show = new HashMap<String, String>(data);
 		show.put("admin", admin);
 		if(admin) {
 			List<Object> staffData = new ArrayList<Object>();
@@ -114,8 +115,8 @@ public class Institution extends Account{
 		}
 		Map<String, String> fullAddress = APICalls.fullAddress((String)show.get("postcode"),(String)show.get("houseIdentifier"));
 		String address = (fullAddress.get("Identifier")+"\n"+fullAddress.get("Town")+"\n"+fullAddress.get("City")+"\n"+fullAddress.get("County"));
-		show.put("address", address);
-		return show;
+		show.put("address", address); */
+		return null;
 	}
 }
 

@@ -18,7 +18,8 @@ public class TeacherGet extends VysusBean {
 	@Inject
 	@Named("uGet")
 	private UserGet uGet;
-	
+	float maxDistance;
+	float minRatePerHour;
 	public TeacherGet(){}
 	@PostConstruct
 	void onInit() {
@@ -40,21 +41,23 @@ public class TeacherGet extends VysusBean {
 	}
 	
 //Getters and setters
-	public String getMaxDistance() {
-		return actor.accountField("maxDistance");
+	public float getMaxDistance() {
+		return Float.parseFloat(actor.accountField("maxDistance"));
 	}
 	public void setMaxDistance(float maxDistance) {
-		if(Float.parseFloat(getMaxDistance()) != maxDistance) {
+		if(getMaxDistance() != maxDistance) {
 			newData.put("maxDistance", maxDistance);
 		}
+		//this.maxDistance = maxDistance;
 	}
-	public String getMinRatePerHour() {
-		return actor.accountField("minRatePerHour");
+	public float getMinRatePerHour() {
+		return Float.parseFloat(actor.accountField("minRatePerHour"));
 	}
 	public void setMinRatePerHour(float minimumRatePerHour) {
-		if(Float.parseFloat(getMinRatePerHour()) != minimumRatePerHour) {
+		if(getMinRatePerHour() != minimumRatePerHour) {
 			newData.put("minRatePerHour", minimumRatePerHour);
 		}
+		//this.minRatePerHour = minimumRatePerHour;
 	}
 	public String getAboutMe() {
 		return actor.accountField("aboutMe");

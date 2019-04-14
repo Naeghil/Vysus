@@ -22,7 +22,7 @@ public class Actor extends VysusBase {
 		try(Connection connection = getConnection()){
 			if(connection==null) return;
 			account = (new User(username)).login(password, connection);
-			System.out.println(account);
+			System.out.println("Test: " + account);
 			actor = username;
 			redirect("profile.jsf");
 		} catch(InvalidDataException | DBProblemException | SQLException e) {

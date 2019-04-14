@@ -73,6 +73,7 @@ public class Actor extends VysusBase implements Serializable {
 	}
 //Refreshing data:
 	public void requestUserData() {
+		System.out.println("user data requested");
 		if(!isIn()) return;
 		try(Connection connection = getConnection()){
 			 userData = new User((String)getSessionMap().get("actor"), connection).showFull();
@@ -81,6 +82,7 @@ public class Actor extends VysusBase implements Serializable {
 		 }
 	}
 	public void requestAccountData() {
+		System.out.println("account data requested");
 		if(!isIn()) return;
 		try(Connection connection = getConnection()){
 			 userData = Account.getAccount((String)getSessionMap().get("account"), (String)getSessionMap().get("actor"), connection).showFull();
@@ -113,8 +115,8 @@ public class Actor extends VysusBase implements Serializable {
 	}
 	
 	public int accType() throws InvalidDataException {
-		//System.out.println("Actor.AccType: " + account);
-		//System.out.println("Actor.Actor: " + actor);
+		System.out.println("Actor.AccType: " + account);
+		System.out.println("Actor.Actor: " + actor);
 		return isIn() ? Account.accType((String)getSessionMap().get("account")) : -1;
 	}
 	

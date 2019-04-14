@@ -25,7 +25,7 @@ public class TeacherGet extends VysusBean implements Serializable {
 	public TeacherGet(){}
 	@PostConstruct
 	void onInit() {
-		if(actor.isIn()) redirect("profile.jsf"); //What
+		//if(actor.isIn()) redirect("profile.jsf"); //What
 		actor.requestAccountData();
 	}
 	

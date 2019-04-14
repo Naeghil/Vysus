@@ -23,11 +23,12 @@ public class UserGet extends VysusBean implements Serializable {
 	
 	Map<String, Object> newData = new HashMap<String, Object>();
 
-	public UserGet(){}
+	public UserGet(){
+		actor.requestUserData();
+	}
 	@PostConstruct
 	void onInit() {
 		System.out.println(actor);
-		actor.requestUserData();
 	}
 
 	public Map<String, Object> userData() throws InvalidDataException {

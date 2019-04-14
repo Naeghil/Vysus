@@ -43,6 +43,7 @@ public abstract class Account extends StorageAbstract {
 	public static Account makeAccount(String accountID, Map<String, Object> accountData, Connection connection)
 		throws InvalidDataException, DBProblemException {
 		char accType = accountID.charAt(0);
+		System.out.println("account.makeAccount: " + accountID);
 		if(accType=='0') return new Teacher(accountID, accountData, connection);
 		if(accType=='1') return new Institution(accountID, accountData, connection);
 		

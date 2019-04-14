@@ -33,6 +33,7 @@ public class TeacherGet extends VysusBean implements Serializable {
 		try {
 			Map<String, Object> userData = uGet.userData();
 			String accountID = '0'+(String)userData.get("username");
+			System.out.println("signupTeacher: " + accountID);
 			actor.signup((String)userData.remove("username"), (String)userData.remove("password"), accountID, userData, newData);
 		} catch (InvalidDataException e) {
 			actor.handleException(e, false);
@@ -75,7 +76,8 @@ public class TeacherGet extends VysusBean implements Serializable {
 	}
 	public void setAboutMe(String aboutMe) {
 		//if(hasChanged(aboutMe) && aboutMe.equals(getAboutMe()))  newData.put("aboutMe", aboutMe);
-		newData.put("aboutMe", aboutMe);
+		if(!actor.isIn() || (hasChanged(aboutMe) && aboutMe.equals(getAboutMe())))  newData.put("aboutMe", aboutMe);
+		//newData.put("aboutMe", aboutMe);
 		System.out.println(newData);
 	}
 	

@@ -106,7 +106,7 @@ public class Actor extends VysusBase implements Serializable {
 		return "";
 	}
 	public String accountField(String key) {
-		if(accountData!=null && accountData.containsKey(key)) return userData.get(key);
+		if(accountData!=null && accountData.containsKey(key)) return accountData.get(key);
 		return "";
 	}
 	

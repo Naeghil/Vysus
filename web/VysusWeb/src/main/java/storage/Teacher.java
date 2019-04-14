@@ -15,17 +15,14 @@ public class Teacher extends Account{
 	//Uses super constructors:
 	public Teacher(String accountID) {
 		super(accountID);
-		System.out.println("Teacher.Teacher 3: " + accountID);
 	}
 	public Teacher(String accountID, Connection connection) throws DBProblemException, InvalidDataException { 
 		super(accountID); 
-		System.out.println("Teacher.Teacher 2: " + accountID);
 		retrieve(connection);
 	}
 	public Teacher(String accountID, Map<String, Object> accountData, Connection connection)
 		throws DBProblemException {
 		super(accountID, accountData, connection);
-		System.out.println("Teacher.Teacher 3: " + accountID);
 		//TODO: Create the calendar
 	}
 	protected void setDBVariables() {

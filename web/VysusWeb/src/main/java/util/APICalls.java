@@ -5,9 +5,10 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
-import java.net.ProtocolException;
+
 import java.net.URL;
-import java.util.Scanner;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.StringTokenizer;
 
 import org.json.*;
@@ -15,23 +16,30 @@ import org.json.*;
 
 public class APICalls {
 
-	public void getLatLong(){}
-
-	public static void main(String[] args) {
-	    try {
-	        StringBuffer j = APICalls.getData("cm34rl","ab245dj");
-	        parseJSON(j);
-		} catch (Exception e) {
-			e.printStackTrace();
+	/*public static void main(String[] args) {
+		//System.out.println(fullAddress("cm34rl","45"));
+		System.out.println(getDistance("cm34rl","ab245dj",1000	));
+	}*/
+	
+		public static Map<String,String> fullAddress(String postcode, String identifier){
+			String APIData = APICalls.getData("https://api.getAddress.io/find/"+postcode+"/"+identifier+"?api-key=GJUIdYuj6UiW-Atc5lR_uQ18432");
+			return parseAddress(APIData);
 		}
-	}
-			   
-		public static StringBuffer getData(String start,String destination){
-			String testPostcode = "cm34rl";
-		    //String url = "https://dev.virtualearth.net/REST/v1/Routes/DistanceMatrix?origins=47.6044,-122.3345;47.6731,-122.1185;47.6149,-122.1936&destinations=45.5347,-122.6231;47.4747,-122.2057&travelMode=driving&key=AoWX66pYythZ2v4yWfGFEHOhpGYEtVNTq5CX3UfB1skxrWBmWMbQEgP0aPR_tejX";
-		    //String url = "http://api.postcodes.io/postcodes/" + testPostcode;
-			String url = "https://api.getAddress.io/find/cm34rl/45?api-key=GJUIdYuj6UiW-Atc5lR_uQ18432";
-			URL obj;
+		
+		public static boolean getDistance(String start, String destination, int minimumDistance) {
+			String URL = "https://maps.googleapis.com/maps/api/distancematrix/json?units=metric&origins="+start+"&destinations="+destination+"&key=AIzaSyDaoTS-UJ0jeuB0kDkGCtBtl7A3KoybsmU";
+			String APIData = APICalls.getData(URL);
+			int calculatedDistance = parseDistance(APIData);
+			if (calculatedDistance < minimumDistance*1000) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+		
+		//generic api caller
+		public static String getData(String url){
+		    URL obj;
 			BufferedReader reader;
 			String line;
 			StringBuffer response = new StringBuffer();
@@ -58,7 +66,7 @@ public class APICalls {
 			    	reader.close();
 			    }
 			    con.disconnect();
-			    System.out.println(response.toString());
+			    //System.out.println(response.toString());
 			} catch (MalformedURLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -66,21 +74,38 @@ public class APICalls {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} 
-			return response;
+			return response.toString();
 		    
 		}
 		
-		public static String parseJSON(String response) {
+		public static Map<String, String> parseAddress(String response) {
 			JSONObject data = new JSONObject(response);
 			JSONArray innerData = (JSONArray) data.get("addresses"); 
 			System.out.println(data.toString());
 			StringTokenizer st = new StringTokenizer(innerData.get(0).toString());
 			System.out.println(st);
-			/*for (int i = 0; i < data.length(); i++) {
-				JSONObject dataItem = data.getJSONObject(i);
-				String quality = dataItem.getString("quality");
-			}*/
-			
-			return "yes";
+			String[] result = innerData.get(0).toString().split(",");
+			//System.out.println(result[0]);
+			for (int i = 0; i < result.length; i++) {
+				System.out.println(i + " " + result[i]);
+			}
+			Map<String, String> fullAddress = new HashMap<String, String>();
+			fullAddress.put("Identifier", result[0]);
+			fullAddress.put("Town", result[4]);
+			fullAddress.put("City", result[5]);
+			fullAddress.put("County", result[6]);
+			System.out.println(fullAddress);
+			return fullAddress;
+		}
+		
+		public static int parseDistance(String response) {
+			JSONObject data = new JSONObject(response);
+			JSONArray innerData = (JSONArray) data.get("rows");
+			JSONObject data2 = innerData.getJSONObject(0);
+			JSONArray data3 = (JSONArray) data2.get("elements");
+			JSONObject data4 = data3.getJSONObject(0);
+			JSONObject data5 = data4.getJSONObject("distance");
+			int distance = data5.getInt("value");
+			return distance;
 		}
 }

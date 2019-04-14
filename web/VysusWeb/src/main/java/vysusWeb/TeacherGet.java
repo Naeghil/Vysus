@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.annotation.PostConstruct;
 import javax.enterprise.context.ConversationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -23,10 +22,6 @@ public class TeacherGet extends VysusBean implements Serializable {
 	float minRatePerHour;
 	
 	public TeacherGet(){}
-	@PostConstruct
-	void onInit() {
-		actor.requestAccountData();
-	}
 	
 	public void signupTeacher() {
 		try {

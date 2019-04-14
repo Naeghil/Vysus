@@ -7,7 +7,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.PostConstruct;
 import javax.enterprise.context.ConversationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -26,10 +25,6 @@ public class InstitutionGet extends VysusBean implements Serializable {
 	private UserGet uGet;
 	
 	public InstitutionGet(){}
-	@PostConstruct
-	void onInit() {
-		actor.requestAccountData();
-	}
 	
 	public void signupInstitution() {
 		try {

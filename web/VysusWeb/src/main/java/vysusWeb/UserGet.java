@@ -7,7 +7,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.PostConstruct;
 import javax.enterprise.context.ConversationScoped;
 import javax.inject.Named;
 
@@ -24,11 +23,6 @@ public class UserGet extends VysusBean implements Serializable {
 	Map<String, Object> newData = new HashMap<String, Object>();
 
 	public UserGet(){}
-	
-	@PostConstruct
-	void onInit() {
-		actor.requestUserData();
-	}
 
 	public Map<String, Object> userData() throws InvalidDataException {
 		checkDate();

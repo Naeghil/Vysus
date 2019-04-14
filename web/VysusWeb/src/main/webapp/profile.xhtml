@@ -44,7 +44,7 @@
 						</div>
 						<div id="uAddress">
 							<p class="inline-block">Address:</p>
-							<p class="profile-element inline-block">#{actor.accountField("address")}</p>
+							<p class="profile-element inline-block">#{actor.userField("address")}</p>
 							<h:inputText id="userHouseId" value="#{uGet.houseIdentifier}" a:placeholder="House Number/Name"
 								styleClass="form-control form-element profile-element hidden w60" required="true" 
 								requiredMessage="House number/name is required"
@@ -62,7 +62,7 @@
 						</div>
 						<div id="uEmail">
 							<p class="inline-block">Email:</p> 
-							<p class="profile-element inline-block">#{actor.accountField("email")}</p>
+							<p class="profile-element inline-block">#{actor.userField("email")}</p>
 							<h:inputText id="userEmail" value="#{uGet.email}" a:placeholder="Email"
 			          			styleClass="form-control form-element hidden w60" required="true" 
 								requiredMessage="Email address is required"
@@ -74,7 +74,7 @@
 						</div>
 						<div id="uPhoneNo">
 							<p class="inline-block">Phone Number:</p>
-							<p class="profile-element inline-block">#{actor.accountField("phoneNo")}</p>
+							<p class="profile-element inline-block">#{actor.userField("phoneNo")}</p>
 							<h:inputText id="userPhone" value="#{uGet.phoneNo}" a:placeholder="Phone Number" 
 								styleClass="form-control form-element hidden w40" required="true" 
 								requiredMessage="Phone number is required."
@@ -98,8 +98,8 @@
 			
 			<!-- the changes button will be here -->
 			<div class="row h10 centertext">
-				<h:form>
 					<h:commandButton id="edit-button" onclick="toggle()" value="Edit Details" styleClass="btn btn-primary form-element profile-element inline-block"/>
+				<h:form>
 					<h:commandButton id="no-edit-button" onclick="toggle()" value="Stop Editing" styleClass="btn btn-primary form-element profile-element hidden"/>
 					<h:commandButton action="#{profile.update}" value="Submit" styleClass="btn btn-primary form-element profile-element hidden"/>
 				</h:form>

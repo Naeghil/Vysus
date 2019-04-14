@@ -13,9 +13,12 @@ public class Teacher extends Account{
 	//TODO: protected Calendar calendar;
 //Initialisation: constructors and variables setup
 	//Uses super constructors:
+	public Teacher(String accountID) {
+		super(accountID);
+	}
 	public Teacher(String accountID, Connection connection) throws DBProblemException, InvalidDataException { 
 		super(accountID); 
-		if(connection!=null) retrieve(connection);
+		retrieve(connection);
 	}
 	public Teacher(String accountID, Map<String, Object> accountData, Connection connection)
 		throws DBProblemException {

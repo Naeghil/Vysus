@@ -9,7 +9,7 @@ package storage;
 
 import java.util.Map;
 
-import util.DataConv;
+import util.Conv;
 
 import java.util.List;
 import java.sql.*;
@@ -111,7 +111,7 @@ public class Qualification extends StorageAbstract{
 	}
 	public Map<String, Object> showFull() {
 		Map<String, Object> show = new HashMap<String, Object>();
-		show.put("data", DataConv.makeStringMap(data));
+		show.put("data", Conv.makeStringMap(data));
 		show.put("verified", verified);
 		return show;
 	}

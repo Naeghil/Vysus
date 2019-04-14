@@ -3,38 +3,40 @@ package vysusWeb;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
+import javax.inject.Inject;
+import javax.inject.Named;
 
-@ManagedBean(name="teacherSignup")
-@SessionScoped
-public class TeacherSignup extends VysusBean {
-	float maxDistance;
-	float minRatePerHour;
-	String aboutMe;
+import storage.InvalidDataException;
+
+@Named("teacherGet")
+@RequestScoped
+public class TeacherGet extends VysusBean {
+	Map<String, Object> accountData = new HashMap<String, Object>();
+
+	@Inject
+	@Named("uGet")
+	private UserGet uGet;
 	
-	@ManagedProperty(value = "#{signup}")
-	private SignupBase signup;
-	
-	public TeacherSignup(){
-		super();
-		if(actor!=null) redirect("profile.jsf");
-	}
-	
-	public Map<String, Object> accountData() {
-		Map<String, Object> data = new HashMap<String, Object>();
-		data.put("maxDistance", maxDistance);
-		data.put("minRatePerHour", minRatePerHour);
-		data.put("aboutMe", aboutMe);
-		data.put("accType", new Integer(0));
-		return data;
+	public TeacherGet(){}
+	@PostConstruct
+	void onInit() {
+		if(actor.isIn()) redirect("profile.jsf");
 	}
 	
 	public void signupTeacher() {
-		signup.signup(accountData());
+		try {
+			Map<String, Object> userData = uGet.userData();
+			String accountID = '0'+(String)userData.get("username");
+			actor.signup((String)userData.remove("username"), (String)userData.remove("password"), accountID, userData, accountData);
+		} catch (InvalidDataException e) {
+			actor.handleException(e, false);
+		}
 	}
-	
 
 //Getters and setters
 	public float getMaxDistance() {

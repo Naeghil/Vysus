@@ -91,9 +91,14 @@ public abstract class StorageAbstract {
 	
 //The following are methods used to construct views, return null if not applicable
 	//Retrieves and shows minimal details doesn't need to be logged in
-	public abstract Map<String, Object> showMini();
+	public Map<String, String> showMini() {
+		return null;
+	}
 	//Retrieves and shows medium details, as seen by non-owner users
-	public abstract Map<String, Object> show();
-	//Retrieves and shows all data, as seen by owner users
-	public abstract Map<String, Object> showFull();
+	public Map<String, String> show() {
+		return null;
+	}//Retrieves and shows all data, as seen by owner users
+	public Map<String, String> showFull() {
+		return null;
+	}
 }

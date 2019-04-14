@@ -12,7 +12,7 @@ import java.util.Map;
 
 public abstract class Account extends StorageAbstract {
 //Object-specific variables
-	//There are no object-specific variables
+	int accType = -1;
 
 //Initialisation: constructors and variables setup
 	public Account(String accountID) {
@@ -27,12 +27,17 @@ public abstract class Account extends StorageAbstract {
 		create(connection);
 	}
 	//Masking constructor for existing accounts
+	public static Account getAccount(String accountID)throws InvalidDataException {
+		int accType = Account.accType(accountID);
+		if(accType==0) return new Teacher(accountID);
+		if(accType==1) return new Institution(accountID);
+		return null;
+	}
 	public static Account getAccount(String accountID, String actor, Connection connection) throws DBProblemException, InvalidDataException {
-		char accType = accountID.charAt(0);
-		if(accType=='0') return new Teacher(accountID, connection);
-		if(accType=='1') return new Institution(accountID, actor, connection);
-		
-		throw new InvalidDataException(null, "Unrecognised account type");
+		int accType = Account.accType(accountID);
+		if(accType==0) return new Teacher(accountID, connection);
+		if(accType==1) return new Institution(accountID, actor, connection);
+		return null;
 	}
 	//Masking constructor for new accounts
 	public static Account makeAccount(String accountID, Map<String, Object> accountData, Connection connection)

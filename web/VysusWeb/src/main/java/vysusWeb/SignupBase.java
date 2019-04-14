@@ -12,6 +12,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -29,8 +30,13 @@ public class SignupBase extends VysusBean {
 	Map<String, Object> userData = new HashMap<String, Object>();
 
 	public SignupBase(){}
+	@PostConstruct
+	void init() {
+		//if(actor.isIn()) redirect("profile.xhtml");
+	}
 
 	public Map<String, Object> userData() throws InvalidDataException {
+		
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 		String dateText = getYear()+"-"+getMonth()+"-"+getDay(); 
 		Date userDOB = null;

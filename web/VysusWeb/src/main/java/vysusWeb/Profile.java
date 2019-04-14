@@ -12,14 +12,18 @@ import java.util.Map;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.inject.Named;
 
 import storage.Account;
 import storage.DBProblemException;
 import storage.InvalidDataException;
 import storage.User;
-import util.DataConv;
+import util.Conv;
 
-@ManagedBean(name="profile")
+//Data has been refreshed by the *Get beans
+
+
+@Named("profile")
 @RequestScoped
 public class Profile extends VysusBean {
 	Map<String, Object> userData = null;
@@ -57,9 +61,9 @@ public class Profile extends VysusBean {
 	}
 
 	void extract(Map<String, Object> fullData) throws InvalidDataException {
-		userData = DataConv.getObjectMap(fullData.get("userData"));
-		accountData = DataConv.getObjectMap(fullData.get("accountData"));
-		if(isAdmin()) additionalData = DataConv.getList(accountData.remove("staffData"));
+		userData = Conv.getObjectMap(fullData.get("userData"));
+		accountData = Conv.getObjectMap(fullData.get("accountData"));
+		if(isAdmin()) additionalData = Conv.getList(accountData.remove("staffData"));
 		accType = Account.accType(account);
 		System.out.println("From extract: " + accType);
 	}
@@ -233,7 +237,7 @@ public class Profile extends VysusBean {
 		List<DispStaff> staff = new ArrayList<DispStaff>();
 		if(additionalData!=null) {
 			for(Object staffDataO : additionalData) {
-				Map<String, Object> staffData = DataConv.getObjectMap(staffDataO);
+				Map<String, Object> staffData = Conv.getObjectMap(staffDataO);
 				staff.add(new DispStaff(staffData));
 			}
 		}

@@ -4,12 +4,30 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+
+import storage.InvalidDataException;
 
 /*************************************
  *  Converts data and maps safely	 *
  ************************************/
 
-public class DataConv {
+public class Conv {
+	public static Date stringToDate(String date) throws InvalidDataException {
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		try { 
+			return new Date(format.parse(date).getTime()); 
+		} catch(ParseException e) {
+			throw new InvalidDataException(e, "date", "This is an invalid date");
+		}
+	}
+	public static String dateToString(Date date) {
+		SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+		return format.format(new java.util.Date(date.getTime()));
+	}
+	
 	public static Map<String, String> getStringMap(Object map) {
 		Map<?, ?> temp;
 		Map<String, String> converted = new HashMap<String, String>();

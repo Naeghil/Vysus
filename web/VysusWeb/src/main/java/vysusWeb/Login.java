@@ -1,44 +1,26 @@
 package vysusWeb;
 
-import java.sql.Connection;
-import java.sql.SQLException;
-
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
-import javax.faces.bean.ManagedBean; 
-
-import storage.*;
+import javax.inject.Named;
 
 //TODO: add a logger class that records database errors somewhere
 
-@ManagedBean(name="login")
+@Named("login")
 @RequestScoped
-public class Login extends VysusBean{
+public class Login extends VysusBean {
 	String username;
 	String password;
-
-	public Login(){
-		super();
+	
+	public Login(){}
+	@PostConstruct
+	void init() {
 		//Avoid session conflict not allowing a logged user to login again
-		if(actor!=null) redirect("profile.jsf");
+		if(actor.isIn()) redirect("profile.jsf");
 	}
 	
 	public void login() {
-		try(Connection connection = getConnection()) {
-			if(connection==null) return;
-
-			User toLogin = new User(username);
-			getSessionMap().put("account", toLogin.login(password, connection));
-			getSessionMap().put("username", this.username);
-			
-			redirect("profile.jsf");
-		} catch(InvalidDataException e) {
-			String field = e.field();
-			String msg = e.message();
-			if(field!=null) if(field.equals("userID")) field = "username";
-			message(field, "Invalid field", msg);
-		} catch(DBProblemException e) {
-			message("Uh-oh", "We had a problem executing your request");
-		} catch (SQLException e) { }
+		actor.login(username, password);
 	}
 	
 //Getters and setters

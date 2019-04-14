@@ -6,28 +6,37 @@ import java.util.Map;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.inject.Inject;
+import javax.inject.Named;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-import storage.User;
+import storage.InvalidDataException;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 
-public class VysusBean implements Serializable {
-	protected String actor = null;
-	protected String account = null;
-	User user = null;
+public class VysusBean extends VysusBase {
+	@Inject
+	@Named("actor")
+	protected Actor actor;
 	
-	public VysusBean() {
-		//Set the actor to the currently logged user, if any:
-		Object actorO = getSessionMap().get("username");
-		if(actorO!=null) actor = (String)actorO;
-		Object accountO = getSessionMap().get("account");
-		if(accountO!=null) account = (String)accountO;
+	/*
+	//For actor availability:
+	public Actor getActor() {
+	    return actor;
 	}
+	@Inject
+	public void setActor (@Named(Actor actor) {
+	    this.actor = actor;
+	} */
+}
+
+class VysusBase implements Serializable {
+	public VysusBase() { }
+	
 	
 //Methods to retrieve session objects:
 	protected Map<String, Object> getSessionMap() {
@@ -55,6 +64,12 @@ public class VysusBean implements Serializable {
 		}
 	}
 //Adds a message to a component:
+	protected void message(InvalidDataException e) {
+		String field = e.field();
+		String msg = e.message();
+		if(field!=null) if(field.equals("userID")) field= "username";
+		message(msg, "Invalid "+field);
+	}
 	protected void message(String message, String detail) { message(null, message, detail); }
 	protected void message(String clientID, String message, String detail) {
 		FacesContext.getCurrentInstance().addMessage(clientID, new FacesMessage(message, detail));
@@ -74,3 +89,5 @@ public class VysusBean implements Serializable {
 		return null;
 	}
 }
+
+

@@ -55,7 +55,11 @@ public class TeacherGet extends VysusBean {
 		//this.maxDistance = maxDistance;
 	}
 	public float getMinRatePerHour() {
-		return Float.parseFloat(actor.accountField("minRatePerHour"));
+		if (!(actor.accountField("minRatePerHour").equals(""))) {
+			return Float.parseFloat(actor.accountField("minRatePerHour"));
+		} else {
+			return 0;
+		}
 	}
 	public void setMinRatePerHour(float minimumRatePerHour) {
 		if(getMinRatePerHour() != minimumRatePerHour) {

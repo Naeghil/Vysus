@@ -97,6 +97,8 @@ public class Actor extends VysusBase {
 	}
 	
 	public int accType() throws InvalidDataException {
+		System.out.println("Actor.AccType: " + account);
+		System.out.println("Actor.Actor: " + actor);
 		return Account.accType(account);
 	}
 }

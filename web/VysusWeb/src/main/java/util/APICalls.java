@@ -23,7 +23,13 @@ public class APICalls {
 		public static Map<String,String> fullAddress(String postcode, String identifier){
 			String identifierFix = identifier.replaceAll("\\s","");
 			String APIData = APICalls.getData("https://api.getAddress.io/find/"+postcode+"/"+identifierFix+"?api-key=GJUIdYuj6UiW-Atc5lR_uQ18432");
-			return parseAddress(APIData);
+			Map<String,String> testData = new HashMap<String,String>();
+			testData.put("Identifier", "WE RAN OUT OF API CALLS");
+			testData.put("Town", "WE RAN OUT OF API CALLS");
+			testData.put("City", "WE RAN OUT OF API CALLS");
+			testData.put("County", "WE RAN OUT OF API CALLS");
+			//return parseAddress(APIData);
+			return testData;
 		}
 		
 		public static boolean getDistance(String start, String destination, int minimumDistance) {

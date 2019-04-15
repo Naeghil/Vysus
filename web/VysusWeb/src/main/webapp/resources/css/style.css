@@ -451,29 +451,6 @@ body {
 }
 
 
-
-.column {
-  float: left;
-}
-
-.left {
-  width: 25%;
-  margin-top: -16px;
-}
-
-.middle {
-  width: 50%;
-  top: 50%;
-  text-align: justify;
-
-  }
-
-  .right {
-    width: 25%;
-    margin-top: 12px;
-    line-height: 20px;
-  }
-
 .row:after {
     height: 20%;
     width: auto;
@@ -519,11 +496,6 @@ body {
   cursor: pointer;
 }
 
-/* When moving the mouse over the submit button, add a darker green color */
-.input[type=submit]:hover {
-  background-color: #85E1E9;
-}
-
 /* Add a background color and some padding around the form */
 .container {
   border-radius: 5px;
@@ -531,34 +503,10 @@ body {
 }
 
 
-a {
-    background-color: lightpink;
-  color: white;
-  padding: 0.2em 1.5em;
-  text-decoration: none;
-  text-transform: uppercase;
-}
-
-a:hover {
-  background-color: lightblue;
-}
-
-a:active {
-  background-color: black;
-}
-
-a:visited {
-  background-color: #ccc;
-}
-
-
 .verticalLine {
   border-left: thick solid #ff0000;
 }
 
-.div-static {
-  padding-top: 10% ;
-}
 
 .vertical-center {
   margin-top: 12px;

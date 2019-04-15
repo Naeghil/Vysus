@@ -25,7 +25,8 @@ public class Actor extends VysusBase implements Serializable {
 			if(connection==null) return;
 			account = (new User(username)).login(password, connection);
 			actor = username;
-			
+			System.out.println("account From login: " + account);
+			System.out.println("actor From login: " + actor);
 			redirect("profile.jsf");
 		} catch(InvalidDataException | DBProblemException | SQLException e) {
 			 handleException(e, false);

@@ -60,7 +60,7 @@ public class InstitutionGet extends VysusBean implements Serializable {
 		return actor.accountField("buildingNo");
 	}
 	public void setBuildNo(String buildNo) {
-		if(hasChanged(buildNo) && !buildNo.equals(getBuildNo())) newData.put("buildingNo", buildNo);
+		if(hasChanged(buildNo) && !buildNo.equals(getBuildNo())) newData.put("buildingIdentifier", buildNo);
 	}
 
 	public String getInstPostcode() {

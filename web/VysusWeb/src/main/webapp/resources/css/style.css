@@ -1,3 +1,26 @@
+body, html, .allHeight {
+	height: 100%;
+	overflow-y:hidden;
+  	position: relative;
+}
+
+/* Text formatting */
+h1 { font-family: 'Eczar',serif; }
+
+h2 { font-family: 'Eczar',serif; }
+
+p { font-family: 'Gentium Basic',serif; }
+
+/* Images rendering */
+.dot {
+    height: 200px;
+    width: 200px;
+    background-color: #FFFFFF;
+    border-radius: 50%;
+    display: inline-block;
+    border-style:solid;
+}
+
 .circle {
   border-radius: 50%;
   display: inline-block;
@@ -13,127 +36,30 @@
 	height: 10vw;
 }
 
-body, html, .allHeight {
-	height: 100%;
-	overflow-y:hidden;
-  position: relative;
-}
-
-.background {
-  color: #999999;
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: -100;
-}
-
-.dot {
-    height: 200px;
-    width: 200px;
-    background-color: #FFFFFF;
-    border-radius: 50%;
-    display: inline-block;
-    border-style:solid;
-}
-
-.plsWork {
-  text-align: center
-}
-
-h1 {
-  font-family: 'Eczar',serif;
-}
-
-h2 {
-	font-family: 'Eczar',serif;
-}
-
-p {
-  	font-family: 'Gentium Basic',serif;
-}
-
-
-
-.sidebar {
-    background-color:#85E1E9;
-    height: 100%;
-}
-
-.smallScrollBar{
-  	overflow:auto;
-}
-
-.noSideScroll{
-	overflow-x:hidden;
-}
-
-.defaultOpacity{
-	opacity:100%;
-}
-
 /*Layout classes*/
-.centertext {
-  text-align:center;
-}
+.centertext { text-align:center; }
 
-.lefttext {
-  text-align:left;
-}
+.lefttext { text-align:left; }
 
-.textright {
-  text-align:right;
-}
+.inline-block {	display:inline-block; }
 
-.inline-block {
-	display:inline-block;
-}
+.hidden { display:none; }
 
-.hidden {
-	display:none;
-}
+.block { display:block; }
 
-.block {
-	display:block;
-}
+/* Height Classes */
+.h10 { height:10%; }
 
-/*Height classes - try to keep them in order*/
-.h5 {
-  height:5%;
-  /*Overrides some bootstrap class: */
-  margin-top:0;
-  margin-bottom:0;
-}
+.h30 { height:30%; }
 
-.h10 {
-    height:10%;
-}
+.h90 { height: 90%; }
 
-.h30 {
-    height:30%;
-}
+.h100 { height:100%; }
 
-.h80 {
-  height:80%;
-}
+/*Width Classes */
+.w10 { width: 10%; }
 
-.h85 {
-	height:85%;
-}
-
-.h90 {
-	height:90%;
-}
-
-.h100 {
-    height:100%;
-}
-
-/*Width classes*/
-.w5 { width: 5%; }
-
-.w10{ width: 10%; }
-
-.w15{ width: 15%; }
+.w15 { width: 15%; }
 
 .w20{ width: 20%; }
 
@@ -143,73 +69,41 @@ p {
 
 .w60{ width: 60%; }
 
-.w70{ width: 70%; }
-
 .w80 { width:80%; }
 
-.w90 { width:90%; }
+.w100 {width:100%; }
 
-.w100{ width:100%; }
+/* Background */
+.bg-bp-grad { background-image:linear-gradient(to right,#c9c9fa,#fcccdc); }
 
-/*Styling*/
-.border-Solid {
-    border-style: solid;
+.bg-lightblue { background-color:#c9c9fa; }
+
+.bg-lightpink { background-color:#fcccdc; }
+
+.bg-white { background-color:#ffffff; }
+
+.background {
+  color: #999999;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -100;
 }
 
-.paddingLeft5px {
-	padding-left:5px;
-}
-
-.profile-Img {
-    padding:10%;
-    height:90%;
-    width:auto;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: auto;
-    margin-bottom: auto;
-}
-
-/*Background Styles*/
-
-.bg-bp-grad {
-      background-image:linear-gradient(to right,#c9c9fa,#fcccdc);
-}
-
-.bg-lightblue {
-    background-color:#c9c9fa;
-}
-
-.bg-lightpink {
-    background-color:#fcccdc;
-}
-
-.bg-lightgreen {
-    background-color:#ead084;
-}
-
-.bg-white {
-  background-color:#ffffff;
-}
-
-/* generic styling */
+/* Forms */
 .form-message {
 	/* Should be used to give some spirit to the messages */
 }
-.form-element {
-	margin: 1%;
-}
-.data-box {
-	width:100%;
-	border-style: solid;
-	border-width: 2px;
-}
+.form-element { margin: 1%; }
 
-.logout-button {
-	position:absolute;
-	bottom:5%;
-	width:88%;
+/* Templates Page Styling (for VysusInternal and VysusBase */
+#header { height:7%; }
+#footer { height: 6%; }
+
+#contentBase {
+	margin-top:1%;
+	margin-bottom:1%;
+	height: 83%;
 }
 
 .content-panel {
@@ -220,31 +114,20 @@ p {
 	padding:1%;
 }
 
-#header {
-	height:7%;
-}
-#footer {
-	height: 6%;
-}
-#contentBase {
-	margin-top:1%;
-	margin-bottom:1%;
-	height: 83%;
+/* For Qualifications, staff and job */
+.data-box {
+	width:100%;
+	border-style: solid;
+	border-width: 2px;
 }
 
-/* index.xhtml styling */
-#central-index-div {
-	padding-top:10%;
-	padding-right:10%;
-	padding-left:10%;
+/* sidebar.xhtml */
+.logout-button {
+	position:absolute;
+	bottom:5%;
+	width:88%;
 }
 
-/* signup.xhtml styling */
-#signup-form-column {
-	padding:2%;
-}
-
-/* sidebar.xhtml styling */
 .sidebar-element {
 	margin-top:5%;
 	margin-bottom:5%;
@@ -253,315 +136,9 @@ p {
 	display:block;
 }
 
-/* profile.xhtml styling */
 
-.circle {
-  border-radius: 50%;
-  display: inline-block;
-  width: 10vw;
-  height: 10vw;
-  left: 40%;
-  display: flex;
-  /* width and height can be anything, as long as they're equal */
-}
+/** TO CHECK BELOW **/
 
-body, html, .allHeight {
-  position:relative;
-  overflow: auto;
-  margin-bottom: 2px;
-}
+.smallScrollBar{  overflow:auto; }
 
-.background {
-  color: #999999;
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: -100;
-}
-
-.dot {
-    height: 200px;
-    width: 200px;
-    background-color: #FFFFFF;
-    border-radius: 50%;
-    display: inline-block;
-    border-style:solid;
-}
-
-.plsWork {
-  text-align: center
-}
-
-h1 {
-  font-family: 'Eczar',serif;
-}
-
-h2 {
-	font-family: 'Eczar',serif;
-}
-
-
-
-
-p {
-  	font-family: 'Gentium Basic',serif;
-}
-
-
-
-.sidebar {
-    background-color:#85E1E9;
-    height: 100%;
-}
-
-.smallScrollBar{
-  	overflow:auto;
-}
-
-.noSideScroll{
-	overflow-x:hidden;
-}
-
-.defaultOpacity{
-	opacity:100%;
-}
-
-/*Layout classes*/
-
-html {
-    height: 100%;
-}
-
-body {
-    height: 100%;
-    overflow:hidden;
-    position: relative;
-    padding-bottom: 140px;
-}
-
-.centertext {
-  text-align:center;
-}
-
-.lefttext {
-  text-align:left;
-}
-
-.textright {
-  text-align:right;
-}
-
-/*Height classes - try to keep them in order*/
-.h5 {
-  height:5%;
-}
-
-.h10 {
-    height:10%;
-}
-
-.h30 {
-    height:30%;
-}
-
-.h66 {
-  height:73%;
-}
-
-.h70 {
-  height:70%;
-}
-
-.h80 {
-  height:80%;
-}
-
-.h90 {
-  height:90%;
-}
-
-.h100 {
-    height:100%;
-}
-
-.h16 {
-    height:22px;
-}
-
-
-/*Width classes*/
-.w100{
-	width:100%;
-}
-
-/*Styling*/
-.border-Solid {
-    border-style: solid;
-}
-
-.paddingLeft5px {
-	padding-left:5px;
-}
-
-.profile-Img {
-    padding:10%;
-    height:90%;
-    width:auto;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: auto;
-    margin-bottom: auto;
-}
-
-/*Background Styles*/
-
-.bg-bp-grad {
-      background-image:linear-gradient(to right,#c9c9fa,#fcccdc);
-}
-
-.bg-lightblue {
-    background-color:#c9c9fa;
-}
-
-.bg-lightpink {
-    background-color:#fcccdc;
-}
-
-.bg-lightgreen {
-    background-color:#ead084;
-}
-
-.bg-white {
-  background-color:#ffffff;
-}
-
-/* index.xhtml styling */
-#central-index-div {
-	padding-top:15%;
-	padding-right:10%;
-	padding-left:10%;
-}
-.index-form-element {
-	margin: 1%;
-}
-
-.index-form-message {
-
-}
-
-
-
-.column {
-  float: left;
-}
-
-.left {
-  width: 25%;
-  margin-top: -16px;
-}
-
-.middle {
-  width: 50%;
-  top: 50%;
-  text-align: justify;
-
-  }
-
-  .right {
-    width: 25%;
-    margin-top: 12px;
-    line-height: 20px;
-  }
-
-.row:after {
-    height: 20%;
-    width: auto;
-  }
-
-  .row-footer {
-      height: 140px;
-      width: auto;
-      background-color:#c9c9fa;
-      position: absolute;
-      clear: both;
-      margin-top: -1px;
-      border-top: 6px solid #f5c9f9;
-      display: inline-block;
-      float: left;
-    }
-.border-left {
-    border-style: solid;
-    }
-
-    .p {
-  padding-left: 50px;
-}
-
-
-/* Style inputs with type="text", select elements and textareas */
-.input[type=text], select, textarea {
-  width: 40%; /* Full width */
-  padding: 12px; /* Some padding */
-  border: 1px solid #ccc; /* Gray border */
-  border-radius: 4px; /* Rounded borders */
-  box-sizing: border-box; /* Make sure that padding and width stays in place */
-  margin-top: 6px; /* Add a top margin */
-  margin-bottom: 16px; /* Bottom margin */
-  resize: vertical /* Allow the user to vertically resize the textarea (not horizontally) */
-}
-
-/* Style the submit button with a specific background color etc */
-.input[type=submit] {
-  padding: 12px 20px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-/* When moving the mouse over the submit button, add a darker green color */
-.input[type=submit]:hover {
-  background-color: #85E1E9;
-}
-
-/* Add a background color and some padding around the form */
-.container {
-  border-radius: 5px;
-  padding: 20px;
-}
-
-
-a {
-    background-color: lightpink;
-  color: white;
-  padding: 0.2em 1.5em;
-  text-decoration: none;
-  text-transform: uppercase;
-}
-
-a:hover {
-  background-color: lightblue;
-}
-
-a:active {
-  background-color: black;
-}
-
-a:visited {
-  background-color: #ccc;
-}
-
-
-.verticalLine {
-  border-left: thick solid #ff0000;
-}
-
-.div-static {
-  padding-top: 10% ;
-}
-
-.vertical-center {
-  margin-top: 12px;
-  position: static;
-  top: 50%;
-}
+.noSideScroll{ overflow-x:hidden; }

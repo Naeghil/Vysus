@@ -7,7 +7,7 @@
 	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
     template="SignupBase.xhtml">
 	<ui:define name="accountForm">
-		<f:metadata>
+	<f:metadata>
 		<f:viewAction action="#{actor.onLoad(false)}"/>
 	</f:metadata>
 	
@@ -31,7 +31,7 @@
 				
 <h5 class="w40 form-element">Tell the employers about yourself (you can change this later)</h5>
 <h:inputTextarea id="aboutMe" value="#{teacherGet.aboutMe}" a:placeholder="Make yourself look good!"
-	styleClass="form-control form-element w60 h20" required="false" />
+	styleClass="form-control form-element w60" required="false" />
 
 <div class="w100 centertext">
 	<h:commandButton value="Sign Up" action="#{teacherGet.signupTeacher()}" styleClass="btn btn-primary form-element"/>

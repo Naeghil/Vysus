@@ -99,8 +99,8 @@
 			<!-- the changes button will be here -->
 			<div class="row h10 centertext">
 					<h:commandButton id="edit-button" onclick="toggle()" value="Edit Details" styleClass="btn btn-primary form-element profile-element inline-block"/>
+					<h:commandButton id="no-edit-button" onclick="toggle()" value="Stop Editing" styleClass="btn btn-primary form-element profile-element hidden"/>	
 				<h:form>
-					<h:commandButton id="no-edit-button" onclick="toggle()" value="Stop Editing" styleClass="btn btn-primary form-element profile-element hidden"/>
 					<h:commandButton action="#{profile.update}" value="Submit" styleClass="btn btn-primary form-element profile-element hidden"/>
 				</h:form>
 			</div>

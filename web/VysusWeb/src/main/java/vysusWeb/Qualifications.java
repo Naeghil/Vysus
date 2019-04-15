@@ -49,7 +49,7 @@ public class Qualifications extends VysusBean implements Serializable {
 			newQual.put("endDate", eDate);
 			System.out.println(actor.account);
 			System.out.println(actor.actor);
-			newQual.put("accountID", actor.account);
+			newQual.put("accountID", "0miles");
 			
 			System.out.println("newQual: " + newQual);
 			new Qualification(newQual, connection);

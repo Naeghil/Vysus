@@ -31,8 +31,7 @@ public class Qualifications extends VysusBean implements Serializable {
 	
 	public Qualifications() {}
 	
-	@PostConstruct
-	void onInit() {
+	void onLoad() {
 		System.out.println(actor.account);
 		try (Connection connection = getConnection()){
 			//CHANGE THIS BACK TO actor.account when it's fixed!!!!!!!!!

@@ -18,9 +18,7 @@ public class Actor extends VysusBase implements Serializable {
 	Map<String, String> userData = null;
 	Map<String, String> accountData = null;
 
-	public Actor() {
-		System.out.println("Actor Instantiated");
-	}
+	public Actor() { }
 //User session:
 	public void login(String username, String password)  {
 		try(Connection connection = getConnection()){
@@ -67,24 +65,20 @@ public class Actor extends VysusBase implements Serializable {
 	}
 //Refreshing data:
 	public void requestUserData() {
-		System.out.println("user data requested");
 		if(!isIn()) return;
 		try(Connection connection = getConnection()){
 			 userData = new User(actor, connection).showFull();
 		 } catch(InvalidDataException | DBProblemException | SQLException e) {
 			 handleException(e, true);
 		 }
-		System.out.println(userData);
 	}
 	public void requestAccountData() {
-		System.out.println("account data requested");
 		if(!isIn()) return;
 		try(Connection connection = getConnection()){
 			 accountData = Account.getAccount(account, actor, connection).showFull();
 		} catch(InvalidDataException | DBProblemException | SQLException e) {
 			handleException(e, true);
 		}
-		System.out.println(accountData);
 	}
 	
 	public void handleException(Exception ex, boolean fatal) {

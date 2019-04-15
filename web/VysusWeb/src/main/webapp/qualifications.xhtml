@@ -11,7 +11,7 @@
 		<f:viewAction action="#{actor.onLoad(true)}"/>		
 	</f:metadata>
 		<div class="container-fluid h100 w100 lefttext fulldimensions"><div class="row h100 w100 fulldimensions">
-			<div id="qualifications-display" class="col-md-7 h100 fulldimensions scroll-div">
+			<div id="qualifications-display" class="col-md-7 h100 scroll-div">
 				<h:outputText rendered="#{qualifications.noQualifications()}"
 					value="Hey, you have not registered any qualification yet! Start now!" />
 				<ui:repeat var="#{q}" value="#{qualifications.qualifications}" varStatus="status">

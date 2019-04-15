@@ -7,6 +7,143 @@
 	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
     template="VysusInternal.xhtml">
 	<ui:define name="content">
+	
+		<div class="container-fluid h100 w100 lefttext fulldimensions"><div class="row h100 w100 fulldimensions">
+			<div id="jobs-display" class="col-md-7 h100 scroll-div">
+				<h:outputText rendered="#{jobs.noJobs()}"
+					value="You are offering no jobs at the moment." />
+				<ui:repeat var="#{j}" value="#{jobs.jobs}" varStatus="status">
+				<div class="data-box">
+					<p>#{j.title}</p>
+					<!--p>#{j.from} - #{j.to}</p-->
+					<p>#{j.description}</p>
+					<p>#{j.rate}</p>
+					<p>#{j.candidate}</p>
+					<p>#{j.accepted}</p>
+					<h:form>
+						<h:commandButton value="Delete" action="#{jobs.delete(j.id)}" styleClass="btn btn-primary form-element"/>
+					</h:form>
+				</div>
+				</ui:repeat>
+			</div>
 		
+			<div id="new-qualification-form"  class="col-md-5 h100 fulldimensions scroll-div">
+				<h:form>
+				<h:inputText id="title" value="#{qualifications.title}" a:placeholder="Qualification name"
+	         			styleClass="form-control form-element w50 inline-block" required="true"
+						requiredMessage="Make sure you enter an institution name" 
+						validatorMessage="Ensure your username is less than 257 characters">
+						<f:validateLength maximum="257" />
+					</h:inputText>
+				<h:message for="title"/>
+				<h:selectOneMenu id="type" value="#{qualifications.type}" 
+					styleClass="form-control inline-block form-element w45">
+         			<f:selectItems  value="#{qualifications.types}"/>
+				</h:selectOneMenu>
+				
+				
+				<div id="start-date">
+					<p class="inline-block w10">From:</p>
+					<h:inputText id="sDay" value="#{qualifications.sDay}" a:placeholder="DD"
+						styleClass="form-control inline-block form-element w15" required="true" 
+						requiredMessage="Day in format DD must be input."
+						onkeypress="if(event.which &lt; 48 || event.which &gt; 57) return false;">
+						<f:validateLength maximum="2" minimum="1"/>
+					</h:inputText>
+					<h:message for="sDay"/>
+					<h:selectOneMenu id="sMonth" value="#{qualifications.sMonth}" 
+						styleClass="form-control inline-block form-element w40">
+	         			<f:selectItems value="#{uGet.monthWord}" var="m" itemLabel="#{m}" itemValue="#{uGet.monthToNo(m)}" />
+					</h:selectOneMenu>
+					<h:inputText id="sYear" value="#{qualifications.sYear}" a:placeholder="YYYY"
+						styleClass="form-control inline-block form-element w20" required="true" 
+						requiredMessage="Year in format YYYY must be input.">
+						<f:validateLength maximum="4" minimum="4"/>
+						<f:validateRegex pattern="^(19|20)\d{2}$"/>
+					</h:inputText>
+					<h:message for="sYear"/>
+				</div>
+				<div id="end-date">
+					<p class="inline-block w10">To:</p>
+					<h:inputText id="eDay" value="#{qualifications.eDay}" a:placeholder="DD"
+						styleClass="form-control inline-block form-element w15" required="true" 
+						requiredMessage="Day in format DD must be input."
+						onkeypress="if(event.which &lt; 48 || event.which &gt; 57) return false;">
+						<f:validateLength maximum="2" minimum="1"/>
+					</h:inputText>
+					<h:message for="eDay"/>
+					<h:selectOneMenu id="eMonth" value="#{qualifications.eMonth}" 
+						styleClass="form-control inline-block form-element w40">
+	         			<f:selectItems value="#{uGet.monthWord}" var="m" itemLabel="#{m}" itemValue="#{uGet.monthToNo(m)}" />
+					</h:selectOneMenu>
+					<h:inputText id="eYear" value="#{qualifications.eYear}" a:placeholder="YYYY"
+						styleClass="form-control inline-block form-element w20" required="true" 
+						requiredMessage="Year in format YYYY must be input.">
+						<f:validateLength maximum="4" minimum="4"/>
+						<f:validateRegex pattern="^(19|20)\d{2}$"/>
+					</h:inputText>
+					<h:message for="eYear"/>
+				</div>
+				
+				<p class="inline-block w30">Main subject:</p>
+				<h:selectOneMenu id="mainSubj" value="#{qualifications.mainSubj}" 
+						styleClass="form-control inline-block form-element w50">
+	         			<f:selectItems value="#{qualifications.subjects}" var="m" itemLabel="#{m}" itemValue="#{m}" />
+				</h:selectOneMenu>
+				<p>Related subjects:</p>
+				<h:selectOneMenu id="subj1" value="#{qualifications.subj1}" 
+						styleClass="form-control inline-block form-element w30">
+	         			<f:selectItems value="#{qualifications.subjectsNull}" var="m" itemLabel="#{m}" itemValue="#{m}" />
+				</h:selectOneMenu>
+				<h:selectOneMenu id="subj2" value="#{qualifications.subj2}" 
+						styleClass="form-control inline-block form-element w30">
+	         			<f:selectItems value="#{qualifications.subjectsNull}" var="m" itemLabel="#{m}" itemValue="#{m}" />
+				</h:selectOneMenu>
+				<h:selectOneMenu id="subj3" value="#{qualifications.subj2}" 
+						styleClass="form-control inline-block form-element w30">
+	         			<f:selectItems value="#{qualifications.subjectsNull}" var="m" itemLabel="#{m}" itemValue="#{m}" />
+				</h:selectOneMenu>
+				
+				<h:inputTextarea id="comment" value="#{qualifications.comment}" a:placeholder="What did you gain from this?"
+	styleClass="form-control form-element w95" required="false" />
+				
+				<h:inputText id="where" value="#{qualifications.where}" a:placeholder="Providing institution"
+         			styleClass="form-control form-element inline-block w50" required="true"
+					requiredMessage="Make sure you enter an institution name" 
+					validatorMessage="Ensure your username is less than 257 characters">
+					<f:validateLength maximum="257" />
+				</h:inputText>
+				<h:message for="where"/>
+				<h:inputText id="referee" value="#{qualifications.referee}" a:placeholder="Ref. Name" 
+					styleClass="form-control form-element inline-block w45" required="true" 
+					requiredMessage="Referee name is required."
+					validatorMessage="Please ensure your referee name is less than 257 characters.">
+					<f:validateLength maximum="300"/>
+				</h:inputText>
+				<h:message for="referee"/>
+				<h:inputText id="rEmail" value="#{qualifications.email}" a:placeholder="Email"
+          			styleClass="form-control form-element inline-block w60" required="true" 
+					requiredMessage="Email address is required"
+					validatorMessage="Please ensure your email address is in the correct format and does not exceed 300 characters">
+					<f:validateRegex pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]"></f:validateRegex>
+             		<f:validateLength maximum="300"/>
+				</h:inputText>
+             	<h:message for="rEmail"/>
+          		<h:inputText id="rPhone" value="#{qualifications.phoneNo}" a:placeholder="Phone No" 
+					styleClass="form-control form-element inline-block w30" required="true" 
+					requiredMessage="Phone number is required."
+					validatorMessage="Please ensure your phone number is in the correct format.">
+					<f:validateRegex pattern="^(((\+44\s?\d{4}|\(?0\d{4}\)?)\s?\d{3}\s?\d{3})|((\+44\s?\d{3}|\(?0\d{3}\)?)\s?\d{3}\s?\d{4})|((\+44\s?\d{2}|\(?0\d{2}\)?)\s?\d{4}\s?\d{4}))(\s?\#(\d{4}|\d{3}))?$"/>
+				</h:inputText>
+				<h:message for="rPhone"/>
+				       		
+				<div class="w100 centertext">
+					<h:commandButton value="Add New" action="#{qualifications.addNew()}" styleClass="btn btn-primary form-element"/>
+				</div>
+				
+				</h:form>
+			</div>		
+			
+		</div></div>
 	</ui:define>
 </ui:composition>

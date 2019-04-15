@@ -3,19 +3,17 @@ package storage;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class Staff extends User {
-	public Staff(String username, Connection connection)
-			throws DBProblemException, InvalidDataException {
+	public Staff(String username) throws DBProblemException, InvalidDataException {
+		super(username);
+	}
+	public Staff(String username, Connection connection) throws DBProblemException, InvalidDataException {
 		super(username, connection);
 	}
-	public Staff(Connection connection, String username, String password, Map<String, Object> data, String accountID)
-			throws DBProblemException, InvalidDataException {
-		super(username);
-		this.data = data;
-		this.data.put("accountID", accountID);
-		create(connection);
+	
+	public void deleteStaff(Connection connection) throws DBProblemException, InvalidDataException {
+		this.delete(connection);
 	}
 	
 //Static show methods to be used by the Institution object

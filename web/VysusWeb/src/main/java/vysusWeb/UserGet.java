@@ -19,6 +19,8 @@ public class UserGet extends VysusBean implements Serializable {
 	//The reason why this is not a map is because there is no way to make it static:
 	static List<String> monthWord = new ArrayList<String>(Arrays.asList("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"));
 	static List<String> monthNo = new ArrayList<String>(Arrays.asList("01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12" ));
+	static List<String> titles = new ArrayList<String>(Arrays.asList("Mr", "Mrs", "Ms", "Sir", "Mme"));
+	
 	
 	Map<String, Object> newData = new HashMap<String, Object>();
 
@@ -55,6 +57,9 @@ public class UserGet extends VysusBean implements Serializable {
 	}
 	public String monthToNo(String month) {
 		return monthNo.get(monthWord.indexOf(month));
+	}
+	public List<String> getTitles(){
+		return titles;
 	}
 	//Per specification: fields are "get" from actor and "set" to newData
 	public String getUsername() {

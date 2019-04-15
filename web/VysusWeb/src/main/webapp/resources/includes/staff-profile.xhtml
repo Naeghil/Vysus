@@ -1,29 +1,119 @@
 <div xmlns:h="http://java.sun.com/jsf/html"
-	 xmlns:ui="http://java.sun.com/jsf/facelets">
-	
-<div class="container-fluid h100 w100"><div class="row h100 w100">
-
-	<div id="staff-display" class="col-7-md">
+	 xmlns:ui="http://java.sun.com/jsf/facelets"
+	 xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+	 xmlns:f="http://java.sun.com/jsf/core"
+	 xmlns:h="http://java.sun.com/jsf/html"
+	 class="container-fluid h100 w100 lefttext fulldimensions"><div class="row h100 w100 fulldimensions">
+			
+	<div id="staff-display" class="col-7-md h100 fulldimensions scroll-div">
 		<h:outputText rendered="#{staff.noStaff()}"
 			value="Hey admin, you have not registered any of your staff yet! Start now!" />
 		<ui:repeat var="#{s}" value="#{staff.staff}" varStatus="status">
 			<div class="data-box">
 				<p>#{s.fullName}</p>
-				<p>#{s.dateOfBirth}</p>
+				<p>#{s.DOB}</p>
 				<p>#{s.address}</p>
 				<p>#{s.email}</p>
 				<p>#{s.phoneNo}</p>
+				<h:form>
+						<h:commandButton value="Delete" action="#{staff.delete(q.username)}" styleClass="btn btn-primary form-element"/>
+				</h:form>
 			</div>
 		</ui:repeat>
 	</div>
-	
-	<div id="staff-form" class="col-5-md">
-	
-	
-	
-	</div>
-	
+		
+	<div id="new-staff-form"  class="col-md-5 h100 fulldimensions scroll-div">
+		<h:form>
+			<div id="login-data">
+       			<h:inputText id="sUsername" value="#{staff.username}" a:placeholder="Username"
+        			styleClass="form-control form-element w40" required="true"
+					requiredMessage="Make sure you enter a username" 
+					validatorMessage="Ensure your username is less than 59 characters">
+					<f:validateLength maximum="59" />
+				</h:inputText>
+				<h:message for="sUsername"/>
+				<h:inputSecret id="sPassword" value="#{staff.password}" a:placeholder="Password"
+					styleClass="form-control form-element w40" required="true"
+					requiredMessage="Password is mandatory"
+					validatorMessage="Ensure your password is less than 58 characters">
+					<f:validateLength maximum="58"/>
+				</h:inputSecret>
+				<h:message for="sPassword"/>
+       		</div>
+			
+			
+			<h:selectOneMenu id="sTitle"
+  				value="#{staff.title}" 
+  				styleClass="form-control inline-block form-element w10">
+				<f:selectItems  value="#{uGet.titles}"/>
+      		</h:selectOneMenu>
+			<h:inputText id="sFullName" value="#{staff.name}" a:placeholder="Full Name"
+	        	styleClass="form-control form-element w80" required="true"
+				requiredMessage="Make sure you enter a name" 
+				validatorMessage="Ensure name is less than 257 characters">
+				<f:validateLength maximum="257" />
+			</h:inputText>
+			<h:message for="sFullName"/>
+				
+			<div id="sDOB">
+				<p class="inline-block w20">Date of Birth:</p>
+				<h:inputText id="sDay" value="#{staff.day}" a:placeholder="DD"
+					styleClass="form-control inline-block form-element w15" required="true" 
+					requiredMessage="Day in format DD must be input."
+					onkeypress="if(event.which &lt; 48 || event.which &gt; 57) return false;">
+					<f:validateLength maximum="2" minimum="1"/>
+				</h:inputText>
+				<h:message for="sDay"/>
+				<h:selectOneMenu id="sMonth" value="#{staff.month}" 
+					styleClass="form-control inline-block form-element w30">
+         			<f:selectItems value="#{uGet.monthWord}" var="m" itemLabel="#{m}" itemValue="#{uGet.monthToNo(m)}" />
+				</h:selectOneMenu>
+				<h:inputText id="sYear" value="#{staff.year}" a:placeholder="YYYY"
+					styleClass="form-control inline-block form-element w20" required="true" 
+					requiredMessage="Year in format YYYY must be input.">
+					<f:validateLength maximum="4" minimum="4"/>
+					<f:validateRegex pattern="^(19|20)\d{2}$"/>
+				</h:inputText>
+				<h:message for="sYear"/>
+			</div>
+			
+			<h:inputText id="staffHouseId" value="#{staff.houseID}" a:placeholder="House Number/Name"
+				styleClass="form-control form-element inline-block w60" required="true" 
+				requiredMessage="House number/name is required"
+				validatorMessage="Do not exceed 64 characters">
+				<f:validateLength maximum="64"/>
+			</h:inputText>
+			<h:message for="staffHouseID"/>
+          	<h:inputText id="staffPostcode" value="#{staff.postcode}" a:placeholder="Postcode"
+				styleClass="form-control form-element inline-block w20" required="true" 
+				requiredMessage="Postcode is required."
+				validatorMessage="Please ensure your postcode is in the correct UK format.">
+				<f:validateRegex pattern="([Gg][Ii][Rr] 0[Aa]{2})|((([A-Za-z][0-9]{1,2})|(([A-Za-z][A-Ha-hJ-Yj-y][0-9]{1,2})|(([A-Za-z][0-9][A-Za-z])|([A-Za-z][A-Ha-hJ-Yj-y][0-9][A-Za-z]?))))\s?[0-9][A-Za-z]{2})"></f:validateRegex>
+			</h:inputText>
+            <h:message for="userPostcode"/>
+          		
+				
+			<h:inputText id="sEmail" value="#{staff.email}" a:placeholder="Email"
+          		styleClass="form-control form-element inline-block w60" required="true" 
+				requiredMessage="Email address is required"
+				validatorMessage="Please ensure your email address is in the correct format and does not exceed 300 characters">
+				<f:validateRegex pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]"></f:validateRegex>
+            	<f:validateLength maximum="300"/>
+			</h:inputText>
+            <h:message for="sEmail"/>
+          	<h:inputText id="sPhone" value="#{staff.phoneNo}" a:placeholder="Phone No" 
+				styleClass="form-control form-element inline-block w30" required="true" 
+				requiredMessage="Phone number is required."
+				validatorMessage="Please ensure your phone number is in the correct format.">
+				<f:validateRegex pattern="^(((\+44\s?\d{4}|\(?0\d{4}\)?)\s?\d{3}\s?\d{3})|((\+44\s?\d{3}|\(?0\d{3}\)?)\s?\d{3}\s?\d{4})|((\+44\s?\d{2}|\(?0\d{2}\)?)\s?\d{4}\s?\d{4}))(\s?\#(\d{4}|\d{3}))?$"/>
+			</h:inputText>
+			<h:message for="sPhone"/>
+				       		
+			<div class="w100 centertext">
+				<h:commandButton value="Add New" action="#{staff.addNew()}" styleClass="btn btn-primary form-element"/>
+			</div>
+				
+				</h:form>
+			</div>		
+			
 </div></div>
-
-
-</div>

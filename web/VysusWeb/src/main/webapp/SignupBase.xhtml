@@ -36,11 +36,7 @@
          		<h:selectOneMenu id="title"
       				value="#{uGet.title}" 
       				styleClass="form-control inline-block form-element w10">
-       					<f:selectItem itemValue="Mr" itemLabel="Mr"/>
-       					<f:selectItem itemValue="Mrs" itemLabel="Mrs"/>
-       					<f:selectItem itemValue="Ms" itemLabel="Ms"/>
-       					<f:selectItem itemValue="Sir" itemLabel="Sir"/>
-       					<f:selectItem itemValue="Mme" itemLabel="Mme"/>
+      				<f:selectItems  value="#{uGet.titles}"/>
           		</h:selectOneMenu>
          		<h:inputText value="#{uGet.fullName}" styleClass="form-control inline-block w80" a:placeholder="Full Name"
          			required="true" requiredMessage="Your full name is mandatory"

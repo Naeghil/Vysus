@@ -21,6 +21,7 @@ public class APICalls {
 	}
 	
 		public static Map<String,String> fullAddress(String postcode, String identifier){
+			System.out.println(identifier);
 			String identifierFix = identifier.replaceAll("\\s","");
 			String APIData = APICalls.getData("https://api.getAddress.io/find/"+postcode+"/"+identifierFix+"?api-key=xDg38fqBR02Bgpr1KgDhVw18443");
 			Map<String,String> testData = new HashMap<String,String>();

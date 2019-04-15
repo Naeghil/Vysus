@@ -29,9 +29,7 @@ public class Qualifications extends VysusBean implements Serializable {
 	List<Map<String, String>> qualifications = null;//new ArrayList<Map<String, String>>();
 	Map<String, Object> newQual = new HashMap<String, Object>();
 	
-	public Qualifications() {
-		System.out.println(actor.actor);
-	}
+	public Qualifications() { }
 	
 	void onLoad() {
 		System.out.println(actor.account);

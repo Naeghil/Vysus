@@ -48,6 +48,7 @@ public class Qualifications extends VysusBean implements Serializable {
 			newQual.put("startDate", sDate);
 			newQual.put("endDate", eDate);
 			System.out.println("newQual: " + newQual);
+			newQual.put("accountID", actor.account);
 			new Qualification(newQual, connection);
 			
 		} catch (DBProblemException | InvalidDataException | SQLException e) {

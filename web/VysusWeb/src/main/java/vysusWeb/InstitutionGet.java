@@ -67,21 +67,21 @@ public class InstitutionGet extends VysusBean implements Serializable {
 		return actor.accountField("postcode");
 	}
 	public void setInstPostcode(String instPostcode) {
-		if(hasChanged(instPostcode) && instPostcode.equals(getInstPostcode())) newData.put("postcode", instPostcode.replaceAll("\\s+",""));
+		if(hasChanged(instPostcode) && !instPostcode.equals(getInstPostcode())) newData.put("postcode", instPostcode.replaceAll("\\s+",""));
 	}
 
 	public String getInstEmail() {
 		return actor.accountField("email");
 	}
 	public void setInstEmail(String instEmail) {
-		if(hasChanged(instEmail) && instEmail.equals(getInstEmail())) newData.put("email", instEmail);
+		if(hasChanged(instEmail) && !instEmail.equals(getInstEmail())) newData.put("email", instEmail);
 	}
 
 	public String getInstPhoneNo() {
 		return actor.accountField("phoneNo");
 	}
 	public void setInstPhoneNo(String instPhoneNo) {
-		if(hasChanged(instPhoneNo) && instPhoneNo.equals(getInstPhoneNo())) newData.put("phoneNo", instPhoneNo);
+		if(hasChanged(instPhoneNo) && !instPhoneNo.equals(getInstPhoneNo())) newData.put("phoneNo", instPhoneNo);
 	}
 	
 	public List<String> getTypes() {

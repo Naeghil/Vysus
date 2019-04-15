@@ -3,7 +3,7 @@
 	<div id="instName">
 		<h4 class="#{profile.isAdmin() ? 'profile-element' :''} inline-block">#{actor.accountField("name")} </h4>
 		<h:inputText id="institutionName" value="#{institutionGet.instName}"
-			styleClass="form-control form-element w90 #{profile.isAdmin() ? 'profile-element' :''} hidden" required="true"
+			styleClass="form-control form-element w80 #{profile.isAdmin() ? 'profile-element' :''} hidden" required="true"
 			requiredMessage="Make sure you enter an institution name" 
 			validatorMessage="Ensure your username is less than 257 characters">
 			<f:validateLength maximum="257" />

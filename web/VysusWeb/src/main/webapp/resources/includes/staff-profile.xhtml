@@ -1,15 +1,29 @@
 <div xmlns:h="http://java.sun.com/jsf/html"
 	 xmlns:ui="http://java.sun.com/jsf/facelets">
 	
-	<h:outputText rendered="#{staff.noStaff()}"
-		value="Hey admin, you have not registered any of your staff yet! Start now!" />
-	<ui:repeat var="#{s}" value="#{staff.staff}" varStatus="status">
-		<div class="data-box">
-			<p>#{s.fullName}</p>
-			<p>#{s.dateOfBirth}</p>
-			<p>#{s.address}</p>
-			<p>#{s.email}</p>
-			<p>#{s.phoneNo}</p>
-		</div>
-	</ui:repeat>
+<div class="container-fluid h100 w100"><div class="row h100 w100">
+
+	<div id="staff-display" class="col-7-md">
+		<h:outputText rendered="#{staff.noStaff()}"
+			value="Hey admin, you have not registered any of your staff yet! Start now!" />
+		<ui:repeat var="#{s}" value="#{staff.staff}" varStatus="status">
+			<div class="data-box">
+				<p>#{s.fullName}</p>
+				<p>#{s.dateOfBirth}</p>
+				<p>#{s.address}</p>
+				<p>#{s.email}</p>
+				<p>#{s.phoneNo}</p>
+			</div>
+		</ui:repeat>
+	</div>
+	
+	<div id="staff-form" class="col-5-md">
+	
+	
+	
+	</div>
+	
+</div></div>
+
+
 </div>

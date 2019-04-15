@@ -37,6 +37,11 @@ p { font-family: 'Gentium Basic',serif; }
 }
 
 /*Layout classes*/
+.fulldimensions { 
+	padding: 0; 
+	margin:0;
+}
+
 .centertext { text-align:center; }
 
 .lefttext { text-align:left; }
@@ -46,6 +51,8 @@ p { font-family: 'Gentium Basic',serif; }
 .hidden { display:none; }
 
 .block { display:block; }
+
+.scroll-div { overflow: auto; }
 
 /* Height Classes */
 .h10 { height:10%; }
@@ -67,9 +74,14 @@ p { font-family: 'Gentium Basic',serif; }
 
 .w40 { width:40%; }
 
+.w45 { width:45%; }
+.w50 {width: 50%; }
+
 .w60{ width: 60%; }
 
 .w80 { width:80%; }
+
+.w95 { width:95%; }
 
 .w100 {width:100%; }
 

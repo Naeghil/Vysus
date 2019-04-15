@@ -30,7 +30,7 @@ public class Qualification extends StorageAbstract{
 		data.put("id", qualificationID);
 		setDBVariables();
 		retrieve(connection);
-		data.put("verified", isVerified(connection));
+		verified = isVerified(connection);
 		
 	}
 	//Creating constructor: no qualification id will be available this way
@@ -42,18 +42,22 @@ public class Qualification extends StorageAbstract{
 	}
 	public void setDBVariables() {
 		keys = new ArrayList<String>(Arrays.asList(
-			"title", "startDate", "endDate", "comment", "finalGrade", "institution", "level", "institutionEmail", "institutionPhoneNo", "referee"));
+			"title", "startDate", "endDate", "comment", "institution", "level", "institutionEmail", "institutionPhoneNo", "referee", "mainSubj", "subj1", "subj2", "subj3"));
 		delete = "DELETE FROM Qualification WHERE qualificationID=?";
 		retrieve = "SELECT * FROM Qualification WHERE qualificationID=?";
 		create = "INSERT INTO Qualification"
-				+ "(accountID, title, startDate, endDate, comment, finalGrade, institution, level, institutionEmail, institutionPhoneNo, referee) "
-				+ "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+				+ "(accountID, title, startDate, endDate, comment, institution, level, institutionEmail, institutionPhoneNo, referee, mainSubj, subj1, subj2, subj3) "
+				+ "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	}
 	protected String update(List<String> changes) {
 		String upd = "UPDATE Qualification SET " + changes.get(0);
 		for(int i=1; i<changes.size(); i++) upd += "=?, " + changes.get(i);
 		upd += "=? WHERE qualificationID=?";
 		return upd;
+	}
+	
+	public void deleteQualification(Connection connection) throws DBProblemException, InvalidDataException{
+		this.delete(connection);
 	}
 	
 //Object-specific querying methods
@@ -100,6 +104,7 @@ public class Qualification extends StorageAbstract{
 //Getters and show methods
 	public Map<String, String> show() {
 		Map<String, String> show = new HashMap<String, String>();
+		show.put("id", ((Integer)data.get("id")).toString());
 		show.put("title", (String)data.get("title"));
 		show.put("from", Conv.dateToString((Date)data.get("startDate")));
 		show.put("to", Conv.dateToString((Date)data.get("endDate")));
@@ -110,6 +115,8 @@ public class Qualification extends StorageAbstract{
 		show.put("email", (String)data.get("institutionEmail"));
 		show.put("phoneNo", (String)data.get("institutionPhoneNo"));
 		show.put("referee", (String)data.get("referee"));
+		if(verified) show.put("verified", "yes");
+		else show.put("verified", "no");
 			
 		return show;
 	}

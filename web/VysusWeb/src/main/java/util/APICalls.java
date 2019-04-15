@@ -28,8 +28,8 @@ public class APICalls {
 			testData.put("Town", "WE RAN OUT OF API CALLS");
 			testData.put("City", "WE RAN OUT OF API CALLS");
 			testData.put("County", "WE RAN OUT OF API CALLS");
-			return parseAddress(APIData);
-			//return testData;
+			//return parseAddress(APIData);
+			return testData;
 		}
 		
 		public static boolean getDistance(String start, String destination, int minimumDistance) {

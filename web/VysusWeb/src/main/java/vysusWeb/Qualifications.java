@@ -38,6 +38,7 @@ public class Qualifications extends VysusBean implements Serializable {
 			//CHANGE THIS BACK TO actor.account when it's fixed!!!!!!!!!
 			for(Qualification q : Qualification.allQualifications("0miles", connection)) {
 				qualifications.add(q.show());
+				System.out.println(qualifications.toString());
 			}
 		} catch (DBProblemException | InvalidDataException | SQLException e) {
 			actor.handleException(e, true);

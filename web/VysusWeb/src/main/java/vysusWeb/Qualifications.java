@@ -26,14 +26,17 @@ public class Qualifications extends VysusBean implements Serializable {
 	static List<String> subjectsNull = new ArrayList<String>(Arrays.asList("", "English Literature","English Language","Maths","Chemistry","Biology","Physics","History","Geography","French","German","Spanish","Mandarin","Resistant Materials","Art","Music","PE","Pastoral Studies","Computing and IT","Religious Studies"));
 	static List<String> types = new ArrayList<String>(Arrays.asList("Undergraduate", "Postgraduate", "PHD", "Work experience"));
 	
-	List<Map<String, String>> qualifications = new ArrayList<Map<String, String>>();
+	List<Map<String, String>> qualifications = null;//new ArrayList<Map<String, String>>();
 	Map<String, Object> newQual = new HashMap<String, Object>();
 	
-	public Qualifications() {}
+	public Qualifications() {
+		System.out.println(actor.actor);
+	}
 	
 	void onLoad() {
 		System.out.println(actor.account);
 		try (Connection connection = getConnection()){
+			qualifications = new ArrayList<Map<String, String>>();
 			//CHANGE THIS BACK TO actor.account when it's fixed!!!!!!!!!
 			for(Qualification q : Qualification.allQualifications(actor.account, connection)) {
 				qualifications.add(q.show());
@@ -73,10 +76,12 @@ public class Qualifications extends VysusBean implements Serializable {
 	
 //Renderer:	
 	public boolean noQualifications() {
+		if(qualifications==null) onLoad();
 		return qualifications.size()==0;
 	}
 	
 	public List<Map<String, String>> getQualifications(){
+		if(qualifications==null) onLoad();
 		return qualifications;
 	}
 	

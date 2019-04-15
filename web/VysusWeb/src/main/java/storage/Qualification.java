@@ -36,6 +36,7 @@ public class Qualification extends StorageAbstract{
 	//Creating constructor: no qualification id will be available this way
 	public Qualification(Map<String, Object> data, Connection connection) throws DBProblemException {
 		this.data = data;
+		System.out.println(data);
 		verified = false;
 		setDBVariables();
 		create(connection);

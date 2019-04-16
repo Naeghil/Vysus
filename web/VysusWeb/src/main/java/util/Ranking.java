@@ -178,7 +178,7 @@ public class Ranking {
 				}
 			}
 		} catch (SQLException e) { 
-			e.getMessage();
+			System.out.println(e.getMessage().toString());
 			throw new DBProblemException(e); 
 		}
 			

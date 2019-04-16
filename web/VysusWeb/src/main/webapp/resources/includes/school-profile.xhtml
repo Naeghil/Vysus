@@ -1,7 +1,7 @@
 <div xmlns:h="http://java.sun.com/jsf/html"
      xmlns:f="http://java.sun.com/jsf/core">
 	<div id="instName">
-		<h4 class="#{profile.isAdmin() ? 'profile-element' :''} inline-block">#{actor.accountField("name")} </h4>
+		<h4 class="#{profile.isAdmin() ? profile-element} inline-block">#{actor.accountField("name")} </h4>
 		<h:inputText id="institutionName" value="#{institutionGet.instName}"
 			styleClass="form-control form-element w80 #{profile.isAdmin() ? 'profile-element' :''} hidden" required="true"
 			requiredMessage="Make sure you enter an institution name" 

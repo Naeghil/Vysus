@@ -13,15 +13,12 @@ import java.sql.*;
 public class Institution extends Account{
 //Object-specific variables
 	boolean admin = false;
-	//TODO: what exactly does it mean?
 	protected Object rankingPreferences;
-	//Object-specific queries:
 	
 //Initialisation: constructors and variables setup
 	//Uses super constructors
-	public Institution(String accountID) {
-		super(accountID); 
-	}
+	public Institution(String accountID) { super(accountID);  }
+	
 	public Institution(String accountID, String actor, Connection connection) throws DBProblemException, InvalidDataException { 
 		super(accountID); 
 		retrieve(connection);
@@ -94,7 +91,6 @@ public class Institution extends Account{
 	//You get staff data separately
 	public Map<String, String> showFull() {
 		Map<String, String> show = show();
-		//If there is such a field, then it's admin:
 		if(admin) show.put("admin", "yes");
 		return null;
 	}

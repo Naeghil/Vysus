@@ -80,6 +80,7 @@ public class Actor extends VysusBase implements Serializable {
 		} catch(InvalidDataException | DBProblemException | SQLException e) {
 			handleException(e, true);
 		}
+		System.out.println(accountData);
 	}
 	
 	public void handleException(Exception ex, boolean fatal) {

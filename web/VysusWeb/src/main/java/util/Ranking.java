@@ -22,11 +22,13 @@ public class Ranking {
 	
 	
 	public void rankingMain(String subject, float rate, Connection connection) {
+		Map<String,String> alreadyTested = new HashMap<String,String>();
 		try {
 			List<Candidate> candidates = jobFilter(subject, rate, connection);
 			
 			for (int i = 0; i < candidates.size(); i++) {
 				Candidate current = (candidates.get(i));
+				
 				float teacherExperience = 0;
 				float teacherValue = 0;
 				List<Qualification> qualifications = findQualification(subject, current.accountID, connection);
@@ -40,7 +42,7 @@ public class Ranking {
 					}
 				}
 				float actualRanking = teacherValue + teacherExperience;
-				System.out.println(actualRanking);
+				System.out.println(current.accountID + " is worth " + actualRanking);
 				}
 			
 			

@@ -17,65 +17,46 @@ import util.APICalls;
 public class Ranking {
 //to store candidates ranking, make a hashmap with keys 20 to 1, then when all candidates have been ranked, take from key 20 etc
 	public static void main(String[] args) {
-		int experience = 33;
-		String candidateName = "Miles Everett";
-		String jobRequirement = "Computer Science";
-		String candidateFullQual = "Computer Science";
-		String type = "phd";
-		String jobPostcode = "cm34rl";
-		String candidatePostcode = "ab245dj";
-		int maxDist = 100;
-		float jobPay = (float)10.50;
-		float candidateMinimum = (float)10.70;
-		
-		//Fake candidate
-		Map<String,Object> candidate = new HashMap<String,Object>();
-		candidate.put("name", candidateName);
-		candidate.put("full", candidateFullQual);
-		candidate.put("experience", experience);
-		candidate.put("type", type);
-		
-		//returns true if they are willing to travel that far
-		if (!distanceCheck(candidatePostcode,jobPostcode,maxDist)) {
-			System.out.println("Candidate will not travel that far");
-		} else if (jobPay < candidateMinimum) {
-			System.out.println("Candidate is too good for this job");
-		} else {
-			rankCandidates(candidate,jobRequirement);
-			/*float qualificationValue;
-			if (((String)candidate.get("full")).matches(jobRequirement)) {
-				qualificationValue = (float) 5;
-			} else {
-				qualificationValue = (float) 2.5;
-			}*/
-			//float teacherValue = (float) ((qualificationRelevancy(jobRequirement,((String)candidate.get("full")))) * (qualificationRanking((String)candidate.get("type"))));
-			//float teacherExperience = (float) experienceRanking(experience);
-			//float actualRanking = teacherValue + teacherExperience;
-			//System.out.println("Candidates experience: " + experienceRanking(experience));
-			//System.out.println("Candidates qualification: " + teacherValue);
-			//System.out.println("Candidates qualification: " + qualificationValue * (qualificationRanking((String)candidate.get("type"))));
-			//System.out.println("Total ranking: " + actualRanking);
-
+		}
+	
+	
+	
+	public void rankingMain(String subject, float rate, Connection connection) {
+		try {
+			List<Candidate> candidates = jobFilter(subject, rate, connection);
+			
+			for (int i = 0; i < candidates.size(); i++) {
+				Candidate current = (candidates.get(i));
+				float teacherExperience = 0;
+				float teacherValue = 0;
+				List<Qualification> qualifications = findQualification(subject, current.accountID, connection);
+				for (int j = 0; j < qualifications.size(); j++) {
+					Qualification qualification = (qualifications.get(j));
+					if (qualification.type.matches("Work Experience")) {
+						teacherExperience = (float) experienceRanking(qualification.startDate,qualification.endDate);
+					} else {
+						teacherValue = (float) ((qualificationRelevancy(current.fromMain) * (qualificationRanking(qualification.type))));
+					}
+				}
+				float actualRanking = teacherValue + teacherExperience;
+				System.out.println(actualRanking);
+				}
+			
+			
+			
+		} catch (DBProblemException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
+
 	
 	public static boolean distanceCheck(String candidatePostcode, String jobPostcode, int maxDist) {
 		return APICalls.checkDistance(candidatePostcode,jobPostcode,maxDist);
 	}
 	
-	public static void rankCandidates(Map<String,Object> teacher, String jobRequirement) {
-		//Can add to showMini
-		//Map<String,String> users = new User(userID, connection).showMini();
-		//Return list 1-20 of candidates 
-		float teacherValue = (float) ((qualificationRelevancy(jobRequirement,((String)teacher.get("full")))) * (qualificationRanking((String)teacher.get("type"))));
-		float teacherExperience = (float) experienceRanking((int)teacher.get("experience"));
-		float actualRanking = teacherValue + teacherExperience;
-		System.out.println(actualRanking);
-	}
-	
-	
-	public static float qualificationRelevancy(String qualification, String jobRequirement) {
-		if (qualification.matches(jobRequirement)) {
+	public static float qualificationRelevancy(boolean result) {
+		if (result = true) {
 			return (float) 5;
 		} else {
 			return (float) 2.5;
@@ -94,7 +75,11 @@ public class Ranking {
 	}
 	
 	
-	public static int experienceRanking(int experience) {
+	public static int experienceRanking(String start, String end) {
+		start = start.substring(0, 3);
+		end = end.substring(0, 3);
+		int experience = (Integer.parseInt(end) - Integer.parseInt(start));
+		System.out.println("Experience: " + experience);
 		if (experience < 1) {
 			return 1;			
 		} else if (experience < 3) {
@@ -113,13 +98,11 @@ public class Ranking {
 			return 8;
 		} else if (experience < 40) {
 			return 9;
-		} else if (experience > 40) {
+		} else if (experience >= 40) {
 			return 10;
 		}
 		return 0;
 	}
-	
-	
 	
 	
 	
@@ -179,6 +162,23 @@ public class Ranking {
 		
 		return firstFilter;		
 	}
+	
+	public List<Qualification> findQualification(String subject, String accountID, Connection connection) throws DBProblemException {
+		List<Qualification> qualifications = new ArrayList<Qualification>();
+		System.out.println("FilterSecondary");
+		try(PreparedStatement findQualificationType = connection.prepareStatement(
+		  "SELECT * FROM Qualification WHERE accountID=? AND mainSubj=?")){
+			findQualificationType.setString(1, accountID);
+			findQualificationType.setString(2, subject);
+			try(ResultSet rs = findQualificationType.executeQuery()){
+				while(rs.next()) {
+					qualifications.add(new Qualification(rs.getString("type"),rs.getString("startDate"),rs.getString("endDate")));
+				}
+			}
+		} catch (SQLException e) { throw new DBProblemException(e); }
+		
+		return qualifications;		
+	}
 }
 
 
@@ -195,5 +195,17 @@ class Candidate {
 		this.postcode = pCode;
 		this.maxDistance = mDis;
 		this.fromMain = main;
+	}
+}
+
+class Qualification {
+	public String type;
+	public String startDate;
+	public String endDate;
+	
+	public Qualification(String initType, String startDate, String endDate) {
+		this.type = initType;
+		this.startDate = startDate;
+		this.endDate = endDate;
 	}
 }

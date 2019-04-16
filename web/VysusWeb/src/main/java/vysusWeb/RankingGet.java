@@ -16,6 +16,7 @@ import javax.inject.Named;
 
 import storage.*;
 import util.Conv;
+//import util.Ranking;
 import util.Ranking;
 
 @Named("rankingGet")
@@ -25,10 +26,10 @@ public class RankingGet extends VysusBean implements Serializable {
 	public void createRanking() {
 		try (Connection connection = getConnection()) {
 			Ranking ranking = new Ranking();
-			System.out.println(ranking.jobFilter("English Literature", (float)400.0, connection));
+			ranking.rankingMain("English Literature", (float)400.0, connection);
 			
 
-		} catch (DBProblemException | SQLException e) {
+		} catch (SQLException e) {
 			actor.handleException(e, false);
 		}
 	}

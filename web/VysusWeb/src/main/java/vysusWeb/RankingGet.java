@@ -25,7 +25,7 @@ public class RankingGet extends VysusBean implements Serializable {
 	public void createRanking() {
 		try (Connection connection = getConnection()) {
 			Ranking ranking = new Ranking();
-			System.out.println(ranking.jobFilter("Computer Science", (float)4.0, connection));
+			System.out.println(ranking.jobFilter("Computer Science", (float)400.0, connection));
 			
 
 		} catch (DBProblemException | SQLException e) {

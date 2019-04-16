@@ -12,7 +12,6 @@ import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ConversationScoped;
-import javax.inject.Inject;
 import javax.inject.Named;
 
 import storage.DBProblemException;
@@ -27,14 +26,11 @@ public class Jobs extends VysusBean implements Serializable {
 	
 	List<Map<String, String>> jobs = new ArrayList<Map<String, String>>();
 	Map<String, Object> newJob = new HashMap<String, Object>();
-	
-	@Inject
-	protected @Named("actor") Actor actor;
-	
+		
 	@PostConstruct
 	void onInit() {
 		try (Connection connection = getConnection()){
-			for(Job j : Job.allJobs(actor.account, connection)) {
+			for(Job j : Job.allJobs(actor.account(), connection)) {
 				jobs.add(j.show());
 			}
 		} catch (DBProblemException | InvalidDataException | SQLException e) {
@@ -49,7 +45,7 @@ public class Jobs extends VysusBean implements Serializable {
 
 			newJob.put("startDate", sDate);
 			newJob.put("endDate", eDate); */
-			newJob.put("accountID", actor.account);
+			newJob.put("accountID", actor.account());
 			
 			new Job(newJob, connection);
 			

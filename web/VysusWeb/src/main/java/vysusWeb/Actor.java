@@ -10,14 +10,9 @@ import javax.inject.Named;
 
 import storage.*;
 
-/*
-@Inject
-protected @Named("actor") Actor actor;
-*/
-
 @Named("actor")
 @SessionScoped
-public class Actor extends VysusBean implements Serializable {
+public class Actor extends VysusBase implements Serializable {
 	String actor = null;
 	String account = null;
 	Map<String, String> userData = null;

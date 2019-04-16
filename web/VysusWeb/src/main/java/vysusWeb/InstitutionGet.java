@@ -23,9 +23,6 @@ public class InstitutionGet extends VysusBean implements Serializable {
 	@Inject
 	private @Named("uGet") UserGet uGet;
 	
-	@Inject
-	protected @Named("actor") Actor actor;
-	
 	public void signupInstitution() {
 		try {
 			Map<String, Object> userData = uGet.userData();

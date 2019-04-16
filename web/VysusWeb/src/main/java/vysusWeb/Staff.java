@@ -11,7 +11,6 @@ import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ConversationScoped;
-import javax.inject.Inject;
 import javax.inject.Named;
 import storage.*;
 import util.Conv;
@@ -23,13 +22,10 @@ public class Staff extends VysusBean implements Serializable {
 	
 	Map<String, Object> newStaff = new HashMap<String, Object>();
 	
-	@Inject
-	protected @Named("actor") Actor actor;
-	
 	@PostConstruct
 	void onInit() {
 		try(Connection connection = getConnection()){
-			for(storage.Staff staff : storage.Staff.allStaff(actor.account, connection)) {
+			for(storage.Staff staff : storage.Staff.allStaff(actor.account(), connection)) {
 				this.staff.add(staff.showFull());
 			}
 		} catch(DBProblemException | InvalidDataException | SQLException e) {
@@ -44,7 +40,7 @@ public class Staff extends VysusBean implements Serializable {
 			
 			newStaff.put("dateOfBirth", date);
 			newStaff.put("fullName", fullName);
-			newStaff.put("accountID", actor.account);
+			newStaff.put("accountID", actor.account());
 			
 			new User(connection, (String)newStaff.remove("username"), (String)newStaff.remove("password"), newStaff);
 			

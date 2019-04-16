@@ -29,9 +29,7 @@ public class Profile extends VysusBean implements Serializable {
 	private @Named("teacherGet") TeacherGet teacherGet;
 	@Inject
 	private @Named("institutionGet") InstitutionGet institutionGet;
-	@Inject
-	protected @Named("actor") Actor actor;
-
+	
 	@PostConstruct
 	void onInit() {
 		try {

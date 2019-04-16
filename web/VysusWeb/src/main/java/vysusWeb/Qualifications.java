@@ -12,7 +12,6 @@ import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ConversationScoped;
-import javax.inject.Inject;
 import javax.inject.Named;
 
 import storage.*;
@@ -34,9 +33,6 @@ public class Qualifications extends VysusBean implements Serializable {
 
 	List<Map<String, String>> qualifications = null;// new ArrayList<Map<String, String>>();
 	Map<String, Object> newQual = new HashMap<String, Object>();
-
-	@Inject
-	protected @Named("actor") Actor actor;
 
 	@PostConstruct
 	void onLoad() {

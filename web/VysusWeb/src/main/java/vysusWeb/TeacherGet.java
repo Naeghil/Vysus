@@ -17,8 +17,6 @@ public class TeacherGet extends VysusBean implements Serializable {
 
 	@Inject
 	private @Named("uGet") UserGet uGet;
-	@Inject
-	protected @Named("actor") Actor actor;
 	
 	float maxDistance;
 	float minRatePerHour;

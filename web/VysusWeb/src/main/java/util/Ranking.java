@@ -1,8 +1,17 @@
 package util;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import storage.DBProblemException;
+import storage.InvalidDataException;
 import util.APICalls;
 
 public class Ranking {
@@ -108,5 +117,81 @@ public class Ranking {
 			return 10;
 		}
 		return 0;
+	}
+	
+	
+	
+	
+	
+	
+	public List<Candidate> distanceFilter(String schoolPostcode, String subject, float rate, Connection connection) throws DBProblemException{
+		List<Candidate> filtered = new ArrayList<Candidate>();
+		for(Candidate c : jobFilter(subject, rate, connection)) {
+			if(getDistance(schoolPostcode, c.postcode, c.maxDistance)) filtered.add(c); 
+		}
+		return filtered;
+	}
+	
+	public List<Candidate> jobFilter(String subject, float rate, Connection connection) throws DBProblemException {
+		List<Candidate> candidates = new ArrayList<Candidate>(filterMain(subject, rate, connection));
+		candidates.addAll(filterSecondary(subject, rate, connection));
+		return candidates;
+	}
+	
+	
+	public List<Candidate> filterMain(String subject, float rate, Connection connection) throws DBProblemException {
+		List<Candidate> firstFilter = new ArrayList<Candidate>();
+		try(PreparedStatement jobFilter = connection.prepareStatement(
+		  "SELECT User.userID as user, User.accountID as account, User.postcode as postcode, Teacher.maxDistance as maxDist"
+		+ "FROM User INNER JOIN Teacher ON User.accountID=Teacher.accountID INNER JOIN Qualification ON Teacher.accountID=Qualification.accountID"
+		+ "WHERE Qualification.mainSubj=? AND Teacher.minRatePerHour<=?")){
+			jobFilter.setString(1, subject);
+			jobFilter.setFloat(2, rate);
+			try(ResultSet rs = jobFilter.executeQuery()){
+				while(rs.next()) {
+					firstFilter.add(new Candidate(
+						rs.getString("user"), rs.getString("account"), rs.getString("postcode"), rs.getFloat("maxDist"), false));
+				}
+			}
+		} catch (SQLException e) { throw new DBProblemException(e); }
+		
+		return firstFilter;		
+	}
+	
+	public List<Candidate> filterSecondary(String subject, float rate, Connection connection) throws DBProblemException {
+		List<Candidate> firstFilter = new ArrayList<Candidate>();
+		try(PreparedStatement jobFilter = connection.prepareStatement(
+		  "SELECT User.userID as user, User.accountID as account, User.postcode as postcode, Teacher.maxDistance as maxDist"
+		+ "FROM User INNER JOIN Teacher ON User.accountID=Teacher.accountID INNER JOIN Qualification ON Teacher.accountID=Qualification.accountID"
+		+ "WHERE Qualification.subj1=? OR Qualification.subj2=? OR Qualification.subj3=? AND Qualification.mainSubj!=? AND Teacher.minRatePerHour<=?")){
+			for(int i=1; i<5; i++) jobFilter.setString(i, subject);
+			jobFilter.setFloat(5, rate);
+			try(ResultSet rs = jobFilter.executeQuery()){
+				while(rs.next()) {
+					firstFilter.add(new Candidate(
+						rs.getString("user"), rs.getString("account"), rs.getString("postcode"), rs.getFloat("maxDist"), false));
+				}
+					
+			}
+		} catch (SQLException e) { throw new DBProblemException(e); }
+		
+		return firstFilter;		
+	}
+}
+
+
+class Candidate {
+	public String userID;
+	public String accountID;
+	public String postcode;
+	public float maxDistance;
+	public boolean fromMain;
+	
+	public Candidate(String uID, String aID, String pCode, float mDis, boolean main) {
+		this.userID = uID;
+		this.accountID = aID;
+		this.postcode = pCode;
+		this.maxDistance = mDis;
+		this.fromMain = main;
 	}
 }

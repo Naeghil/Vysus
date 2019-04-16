@@ -1,7 +1,6 @@
 package vysusWeb;
 
 import javax.enterprise.context.RequestScoped;
-import javax.inject.Inject;
 import javax.inject.Named;
 
 //TODO: add a logger class that records database errors somewhere
@@ -12,9 +11,6 @@ import javax.inject.Named;
 public class Login extends VysusBean {
 	String username;
 	String password;
-	
-	@Inject
-	protected @Named("actor") Actor actor;
 	
 	public void login() {
 		actor.login(username, password);

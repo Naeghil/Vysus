@@ -5,6 +5,8 @@ import java.util.Map;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.inject.Inject;
+import javax.inject.Named;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -15,7 +17,12 @@ import storage.InvalidDataException;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-class VysusBean {
+public class VysusBean extends VysusBase {
+	@Inject
+	protected @Named("actor") Actor actor;
+}
+
+class VysusBase {
 	
 //Methods to retrieve session objects:
 	protected Map<String, Object> getSessionMap() {

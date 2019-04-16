@@ -28,13 +28,15 @@ public class Ranking {
 			
 			for (int i = 0; i < candidates.size(); i++) {
 				Candidate current = (candidates.get(i));
-				
+				if (alreadyTested.containsKey(current.accountID)) {
+					break;
+				} 
 				float teacherExperience = 0;
 				float teacherValue = 0;
 				List<Qualification> qualifications = findQualification(subject, current.accountID, connection);
 				for (int j = 0; j < qualifications.size(); j++) {
 					Qualification qualification = (qualifications.get(j));
-					System.out.println(qualification.type);
+					//System.out.println(qualification.type);
 					if (qualification.type.matches("Work experience")) {
 						teacherExperience = (float) experienceRanking(qualification.startDate,qualification.endDate);
 					} else {
@@ -43,6 +45,7 @@ public class Ranking {
 				}
 				float actualRanking = teacherValue + teacherExperience;
 				System.out.println(current.accountID + " is worth " + actualRanking);
+				alreadyTested.put(current.accountID,"yes");
 				}
 			
 			
@@ -79,14 +82,14 @@ public class Ranking {
 	
 	
 	public static int experienceRanking(String start, String end) {
-		System.out.println("Start pre: " + start);
-		System.out.println("End pre: " + end);
+		//System.out.println("Start pre: " + start);
+		//System.out.println("End pre: " + end);
 		start = start.substring(0, 4);
 		end = end.substring(0, 4);
-		System.out.println("Start post: " + start);
-		System.out.println("End post: " + end);
+		//System.out.println("Start post: " + start);
+		//System.out.println("End post: " + end);
 		int experience = (Integer.parseInt(end) - Integer.parseInt(start));
-		System.out.println("Experience: " + experience);
+		//System.out.println("Experience: " + experience);
 		if (experience < 1) {
 			return 1;			
 		} else if (experience < 3) {
@@ -131,7 +134,7 @@ public class Ranking {
 	
 	public List<Candidate> filterMain(String subject, float rate, Connection connection) throws DBProblemException {
 		List<Candidate> firstFilter = new ArrayList<Candidate>();
-		System.out.println("FilterMain");
+		//System.out.println("FilterMain");
 		try(PreparedStatement jobFilter = connection.prepareStatement(
 		  "SELECT User.userID as user, User.accountID as account, User.postcode as postcode, Teacher.maxDistance as maxDist "
 		+ "FROM User INNER JOIN Teacher ON User.accountID=Teacher.accountID INNER JOIN Qualification ON Teacher.accountID=Qualification.accountID "
@@ -151,7 +154,7 @@ public class Ranking {
 	
 	public List<Candidate> filterSecondary(String subject, float rate, Connection connection) throws DBProblemException {
 		List<Candidate> firstFilter = new ArrayList<Candidate>();
-		System.out.println("FilterSecondary");
+		//System.out.println("FilterSecondary");
 		try(PreparedStatement jobFilter = connection.prepareStatement(
 		  "SELECT User.userID as user, User.accountID as account, User.postcode as postcode, Teacher.maxDistance as maxDist "
 		+ "FROM User INNER JOIN Teacher ON User.accountID=Teacher.accountID INNER JOIN Qualification ON Teacher.accountID=Qualification.accountID "
@@ -172,7 +175,7 @@ public class Ranking {
 	
 	public List<Qualification> findQualification(String subject, String accountID, Connection connection) throws DBProblemException {
 		List<Qualification> qualifications = new ArrayList<Qualification>();
-		System.out.println("FilterSecondary");
+		//System.out.println("FilterSecondary");
 		try(PreparedStatement findQualificationType = connection.prepareStatement(
 		  "SELECT * FROM Qualification WHERE accountID=? AND mainSubj=?")){
 			findQualificationType.setString(1, accountID);

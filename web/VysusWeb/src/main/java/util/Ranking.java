@@ -143,7 +143,7 @@ public class Ranking {
 		List<Candidate> firstFilter = new ArrayList<Candidate>();
 		System.out.println("FilterMain");
 		try(PreparedStatement jobFilter = connection.prepareStatement(
-		  "SELECT User.userID as user, User.accountID as account, User.postcode as postcode, Teacher.maxDistance as maxDist"
+		  "SELECT User.userID as user, User.accountID as account, User.postcode as postcode, Teacher.maxDistance as maxDist "
 		+ "FROM User INNER JOIN Teacher ON User.accountID=Teacher.accountID INNER JOIN Qualification ON Teacher.accountID=Qualification.accountID "
 		+ "WHERE Qualification.mainSubj=? AND Teacher.minRatePerHour<=?")){
 			jobFilter.setString(1, subject);
@@ -163,7 +163,7 @@ public class Ranking {
 		List<Candidate> firstFilter = new ArrayList<Candidate>();
 		System.out.println("FilterSecondary");
 		try(PreparedStatement jobFilter = connection.prepareStatement(
-		  "SELECT User.userID as user, User.accountID as account, User.postcode as postcode, Teacher.maxDistance as maxDist"
+		  "SELECT User.userID as user, User.accountID as account, User.postcode as postcode, Teacher.maxDistance as maxDist "
 		+ "FROM User INNER JOIN Teacher ON User.accountID=Teacher.accountID INNER JOIN Qualification ON Teacher.accountID=Qualification.accountID "
 		+ "WHERE Qualification.subj1=? OR Qualification.subj2=? OR Qualification.subj3=? AND Qualification.mainSubj!=? AND Teacher.minRatePerHour<=?")){
 			for(int i=1; i<5; i++) jobFilter.setString(i, subject);

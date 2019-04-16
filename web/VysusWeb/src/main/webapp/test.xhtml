@@ -11,4 +11,19 @@
 			VYSUS stands for Verified Supply Teacher System which is an interactive tool created for the simplification of supply teacher recruitment processes. It provides a dynamic and new way which aims at making exisitng processes easier, cheaper and most importantly more secure and efficient by focusing on enhanced verification of potential candidated as well as the matching of the most suitable candidate with a school's job position using our unique and in-house made algorithm
 		</p>
 	</ui:define>
+	
+				<div class="data-box">
+					<p>#{q.title}</p>
+					<p>#{q.from} - #{q.to}</p>
+					<p>#{q.comment}</p>
+					<p>#{q.where}</p>
+					<p>#{q.type}</p>
+					<p>#{q.email}</p>
+					<p>#{q.phoneNo}</p>
+					<p>#{q.referee}</p>
+					<p>#{q.verified}</p>
+					<h:form>
+						<h:commandButton value="Delete" action="#{qualifications.delete(q.id)}" styleClass="btn btn-primary form-element"/>
+					</h:form>
+				</div>
 </ui:composition>

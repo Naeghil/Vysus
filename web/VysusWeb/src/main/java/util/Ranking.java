@@ -51,7 +51,7 @@ public class Ranking {
 	}
 	
 	public static boolean distanceCheck(String candidatePostcode, String jobPostcode, int maxDist) {
-		return APICalls.getDistance(candidatePostcode,jobPostcode,maxDist);
+		return APICalls.checkDistance(candidatePostcode,jobPostcode,maxDist);
 	}
 	
 	public static void rankCandidates(Map<String,Object> teacher, String jobRequirement) {

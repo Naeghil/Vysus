@@ -34,11 +34,11 @@ public class APICalls {
 			return testData;
 		}
 		
-		public static boolean getDistance(String start, String destination, int minimumDistance) {
+		public static boolean checkDistance(String start, String destination, float maximumDistance) {
 			String URL = "https://maps.googleapis.com/maps/api/distancematrix/json?units=metric&origins="+start+"&destinations="+destination+"&key=AIzaSyDaoTS-UJ0jeuB0kDkGCtBtl7A3KoybsmU";
 			String APIData = APICalls.getData(URL);
 			int calculatedDistance = parseDistance(APIData);
-			if (calculatedDistance < minimumDistance*1000) {
+			if (calculatedDistance < maximumDistance*1000) {
 				return true;
 			} else {
 				return false;

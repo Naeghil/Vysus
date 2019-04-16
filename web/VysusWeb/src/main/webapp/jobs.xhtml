@@ -15,6 +15,7 @@
 				<ui:repeat var="#{j}" value="#{jobs.jobs}" varStatus="status">
 				<div class="data-box">
 					<p>#{j.title}</p>
+					<p>#{j.subject}</p>
 					<p>#{j.description}</p>
 					<p>#{j.rate}</p>
 					<p>#{j.candidate}</p>
@@ -28,7 +29,7 @@
 		
 			<div id="new-qualification-form"  class="col-md-5 h100 fulldimensions scroll-div">
 				<h:form>
-				<h:inputText id="title" value="#{jobs.title}" a:placeholder="Qualification name"
+				<h:inputText id="title" value="#{jobs.title}" a:placeholder="Job title"
 	         			styleClass="form-control form-element w50 inline-block" required="true"
 						requiredMessage="Make sure you enter an institution name" 
 						validatorMessage="Ensure your username is less than 257 characters">
@@ -36,41 +37,24 @@
 					</h:inputText>
 				<h:message for="title"/>
 								
-				<h:inputTextarea id="comment" value="#{jobs.description}" a:placeholder="What did you gain from this?"
+				<h:selectOneMenu id="jSubj" value="#{jobs.subject}" 
+						styleClass="form-control inline-block form-element w50">
+	         			<f:selectItems value="#{qualifications.subjects}" var="m" itemLabel="#{m}" itemValue="#{m}" />
+				</h:selectOneMenu>				
+				
+				<h:inputTextarea id="comment" value="#{jobs.description}" a:placeholder="Give some more detail"
 	styleClass="form-control form-element w95" required="false" />
 				
-				<h:inputText id="where" value="#{qualifications.where}" a:placeholder="Providing institution"
-         			styleClass="form-control form-element inline-block w50" required="true"
-					requiredMessage="Make sure you enter an institution name" 
-					validatorMessage="Ensure your username is less than 257 characters">
-					<f:validateLength maximum="257" />
+				<p class="inline-block">Rate: </p>
+				<h:inputText id="rate" value="#{jobs.rate}"
+					styleClass="form-control form-element inline-block w20" required="true"
+					requiredMessage="Please input a number"
+					validatorMessage="Please input a positive number">                    
 				</h:inputText>
-				<h:message for="where"/>
-				<h:inputText id="referee" value="#{qualifications.referee}" a:placeholder="Ref. Name" 
-					styleClass="form-control form-element inline-block w45" required="true" 
-					requiredMessage="Referee name is required."
-					validatorMessage="Please ensure your referee name is less than 257 characters.">
-					<f:validateLength maximum="300"/>
-				</h:inputText>
-				<h:message for="referee"/>
-				<h:inputText id="rEmail" value="#{qualifications.email}" a:placeholder="Email"
-          			styleClass="form-control form-element inline-block w60" required="true" 
-					requiredMessage="Email address is required"
-					validatorMessage="Please ensure your email address is in the correct format and does not exceed 300 characters">
-					<f:validateRegex pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]"></f:validateRegex>
-             		<f:validateLength maximum="300"/>
-				</h:inputText>
-             	<h:message for="rEmail"/>
-          		<h:inputText id="rPhone" value="#{qualifications.phoneNo}" a:placeholder="Phone No" 
-					styleClass="form-control form-element inline-block w30" required="true" 
-					requiredMessage="Phone number is required."
-					validatorMessage="Please ensure your phone number is in the correct format.">
-					<f:validateRegex pattern="^(((\+44\s?\d{4}|\(?0\d{4}\)?)\s?\d{3}\s?\d{3})|((\+44\s?\d{3}|\(?0\d{3}\)?)\s?\d{3}\s?\d{4})|((\+44\s?\d{2}|\(?0\d{2}\)?)\s?\d{4}\s?\d{4}))(\s?\#(\d{4}|\d{3}))?$"/>
-				</h:inputText>
-				<h:message for="rPhone"/>
+				<h:message for="minRatePerHour"/>
 				       		
 				<div class="w100 centertext">
-					<h:commandButton value="Add New" action="#{qualifications.addNew()}" styleClass="btn btn-primary form-element"/>
+					<h:commandButton value="Add New" action="#{jobs.addNew()}" styleClass="btn btn-primary form-element"/>
 				</div>
 				
 				</h:form>

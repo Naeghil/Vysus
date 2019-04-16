@@ -83,6 +83,12 @@ public class Jobs extends VysusBean implements Serializable {
 	public void setTitle(String title) {
 		newJob.put("title", title);
 	}
+	public String getSubject() {
+		return newJob.containsKey("subject") ? (String)newJob.get("subject") : "";
+	}
+	public void setSubject(String subject) {
+		newJob.put("subject", subject);
+	}
 	/**
 	public String getsDay() {
 		return newQual.containsKey("sDay") ? (String)newQual.get("sDay") : "";

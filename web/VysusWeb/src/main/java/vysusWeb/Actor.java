@@ -123,4 +123,8 @@ public class Actor extends VysusBase implements Serializable {
 	public String getUserPicture() { 
 		return "resources/images/propic-default.jpg";
 	}
+	
+	public String getActor() {
+		return actor;
+	}
 }

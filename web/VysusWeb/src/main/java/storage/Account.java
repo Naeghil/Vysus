@@ -35,9 +35,9 @@ public abstract class Account extends StorageAbstract {
 	}
 	public static Account getAccount(String accountID, String actor, Connection connection) throws DBProblemException, InvalidDataException {
 		int accType = Account.accType(accountID);
-		System.out.println("Account.getAccount.accountID: " + accountID);
-		System.out.println("Account.getAccount.actor: " + actor);
-		System.out.println("Account.getAccount.accType: " + accType);
+		//System.out.println("Account.getAccount.accountID: " + accountID);
+		//System.out.println("Account.getAccount.actor: " + actor);
+		//System.out.println("Account.getAccount.accType: " + accType);
 		if(accType==0) return new Teacher(accountID, connection);
 		if(accType==1) return new Institution(accountID, actor, connection);
 		return null;
@@ -46,7 +46,7 @@ public abstract class Account extends StorageAbstract {
 	public static Account makeAccount(String accountID, Map<String, Object> accountData, Connection connection)
 		throws InvalidDataException, DBProblemException {
 		char accType = accountID.charAt(0);
-		System.out.println("account.makeAccount: " + accountID);
+		//System.out.println("account.makeAccount: " + accountID);
 		if(accType=='0') return new Teacher(accountID, accountData, connection);
 		if(accType=='1') return new Institution(accountID, accountData, connection);
 		

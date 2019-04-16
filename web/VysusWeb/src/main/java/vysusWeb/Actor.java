@@ -89,8 +89,13 @@ public class Actor extends VysusBean implements Serializable {
 		System.out.println("when reqaccountdata: "+this.account+" "+this.actor);
 		if(!isIn()) return;
 		try(Connection connection = getConnection()){
+<<<<<<< HEAD
 			 this.accountData = Account.getAccount(this.account, this.actor, connection).showFull();
 			 System.out.println("requestAccountData.accountData: " + this.accountData);
+=======
+			 accountData = Account.getAccount(this.account, this.actor, connection).showFull();
+			 //System.out.println("requestAccountData.accountData: " + accountData);
+>>>>>>> 1104c4720c224ac94d63b0a78fdf32e20d27439a
 		} catch(InvalidDataException | DBProblemException | SQLException e) {
 			handleException(e, true);
 		}

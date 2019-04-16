@@ -16,6 +16,8 @@ public class Ranking {
 		String jobPostcode = "cm34rl";
 		String candidatePostcode = "ab245dj";
 		int maxDist = 100;
+		float jobPay = (float)10.50;
+		float candidateMinimum = (float)10.70;
 		
 		//Fake candidate
 		Map<String,Object> candidate = new HashMap<String,Object>();
@@ -27,8 +29,10 @@ public class Ranking {
 		//returns true if they are willing to travel that far
 		if (!distanceCheck(candidatePostcode,jobPostcode,maxDist)) {
 			System.out.println("Candidate will not travel that far");
+		} else if (jobPay < candidateMinimum) {
+			System.out.println("Candidate is too good for this job");
 		} else {
-			
+			rankCandidates(candidate,jobRequirement);
 			/*float qualificationValue;
 			if (((String)candidate.get("full")).matches(jobRequirement)) {
 				qualificationValue = (float) 5;
@@ -42,7 +46,7 @@ public class Ranking {
 			//System.out.println("Candidates qualification: " + teacherValue);
 			//System.out.println("Candidates qualification: " + qualificationValue * (qualificationRanking((String)candidate.get("type"))));
 			//System.out.println("Total ranking: " + actualRanking);
-			rankCandidates(candidate,jobRequirement);
+
 		}
 	}
 	

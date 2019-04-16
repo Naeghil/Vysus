@@ -16,12 +16,12 @@ public class TeacherGet extends VysusBean implements Serializable {
 	Map<String, Object> newData = new HashMap<String, Object>();
 
 	@Inject
-	@Named("uGet")
-	private UserGet uGet;
+	private @Named("uGet") UserGet uGet;
+	@Inject
+	protected @Named("actor") Actor actor;
+	
 	float maxDistance;
 	float minRatePerHour;
-	
-	public TeacherGet(){}
 	
 	public void signupTeacher() {
 		try {

@@ -1,10 +1,11 @@
 package vysusWeb;
 
-import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 
 //TODO: add a logger class that records database errors somewhere
+
 
 @Named("login")
 @RequestScoped
@@ -12,12 +13,8 @@ public class Login extends VysusBean {
 	String username;
 	String password;
 	
-	public Login(){}
-	@PostConstruct
-	void init() {
-		//Avoid session conflict not allowing a logged user to login again
-		if(actor.isIn()) redirect("profile.jsf");
-	}
+	@Inject
+	protected @Named("actor") Actor actor;
 	
 	public void login() {
 		actor.login(username, password);

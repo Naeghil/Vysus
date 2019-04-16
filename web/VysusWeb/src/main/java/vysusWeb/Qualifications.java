@@ -12,11 +12,10 @@ import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ConversationScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 
-import storage.DBProblemException;
-import storage.InvalidDataException;
-import storage.Qualification;
+import storage.*;
 import util.Conv;
 
 @Named("qualifications")
@@ -29,13 +28,14 @@ public class Qualifications extends VysusBean implements Serializable {
 	List<Map<String, String>> qualifications = null;//new ArrayList<Map<String, String>>();
 	Map<String, Object> newQual = new HashMap<String, Object>();
 	
-	public Qualifications() { }
+	@Inject
+	protected @Named("actor") Actor actor;
 	
+	@PostConstruct
 	void onLoad() {
 		System.out.println(actor.account);
 		try (Connection connection = getConnection()){
 			qualifications = new ArrayList<Map<String, String>>();
-			//CHANGE THIS BACK TO actor.account when it's fixed!!!!!!!!!
 			for(Qualification q : Qualification.allQualifications(actor.account, connection)) {
 				qualifications.add(q.show());
 				System.out.println(qualifications.toString());

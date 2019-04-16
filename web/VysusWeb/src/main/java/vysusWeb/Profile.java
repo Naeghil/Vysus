@@ -20,24 +20,23 @@ import storage.User;
 @Named("profile")
 @ConversationScoped
 public class Profile extends VysusBean implements Serializable {
+	int accType = -1;
+	boolean admin = false;
 //The gets:
 	@Inject
-	@Named("uGet")
-	private UserGet uGet;
+	private @Named("uGet") UserGet uGet;
 	@Inject
-	@Named("teacherGet")
-	private TeacherGet teacherGet;
+	private @Named("teacherGet") TeacherGet teacherGet;
 	@Inject
-	@Named("institutionGet")
-	private InstitutionGet institutionGet;
-	//test
-	int accType = -1; //0 = Teachers 1 = Institutions 
-	
-	public Profile() {}
+	private @Named("institutionGet") InstitutionGet institutionGet;
+	@Inject
+	protected @Named("actor") Actor actor;
+
 	@PostConstruct
 	void onInit() {
 		try {
 			accType = actor.accType();
+			admin = actor.accountField("admin").equals("yes");
 		} catch (InvalidDataException e) {
 			actor.handleException(e, true);
 		}
@@ -64,8 +63,10 @@ public class Profile extends VysusBean implements Serializable {
 		return null;
 	}
 	
-//Tab renderers:	
-	public boolean isAdmin() {
-		return (actor.accountField("admin").equals("yes"));
+	public int getAccType() {
+		return accType;
+	}
+	public boolean getAdmin() {
+		return admin;
 	}
 }

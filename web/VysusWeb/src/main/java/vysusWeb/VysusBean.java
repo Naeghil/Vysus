@@ -1,42 +1,21 @@
 package vysusWeb;
 
 import java.io.IOException;
-import java.io.Serializable;
 import java.util.Map;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
-import javax.inject.Inject;
-import javax.inject.Named;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 import storage.InvalidDataException;
-import vysusWeb.Actor;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 
-public class VysusBean extends VysusBase {
-	@Inject
-	protected @Named("actor") Actor actor;
-	
-	/*
-	//For actor availability:
-	public Actor getActor() {
-	    return actor;
-	}
-	@Inject
-	public void setActor (@Named(Actor actor) {
-	    this.actor = actor;
-	} */
-}
-
-class VysusBase implements Serializable {
-	public VysusBase() { }
-	
+class VysusBean {
 	
 //Methods to retrieve session objects:
 	protected Map<String, Object> getSessionMap() {

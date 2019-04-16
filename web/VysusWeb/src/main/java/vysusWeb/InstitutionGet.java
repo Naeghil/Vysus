@@ -21,10 +21,10 @@ public class InstitutionGet extends VysusBean implements Serializable {
 	Map<String, Object> newData = new HashMap<String, Object>();
 
 	@Inject
-	@Named("uGet")
-	private UserGet uGet;
+	private @Named("uGet") UserGet uGet;
 	
-	public InstitutionGet(){}
+	@Inject
+	protected @Named("actor") Actor actor;
 	
 	public void signupInstitution() {
 		try {

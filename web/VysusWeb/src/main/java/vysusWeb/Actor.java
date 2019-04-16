@@ -10,15 +10,20 @@ import javax.inject.Named;
 
 import storage.*;
 
+/*
+@Inject
+protected @Named("actor") Actor actor;
+*/
+
 @Named("actor")
 @SessionScoped
-public class Actor extends VysusBase implements Serializable {
+public class Actor extends VysusBean implements Serializable {
 	String actor = null;
 	String account = null;
 	Map<String, String> userData = null;
 	Map<String, String> accountData = null;
 
-	public Actor() {}
+	
 //User session:
 	public void login(String username, String password)  {
 		try(Connection connection = getConnection()){
@@ -57,9 +62,10 @@ public class Actor extends VysusBase implements Serializable {
 		getExternalContext().invalidateSession();
 		redirect("index.jsf");
 	}
+	
 	public boolean isIn() {
 		System.out.println("when isin: "+this.account+" "+this.actor);
-		return actor!=null;
+		return this.actor!=null && this.account!=null;
 	}
 	
 	public String onLoad(boolean internal) {
@@ -68,6 +74,7 @@ public class Actor extends VysusBase implements Serializable {
 		if(!internal && actor!=null) return "profile.jsf";
 		return "";
 	}
+	
 //Refreshing data:
 	public void requestUserData() {
 		System.out.println("when requserdata: "+this.account+" "+this.actor);
@@ -82,8 +89,8 @@ public class Actor extends VysusBase implements Serializable {
 		System.out.println("when reqaccountdata: "+this.account+" "+this.actor);
 		if(!isIn()) return;
 		try(Connection connection = getConnection()){
-			 accountData = Account.getAccount(this.account, this.actor, connection).showFull();
-			 System.out.println("requestAccountData.accountData: " + accountData);
+			 this.accountData = Account.getAccount(this.account, this.actor, connection).showFull();
+			 System.out.println("requestAccountData.accountData: " + this.accountData);
 		} catch(InvalidDataException | DBProblemException | SQLException e) {
 			handleException(e, true);
 		}
@@ -123,9 +130,5 @@ public class Actor extends VysusBase implements Serializable {
 	
 	public String getUserPicture() { 
 		return "resources/images/propic-default.jpg";
-	}
-	
-	public String getActor() {
-		return actor;
 	}
 }

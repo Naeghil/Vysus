@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.enterprise.context.ConversationScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 
 import storage.InvalidDataException;
@@ -21,6 +22,8 @@ public class UserGet extends VysusBean implements Serializable {
 	static List<String> monthNo = new ArrayList<String>(Arrays.asList("01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12" ));
 	static List<String> titles = new ArrayList<String>(Arrays.asList("Mr", "Mrs", "Ms", "Sir", "Mme"));
 	
+	@Inject
+	protected @Named("actor") Actor actor;
 	
 	Map<String, Object> newData = new HashMap<String, Object>();
 

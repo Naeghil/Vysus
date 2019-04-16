@@ -11,6 +11,7 @@ import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ConversationScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 import storage.*;
 import util.Conv;
@@ -22,7 +23,9 @@ public class Staff extends VysusBean implements Serializable {
 	
 	Map<String, Object> newStaff = new HashMap<String, Object>();
 	
-	public Staff() {}
+	@Inject
+	protected @Named("actor") Actor actor;
+	
 	@PostConstruct
 	void onInit() {
 		try(Connection connection = getConnection()){

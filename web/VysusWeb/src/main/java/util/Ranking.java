@@ -29,7 +29,7 @@ public class Ranking {
 			for (int i = 0; i < candidates.size(); i++) {
 				Candidate current = (candidates.get(i));
 				if (alreadyTested.containsKey(current.accountID)) {
-					break;
+					continue;
 				} 
 				float teacherExperience = 0;
 				float teacherValue = 0;

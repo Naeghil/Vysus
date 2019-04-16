@@ -35,6 +35,9 @@ public abstract class Account extends StorageAbstract {
 	}
 	public static Account getAccount(String accountID, String actor, Connection connection) throws DBProblemException, InvalidDataException {
 		int accType = Account.accType(accountID);
+		System.out.println("Account.getAccount.accountID" + accountID);
+		System.out.println("Account.getAccount.actor" + actor);
+		System.out.println("Account.getAccount.accType" + accType);
 		if(accType==0) return new Teacher(accountID, connection);
 		if(accType==1) return new Institution(accountID, actor, connection);
 		return null;

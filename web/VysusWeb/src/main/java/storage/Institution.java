@@ -48,7 +48,7 @@ public class Institution extends Account{
 //Public interfaces of protected methods
 	//Sets admin to true if the person making the request is the sysAdmin
 	public void requestAdminRights(String actor) {
-		System.out.println("Insitution.requestAdmin.data: " + data);
+		//System.out.println("Insitution.requestAdmin.data: " + data);
 		admin = actor.equals(data.get("sysAdminID"));
 	}
 	//The following methods handle the account's jobs

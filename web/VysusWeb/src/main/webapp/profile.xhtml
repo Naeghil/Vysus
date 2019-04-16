@@ -84,13 +84,13 @@
 							<h:message for="userPhone"/>
 						</div>
 					</p:tab>
-					<p:tab rendered="#{actor.accType() eq 1}" title="Institution">
+					<p:tab rendered="#{profile.accType eq 1}" title="Institution">
 						<ui:include src="resources/includes/school-profile.xhtml"/>
 					</p:tab>
-					<p:tab rendered="#{actor.accType() eq 1 and profile.isAdmin()}" title="Staff">
+					<p:tab rendered="#{profile.accType eq 1 and profile.isAdmin()}" title="Staff">
 						<ui:include src="resources/includes/staff-profile.xhtml"/>
 					</p:tab>
-					<p:tab rendered="#{actor.accType() eq 0}" title="Work">
+					<p:tab rendered="#{profile.accType eq 0}" title="Work">
 						<ui:include src="resources/includes/teacher-profile.xhtml"/>	
 					</p:tab>
 		    	</p:tabView>

@@ -174,7 +174,7 @@ public class Ranking {
 			
 			try(ResultSet rs = findQualificationType.executeQuery()){
 				while(rs.next()) {
-					qualifications.add(new Qualification(rs.getString("type"),rs.getString("startDate"),rs.getString("endDate")));
+					qualifications.add(new Qualification(rs.getString("level"),rs.getString("startDate"),rs.getString("endDate")));
 				}
 			}
 		} catch (SQLException e) { 

@@ -29,13 +29,20 @@ public class Jobs extends VysusBean implements Serializable {
 		
 	@PostConstruct
 	void onInit() {
-		try (Connection connection = getConnection()){
+		Map<String, String> mockJob = new HashMap<String, String>();
+		mockJob.put("id", "0");
+		mockJob.put("title", "English Teacher");
+		mockJob.put("subject", "English Literature");
+		mockJob.put("description", "Teach some kids some things because learning is important to shape personality and citizenship");
+		mockJob.put("ratePerHour", "7.56");
+		jobs.add(mockJob);
+		/*try (Connection connection = getConnection()){
 			for(Job j : Job.allJobs(actor.account(), connection)) {
 				jobs.add(j.show());
 			}
 		} catch (DBProblemException | InvalidDataException | SQLException e) {
 			actor.handleException(e, true);
-		}
+		}*/
 	}
 	
 	public void addNew() {
@@ -143,54 +150,3 @@ public class Jobs extends VysusBean implements Serializable {
 		newJob.put("ratePerHour", rate);
 	}
 }
-
-class showJobs {
-
-	public String accountID;
-	public String subject;
-	public String description;
-	public String ratePerHour;
-	
-	showJobs() {
-
-	}
-
-	public void setDetails(Map<String,String> job) {
-		this.accountID = job.get("accountID");
-		this.subject = job.get("subject");
-		this.description = job.get("description");
-		this.ratePerHour = job.get("ratePerHour");
-	}
-	
-	public String getAccountID() {
-		return accountID;
-	}
-
-	public void setAccountID(String accountID) {
-		this.accountID = accountID;
-	}
-
-	public String getSubject() {
-		return subject;
-	}
-
-	public void setSubject(String subject) {
-		this.subject = subject;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	public String getRatePerHour() {
-		return ratePerHour;
-	}
-
-	public void setRatePerHour(String ratePerHour) {
-		this.ratePerHour = ratePerHour;
-	}
-	}

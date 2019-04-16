@@ -31,16 +31,15 @@ public class Qualifications extends VysusBean implements Serializable {
 	static List<String> types = new ArrayList<String>(
 			Arrays.asList("Undergraduate", "Postgraduate", "PHD", "Work experience"));
 
-	List<Map<String, String>> qualifications = null;// new ArrayList<Map<String, String>>();
+	List<showQualifications> qualifications = new ArrayList<showQualifications>();
 	Map<String, Object> newQual = new HashMap<String, Object>();
 
 	@PostConstruct
 	void onLoad() {
 		System.out.println(actor.account());
 		try (Connection connection = getConnection()) {
-			qualifications = new ArrayList<Map<String, String>>();
 			for (Qualification q : Qualification.allQualifications(actor.account(), connection)) {
-				qualifications.add(q.show());
+				qualifications.add(new showQualifications(q.show()));
 				System.out.println(qualifications.toString());
 			}
 		} catch (DBProblemException | InvalidDataException | SQLException e) {
@@ -84,7 +83,7 @@ public class Qualifications extends VysusBean implements Serializable {
 		return qualifications.size() == 0;
 	}
 
-	public List<Map<String, String>> getQualifications() {
+	public List<showQualifications> getQualifications() {
 		if (qualifications == null)
 			onLoad();
 		return qualifications;
@@ -242,9 +241,8 @@ public class Qualifications extends VysusBean implements Serializable {
 }
 
 class showQualifications {
-
-	public String accountID;
 	//qualification info
+	public String id;
 	public String title;
 	public String level;
 	public String startDate;
@@ -261,12 +259,8 @@ class showQualifications {
 	public String subj2;
 	public String subj3;
 
-	showQualifications() {
-
-	}
-
-	public void setDetails(Map<String,String> qualification) {
-		this.accountID = qualification.get("accountID");
+	public showQualifications(Map<String,String> qualification) {
+		this.id = qualification.get("id");
 		this.title = qualification.get("title");
 		this.startDate = qualification.get("startDate");
 		this.endDate = qualification.get("endDate");
@@ -281,117 +275,4 @@ class showQualifications {
 		this.subj3 = qualification.get("subj3");
 		
 	}
-	
-	public String getAccountID() {
-		return accountID;
-	}
-
-	public void setAccountID(String accountID) {
-		this.accountID = accountID;
-	}
-
-	public String getTitle() {
-		return title;
-	}
-
-	public void setTitle(String title) {
-		this.title = title;
-	}
-
-	public String getLevel() {
-		return level;
-	}
-
-	public void setLevel(String level) {
-		this.level = level;
-	}
-
-	public String getStartDate() {
-		return startDate;
-	}
-
-	public void setStartDate(String startDate) {
-		this.startDate = startDate;
-	}
-
-	public String getEndDate() {
-		return endDate;
-	}
-
-	public void setEndDate(String endDate) {
-		this.endDate = endDate;
-	}
-
-	public String getComment() {
-		return comment;
-	}
-
-	public void setComment(String comment) {
-		this.comment = comment;
-	}
-
-	public String getInstitution() {
-		return institution;
-	}
-
-	public void setInstitution(String institution) {
-		this.institution = institution;
-	}
-
-	public String getInstitutionEmail() {
-		return institutionEmail;
-	}
-
-	public void setInstitutionEmail(String institutionEmail) {
-		this.institutionEmail = institutionEmail;
-	}
-
-	public String getInstitutionPhoneNo() {
-		return institutionPhoneNo;
-	}
-
-	public void setInstitutionPhoneNo(String institutionPhoneNo) {
-		this.institutionPhoneNo = institutionPhoneNo;
-	}
-
-	public String getReferee() {
-		return referee;
-	}
-
-	public void setReferee(String referee) {
-		this.referee = referee;
-	}
-
-	public String getMainSubj() {
-		return mainSubj;
-	}
-
-	public void setMainSubj(String mainSubj) {
-		this.mainSubj = mainSubj;
-	}
-
-	public String getSubj1() {
-		return subj1;
-	}
-
-	public void setSubj1(String subj1) {
-		this.subj1 = subj1;
-	}
-
-	public String getSubj2() {
-		return subj2;
-	}
-
-	public void setSubj2(String subj2) {
-		this.subj2 = subj2;
-	}
-
-	public String getSubj3() {
-		return subj3;
-	}
-
-	public void setSubj3(String subj3) {
-		this.subj3 = subj3;
-	}
-
 }

@@ -15,14 +15,12 @@
 			<div id="jobs-display" class="col-md-7 h100 scroll-div">
 				<h:outputText rendered="#{jobs.noJobs()}"
 					value="You are offering no jobs at the moment." />
-				<ui:repeat var="#{j}" value="#{jobs.jobs}" varStatus="status">
+				<ui:repeat var="j" value="#{jobs.jobs}">
 				<div class="data-box">
-					<p>#{j.title}</p>
-					<p>#{j.subject}</p>
-					<p>#{j.description}</p>
-					<p>#{j.rate}</p>
-					<p>#{j.candidate}</p>
-					<p>#{j.accepted}</p>
+					<h:outputText value="#{j.title}"/>
+					<h:outputText value="#{j.subject}"/>
+					<h:outputText value="#{j.description}"/>
+					<h:outputText value="#{j.rate}"/>
 					<h:form>
 						<h:commandButton value="Delete" action="#{jobs.delete(j.id)}" styleClass="btn btn-primary form-element"/>
 					</h:form>
@@ -42,7 +40,7 @@
 								
 				<h:selectOneMenu id="jSubj" value="#{jobs.subject}" 
 						styleClass="form-control inline-block form-element w50">
-	         			<f:selectItems value="#{qualifications.subjects}" var="m" itemLabel="#{m}" itemValue="#{m}" />
+	         			<f:selectItems value="#{jobs.subjects}" var="m" itemLabel="#{m}" itemValue="#{m}" />
 				</h:selectOneMenu>				
 				
 				<h:inputTextarea id="comment" value="#{jobs.description}" a:placeholder="Give some more detail"

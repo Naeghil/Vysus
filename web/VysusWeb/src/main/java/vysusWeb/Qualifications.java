@@ -206,3 +206,158 @@ public class Qualifications extends VysusBean implements Serializable {
 		newQual.put("subj3", subj3);
 	}
 }
+
+class showQualifications {
+
+	public String accountID;
+	//qualification info
+	public String title;
+	public String level;
+	public String startDate;
+	public String endDate;
+	public String comment;
+	//institution they got it from
+	public String institution;
+	public String institutionEmail;
+	public String institutionPhoneNo;
+	public String referee;
+	//subjects it allows them to teach
+	public String mainSubj;
+	public String subj1;
+	public String subj2;
+	public String subj3;
+
+	showQualifications() {
+
+	}
+
+	public void setDetails(Map<String,String> qualification) {
+		this.accountID = qualification.get("accountID");
+		this.title = qualification.get("title");
+		this.startDate = qualification.get("startDate");
+		this.endDate = qualification.get("endDate");
+		this.comment = qualification.get("comment");
+		this.institution = qualification.get("institution");
+		this.institutionEmail = qualification.get("institutionEmail");
+		this.institutionPhoneNo = qualification.get("institutionPhoneNo");
+		this.referee = qualification.get("referee");
+		this.mainSubj = qualification.get("mainSubj");
+		this.subj1 = qualification.get("subj1");
+		this.subj2 = qualification.get("subj2");
+		this.subj3 = qualification.get("subj3");
+		
+	}
+	
+	public String getAccountID() {
+		return accountID;
+	}
+
+	public void setAccountID(String accountID) {
+		this.accountID = accountID;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public String getLevel() {
+		return level;
+	}
+
+	public void setLevel(String level) {
+		this.level = level;
+	}
+
+	public String getStartDate() {
+		return startDate;
+	}
+
+	public void setStartDate(String startDate) {
+		this.startDate = startDate;
+	}
+
+	public String getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(String endDate) {
+		this.endDate = endDate;
+	}
+
+	public String getComment() {
+		return comment;
+	}
+
+	public void setComment(String comment) {
+		this.comment = comment;
+	}
+
+	public String getInstitution() {
+		return institution;
+	}
+
+	public void setInstitution(String institution) {
+		this.institution = institution;
+	}
+
+	public String getInstitutionEmail() {
+		return institutionEmail;
+	}
+
+	public void setInstitutionEmail(String institutionEmail) {
+		this.institutionEmail = institutionEmail;
+	}
+
+	public String getInstitutionPhoneNo() {
+		return institutionPhoneNo;
+	}
+
+	public void setInstitutionPhoneNo(String institutionPhoneNo) {
+		this.institutionPhoneNo = institutionPhoneNo;
+	}
+
+	public String getReferee() {
+		return referee;
+	}
+
+	public void setReferee(String referee) {
+		this.referee = referee;
+	}
+
+	public String getMainSubj() {
+		return mainSubj;
+	}
+
+	public void setMainSubj(String mainSubj) {
+		this.mainSubj = mainSubj;
+	}
+
+	public String getSubj1() {
+		return subj1;
+	}
+
+	public void setSubj1(String subj1) {
+		this.subj1 = subj1;
+	}
+
+	public String getSubj2() {
+		return subj2;
+	}
+
+	public void setSubj2(String subj2) {
+		this.subj2 = subj2;
+	}
+
+	public String getSubj3() {
+		return subj3;
+	}
+
+	public void setSubj3(String subj3) {
+		this.subj3 = subj3;
+	}
+
+}

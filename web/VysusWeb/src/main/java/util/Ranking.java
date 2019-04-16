@@ -170,13 +170,18 @@ public class Ranking {
 		  "SELECT * FROM Qualification WHERE accountID=? AND mainSubj=?")){
 			findQualificationType.setString(1, accountID);
 			findQualificationType.setString(2, subject);
+			
+			
 			try(ResultSet rs = findQualificationType.executeQuery()){
 				while(rs.next()) {
 					qualifications.add(new Qualification(rs.getString("type"),rs.getString("startDate"),rs.getString("endDate")));
 				}
 			}
-		} catch (SQLException e) { throw new DBProblemException(e); }
-		
+		} catch (SQLException e) { 
+			e.getMessage();
+			throw new DBProblemException(e); 
+		}
+			
 		return qualifications;		
 	}
 }

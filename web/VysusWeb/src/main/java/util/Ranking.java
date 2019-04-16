@@ -141,6 +141,7 @@ public class Ranking {
 	
 	public List<Candidate> filterMain(String subject, float rate, Connection connection) throws DBProblemException {
 		List<Candidate> firstFilter = new ArrayList<Candidate>();
+		System.out.println("FilterMain");
 		try(PreparedStatement jobFilter = connection.prepareStatement(
 		  "SELECT User.userID as user, User.accountID as account, User.postcode as postcode, Teacher.maxDistance as maxDist"
 		+ "FROM User INNER JOIN Teacher ON User.accountID=Teacher.accountID INNER JOIN Qualification ON Teacher.accountID=Qualification.accountID"
@@ -160,6 +161,7 @@ public class Ranking {
 	
 	public List<Candidate> filterSecondary(String subject, float rate, Connection connection) throws DBProblemException {
 		List<Candidate> firstFilter = new ArrayList<Candidate>();
+		System.out.println("FilterSecondary");
 		try(PreparedStatement jobFilter = connection.prepareStatement(
 		  "SELECT User.userID as user, User.accountID as account, User.postcode as postcode, Teacher.maxDistance as maxDist"
 		+ "FROM User INNER JOIN Teacher ON User.accountID=Teacher.accountID INNER JOIN Qualification ON Teacher.accountID=Qualification.accountID"

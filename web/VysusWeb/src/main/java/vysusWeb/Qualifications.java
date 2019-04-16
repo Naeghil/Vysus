@@ -70,11 +70,11 @@ public class Qualifications extends VysusBean implements Serializable {
 		mockQual1.put("verified", "no");
 		qualifications.add(mockQual);
 		qualifications.add(mockQual1); */
-		System.out.println(actor.account());
+		//System.out.println(actor.account());
 		try (Connection connection = getConnection()) {
 			for (Qualification q : Qualification.allQualifications(actor.account(), connection)) {
 				qualifications.add(q.show());
-				System.out.println(qualifications.toString());
+				//System.out.println(qualifications.toString());
 			}
 		} catch (DBProblemException | InvalidDataException | SQLException e) {
 			actor.handleException(e, true);
@@ -90,11 +90,11 @@ public class Qualifications extends VysusBean implements Serializable {
 
 			newQual.put("startDate", sDate);
 			newQual.put("endDate", eDate);
-			System.out.println(actor.account());
-			System.out.println(actor.actor());
+			//System.out.println(actor.account());
+			//System.out.println(actor.actor());
 			newQual.put("id", actor.account());
 
-			System.out.println("newQual: " + newQual);
+			//System.out.println("newQual: " + newQual);
 			new Qualification(newQual, connection);
 
 		} catch (DBProblemException | InvalidDataException | SQLException e) {

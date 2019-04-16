@@ -30,7 +30,7 @@ public class Profile extends VysusBean implements Serializable {
 	@Inject
 	@Named("institutionGet")
 	private InstitutionGet institutionGet;
-	
+	//test
 	int accType = -1; //0 = Teachers 1 = Institutions 
 	
 	public Profile() {}

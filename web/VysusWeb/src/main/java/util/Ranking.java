@@ -127,7 +127,7 @@ public class Ranking {
 	public List<Candidate> distanceFilter(String schoolPostcode, String subject, float rate, Connection connection) throws DBProblemException{
 		List<Candidate> filtered = new ArrayList<Candidate>();
 		for(Candidate c : jobFilter(subject, rate, connection)) {
-			if(getDistance(schoolPostcode, c.postcode, c.maxDistance)) filtered.add(c); 
+			if(APICalls.checkDistance(schoolPostcode, c.postcode, c.maxDistance)) filtered.add(c); 
 		}
 		return filtered;
 	}

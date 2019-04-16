@@ -143,3 +143,54 @@ public class Jobs extends VysusBean implements Serializable {
 		newJob.put("ratePerHour", rate);
 	}
 }
+
+class showJobs {
+
+	public String accountID;
+	public String subject;
+	public String description;
+	public String ratePerHour;
+	
+	showJobs() {
+
+	}
+
+	public void setDetails(Map<String,String> job) {
+		this.accountID = job.get("accountID");
+		this.subject = job.get("subject");
+		this.description = job.get("description");
+		this.ratePerHour = job.get("ratePerHour");
+	}
+	
+	public String getAccountID() {
+		return accountID;
+	}
+
+	public void setAccountID(String accountID) {
+		this.accountID = accountID;
+	}
+
+	public String getSubject() {
+		return subject;
+	}
+
+	public void setSubject(String subject) {
+		this.subject = subject;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public String getRatePerHour() {
+		return ratePerHour;
+	}
+
+	public void setRatePerHour(String ratePerHour) {
+		this.ratePerHour = ratePerHour;
+	}
+	}

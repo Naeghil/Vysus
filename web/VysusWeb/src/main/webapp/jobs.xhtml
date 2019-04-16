@@ -7,6 +7,9 @@
 	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
     template="VysusInternal.xhtml">
 	<ui:define name="content">
+	<f:metadata>
+		<f:viewAction action="#{actor.onLoad(true)}"/>
+	</f:metadata>
 	
 		<div class="container-fluid h100 w100 lefttext fulldimensions"><div class="row h100 w100 fulldimensions">
 			<div id="jobs-display" class="col-md-7 h100 scroll-div">

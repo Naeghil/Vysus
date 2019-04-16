@@ -29,20 +29,20 @@ public class Jobs extends VysusBean implements Serializable {
 		
 	@PostConstruct
 	void onInit() {
-		Map<String, String> mockJob = new HashMap<String, String>();
+		/*Map<String, String> mockJob = new HashMap<String, String>();
 		mockJob.put("id", "0");
 		mockJob.put("title", "English Teacher");
 		mockJob.put("subject", "English Literature");
 		mockJob.put("description", "Teach some kids some things because learning is important to shape personality and citizenship");
 		mockJob.put("ratePerHour", "7.56");
-		jobs.add(mockJob);
-		/*try (Connection connection = getConnection()){
+		jobs.add(mockJob);*/
+		try (Connection connection = getConnection()){
 			for(Job j : Job.allJobs(actor.account(), connection)) {
 				jobs.add(j.show());
 			}
 		} catch (DBProblemException | InvalidDataException | SQLException e) {
 			actor.handleException(e, true);
-		}*/
+		}
 	}
 	
 	public void addNew() {
@@ -60,6 +60,11 @@ public class Jobs extends VysusBean implements Serializable {
 		} catch (DBProblemException | SQLException e) {
 			actor.handleException(e, false);
 		}
+	}
+	
+	public void findCandidates(String stringID) {
+		getSessionMap().put("jobID", Integer.parseInt(stringID));
+		redirect("ranking.xhtml");
 	}
 	
 	public void delete(String stringID) {

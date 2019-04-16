@@ -46,6 +46,8 @@ p { font-family: 'Gentium Basic',serif; }
 
 .lefttext { text-align:left; }
 
+.righttext { text-align:right; }
+
 .inline-block {	display:inline-block; }
 
 .hidden { display:none; }
@@ -128,9 +130,18 @@ p { font-family: 'Gentium Basic',serif; }
 
 /* For Qualifications, staff and job */
 .data-box {
+	padding:2%;
 	width:100%;
 	border-style: solid;
 	border-width: 2px;
+}
+
+.green {
+	border-color:green;
+}
+
+.red {
+	border-color:red;
 }
 
 /* sidebar.xhtml */

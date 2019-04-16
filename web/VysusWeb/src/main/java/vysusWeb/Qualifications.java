@@ -31,15 +31,49 @@ public class Qualifications extends VysusBean implements Serializable {
 	static List<String> types = new ArrayList<String>(
 			Arrays.asList("Undergraduate", "Postgraduate", "PHD", "Work experience"));
 
-	List<showQualifications> qualifications = new ArrayList<showQualifications>();
+	List<Map<String, String>> qualifications = new ArrayList<Map<String, String>>();
 	Map<String, Object> newQual = new HashMap<String, Object>();
 
 	@PostConstruct
 	void onLoad() {
+		/*Map<String, String> mockQual = new HashMap<String, String>();
+		mockQual.put("id", "0");
+		mockQual.put("title", "BSc Eng Lit");
+		mockQual.put("type", "Undergraduate");
+		mockQual.put("where", "no where");
+		mockQual.put("mainSubj", "English Literature");
+		mockQual.put("subj1", "Blah");
+		mockQual.put("subj2", "Blah");
+		mockQual.put("subj3", "Blah");
+		mockQual.put("from", "never");
+		mockQual.put("to", "always");
+		mockQual.put("comment", "Read some books");
+		mockQual.put("email", "giver.of.degrees@real.nope");
+		mockQual.put("phoneNo", "a lot");
+		mockQual.put("referee", "some dude");
+		mockQual.put("verified", "yes");
+		Map<String, String> mockQual1 = new HashMap<String, String>();
+		mockQual1.put("id", "0");
+		mockQual1.put("title", "BSc Eng Lit");
+		mockQual1.put("type", "Undergraduate");
+		mockQual1.put("where", "no where");
+		mockQual1.put("mainSubj", "English Literature");
+		mockQual1.put("subj1", "Blah");
+		mockQual1.put("subj2", "Blah");
+		mockQual1.put("subj3", "Blah");
+		mockQual1.put("from", "never");
+		mockQual1.put("to", "always");
+		mockQual1.put("comment", "Read some books");
+		mockQual1.put("email", "giver.of.degrees@real.nope");
+		mockQual1.put("phoneNo", "a lot");
+		mockQual1.put("referee", "some dude");
+		mockQual1.put("verified", "no");
+		qualifications.add(mockQual);
+		qualifications.add(mockQual1); */
 		System.out.println(actor.account());
 		try (Connection connection = getConnection()) {
 			for (Qualification q : Qualification.allQualifications(actor.account(), connection)) {
-				qualifications.add(new showQualifications(q.show()));
+				qualifications.add(q.show());
 				System.out.println(qualifications.toString());
 			}
 		} catch (DBProblemException | InvalidDataException | SQLException e) {
@@ -83,7 +117,7 @@ public class Qualifications extends VysusBean implements Serializable {
 		return qualifications.size() == 0;
 	}
 
-	public List<showQualifications> getQualifications() {
+	public List<Map<String, String>> getQualifications() {
 		if (qualifications == null)
 			onLoad();
 		return qualifications;
@@ -237,42 +271,5 @@ public class Qualifications extends VysusBean implements Serializable {
 
 	public void setSubj3(String subj3) {
 		newQual.put("subj3", subj3);
-	}
-}
-
-class showQualifications {
-	//qualification info
-	public String id;
-	public String title;
-	public String level;
-	public String startDate;
-	public String endDate;
-	public String comment;
-	//institution they got it from
-	public String institution;
-	public String institutionEmail;
-	public String institutionPhoneNo;
-	public String referee;
-	//subjects it allows them to teach
-	public String mainSubj;
-	public String subj1;
-	public String subj2;
-	public String subj3;
-
-	public showQualifications(Map<String,String> qualification) {
-		this.id = qualification.get("id");
-		this.title = qualification.get("title");
-		this.startDate = qualification.get("startDate");
-		this.endDate = qualification.get("endDate");
-		this.comment = qualification.get("comment");
-		this.institution = qualification.get("institution");
-		this.institutionEmail = qualification.get("institutionEmail");
-		this.institutionPhoneNo = qualification.get("institutionPhoneNo");
-		this.referee = qualification.get("referee");
-		this.mainSubj = qualification.get("mainSubj");
-		this.subj1 = qualification.get("subj1");
-		this.subj2 = qualification.get("subj2");
-		this.subj3 = qualification.get("subj3");
-		
 	}
 }

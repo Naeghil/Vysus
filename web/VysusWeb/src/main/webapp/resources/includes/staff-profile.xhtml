@@ -7,21 +7,21 @@
 	<div id="staff-display" class="col-7-md h100 scroll-div">
 		<h:outputText rendered="#{staff.noStaff()}"
 			value="Hey admin, you have not registered any of your staff yet! Start now!" />
-		<ui:repeat var="#{s}" value="#{staff.staff}" varStatus="status">
+		<ui:repeat var="s" value="#{staff.staff}" varStatus="status">
 			<div class="data-box">
 				<p>#{s.fullName}</p>
 				<p>#{s.DOB}</p>
 				<p>#{s.address}</p>
 				<p>#{s.email}</p>
 				<p>#{s.phoneNo}</p>
-				<h:form>
-						<h:commandButton value="Delete" action="#{staff.delete(q.username)}" styleClass="btn btn-primary form-element"/>
+				<h:form styleClass="w100 righttext fulldimensions">
+						<h:commandButton value="Delete" action="#{staff.delete(q.id)}" styleClass="btn btn-primary form-element"/>
 				</h:form>
 			</div>
 		</ui:repeat>
 	</div>
 		
-	<div id="new-staff-form"  class="col-md-5 h100 fulldimensions scroll-div">
+	<div id="new-staff-form"  class="col-md-5 h100 scroll-div">
 		<h:form>
 			<div id="login-data">
        			<h:inputText id="sUsername" value="#{staff.username}" a:placeholder="Username"

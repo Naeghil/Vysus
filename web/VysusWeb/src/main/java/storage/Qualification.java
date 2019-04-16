@@ -110,12 +110,15 @@ public class Qualification extends StorageAbstract{
 		show.put("from", Conv.dateToString((Date)data.get("startDate")));
 		show.put("to", Conv.dateToString((Date)data.get("endDate")));
 		show.put("comment", (String)data.get("comment"));
-		show.put("eval", (String)data.get("finalGrade"));
 		show.put("where", (String)data.get("institution"));
 		show.put("type", (String)data.get("level"));
 		show.put("email", (String)data.get("institutionEmail"));
 		show.put("phoneNo", (String)data.get("institutionPhoneNo"));
 		show.put("referee", (String)data.get("referee"));
+		show.put("mainSubj", (String)data.get("mainSubj"));
+		show.put("subj1", (String)data.get("subj1"));
+		show.put("subj2", (String)data.get("subj2"));
+		show.put("subj3", (String)data.get("subj3"));
 		if(verified) show.put("verified", "yes");
 		else show.put("verified", "no");
 			

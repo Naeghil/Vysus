@@ -17,18 +17,22 @@
 					value="You are offering no jobs at the moment." />
 				<ui:repeat var="j" value="#{jobs.jobs}">
 				<div class="data-box">
-					<h:outputText value="#{j.title}"/>
-					<h:outputText value="#{j.subject}"/>
-					<h:outputText value="#{j.description}"/>
-					<h:outputText value="#{j.rate}"/>
-					<h:form>
+					<p class="fulldimensions">
+					Title: #{j.title} <br/>
+					Subject: #{j.subject} <br/>
+					Description: <br/>
+					#{j.description} <br/>
+					Per hour: £ #{j.ratePerHour}
+					</p>
+					<h:form styleClass="w100 righttext fulldimensions">
+						<h:commandButton value="Find Candidates!" action="#{jobs.findCandidates(j.id)}" styleClass="btn btn-primary form-element"/>
 						<h:commandButton value="Delete" action="#{jobs.delete(j.id)}" styleClass="btn btn-primary form-element"/>
-					</h:form>
+					</h:form> 
 				</div>
 				</ui:repeat>
 			</div>
 		
-			<div id="new-qualification-form"  class="col-md-5 h100 fulldimensions scroll-div">
+			<div id="new-qualification-form"  class="col-md-5 h100 scroll-div">
 				<h:form>
 				<h:inputText id="title" value="#{jobs.title}" a:placeholder="Job title"
 	         			styleClass="form-control form-element w50 inline-block" required="true"

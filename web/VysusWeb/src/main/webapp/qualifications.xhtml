@@ -10,29 +10,31 @@
 	<f:metadata>
 		<f:viewAction action="#{actor.onLoad(true)}"/>
 	</f:metadata>
+	
 		<div class="container-fluid h100 w100 lefttext fulldimensions"><div class="row h100 w100 fulldimensions">
 			<div id="qualifications-display" class="col-md-7 h100 scroll-div">
 				<h:outputText rendered="#{qualifications.noQualifications()}"
 					value="Hey, you have not registered any qualification yet! Start now!" />
-				<ui:repeat var="#{q}" value="#{qualifications.qualifications}" varStatus="status">
-				<div class="data-box">
-					<p>#{q.title}</p>
-					<p>#{q.from} - #{q.to}</p>
-					<p>#{q.comment}</p>
-					<p>#{q.where}</p>
-					<p>#{q.type}</p>
-					<p>#{q.email}</p>
-					<p>#{q.phoneNo}</p>
-					<p>#{q.referee}</p>
-					<p>#{q.verified}</p>
-					<h:form>
+				<ui:repeat var="q" value="#{qualifications.qualifications}" varStatus="status">
+				<div class="data-box #{q.verified.equals('yes') ? 'green' : 'red'}">
+					<p class="fulldimensions">
+						#{q.type}: #{q.title} <br/>
+						From: #{q.where}
+						#{q.from} - #{q.to} <br/>
+						About this qualification: <br/>
+						#{q.comment} <br/>
+						Main subject: #{q.mainSubj} <br/>
+						Others: #{q.subj1} #{q.subj2} #{q.subj3} <br/>
+						Ref: #{q.referee} #{q.email} #{q.phoneNo}
+					</p>
+					<h:form styleClass="w100 righttext fulldimensions">
 						<h:commandButton value="Delete" action="#{qualifications.delete(q.id)}" styleClass="btn btn-primary form-element"/>
 					</h:form>
 				</div>
 				</ui:repeat>
 			</div>
 		
-			<div id="new-qualification-form"  class="col-md-5 h100 fulldimensions scroll-div">
+			<div id="new-qualification-form"  class="col-md-5 h100 scroll-div">
 				<h:form>
 				<h:inputText id="title" value="#{qualifications.title}" a:placeholder="Qualification name"
 	         			styleClass="form-control form-element w50 inline-block" required="true"

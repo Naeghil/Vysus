@@ -33,7 +33,7 @@ public class Ranking {
 				for (int j = 0; j < qualifications.size(); j++) {
 					Qualification qualification = (qualifications.get(j));
 					System.out.println(qualification.type);
-					if (qualification.type.matches("Work Experience")) {
+					if (qualification.type.matches("Work experience")) {
 						teacherExperience = (float) experienceRanking(qualification.startDate,qualification.endDate);
 					} else {
 						teacherValue = (float) ((qualificationRelevancy(current.fromMain) * (qualificationRanking(qualification.type))));
@@ -65,11 +65,11 @@ public class Ranking {
 	}
 	
 	public static double qualificationRanking(String level) {
-		if (level.matches("undergraduate")) {
+		if (level.matches("Undergraduate")) {
 			return 1;
-		} else if (level.matches("masters")) {
+		} else if (level.matches("Masters")) {
 			return 1.5;
-		} else if (level.matches("phd")) {
+		} else if (level.matches("PHD")) {
 			return 2;
 		}
 		return 0;

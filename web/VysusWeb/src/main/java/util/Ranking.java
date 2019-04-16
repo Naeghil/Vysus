@@ -79,8 +79,8 @@ public class Ranking {
 	public static int experienceRanking(String start, String end) {
 		System.out.println("Start pre: " + start);
 		System.out.println("End pre: " + end);
-		start = start.substring(0, 3);
-		end = end.substring(0, 3);
+		start = start.substring(0, 4);
+		end = end.substring(0, 4);
 		System.out.println("Start post: " + start);
 		System.out.println("End post: " + end);
 		int experience = (Integer.parseInt(end) - Integer.parseInt(start));

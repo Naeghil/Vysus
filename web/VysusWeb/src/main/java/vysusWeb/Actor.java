@@ -82,7 +82,7 @@ public class Actor extends VysusBase implements Serializable {
 		System.out.println("when reqaccountdata: "+this.account+" "+this.actor);
 		if(!isIn()) return;
 		try(Connection connection = getConnection()){
-			 accountData = Account.getAccount(account, actor, connection).showFull();
+			 accountData = Account.getAccount(this.account, this.actor, connection).showFull();
 			 System.out.println("requestAccountData.accountData: " + accountData);
 		} catch(InvalidDataException | DBProblemException | SQLException e) {
 			handleException(e, true);

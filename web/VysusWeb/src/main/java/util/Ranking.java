@@ -32,6 +32,7 @@ public class Ranking {
 				List<Qualification> qualifications = findQualification(subject, current.accountID, connection);
 				for (int j = 0; j < qualifications.size(); j++) {
 					Qualification qualification = (qualifications.get(j));
+					System.out.println(qualification.type);
 					if (qualification.type.matches("Work Experience")) {
 						teacherExperience = (float) experienceRanking(qualification.startDate,qualification.endDate);
 					} else {

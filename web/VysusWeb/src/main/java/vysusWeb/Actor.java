@@ -131,4 +131,12 @@ public class Actor extends VysusBean implements Serializable {
 	public String getUserPicture() { 
 		return "resources/images/propic-default.jpg";
 	}
+	
+	public String account() {
+		return account;
+	}
+	public String actor() {
+		return actor;
+	}
+	
 }

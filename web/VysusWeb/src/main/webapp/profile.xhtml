@@ -87,7 +87,7 @@
 					<p:tab rendered="#{profile.accType eq 1}" title="Institution">
 						<ui:include src="resources/includes/school-profile.xhtml"/>
 					</p:tab>
-					<p:tab rendered="#{profile.accType eq 1 and profile.isAdmin()}" title="Staff">
+					<p:tab rendered="#{profile.accType eq 1 and profile.admin}" title="Staff">
 						<ui:include src="resources/includes/staff-profile.xhtml"/>
 					</p:tab>
 					<p:tab rendered="#{profile.accType eq 0}" title="Work">

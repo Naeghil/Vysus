@@ -93,6 +93,6 @@ public class Institution extends Account{
 	public Map<String, String> showFull() {
 		Map<String, String> show = show();
 		if(admin) show.put("admin", "yes");
-		return null;
+		return show;
 	}
 }

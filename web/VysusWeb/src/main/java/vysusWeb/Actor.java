@@ -18,15 +18,14 @@ public class Actor extends VysusBase implements Serializable {
 	Map<String, String> userData = null;
 	Map<String, String> accountData = null;
 
-	public Actor() { }
+	public Actor() {}
 //User session:
 	public void login(String username, String password)  {
 		try(Connection connection = getConnection()){
 			if(connection==null) return;
-			account = (new User(username)).login(password, connection);
-			actor = username;
-			System.out.println("account From login: " + account);
-			System.out.println("actor From login: " + actor);
+			this.account = (new User(username)).login(password, connection);
+			this.actor = username;
+			System.out.println("after login: " + this.account+" "+this.actor);
 			redirect("profile.jsf");
 		} catch(InvalidDataException | DBProblemException | SQLException e) {
 			 handleException(e, false);
@@ -34,6 +33,7 @@ public class Actor extends VysusBase implements Serializable {
 	}
 	
 	public void signup(String username, String password, String accountID, Map<String, Object> userData, Map<String, Object> accountData) {
+		System.out.println("before signup: "+this.account+" "+this.actor);
 		try (Connection connection = getConnection()){
 			if(connection == null) return;
 			if(User.exists(username, connection)) throw new InvalidDataException("username", "This username already exists.");
@@ -42,30 +42,35 @@ public class Actor extends VysusBase implements Serializable {
 			userData.put("accountID", accountID);
 			new User(connection, username, password, userData);
 			
-			actor = username;
-			account = accountID;
+			this.actor = username;
+			this.account = accountID;
 			
 			redirect("profile.jsf");
 		} catch(InvalidDataException | DBProblemException | SQLException e) {
 			handleException(e, false);
 		}
+		System.out.println("after signup: "+this.account+" "+this.actor);
 	}
 	
 	public void logout() {
+		System.out.println("when logout: "+this.account+" "+this.actor);
 		getExternalContext().invalidateSession();
 		redirect("index.jsf");
 	}
 	public boolean isIn() {
+		System.out.println("when isin: "+this.account+" "+this.actor);
 		return actor!=null;
 	}
 	
 	public String onLoad(boolean internal) {
+		System.out.println("when onload: "+this.account+" "+this.actor);
 		if(internal && actor==null) return "index.jsf";
 		if(!internal && actor!=null) return "profile.jsf";
 		return "";
 	}
 //Refreshing data:
 	public void requestUserData() {
+		System.out.println("when requserdata: "+this.account+" "+this.actor);
 		if(!isIn()) return;
 		try(Connection connection = getConnection()){
 			 userData = new User(actor, connection).showFull();
@@ -74,6 +79,7 @@ public class Actor extends VysusBase implements Serializable {
 		 }
 	}
 	public void requestAccountData() {
+		System.out.println("when reqaccountdata: "+this.account+" "+this.actor);
 		if(!isIn()) return;
 		try(Connection connection = getConnection()){
 			 accountData = Account.getAccount(account, actor, connection).showFull();
@@ -84,6 +90,7 @@ public class Actor extends VysusBase implements Serializable {
 	}
 	
 	public void handleException(Exception ex, boolean fatal) {
+		System.out.println("when handling exception: "+this.account+" "+this.actor);
 		if(ex instanceof InvalidDataException) {
 			InvalidDataException e = (InvalidDataException)ex;
 			message(e);
@@ -98,15 +105,18 @@ public class Actor extends VysusBase implements Serializable {
 	}
 //Getters and setters:
 	public String userField(String key) {
+		System.out.println("when userfield: "+this.account+" "+this.actor);
 		if(userData!=null && userData.containsKey(key)) return userData.get(key);
 		return "";
 	}
 	public String accountField(String key) {
+		System.out.println("when accountfield: "+this.account+" "+this.actor);
 		if(accountData!=null && accountData.containsKey(key)) return accountData.get(key);
 		return "";
 	}
 	
 	public int accType() throws InvalidDataException {
+		System.out.println("when account type: "+this.account+" "+this.actor);
 		return Account.accType(account);
 	}
 	

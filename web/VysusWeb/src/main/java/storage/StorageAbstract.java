@@ -59,6 +59,7 @@ public abstract class StorageAbstract {
 	}
 	//Retrieve database record, populating the object fields
 	protected void retrieve(Connection con) throws DBProblemException, InvalidDataException {
+		System.out.println("storageAbstract.retrieve.data" + data);
 		try (PreparedStatement select = con.prepareStatement(retrieve);) {
 			select.setObject(1, data.get("id"));
 			try(ResultSet record = select.executeQuery();){

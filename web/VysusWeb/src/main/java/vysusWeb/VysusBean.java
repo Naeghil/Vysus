@@ -21,8 +21,7 @@ import java.sql.SQLException;
 
 public class VysusBean extends VysusBase {
 	@Inject
-	@Named("actor")
-	protected Actor actor;
+	protected @Named("actor") Actor actor;
 	
 	/*
 	//For actor availability:

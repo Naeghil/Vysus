@@ -57,11 +57,12 @@ public class Jobs extends VysusBean implements Serializable {
 
 			newJob.put("startDate", sDate);
 			newJob.put("endDate", eDate); */
-			newJob.put("accountID", actor.account());
+			newJob.put("id", actor.account());
 			
 			new Job(newJob, connection);
 			
 			//Need to add calendar stuff
+			onInit();
 		} catch (DBProblemException | SQLException e) {
 			actor.handleException(e, false);
 		}

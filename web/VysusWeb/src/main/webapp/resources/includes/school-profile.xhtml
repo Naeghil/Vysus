@@ -10,7 +10,7 @@
 		</h:inputText>
 		<h:message for="institutionName"/>
 	</div>
-	<h:outputText rendered="#{profile.admin}">You are the admin for this account.</h:outputText>
+	<h:outputText rendered="#{actor.accountField('admin') eq 'yes' }">You are the admin for this account.</h:outputText>
 	<div id="instType">
 		<p class="inline-block">Type: </p>
 		<p class="#{profile.admin ? 'profile-element' :''} inline-block">#{actor.accountField("type")}</p>

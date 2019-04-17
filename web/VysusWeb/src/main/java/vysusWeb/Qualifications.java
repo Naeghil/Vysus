@@ -36,7 +36,11 @@ public class Qualifications extends VysusBean implements Serializable {
 
 	@PostConstruct
 	void onLoad() {
-		
+		if(actor.accountField("admin").equals("")) {
+			redirect("profile.xhtml");
+			message("You don't have the rights to go there.", "Bad navigation");
+			return;
+		}
 		/*Map<String, String> mockQual = new HashMap<String, String>();
 		mockQual.put("id", "0");
 		mockQual.put("title", "BSc Eng Lit");
@@ -98,7 +102,7 @@ public class Qualifications extends VysusBean implements Serializable {
 
 			//System.out.println("newQual: " + newQual);
 			new Qualification(newQual, connection);
-
+			onLoad();
 		} catch (DBProblemException | InvalidDataException | SQLException e) {
 			actor.handleException(e, false);
 		}

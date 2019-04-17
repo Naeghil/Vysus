@@ -43,7 +43,6 @@ public class Qualification extends StorageAbstract{
 	//Creating constructor: no qualification id will be available this way
 	public Qualification(Map<String, Object> data, Connection connection) throws DBProblemException {
 		this.data = data;
-		System.out.println(data);
 		verified = false;
 		setDBVariables();
 		create(connection);
@@ -75,7 +74,7 @@ public class Qualification extends StorageAbstract{
 			verified=true;
 			verify.setBoolean(1, verified);
 			verify.setObject(2, data.get("id"));
-			if(verify.executeUpdate() != 1) throw new InvalidDataException(null, "Record not found");
+			if(verify.executeUpdate() != 1) throw new InvalidDataException("Record not found");
 		} catch (SQLException e) { throw new DBProblemException(e); }
 	}
 	
@@ -85,7 +84,7 @@ public class Qualification extends StorageAbstract{
 			veri.setObject(1, data.get("id"));
 			try(ResultSet record = veri.executeQuery()) {
 				if(record.next()) return record.getBoolean("verified");
-				else throw new InvalidDataException(null, "Record not found");
+				else throw new InvalidDataException("Record not found");
 			}
 		} catch (SQLException e ) {throw new DBProblemException(e); }
 	}

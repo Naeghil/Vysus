@@ -44,9 +44,11 @@ public class Ranking {
 					Map<String,String> rankingBreakdown = new HashMap<String,String>();
 					if (qualification.type.matches("Work experience")) {
 						teacherExperience = (float) experienceRanking(qualification.startDate,qualification.endDate);
+						System.out.println(current.accountID + " teacherExperience " + teacherValue);
 						rankingBreakdown.put("work", Float.toString(teacherExperience));
 					} else {
 						teacherValue = (float) ((qualificationRelevancy(current.fromMain) * (qualificationRanking(qualification.type))));
+						System.out.println(current.accountID + " teacherValue " + teacherValue);
 						rankingBreakdown.put("academic", Float.toString(teacherValue));
 					}
 					rankingBreakdowns.put(current.accountID, rankingBreakdown);

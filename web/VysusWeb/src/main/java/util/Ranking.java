@@ -7,8 +7,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import storage.DBProblemException;
@@ -49,8 +51,8 @@ public class Ranking {
 				allRankings.put(current.accountID,actualRanking);
 
 				}
-			
-		System.out.println(createOrderedRanking(allRankings));	
+		System.out.println(sortByValue(allRankings));
+		//System.out.println(createOrderedRanking(allRankings));	
 			
 		} catch (DBProblemException e) {
 			// TODO Auto-generated catch block
@@ -58,17 +60,32 @@ public class Ranking {
 		}
 	}
 
-	public static ArrayList<String> createOrderedRanking(Map<String,Float> allRankings){
+	
+    public static <K, V extends Comparable<? super V>> Map<K, V> sortByValue(Map<K, V> map) {
+        List<Entry<K, V>> list = new ArrayList<>(map.entrySet());
+        list.sort(Entry.comparingByValue());
+
+        Map<K, V> result = new LinkedHashMap<>();
+        for (Entry<K, V> entry : list) {
+            result.put(entry.getKey(), entry.getValue());
+        }
+
+        return result;
+    }
+    
+	/*public static ArrayList<String> createOrderedRanking(Map<String,Float> allRankings){
 		Set<String> keys = allRankings.keySet();
 		System.out.println("Keys: " + keys);
 		System.out.println("Set size: " + keys.size());
+		String currentHighest;
 		for (String temp : keys) {
+			
 			System.out.println(temp);
 			System.out.println(allRankings.get(temp));
 		}
 		return null;
 		
-	}
+	}*/
 	
 	
 	public static boolean distanceCheck(String candidatePostcode, String jobPostcode, int maxDist) {

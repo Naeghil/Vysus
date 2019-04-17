@@ -23,7 +23,7 @@ public class Ranking {
 	
 	
 	
-	public void rankingMain(String subject, float rate, Connection connection) {
+	public List<String> rankingMain(String subject, float rate, Connection connection) {
 		Map<String,String> alreadyTested = new HashMap<String,String>();
 		Map<Float,List<String>> allRankings = new HashMap<Float,List<String>>();
 		try {
@@ -71,12 +71,14 @@ public class Ranking {
 				finalRanking.add(people.get(j));
 			}
 		System.out.println(finalRanking);
+		return finalRanking;
 		}
 			
 		} catch (DBProblemException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return null;
 	}
 
 	public static

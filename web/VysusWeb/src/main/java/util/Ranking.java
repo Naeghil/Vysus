@@ -7,11 +7,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
 
 import storage.DBProblemException;
 import storage.InvalidDataException;
@@ -25,13 +22,14 @@ public class Ranking {
 	
 	
 	public void rankingMain(String subject, float rate, Connection connection) {
-		Map<String,Float> allRankings = new HashMap<String,Float>();
+		Map<String,String> alreadyTested = new HashMap<String,String>();
+		Map<Float,List<String>> allRankings = new HashMap<Float,List<String>>();
 		try {
 			List<Candidate> candidates = jobFilter(subject, rate, connection);
 			
 			for (int i = 0; i < candidates.size(); i++) {
 				Candidate current = (candidates.get(i));
-				if (allRankings.containsKey(current.accountID)) {
+				if (alreadyTested.containsKey(current.accountID)) {
 					continue;
 				} 
 				float teacherExperience = 0;
@@ -48,11 +46,22 @@ public class Ranking {
 				}
 				float actualRanking = teacherValue + teacherExperience;
 				System.out.println(current.accountID + " is worth " + actualRanking);
-				allRankings.put(current.accountID,actualRanking);
-
+				alreadyTested.put(current.accountID,"yes");
+				
+				if (allRankings.containsKey(actualRanking)) {
+					List<String> groupedCandidates = allRankings.remove(actualRanking);
+					groupedCandidates.add(current.accountID);
+					allRankings.put(actualRanking, groupedCandidates);
+				} else {
+					List<String> newGroupedCandidates = new ArrayList<String>();
+					newGroupedCandidates.add(current.accountID);
+					allRankings.put(actualRanking, newGroupedCandidates);
 				}
-		System.out.println(sortByValue(allRankings));
-		//System.out.println(createOrderedRanking(allRankings));	
+				System.out.println(allRankings);
+				//allRankings.put(current.accountID,actualRanking);
+				}
+			
+			
 			
 		} catch (DBProblemException e) {
 			// TODO Auto-generated catch block
@@ -60,33 +69,6 @@ public class Ranking {
 		}
 	}
 
-	
-    public static <K, V extends Comparable<? super V>> Map<K, V> sortByValue(Map<K, V> map) {
-        List<Entry<K, V>> list = new ArrayList<>(map.entrySet());
-        list.sort(Entry.comparingByValue());
-
-        Map<K, V> result = new LinkedHashMap<>();
-        for (Entry<K, V> entry : list) {
-            result.put(entry.getKey(), entry.getValue());
-        }
-
-        return result;
-    }
-    
-	/*public static ArrayList<String> createOrderedRanking(Map<String,Float> allRankings){
-		Set<String> keys = allRankings.keySet();
-		System.out.println("Keys: " + keys);
-		System.out.println("Set size: " + keys.size());
-		String currentHighest;
-		for (String temp : keys) {
-			
-			System.out.println(temp);
-			System.out.println(allRankings.get(temp));
-		}
-		return null;
-		
-	}*/
-	
 	
 	public static boolean distanceCheck(String candidatePostcode, String jobPostcode, int maxDist) {
 		return APICalls.checkDistance(candidatePostcode,jobPostcode,maxDist);

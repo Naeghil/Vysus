@@ -36,6 +36,7 @@ public class Qualifications extends VysusBean implements Serializable {
 
 	@PostConstruct
 	void onLoad() {
+		
 		/*Map<String, String> mockQual = new HashMap<String, String>();
 		mockQual.put("id", "0");
 		mockQual.put("title", "BSc Eng Lit");
@@ -79,6 +80,7 @@ public class Qualifications extends VysusBean implements Serializable {
 		} catch (DBProblemException | InvalidDataException | SQLException e) {
 			actor.handleException(e, true);
 		}
+		System.out.println(qualifications);
 	}
 
 	public void addNew() {

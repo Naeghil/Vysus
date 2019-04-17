@@ -11,7 +11,10 @@
 	<h:link id="calendar-link" value="Calendar" rendered="#{actor.accType() eq 0}"
 		outcome="calendar.xhtml" styleClass="btn btn-primary sidebar-element"/>
 	
-	<h:link id="jobs-link" value="Jobs" rendered="#{actor.accType() eq 1}"
+	<h:link id="staff-link" value="Staff" rendered="#{actor.accType() eq 1 and actor.accountField('admin') eq 'yes'}"
+		outcome="staff.xhtml" styleClass="btn btn-primary sidebar-element"/>		
+	
+	<h:link id="jobs-link" value="Jobs" rendered="#{actor.accType() eq 1 and actor.accountField('admin') eq 'no'}"
 		outcome="jobs.xhtml" styleClass="btn btn-primary sidebar-element"/>
 	
 	<h:form>

@@ -1,10 +1,20 @@
-<div xmlns:h="http://java.sun.com/jsf/html"
-	 xmlns:ui="http://java.sun.com/jsf/facelets"
-	 xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
-	 xmlns:f="http://java.sun.com/jsf/core"
-	 class="container-fluid h100 w100 lefttext fulldimensions"><div class="row h100 w100 fulldimensions">
+<ui:composition lang="en"     
+	xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+    template="VysusInternal.xhtml">
+	<ui:define name="content">
+	<f:metadata>
+		<f:viewAction action="#{actor.onLoad(true)}"/>
+	</f:metadata>
+
+
+<div class="container-fluid h100 w100 lefttext fulldimensions"><div class="row h100 w100 fulldimensions">
 			
-	<div id="staff-display" class="col-7-md h100 scroll-div">
+	<div id="staff-display" class="col-md-7 h100 scroll-div">
 		<h:outputText rendered="#{staff.noStaff()}"
 			value="Hey admin, you have not registered any of your staff yet! Start now!" />
 		<ui:repeat var="s" value="#{staff.staff}" varStatus="status">
@@ -116,3 +126,4 @@
 			</div>		
 			
 </div></div>
+</ui:define></ui:composition>

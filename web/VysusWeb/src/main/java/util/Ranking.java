@@ -38,10 +38,11 @@ public class Ranking {
 				float teacherExperience = 0;
 				float teacherValue = 0;
 				List<Qualification> qualifications = findQualification(subject, current.accountID, connection);
+				Map<String,String> rankingBreakdown = new HashMap<String,String>();
 				for (int j = 0; j < qualifications.size(); j++) {
 					Qualification qualification = (qualifications.get(j));
 					//System.out.println(qualification.type);
-					Map<String,String> rankingBreakdown = new HashMap<String,String>();
+					
 					if (qualification.type.matches("Work experience")) {
 						teacherExperience = (float) experienceRanking(qualification.startDate,qualification.endDate);
 						System.out.println(current.accountID + " teacherExperience " + teacherValue);
@@ -51,9 +52,8 @@ public class Ranking {
 						System.out.println(current.accountID + " teacherValue " + teacherValue);
 						rankingBreakdown.put("academic", Float.toString(teacherValue));
 					}
-					rankingBreakdowns.put(current.accountID, rankingBreakdown);
 				}
-
+				rankingBreakdowns.put(current.accountID, rankingBreakdown);
 				float actualRanking = teacherValue + teacherExperience;
 				System.out.println(current.accountID + " is worth " + actualRanking);
 				alreadyTested.put(current.accountID,"yes");

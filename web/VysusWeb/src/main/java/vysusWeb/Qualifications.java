@@ -106,6 +106,8 @@ public class Qualifications extends VysusBean implements Serializable {
 
 	public void delete(String stringID) {
 		try (Connection connection = getConnection()) {
+			System.out.println("Qualifications.delete.stringID: " + stringID);
+			System.out.println("Qualifications.delete.qualifications: " + qualifications);
 			new Qualification(Integer.parseInt(stringID), null).deleteQualification(connection);
 		} catch (DBProblemException | InvalidDataException | SQLException e) {
 			actor.handleException(e, false);

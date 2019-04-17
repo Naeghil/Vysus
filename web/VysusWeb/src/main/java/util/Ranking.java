@@ -82,6 +82,7 @@ public class Ranking {
 				userData.put("academic", rankingBreakdowns.get(people.get(j)).get("academic"));
 				userData.put("work", rankingBreakdowns.get(people.get(j)).get("work"));
 				finalRanking.add(userData);
+				System.out.println("finalRanking after " + people.get(j) + " " + finalRanking);
 			}
 		System.out.println(finalRanking);
 		return finalRanking;

@@ -60,11 +60,18 @@ public class Ranking {
 					allRankings.put(actualRanking, newGroupedCandidates);
 				}
 				System.out.println(allRankings);
-				System.out.println(asSortedList(allRankings.keySet()));
+			
 				//allRankings.put(current.accountID,actualRanking);
 				}
-			
-			
+		List<Float> keys = asSortedList(allRankings.keySet());
+		List<String> finalRanking = new ArrayList<String>();
+		for (int i = 0; i < keys.size(); i++) {
+			List<String> people = allRankings.get(i);
+			for (int j = 0; j < people.size(); j++) {
+				finalRanking.add(people.get(j));
+			}
+		System.out.println(finalRanking);
+		}
 			
 		} catch (DBProblemException e) {
 			// TODO Auto-generated catch block

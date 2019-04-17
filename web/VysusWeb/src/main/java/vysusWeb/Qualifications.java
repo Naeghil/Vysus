@@ -80,7 +80,7 @@ public class Qualifications extends VysusBean implements Serializable {
 		} catch (DBProblemException | InvalidDataException | SQLException e) {
 			actor.handleException(e, true);
 		}
-		System.out.println(qualifications);
+		//System.out.println(qualifications);
 	}
 
 	public void addNew() {
@@ -107,8 +107,10 @@ public class Qualifications extends VysusBean implements Serializable {
 	public void delete(String stringID) {
 		try (Connection connection = getConnection()) {
 			System.out.println("Qualifications.delete.stringID: " + stringID);
-			System.out.println("Qualifications.delete.qualifications: " + qualifications);
-			new Qualification(Integer.parseInt(stringID), null).deleteQualification(connection);
+			int id = Integer.parseInt(stringID);
+			System.out.println("Qualifications.delete.id: "+ id);
+			//System.out.println("Qualifications.delete.qualifications: " + qualifications);
+			new Qualification(id, null).deleteQualification(connection);
 		} catch (DBProblemException | InvalidDataException | SQLException e) {
 			actor.handleException(e, false);
 		}

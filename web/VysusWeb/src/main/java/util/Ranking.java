@@ -84,9 +84,10 @@ public class Ranking {
 				finalRanking.add(userData);
 				System.out.println("finalRanking after " + people.get(j) + " " + finalRanking);
 			}
+		}
 		System.out.println(finalRanking);
 		return finalRanking;
-		}
+
 			
 		} catch (DBProblemException e) {
 			// TODO Auto-generated catch block

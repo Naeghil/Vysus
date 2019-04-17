@@ -2,10 +2,8 @@ package vysusWeb;
 
 import java.io.Serializable;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,23 +13,59 @@ import javax.enterprise.context.ConversationScoped;
 import javax.inject.Named;
 
 import storage.*;
-import util.Conv;
-//import util.Ranking;
 import util.Ranking;
 
-@Named("rankingGet")
+@Named("ranking")
 @ConversationScoped
 public class RankingGet extends VysusBean implements Serializable {
+	Integer jobID;
+	Map<String, String> job = new HashMap<String, String>();
+	List<Map<String, String>> candidates = new ArrayList<Map<String, String>>(); 
 	
-	public void createRanking() {
+	@PostConstruct
+	void onLoad() {
+		if(getSessionMap().containsKey("jobID")) jobID = (Integer)getSessionMap().remove("jobID");
+		else {
+			redirect("profile.xhtml");
+			message("No job", "No job selected");
+			return;
+		}
 		try (Connection connection = getConnection()) {
-			Ranking ranking = new Ranking();
-			ranking.rankingMain("English Literature", (float)400.0, connection);
+			job = new Job(jobID, connection).show();
+			
+			List<Map<String, Object>> gradedCandidates = new ArrayList<Map<String, Object>>();//new Ranking().rankingMain(job.get("subject"), Float.parseFloat(job.get("ratePerHour")), connection);
+			for(Map<String, Object> cand : gradedCandidates) retrieveCandidateData(cand, connection);
 			
 
-		} catch (SQLException e) {
+		} catch (InvalidDataException | DBProblemException | SQLException e) {
 			actor.handleException(e, false);
 		}
+		
+	}
+	
+	void retrieveCandidateData(Map<String, Object> candidate, Connection connection) throws DBProblemException, InvalidDataException {
+		Map<String, String> data = new User((String)candidate.get("userID"), connection).showMini();
+		data.putAll(new Teacher(data.get("account"), connection).showMini());
+		data.put("academic", Float.toString((float)candidate.get("academic")));
+		data.put("work", Float.toString((float)candidate.get("work")));
+		data.put("total", Float.toString((float)candidate.get("academic")+(float)candidate.get("academic")));
+		candidates.add(data);
+	}
+	
+	public void offer(String id) {
+		try (Connection connection = getConnection()) {
+			new Job(jobID, connection).proposeTo(id, connection);
+			redirect("jobs.xhtml");
+		} catch (InvalidDataException | DBProblemException | SQLException e) {
+			actor.handleException(e, false);
+		}
+	}
+	
+	public Map<String, String> getJob(){
+		return job;
+	}
+	public List<Map<String, String>> getCandidates(){
+		return candidates;
 	}
 	
 	

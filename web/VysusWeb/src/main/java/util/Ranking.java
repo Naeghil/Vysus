@@ -5,7 +5,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -13,7 +12,6 @@ import java.util.List;
 import java.util.Map;
 
 import storage.DBProblemException;
-import storage.InvalidDataException;
 import util.APICalls;
 
 public class Ranking {
@@ -65,6 +63,7 @@ public class Ranking {
 				}
 		List<Float> keys = asSortedList(allRankings.keySet());
 		List<String> finalRanking = new ArrayList<String>();
+		//Miles check the parentheses here:
 		for (int i = 0; i < keys.size(); i++) {
 			List<String> people = allRankings.get(keys.get(i));
 			for (int j = 0; j < people.size(); j++) {

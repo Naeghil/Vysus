@@ -1,4 +1,6 @@
-<div xmlns:h="http://java.sun.com/jsf/html">
+<div xmlns:h="http://java.sun.com/jsf/html"
+	 xmlns:ui="http://java.sun.com/jsf/facelets"
+	 xmlns:p="http://primefaces.org/ui">
 	<h4>Your work preferences:</h4>
 	<div id="maxDist">
 		<p class="inline-block">Maximum Distance: </p>
@@ -25,5 +27,25 @@
 		<p class="inline-block">#{actor.accountField("aboutMe")}</p>
 		<h:inputTextarea id="aboutMe" value="#{teacherGet.aboutMe}"
 			styleClass="form-control form-element w60 h30 profile-element hidden" required="false" />	
-	</div>	
+	</div>
+	<div class="w100 data-box">
+	<h:outputText rendered="#{offers.noOffers()}"
+		value="You haven't been offered any jobs yet." />
+	<p:accordionPanel>
+			<ui:repeat var="j" values="offers.all">
+				<p:tab title="#{j.title}">
+					At: #{j.school}, #{j.type}<br/>
+					Where: #{j.address} <br/>
+					Subject: #{j.subject} <br/>
+					Description: <br/>
+					#{j.description} <br/>
+					Per hour: £ #{j.ratePerHour}
+					<h:form>
+						<h:commandButton value="accept" action="#{offers.accept(j.id)}" styleClass="btn btn-primary form-element"/>
+					</h:form>
+				</p:tab>
+			</ui:repeat>
+		</p:accordionPanel>
+	
+	</div>
 </div>

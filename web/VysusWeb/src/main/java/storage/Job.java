@@ -52,6 +52,12 @@ public class Job extends StorageAbstract{
 	}
 	
 //Object-specific querying methods
+	protected void retrieve(Connection con) throws DBProblemException, InvalidDataException {
+		keys.add("accountID");
+		super.retrieve(con);
+		keys.remove("accountID");
+	}
+	
 	public void proposeTo(String candidateID, Connection connection) throws DBProblemException, InvalidDataException {
 		try(PreparedStatement propose = connection.prepareStatement("UPDATE Job SET candidateID=? WHERE jobID=?");) {
 			propose.setObject(1, candidateID);
@@ -87,7 +93,6 @@ public class Job extends StorageAbstract{
 		} catch (SQLException e ) {throw new DBProblemException(e); }
 	}
 	
-	
 	public static List<Integer> jobList(Connection con, String account) throws DBProblemException {
 		List<Integer> list = new ArrayList<Integer>();
 		try(PreparedStatement qualifications = con.prepareStatement("SELECT jobID FROM Job WHERE accountID=?");) {
@@ -106,12 +111,24 @@ public class Job extends StorageAbstract{
 		}
 		return allJobs;
 	}
+	
+	public static List<Job> offersFor(String candidate, Connection connection) throws DBProblemException, InvalidDataException {
+		List<Job> allOffers = new ArrayList<Job>();
+		try(PreparedStatement qualifications = connection.prepareStatement("SELECT jobID FROM Job WHERE candidateID=?");) {
+			qualifications.setObject(1, candidate);
+			try(ResultSet result = qualifications.executeQuery();){
+				while(result.next()) allOffers.add(new Job(result.getInt("jobID"), connection));
+			}
+		} catch (SQLException e) { throw new DBProblemException(e); }
+		return allOffers;
+	}
 
 	
 //Getters and show methods
 	public Map<String, String> show(){
 		Map<String, String> show = new HashMap<String, String>();
 		show.put("id", ((Integer)data.get("id")).toString());
+		show.put("schoolID", (String)data.get("accountID"));
 		show.put("subject", (String)data.get("subject"));
 		show.put("title", (String)data.get("title"));
 		show.put("descritpion", (String)data.get("description"));

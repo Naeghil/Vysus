@@ -69,7 +69,7 @@ public class Jobs extends VysusBean implements Serializable {
 	}
 	
 	public void findCandidates(String stringID) {
-		getSessionMap().put("jobID", Integer.parseInt(stringID));
+		getSessionMap().put("jobID", new Integer(stringID));
 		redirect("ranking.xhtml");
 	}
 	

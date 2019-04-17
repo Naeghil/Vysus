@@ -23,9 +23,10 @@ public class Ranking {
 	
 	
 	
-	public List<String> rankingMain(String subject, float rate, Connection connection) {
+	public List<Map<String,String>> rankingMain(String subject, float rate, Connection connection) {
 		Map<String,String> alreadyTested = new HashMap<String,String>();
 		Map<Float,List<String>> allRankings = new HashMap<Float,List<String>>();
+		Map<String, Map<String,String>> rankingBreakdowns = new HashMap<String, Map<String,String>>();
 		try {
 			List<Candidate> candidates = jobFilter(subject, rate, connection);
 			
@@ -40,12 +41,17 @@ public class Ranking {
 				for (int j = 0; j < qualifications.size(); j++) {
 					Qualification qualification = (qualifications.get(j));
 					//System.out.println(qualification.type);
+					Map<String,String> rankingBreakdown = new HashMap<String,String>();
 					if (qualification.type.matches("Work experience")) {
 						teacherExperience = (float) experienceRanking(qualification.startDate,qualification.endDate);
+						rankingBreakdown.put("work", Float.toString(teacherExperience));
 					} else {
 						teacherValue = (float) ((qualificationRelevancy(current.fromMain) * (qualificationRanking(qualification.type))));
+						rankingBreakdown.put("academic", Float.toString(teacherValue));
 					}
+					rankingBreakdowns.put(current.accountID, rankingBreakdown);
 				}
+
 				float actualRanking = teacherValue + teacherExperience;
 				System.out.println(current.accountID + " is worth " + actualRanking);
 				alreadyTested.put(current.accountID,"yes");
@@ -64,11 +70,15 @@ public class Ranking {
 				//allRankings.put(current.accountID,actualRanking);
 				}
 		List<Float> keys = asSortedList(allRankings.keySet());
-		List<String> finalRanking = new ArrayList<String>();
+		List<Map<String,String>> finalRanking = new ArrayList<Map<String,String>>();
 		for (int i = 0; i < keys.size(); i++) {
 			List<String> people = allRankings.get(keys.get(i));
 			for (int j = 0; j < people.size(); j++) {
-				finalRanking.add(people.get(j));
+				Map<String,String> userData = new HashMap<String,String>();
+				userData.put("userID", findActor(people.get(j),connection));
+				userData.put("academic", rankingBreakdowns.get(people.get(j)).get("academic"));
+				userData.put("work", rankingBreakdowns.get(people.get(j)).get("work"));
+				finalRanking.add(userData);
 			}
 		System.out.println(finalRanking);
 		return finalRanking;
@@ -226,8 +236,29 @@ public class Ranking {
 			
 		return qualifications;		
 	}
+
+public String findActor(String accountID, Connection connection) throws DBProblemException {
+	String actorID = null;
+	try(PreparedStatement findQualificationType = connection.prepareStatement(
+	  "SELECT userID FROM User WHERE accountID=?")){
+		findQualificationType.setString(1, accountID);
+		
+		
+		try(ResultSet rs = findQualificationType.executeQuery()){
+			while(rs.next()) {
+				actorID = (rs.getString("userID"));
+			}
+		return actorID;
+		}
+		
+	} catch (SQLException e) { 
+		System.out.println(e.getMessage().toString());
+		throw new DBProblemException(e); 
+	}
+				
 }
 
+}
 
 class Candidate {
 	public String userID;

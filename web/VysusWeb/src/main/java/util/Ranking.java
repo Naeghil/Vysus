@@ -62,8 +62,9 @@ public class Ranking {
 		Set<String> keys = allRankings.keySet();
 		System.out.println("Keys: " + keys);
 		System.out.println("Set size: " + keys.size());
-		for (int i = 0; i < keys.size(); i++) {
-			System.out.println(keys);
+		for (String temp : keys) {
+			System.out.println(temp);
+			System.out.println(allRankings.get(temp));
 		}
 		return null;
 		

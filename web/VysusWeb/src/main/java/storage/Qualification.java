@@ -29,7 +29,7 @@ public class Qualification extends StorageAbstract{
 	public Qualification(int qualificationID, Connection connection) throws InvalidDataException, DBProblemException {
 		data.put("id", qualificationID);
 		setDBVariables();
-		retrieve(connection);
+		if (connection!=null) retrieve(connection);
 		verified = isVerified(connection);
 		
 	}

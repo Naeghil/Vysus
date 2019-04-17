@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import storage.DBProblemException;
 import storage.InvalidDataException;
@@ -22,13 +23,13 @@ public class Ranking {
 	
 	
 	public void rankingMain(String subject, float rate, Connection connection) {
-		Map<String,String> alreadyTested = new HashMap<String,String>();
+		Map<String,Float> allRankings = new HashMap<String,Float>();
 		try {
 			List<Candidate> candidates = jobFilter(subject, rate, connection);
 			
 			for (int i = 0; i < candidates.size(); i++) {
 				Candidate current = (candidates.get(i));
-				if (alreadyTested.containsKey(current.accountID)) {
+				if (allRankings.containsKey(current.accountID)) {
 					continue;
 				} 
 				float teacherExperience = 0;
@@ -45,10 +46,11 @@ public class Ranking {
 				}
 				float actualRanking = teacherValue + teacherExperience;
 				System.out.println(current.accountID + " is worth " + actualRanking);
-				alreadyTested.put(current.accountID,"yes");
+				allRankings.put(current.accountID,actualRanking);
+
 				}
 			
-			
+		System.out.println(createOrderedRanking(allRankings));	
 			
 		} catch (DBProblemException e) {
 			// TODO Auto-generated catch block
@@ -56,6 +58,17 @@ public class Ranking {
 		}
 	}
 
+	public static ArrayList<String> createOrderedRanking(Map<String,Float> allRankings){
+		Set<String> keys = allRankings.keySet();
+		System.out.println("Keys: " + keys);
+		System.out.println("Set size: " + keys.size());
+		for (int i = 0; i < keys.size(); i++) {
+			System.out.println(keys);
+		}
+		return null;
+		
+	}
+	
 	
 	public static boolean distanceCheck(String candidatePostcode, String jobPostcode, int maxDist) {
 		return APICalls.checkDistance(candidatePostcode,jobPostcode,maxDist);

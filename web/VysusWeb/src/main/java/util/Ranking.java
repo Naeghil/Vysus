@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -58,6 +59,7 @@ public class Ranking {
 					allRankings.put(actualRanking, newGroupedCandidates);
 				}
 				System.out.println(allRankings);
+				System.out.println(asSortedList(allRankings.keySet()));
 				//allRankings.put(current.accountID,actualRanking);
 				}
 			
@@ -69,6 +71,12 @@ public class Ranking {
 		}
 	}
 
+	public static
+	<T extends Comparable<? super T>> List<T> asSortedList(Collection<T> c) {
+	  List<T> list = new ArrayList<T>(c);
+	  java.util.Collections.sort(list);
+	  return list;
+	}
 	
 	public static boolean distanceCheck(String candidatePostcode, String jobPostcode, int maxDist) {
 		return APICalls.checkDistance(candidatePostcode,jobPostcode,maxDist);

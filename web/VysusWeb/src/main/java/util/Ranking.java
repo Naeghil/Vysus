@@ -77,6 +77,7 @@ public class Ranking {
 			List<String> people = allRankings.get(keys.get(i));
 			for (int j = 0; j < people.size(); j++) {
 				Map<String,String> userData = new HashMap<String,String>();
+				System.out.println(rankingBreakdowns);
 				userData.put("userID", findActor(people.get(j),connection));
 				userData.put("academic", rankingBreakdowns.get(people.get(j)).get("academic"));
 				userData.put("work", rankingBreakdowns.get(people.get(j)).get("work"));

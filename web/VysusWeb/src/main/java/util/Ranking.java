@@ -66,7 +66,7 @@ public class Ranking {
 		List<Float> keys = asSortedList(allRankings.keySet());
 		List<String> finalRanking = new ArrayList<String>();
 		for (int i = 0; i < keys.size(); i++) {
-			List<String> people = allRankings.get(i);
+			List<String> people = allRankings.get(keys.get(i));
 			for (int j = 0; j < people.size(); j++) {
 				finalRanking.add(people.get(j));
 			}

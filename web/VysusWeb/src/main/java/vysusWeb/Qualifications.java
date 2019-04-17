@@ -75,19 +75,19 @@ public class Qualifications extends VysusBean implements Serializable {
 		try (Connection connection = getConnection()) {
 			for (Qualification q : Qualification.allQualifications(actor.account(), connection)) {
 				qualifications.add(q.show());
-				//System.out.println(qualifications.toString());
 			}
 		} catch (DBProblemException | InvalidDataException | SQLException e) {
 			actor.handleException(e, true);
 		}
-		//System.out.println(qualifications);
 	}
 
 	public void addNew() {
 		try (Connection connection = getConnection()) {
-			Date sDate = Conv.stringToDate((String) newQual.remove("sYear") + "-" + (String) newQual.remove("sMonth")
+			Date sDate = Conv.stringToDate((String) newQual.remove("sYear") 
+					+ "-" + (String) newQual.remove("sMonth")
 					+ "-" + (String) newQual.remove("sDay"));
-			Date eDate = Conv.stringToDate((String) newQual.remove("eYear") + "-" + (String) newQual.remove("eMonth")
+			Date eDate = Conv.stringToDate((String) newQual.remove("eYear") 
+					+ "-" + (String) newQual.remove("eMonth")
 					+ "-" + (String) newQual.remove("eDay"));
 
 			newQual.put("startDate", sDate);
@@ -106,11 +106,7 @@ public class Qualifications extends VysusBean implements Serializable {
 
 	public void delete(String stringID) {
 		try (Connection connection = getConnection()) {
-			System.out.println("Qualifications.delete.stringID: " + stringID);
-			int id = Integer.parseInt(stringID);
-			System.out.println("Qualifications.delete.id: "+ id);
-			//System.out.println("Qualifications.delete.qualifications: " + qualifications);
-			new Qualification(id, null).deleteQualification(connection);
+			new Qualification(Integer.parseInt(stringID)).deleteQualification(connection);
 		} catch (DBProblemException | InvalidDataException | SQLException e) {
 			actor.handleException(e, false);
 		}

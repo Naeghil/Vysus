@@ -26,11 +26,18 @@ public class Qualification extends StorageAbstract{
 	
 //Initialisation: constructors and variables setup
 	//Existing constructor, also enabling loading, if given a connection
+	public Qualification(int qualificationID) {
+		data.put("id", qualificationID);
+		setDBVariables();
+	}
 	public Qualification(int qualificationID, Connection connection) throws InvalidDataException, DBProblemException {
 		data.put("id", qualificationID);
 		setDBVariables();
-		if (connection!=null) retrieve(connection);
-		verified = isVerified(connection);
+		if (connection!=null) {
+			retrieve(connection);
+			verified = isVerified(connection);
+		}
+		
 		
 	}
 	//Creating constructor: no qualification id will be available this way

@@ -69,7 +69,7 @@ public class Jobs extends VysusBean implements Serializable {
 	
 	public void delete(String stringID) {
 		try(Connection connection = getConnection()) {
-			new Job(Integer.parseInt(stringID), null).deleteJob(connection);
+			new Job(Integer.parseInt(stringID)).deleteJob(connection);
 		} catch (DBProblemException | InvalidDataException | SQLException e) {
 			actor.handleException(e, false);
 		}
@@ -151,7 +151,7 @@ public class Jobs extends VysusBean implements Serializable {
 	public float getRate() {
 		return newJob.containsKey("ratePerHour") ? (float)newJob.get("ratePerHour") : 0;
 	}
-	public void setRate(String rate) {
+	public void setRate(float rate) {
 		newJob.put("ratePerHour", rate);
 	}
 }

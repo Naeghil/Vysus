@@ -24,8 +24,13 @@ public class Staff extends VysusBean implements Serializable {
 	
 	@PostConstruct
 	void onInit() {
+		if(!actor.accountField("admin").equals("yes")) {
+			redirect("profile.xhtml");
+			message("Bad navigation", "You don't have the rights to go there.");
+			return;
+		}
 		try(Connection connection = getConnection()){
-			for(storage.Staff staff : storage.Staff.allStaff(actor.account(), connection)) {
+			for(storage.Staff staff : storage.Staff.allStaff(actor.account(), actor.actor(), connection)) {
 				this.staff.add(staff.showFull());
 			}
 		} catch(DBProblemException | InvalidDataException | SQLException e) {

@@ -35,14 +35,14 @@
 		<h:form>
 			<div id="login-data">
        			<h:inputText id="sUsername" value="#{staff.username}" a:placeholder="Username"
-        			styleClass="form-control form-element w40" required="true"
+        			styleClass="form-control form-element inline-block w40" required="true"
 					requiredMessage="Make sure you enter a username" 
 					validatorMessage="Ensure your username is less than 59 characters">
 					<f:validateLength maximum="59" />
 				</h:inputText>
 				<h:message for="sUsername"/>
 				<h:inputSecret id="sPassword" value="#{staff.password}" a:placeholder="Password"
-					styleClass="form-control form-element w40" required="true"
+					styleClass="form-control form-element inline-block w40" required="true"
 					requiredMessage="Password is mandatory"
 					validatorMessage="Ensure your password is less than 58 characters">
 					<f:validateLength maximum="58"/>
@@ -53,11 +53,11 @@
 			
 			<h:selectOneMenu id="sTitle"
   				value="#{staff.title}" 
-  				styleClass="form-control inline-block form-element w10">
+  				styleClass="form-control inline-block form-element w20">
 				<f:selectItems  value="#{uGet.titles}"/>
       		</h:selectOneMenu>
 			<h:inputText id="sFullName" value="#{staff.name}" a:placeholder="Full Name"
-	        	styleClass="form-control form-element w80" required="true"
+	        	styleClass="form-control form-element inline-block w70" required="true"
 				requiredMessage="Make sure you enter a name" 
 				validatorMessage="Ensure name is less than 257 characters">
 				<f:validateLength maximum="257" />
@@ -65,7 +65,7 @@
 			<h:message for="sFullName"/>
 				
 			<div id="sDOB">
-				<p class="inline-block w20">Date of Birth:</p>
+				<p class="inline-block w20">DOB:</p>
 				<h:inputText id="sDay" value="#{staff.day}" a:placeholder="DD"
 					styleClass="form-control inline-block form-element w15" required="true" 
 					requiredMessage="Day in format DD must be input."

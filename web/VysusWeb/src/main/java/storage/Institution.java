@@ -66,8 +66,8 @@ public class Institution extends Account{
 	}
 	
 	public void deleteAccount(Connection connection) throws DBProblemException, InvalidDataException{
-		for(Staff staff : Staff.allStaff(getID(), connection)) staff.delete(connection);
-		//for(Job job : Job.allJobs(getID(), connection)) job.delete(connection);
+		for(Staff staff : Staff.allStaff(getID(), (String)data.get("sysAdminID"), connection)) staff.delete(connection);
+		for(Job job : Job.allJobs(getID(), connection)) job.delete(connection);
 		this.delete(connection);
 	}
 	

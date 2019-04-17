@@ -29,6 +29,11 @@ public class Jobs extends VysusBean implements Serializable {
 		
 	@PostConstruct
 	void onInit() {
+		if(!actor.accountField("admin").equals("no")) {
+			redirect("profile.xhtml");
+			message("Bad navigation", "You don't have the rights to go there.");
+			return;
+		}
 		/*Map<String, String> mockJob = new HashMap<String, String>();
 		mockJob.put("id", "0");
 		mockJob.put("title", "English Teacher");

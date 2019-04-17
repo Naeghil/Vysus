@@ -17,10 +17,10 @@ public class Staff extends User {
 	}
 	
 //Static show methods to be used by the Institution object
-	public static List<Staff> allStaff(String accountID, Connection connection) throws DBProblemException, InvalidDataException {
+	public static List<Staff> allStaff(String accountID, String sysAdmin, Connection connection) throws DBProblemException, InvalidDataException {
 		List<Staff> allStaff = new ArrayList<Staff>();
 		for(String staffID : Staff.staffList(accountID, connection)) {
-			allStaff.add(new Staff(staffID, connection));
+			if(!staffID.equals(sysAdmin)) allStaff.add(new Staff(staffID, connection));
 		}
 		return allStaff;
 	}

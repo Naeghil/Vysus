@@ -43,7 +43,7 @@ public abstract class SecondaryBean extends VysusBean {
 	public abstract void delete(String id);
 	
 	public boolean noData() {
-		return toShow.size()==0;
+		return toShow!=null && toShow.size()==0;
 	}
 	
 	public List<Map<String, String>> gettoShow() {

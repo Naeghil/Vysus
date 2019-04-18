@@ -54,7 +54,6 @@ public class Actor extends vysusWeb.bases.VysusBase implements Serializable {
 	}
 	
 	public void logout() {
-		//System.out.println("when logout: "+this.account+" "+this.actor);
 		getExternalContext().invalidateSession();
 		redirect("index.jsf");
 	}

@@ -96,6 +96,7 @@ public class Qualification extends SecondaryStorage {
 	}
 	
 	public static List<SecondaryStorage> all(Object id, Connection connection) throws DBProblemException, InvalidDataException {
+		System.out.println("Qualification.all");
 		return all("storage.Qualification", id, connection, "qualificationID", "Qualification", "accountID");
 	}
 

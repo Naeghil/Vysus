@@ -29,9 +29,13 @@ public class Qualifications extends vysusWeb.bases.SecondaryBean implements Seri
 	static List<String> types = new ArrayList<String>(
 			Arrays.asList("Undergraduate", "Postgraduate", "PHD", "Work experience"));
 
-	public void onLoad() { onLoad(""); }
+	public void onLoad() { 
+		System.out.println("Qualifications.onLoad");
+		onLoad(""); 
+	}
 	
 	protected void loadData(Connection connection) throws DBProblemException, InvalidDataException {
+		System.out.println("Qualifications.loadData");
 		for (SecondaryStorage q : Qualification.all(actor.account(), connection)) toShow.add(q.show());
 	}
 

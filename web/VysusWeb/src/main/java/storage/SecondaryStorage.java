@@ -29,10 +29,11 @@ public abstract class SecondaryStorage extends StorageAbstract {
 	
 	protected static List<SecondaryStorage> all(String className, Object queryBy, Connection connection, String idName, String table, String foreignKey)
 		throws DBProblemException, InvalidDataException {
+		String retrieveIDs = "SELECT "+idName+" FROM "+table+" WHERE "+foreignKey+"=?";
+		System.out.println("SecondaryStorage.all: "+className+" "+queryBy.toString()+" "+retrieveIDs);
 		List<Object> list = new ArrayList<Object>();
 		List<SecondaryStorage> all = new ArrayList<SecondaryStorage>();
-		try(PreparedStatement retList = connection.prepareStatement(
-				"SELECT "+idName+" FROM "+table+" WHERE "+foreignKey+"=?");) {
+		try(PreparedStatement retList = connection.prepareStatement(retrieveIDs);) {
 			retList.setObject(1, queryBy);
 			try(ResultSet records = retList.executeQuery();) {
 				while(records.next()) list.add(records.getObject(idName));

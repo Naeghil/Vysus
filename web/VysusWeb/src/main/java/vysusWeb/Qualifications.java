@@ -36,7 +36,7 @@ public class Qualifications extends VysusBean implements Serializable {
 
 	@PostConstruct
 	void onLoad() {
-		if(actor.accountField("admin").equals("")) {
+		if(!actor.accountField("admin").equals("")) {
 			redirect("profile.xhtml");
 			message("You don't have the rights to go there.", "Bad navigation");
 			return;

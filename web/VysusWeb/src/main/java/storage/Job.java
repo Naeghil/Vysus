@@ -34,7 +34,7 @@ public class Job extends StorageAbstract{
 	protected void setDBVariables() {
 		keys = new ArrayList<String>(Arrays.asList(
 			"subject", "title", "description", "ratePerHour"));
-		create = "INSERT INTO JOB"
+		create = "INSERT INTO Job"
 				+ "(accountID, subject, title, description, ratePerHour) "
 				+ "VALUES(?, ?, ?, ?, ?)";
 		retrieve = "SELECT * FROM Job WHERE jobID=?";

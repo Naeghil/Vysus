@@ -11,8 +11,8 @@ import exceptions.DBProblemException;
 import exceptions.InvalidDataException;
 
 public abstract class SecondaryBean extends VysusBean {
-	public List<Map<String, String>> toShow = null;
-	public Map<String, Object> newData = new HashMap<String, Object>();
+	protected List<Map<String, String>> toShow = null;
+	protected Map<String, Object> newData = new HashMap<String, Object>();
 	
 	public void onLoad(String adminStatus){
 		if(!actor.accountField("admin").equals(adminStatus)) {

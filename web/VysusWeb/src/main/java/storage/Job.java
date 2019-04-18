@@ -131,7 +131,7 @@ public class Job extends StorageAbstract{
 		show.put("schoolID", (String)data.get("accountID"));
 		show.put("subject", (String)data.get("subject"));
 		show.put("title", (String)data.get("title"));
-		show.put("descritpion", (String)data.get("description"));
+		show.put("description", (String)data.get("description"));
 		show.put("rate", Float.toString((float)data.get("ratePerHour")));
 		if(data.containsKey("candidateID")) show.put("candidate", (String)data.get("candidateID"));
 		if((boolean)data.get("accepted")) show.put("accepted", "yes");

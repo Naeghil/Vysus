@@ -32,9 +32,9 @@ public class RankingGet extends VysusBean implements Serializable {
 		}
 		try (Connection connection = getConnection()) {
 			job = new Job(jobID, connection).show();
-			
-			List<Map<String, Object>> gradedCandidates = new ArrayList<Map<String, Object>>();//new Ranking().rankingMain(job.get("subject"), Float.parseFloat(job.get("ratePerHour")), connection);
-			for(Map<String, Object> cand : gradedCandidates) retrieveCandidateData(cand, connection);
+			//new ArrayList<Map<String, Object>>();
+			List<Map<String, String>> gradedCandidates = new Ranking().rankingMain(job.get("subject"), Float.parseFloat(job.get("ratePerHour")), connection);
+			for(Map<String, String> cand : gradedCandidates) retrieveCandidateData(cand, connection);
 			
 
 		} catch (InvalidDataException | DBProblemException | SQLException e) {
@@ -43,12 +43,12 @@ public class RankingGet extends VysusBean implements Serializable {
 		
 	}
 	
-	void retrieveCandidateData(Map<String, Object> candidate, Connection connection) throws DBProblemException, InvalidDataException {
+	void retrieveCandidateData(Map<String, String> candidate, Connection connection) throws DBProblemException, InvalidDataException {
 		Map<String, String> data = new User((String)candidate.get("userID"), connection).showMini();
 		data.putAll(new Teacher(data.get("account"), connection).showMini());
-		data.put("academic", Float.toString((float)candidate.get("academic")));
-		data.put("work", Float.toString((float)candidate.get("work")));
-		data.put("total", Float.toString((float)candidate.get("academic")+(float)candidate.get("academic")));
+		data.put("academic", (candidate.get("academic")));
+		data.put("work", (candidate.get("work")));
+		data.put("total", candidate.get("total"));
 		candidates.add(data);
 	}
 	

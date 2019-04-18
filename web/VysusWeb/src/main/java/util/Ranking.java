@@ -51,8 +51,10 @@ public class Ranking {
 						rankingBreakdown.put("academic", Float.toString(teacherValue));
 					}
 				}
-				rankingBreakdowns.put(current.accountID, rankingBreakdown);
+
 				float actualRanking = teacherValue + teacherExperience;
+				rankingBreakdown.put("total", Float.toString(actualRanking));
+				rankingBreakdowns.put(current.accountID, rankingBreakdown);
 				System.out.println(current.accountID + " is worth " + actualRanking);
 				alreadyTested.put(current.accountID,"yes");
 				
@@ -79,6 +81,7 @@ public class Ranking {
 				userData.put("userID", findActor(people.get(j),connection));
 				userData.put("academic", rankingBreakdowns.get(people.get(j)).get("academic"));
 				userData.put("work", rankingBreakdowns.get(people.get(j)).get("work"));
+				userData.put("total", rankingBreakdowns.get(people.get(j)).get("total"));
 				finalRanking.add(userData);
 				System.out.println("finalRanking after " + people.get(j) + " " + finalRanking);
 			}

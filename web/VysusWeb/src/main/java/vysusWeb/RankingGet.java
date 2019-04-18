@@ -36,7 +36,7 @@ public class RankingGet extends VysusBean implements Serializable {
 			List<Map<String, String>> gradedCandidates = new Ranking().rankingMain(job.get("subject"), Float.parseFloat(job.get("rate")), connection);
 			System.out.println("Graded candidates: " + gradedCandidates);
 			for(Map<String, String> cand : gradedCandidates) retrieveCandidateData(cand, connection);
-			
+			System.out.println("Candidates: " + candidates);
 
 		} catch (InvalidDataException | DBProblemException | SQLException e) {
 			actor.handleException(e, false);

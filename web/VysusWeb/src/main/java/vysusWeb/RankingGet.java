@@ -24,6 +24,7 @@ public class RankingGet extends VysusBean implements Serializable {
 	
 	@PostConstruct
 	void onLoad() {
+		System.out.println("Afterinstantiating ranking");
 		if(getSessionMap().containsKey("jobID")) jobID = (Integer)getSessionMap().remove("jobID");
 		else {
 			redirect("profile.xhtml");

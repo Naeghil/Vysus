@@ -50,7 +50,6 @@ public class Institution extends Account{
 //Public interfaces of protected methods
 	//Sets admin to true if the person making the request is the sysAdmin
 	public void requestAdminRights(String actor) {
-		//System.out.println("Insitution.requestAdmin.data: " + data);
 		admin = actor.equals(data.get("sysAdminID"));
 	}
 	//The following methods handle the account's jobs
@@ -78,7 +77,6 @@ public class Institution extends Account{
 		Map<String, String> show = new HashMap<String, String>();
 		show.put("name", (String)data.get("name"));
 		show.put("type", (String)data.get("type"));
-		//System.out.println(show);
 		Map<String, String> fullAddress = APICalls.fullAddress((String)data.get("postcode"),(String)data.get("buildingIdentifier"));
 		String address = (fullAddress.get("Identifier")+"\n"+fullAddress.get("Town")+"\n"+fullAddress.get("City")+"\n"+fullAddress.get("County"));
 		show.put("address", address);

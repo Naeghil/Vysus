@@ -32,7 +32,6 @@ public class UserGet extends vysusWeb.bases.VysusBean implements Serializable {
 	}
 	
 	protected void checkDate() throws InvalidDataException {
-		//System.out.println("userGet.checkDate.newData: " + newData.toString());
 		String date = newData.remove("year")+"-"+newData.remove("month")+"-"+newData.remove("day");
 		if(!actor.userField("DOB").equals(date)) {
 			newData.put("dateOfBirth", Conv.stringToDate(date));

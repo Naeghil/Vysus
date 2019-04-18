@@ -95,24 +95,23 @@ public class APICalls {
 				fullAddress.put("Town", "WE RAN OUT OF API CALLS");
 				fullAddress.put("City", "WE RAN OUT OF API CALLS");
 				fullAddress.put("County", "OR YOUR DATA IS WRONG");
-				System.out.println(fullAddress);
 				return fullAddress;
 			}
 			JSONObject data = new JSONObject(response);
 			JSONArray innerData = (JSONArray) data.get("addresses"); 
-			System.out.println(data.toString());
+			//System.out.println(data.toString());
 			StringTokenizer st = new StringTokenizer(innerData.get(0).toString());
-			System.out.println(st);
+			//System.out.println(st);
 			String[] result = innerData.get(0).toString().split(",");
 			//System.out.println(result[0]);
 			for (int i = 0; i < result.length; i++) {
-				System.out.println(i + " " + result[i]);
+				//System.out.println(i + " " + result[i]);
 			}
 			fullAddress.put("Identifier", result[0]);
 			fullAddress.put("Town", result[4]);
 			fullAddress.put("City", result[5]);
 			fullAddress.put("County", result[6]);
-			System.out.println(fullAddress);
+			//System.out.println(fullAddress);
 			return fullAddress;
 		}
 		

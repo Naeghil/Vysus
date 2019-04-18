@@ -40,6 +40,7 @@ public abstract class SecondaryStorage extends StorageAbstract {
 			}
 			for(Object id : list) {
 				Object [] params = {id, connection };
+				System.out.println(id.toString());
 				SecondaryStorage toAdd = (SecondaryStorage) Class.forName(className)
 					.getConstructor(Object.class, Connection.class)
 					.newInstance(params);
@@ -48,7 +49,7 @@ public abstract class SecondaryStorage extends StorageAbstract {
 		} catch (SQLException e) { 
 			throw new DBProblemException(e); 
 		} catch(NoSuchMethodException | ClassNotFoundException | InvocationTargetException | IllegalAccessException | InstantiationException e) {
-			System.out.println(e.getMessage());
+			System.out.println("This is an error: "+e.getMessage());
 		}
 		
 		return all;

@@ -20,13 +20,14 @@
 	</div>
 	<div id="candidates-list" class="row w100 fulldimensions">
 		<ui:repeat var="c" value="#{ranking.candidates}" varStatus="status">
-			<p:tab title="#{c.fullName} Total: #{c.total}/20 Work: #{c.work}/10 Academic: #{c.academic}/10">
+			<div class="data-box">
+				<p>#{c.fullName} Total: #{c.total}/20 Work: #{c.work}/10 Academic: #{c.academic}/10</p>
 				<p>#{c.aboutMe}</p>
 				<!-- Consider adding data-boxes with the qualifications -->
-				<h:form>
+				<h:form styleClass="w100 righttext fulldimensions">
 					<h:commandButton value="Offer" action="#{ranking.offer(c.account)}" styleClass="btn btn-primary form-element"/>
 				</h:form>
-			</p:tab>
+			</div>
 		</ui:repeat>
 	
 	</div>

@@ -5,17 +5,18 @@
     xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
-    template="VysusInternal.xhtml">
+    template="resources/includes/VysusInternal.xhtml">
 	<ui:define name="content">
+	
 	<f:metadata>
-		<f:viewAction action="#{actor.onLoad(true)}"/>
+		<f:viewAction action="#{jobs.onLoad()}"/>
 	</f:metadata>
 	
 		<div class="container-fluid h100 w100 lefttext fulldimensions"><div class="row h100 w100 fulldimensions">
 			<div id="jobs-display" class="col-md-7 h100 scroll-div">
-				<h:outputText rendered="#{jobs.noJobs()}"
+				<h:outputText rendered="#{jobs.noData()}"
 					value="You are offering no jobs at the moment." />
-				<ui:repeat var="j" value="#{jobs.jobs}">
+				<ui:repeat var="j" value="#{jobs.toShow}">
 				<div class="data-box">
 					<p class="fulldimensions">
 					Title: #{j.title} <br/>

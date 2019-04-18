@@ -8,7 +8,9 @@ import util.APICalls;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.sql.*;
+import java.sql.Connection;
+
+import exceptions.*;
 
 public class Institution extends Account{
 //Object-specific variables

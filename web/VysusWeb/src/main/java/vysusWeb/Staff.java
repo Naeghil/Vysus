@@ -9,54 +9,38 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.PostConstruct;
 import javax.enterprise.context.ConversationScoped;
 import javax.inject.Named;
 import storage.*;
+import exceptions.*;
 import util.Conv;
 
 @Named("staff")
 @ConversationScoped
-public class Staff extends VysusBean implements Serializable {
+public class Staff extends vysusWeb.bases.SecondaryBean implements Serializable {
 	List<Map<String, String>> staff = new ArrayList<Map<String, String>>();
 	
-	Map<String, Object> newStaff = new HashMap<String, Object>();
+	Map<String, Object> newData = new HashMap<String, Object>();
 	
-	@PostConstruct
-	void onInit() {
-		if(!actor.accountField("admin").equals("yes")) {
-			redirect("profile.xhtml");
-			message("Bad navigation", "You don't have the rights to go there.");
-			return;
-		}
-		try(Connection connection = getConnection()){
-			for(storage.Staff staff : storage.Staff.allStaff(actor.account(), actor.actor(), connection)) {
-				this.staff.add(staff.showFull());
-			}
-		} catch(DBProblemException | InvalidDataException | SQLException e) {
-			actor.handleException(e, false);
-		}
+	public void onLoad() { onLoad("yes"); }
+	
+	protected void loadData(Connection connection) throws DBProblemException, InvalidDataException {
+		for (SecondaryStorage s : User.all(actor.account(), connection)) toShow.add(s.showFull());
 	}
 	
-	public void addNew() {
-		try(Connection connection = getConnection()) {
-			Date date = Conv.stringToDate((String)newStaff.remove("year")+"-"+(String)newStaff.remove("month")+"-"+(String)newStaff.remove("day"));
-			String fullName = (String)newStaff.remove("title")+" "+(String)newStaff.remove("name");
-			
-			newStaff.put("dateOfBirth", date);
-			newStaff.put("fullName", fullName);
-			newStaff.put("accountID", actor.account());
-			
-			new User(connection, (String)newStaff.remove("username"), (String)newStaff.remove("password"), newStaff);
-			
-		} catch (DBProblemException | InvalidDataException | SQLException e) {
-			actor.handleException(e, false);
-		}
+	protected void makeNew (Connection connection) throws InvalidDataException, DBProblemException {
+		Date date = Conv.stringToDate((String)newData.remove("year")+"-"+(String)newData.remove("month")+"-"+(String)newData.remove("day"));
+		
+		newData.put("dateOfBirth", date);
+		newData.put("fullName", (String)newData.remove("title")+" "+(String)newData.remove("name"));
+		newData.put("accountID", actor.account());
+		
+		new User((String)newData.remove("username"), (String)newData.remove("password"), newData, connection);
 	}
 	
-	public void delete(String userID) {
+	public void delete(String id) {
 		try(Connection connection = getConnection()) {
-			new storage.Staff(userID).deleteStaff(connection);
+			new storage.Staff(id).deleteStaff(connection);
 		} catch (DBProblemException | InvalidDataException | SQLException e) {
 			actor.handleException(e, false);
 		}
@@ -73,73 +57,73 @@ public class Staff extends VysusBean implements Serializable {
 	
 //Getters and setters:
 	public String getUsername() {
-		return newStaff.containsKey("username") ? (String)newStaff.get("username") : "";
+		return newData.containsKey("username") ? (String)newData.get("username") : "";
 	}
 	public void setUsername(String username) {
-		newStaff.put("username", username);
+		newData.put("username", username);
 	}
 	public String getPassword() {
-		return newStaff.containsKey("password") ? (String)newStaff.get("password") : "";
+		return newData.containsKey("password") ? (String)newData.get("password") : "";
 	}
 	public void setPassword(String password) {
-		newStaff.put("password", password);
+		newData.put("password", password);
 	}
 	
 	public String getTitle() {
 		return "";
 	}
 	public void setTitle(String title) {
-		newStaff.put("title", title);
+		newData.put("title", title);
 	}
 	public String getName() {
 		return "";
 	}
 	public void setName(String name) {
-		newStaff.put("name", name);
+		newData.put("name", name);
 	}
 	
 	public String getHouseID() {
 		return "";
 	}
 	public void setHouseID(String houseID) {
-		newStaff.put("houseIdentifier", houseID);
+		newData.put("houseIdentifier", houseID);
 	}
 	public String getPostcode() {
 		return "";
 	}
 	public void setPostcode(String postcode) {
-		newStaff.put("postcode", postcode);
+		newData.put("postcode", postcode);
 	}
 	
 	public String getDay() {
-		return newStaff.containsKey("day") ? (String)newStaff.get("day") : "";
+		return newData.containsKey("day") ? (String)newData.get("day") : "";
 	}
 	public void setDay(String day) {
-		newStaff.put("day", day);
+		newData.put("day", day);
 	}
 	public String getMonth() {
-		return newStaff.containsKey("month") ? (String)newStaff.get("day") : "";
+		return newData.containsKey("month") ? (String)newData.get("day") : "";
 	}
 	public void setMonth(String month) {
-		newStaff.put("month", month);
+		newData.put("month", month);
 	}
 	public String getYear() {
-		return newStaff.containsKey("year") ? (String)newStaff.get("year") : "";
+		return newData.containsKey("year") ? (String)newData.get("year") : "";
 	}
 	public void setYear(String year) {
-		newStaff.put("year", year);
+		newData.put("year", year);
 	}
 	
 	public String getEmail() {
-		return newStaff.containsKey("email") ? (String)newStaff.get("email") : "";
+		return newData.containsKey("email") ? (String)newData.get("email") : "";
 	}
 	public void setEmail(String email) {
-		newStaff.put("email", email);
+		newData.put("email", email);
 	}
 	public String getPhoneNo() {
-		return newStaff.containsKey("phoneNo") ? (String)newStaff.get("phoneNo") : "";
+		return newData.containsKey("phoneNo") ? (String)newData.get("phoneNo") : "";
 	}
 	public void setPhoneNo(String phoneNo) {
-		newStaff.put("phoneNo", phoneNo);
+		newData.put("phoneNo", phoneNo);
 	}
 }

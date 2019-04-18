@@ -4,6 +4,8 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import exceptions.*;
+
 public class Staff extends User {
 	public Staff(String username) throws DBProblemException, InvalidDataException {
 		super(username);

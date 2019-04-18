@@ -5,12 +5,11 @@
     xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
-    template="VysusInternal.xhtml">
+    template="resources/includes/VysusInternal.xhtml">
 	<ui:define name="content">
-	<f:metadata>
-		<f:viewAction action="#{actor.onLoad(true)}"/>
-	</f:metadata>
-	
+		<f:metadata>
+			<f:viewAction action="#{ranking.onLoad()}"/>
+		</f:metadata>
 <div class="container-fluid h100 w100">
 	<div id="job-details" class="row w100 lefttext">
 		<p>
@@ -19,7 +18,7 @@
 		<p>#{ranking.job.description}</p>
 	</div>
 	<div id="candidates-list" class="row w100 fulldimensions">
-		<ui:repeat var="c" value="#{ranking.candidates}" varStatus="status">
+		<ui:repeat var="c" value="#{ranking.toShow}" varStatus="status">
 			<div class="data-box">
 				<p>#{c.fullName} Total: #{c.total}/20 Work: #{c.work}/10 Academic: #{c.academic}/10</p>
 				<p>#{c.aboutMe}</p>

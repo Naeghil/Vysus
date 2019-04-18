@@ -23,7 +23,7 @@ import storage.*;
 @SuppressWarnings("unused")
 @ManagedBean(name="test")
 @SessionScoped
-public class Test extends VysusBean {
+public class Test extends vysusWeb.bases.VysusBean {
 	private UIComponent test;
 
     public void press() {

@@ -18,26 +18,19 @@ import util.APICalls;
 
 import java.sql.*;
 
-//TODO: make changes for account creation/retrieve
+import exceptions.*;
 
-public class User extends StorageAbstract {
+//This extends SecondaryStorage for its use as "staff";
+public class User extends SecondaryStorage {
 //Object initialisation:
 	//Constructors for existing user
-	public User(String username) {
-		data.put("id", username);
-		setDBVariables();
-	}
+	public User(String username) { super(username);	}
 	public User(String username, Connection connection) throws DBProblemException, InvalidDataException {
-		data.put("id", username);
-		setDBVariables();
-		retrieve(connection);
+		super(username, connection);
 	}
 	//Constructor for new user
-	public User(Connection connection, String username, String password, Map<String, Object> data) throws DBProblemException, InvalidDataException {
-		this.data = data;
-		this.data.put("id", username);
-		setDBVariables();
-		create(connection);
+	public User(String username, String password, Map<String, Object> data, Connection connection) throws DBProblemException, InvalidDataException {
+		super(username, data, connection);
 		setPassword(connection, password);
 	}
 	//Sets object-specific queries and keys:
@@ -90,13 +83,13 @@ public class User extends StorageAbstract {
 	}
 
 //Public interfaces of protected methods:
-	//Enables user deletion
+	//Enables user deletion (TODO: currently unused)
 	public void deleteUser(String password, Connection connection) throws DBProblemException, InvalidDataException {
 		Account account = Account.getAccount(login(password, connection)); //Double checks password
 		account.deleteAccount(connection);
 		delete(connection);
 	}
-	//For now this is to enact changes to the user account
+	//For enact changes to the user account (TODO: currently unused)
 	public void updateProfile(Map<String, Object> changes, Connection connection) throws InvalidDataException, DBProblemException {
 		if(changes.containsKey("newPassword") && changes.containsKey("oldPassword")) {
 			login((String)changes.remove("oldPassword"), connection);
@@ -104,6 +97,10 @@ public class User extends StorageAbstract {
 		}
 		this.changes = changes;
 		update(connection);
+	}
+	
+	public static List<SecondaryStorage> all(Object id, Connection connection) throws DBProblemException, InvalidDataException {
+		return all("storage.User", id, connection, "userID", "User", "accountID");
 	}
 	
 //Getters & Shows:

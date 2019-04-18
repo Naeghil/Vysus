@@ -1,4 +1,4 @@
-package storage;
+package exceptions;
 
 /* **********************************************************************
  *                           StorageException                           *
@@ -6,13 +6,13 @@ package storage;
  * Data in these exceptions may be used to craft the error messages     *
  * **********************************************************************/
 
-public class StorageException extends Exception {
+public class VysusException extends Exception {
 	protected Exception nestedException;
 	
-	public StorageException() { 
+	public VysusException() { 
 		nestedException = null; 
 	}
-	public StorageException(Exception e) { 
+	public VysusException(Exception e) { 
 		nestedException = e; 
 	}
 	

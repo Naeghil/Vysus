@@ -11,15 +11,14 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import storage.Account;
-import storage.DBProblemException;
-import storage.InvalidDataException;
+import exceptions.*;
 import storage.User;
 
 //Data has been refreshed by the *Get beans
 
 @Named("profile")
 @ConversationScoped
-public class Profile extends VysusBean implements Serializable {
+public class Profile extends vysusWeb.bases.VysusBean implements Serializable {
 	int accType = -1;
 	boolean admin = false;
 //The gets:

@@ -1,4 +1,4 @@
-package storage;
+package exceptions;
 
 /* *********************************************************
  *                  NoLogException                         *
@@ -6,9 +6,8 @@ package storage;
  * Write a log in a file and handle it in another moment   *
  * *********************************************************/
  
-import storage.StorageException;
 
-public class NoLogException extends StorageException {
+public class NoLogException extends VysusException {
 	private String log;
 
 	public NoLogException(Exception e, String l) {

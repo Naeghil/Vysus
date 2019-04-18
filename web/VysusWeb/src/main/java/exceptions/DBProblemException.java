@@ -1,4 +1,4 @@
-package storage;
+package exceptions;
 
 /* *********************************************************
  *                  DBProblemException                     *
@@ -6,11 +6,9 @@ package storage;
  * SQLException needs to be handled by who tries the query *
  * but the application needs to be notified                *
  * *********************************************************/
- 
-import storage.StorageException;
 import java.sql.SQLException;
 
  
-public class DBProblemException extends StorageException {
+public class DBProblemException extends VysusException {
 	public DBProblemException(SQLException e) { nestedException = e; }
 }

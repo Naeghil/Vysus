@@ -113,13 +113,12 @@ p { font-family: 'Gentium Basic',serif; }
 .form-element { margin: 1%; }
 
 /* Templates Page Styling (for VysusInternal and VysusBase */
-#header { height:7%; }
-#footer { height: 6%; }
+#footer { height: 7%; }
 
 #contentBase {
 	margin-top:1%;
 	margin-bottom:1%;
-	height: 83%;
+	height: 90%;
 }
 
 .content-panel {

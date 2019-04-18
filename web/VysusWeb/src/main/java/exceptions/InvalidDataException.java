@@ -1,4 +1,4 @@
-package storage;
+package exceptions;
 
 /* ************************************************************************
  *                         InvalidDataException                           *
@@ -8,9 +8,8 @@ package storage;
 //TODO: consider changing to "NotFoundException" to make it clearer what it means
 //Distinguish it from format problems such as "InvalidInputException"
  
-import storage.StorageException;
 
- public class InvalidDataException extends StorageException {
+ public class InvalidDataException extends VysusException {
 	 String field;
 	 String message;
 	 

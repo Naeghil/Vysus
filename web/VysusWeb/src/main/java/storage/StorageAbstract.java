@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import exceptions.*;
+
 /**************************************************************
  *						StorageAbstract						  *
  * Summarises features of objects representing DB entities.   *
@@ -34,6 +36,7 @@ import java.util.Map;
 
 
 public abstract class StorageAbstract {
+//Variables:
 	//The data corresponding to the object, including their primary key as "id";
 	protected Map<String, Object> data = new HashMap<String, Object>();
 	//Used to enact changes
@@ -46,6 +49,21 @@ public abstract class StorageAbstract {
 	protected String retrieve;
 	protected abstract String update(List<String> changes);
 	
+//Constructors and initializers:
+	public StorageAbstract() {}
+	public StorageAbstract(Object id) {
+		data.put("id", id);
+		setDBVariables();
+	}
+	public StorageAbstract(Object id, Connection connection) throws DBProblemException, InvalidDataException {
+		this(id);
+		if(connection!=null) retrieve(connection);
+	}
+	public StorageAbstract(Object id, Map<String, Object> data, Connection connection) throws DBProblemException {
+		this(id);
+		this.data.putAll(data);
+		create(connection);
+	}
 	//Used to initialise object-specific statements and keys:
 	protected abstract void setDBVariables();
 	

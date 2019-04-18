@@ -8,7 +8,7 @@ import javax.inject.Named;
 
 @Named("login")
 @RequestScoped
-public class Login extends VysusBean {
+public class Login extends vysusWeb.bases.VysusBean {
 	String username;
 	String password;
 	

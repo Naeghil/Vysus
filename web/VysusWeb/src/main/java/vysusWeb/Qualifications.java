@@ -6,20 +6,18 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import javax.annotation.PostConstruct;
 import javax.enterprise.context.ConversationScoped;
 import javax.inject.Named;
 
+import exceptions.*;
 import storage.*;
 import util.Conv;
 
 @Named("qualifications")
 @ConversationScoped
-public class Qualifications extends VysusBean implements Serializable {
+public class Qualifications extends vysusWeb.bases.SecondaryBean implements Serializable {
 	static List<String> subjects = new ArrayList<String>(
 			Arrays.asList("English Literature", "English Language", "Maths", "Chemistry", "Biology", "Physics",
 					"History", "Geography", "French", "German", "Spanish", "Mandarin", "Resistant Materials", "Art",
@@ -31,251 +29,149 @@ public class Qualifications extends VysusBean implements Serializable {
 	static List<String> types = new ArrayList<String>(
 			Arrays.asList("Undergraduate", "Postgraduate", "PHD", "Work experience"));
 
-	List<Map<String, String>> qualifications = new ArrayList<Map<String, String>>();
-	Map<String, Object> newQual = new HashMap<String, Object>();
-
-	@PostConstruct
-	void onLoad() {
-		if(!actor.accountField("admin").equals("")) {
-			redirect("profile.xhtml");
-			message("You don't have the rights to go there.", "Bad navigation");
-			return;
-		}
-		/*Map<String, String> mockQual = new HashMap<String, String>();
-		mockQual.put("id", "0");
-		mockQual.put("title", "BSc Eng Lit");
-		mockQual.put("type", "Undergraduate");
-		mockQual.put("where", "no where");
-		mockQual.put("mainSubj", "English Literature");
-		mockQual.put("subj1", "Blah");
-		mockQual.put("subj2", "Blah");
-		mockQual.put("subj3", "Blah");
-		mockQual.put("from", "never");
-		mockQual.put("to", "always");
-		mockQual.put("comment", "Read some books");
-		mockQual.put("email", "giver.of.degrees@real.nope");
-		mockQual.put("phoneNo", "a lot");
-		mockQual.put("referee", "some dude");
-		mockQual.put("verified", "yes");
-		Map<String, String> mockQual1 = new HashMap<String, String>();
-		mockQual1.put("id", "0");
-		mockQual1.put("title", "BSc Eng Lit");
-		mockQual1.put("type", "Undergraduate");
-		mockQual1.put("where", "no where");
-		mockQual1.put("mainSubj", "English Literature");
-		mockQual1.put("subj1", "Blah");
-		mockQual1.put("subj2", "Blah");
-		mockQual1.put("subj3", "Blah");
-		mockQual1.put("from", "never");
-		mockQual1.put("to", "always");
-		mockQual1.put("comment", "Read some books");
-		mockQual1.put("email", "giver.of.degrees@real.nope");
-		mockQual1.put("phoneNo", "a lot");
-		mockQual1.put("referee", "some dude");
-		mockQual1.put("verified", "no");
-		qualifications.add(mockQual);
-		qualifications.add(mockQual1); */
-		//System.out.println(actor.account());
-		try (Connection connection = getConnection()) {
-			for (Qualification q : Qualification.allQualifications(actor.account(), connection)) {
-				qualifications.add(q.show());
-			}
-		} catch (DBProblemException | InvalidDataException | SQLException e) {
-			actor.handleException(e, true);
-		}
+	public void onLoad() { onLoad(""); }
+	
+	protected void loadData(Connection connection) throws DBProblemException, InvalidDataException {
+		for (SecondaryStorage q : Qualification.all(actor.account(), connection)) toShow.add(q.show());
 	}
 
-	public void addNew() {
+	protected void makeNew (Connection connection) throws InvalidDataException, DBProblemException {
+		Date sDate = Conv.stringToDate((String) newData.remove("sYear") 
+			+ "-" + (String) newData.remove("sMonth")
+			+ "-" + (String) newData.remove("sDay"));
+		Date eDate = Conv.stringToDate((String) newData.remove("eYear") 
+			+ "-" + (String) newData.remove("eMonth")
+			+ "-" + (String) newData.remove("eDay"));
+		newData.put("startDate", sDate);
+		newData.put("endDate", eDate);
+		
+		new Qualification(actor.account(), newData, connection);
+	}
+
+	public void delete(String id) {
 		try (Connection connection = getConnection()) {
-			Date sDate = Conv.stringToDate((String) newQual.remove("sYear") 
-					+ "-" + (String) newQual.remove("sMonth")
-					+ "-" + (String) newQual.remove("sDay"));
-			Date eDate = Conv.stringToDate((String) newQual.remove("eYear") 
-					+ "-" + (String) newQual.remove("eMonth")
-					+ "-" + (String) newQual.remove("eDay"));
-
-			newQual.put("startDate", sDate);
-			newQual.put("endDate", eDate);
-			//System.out.println(actor.account());
-			//System.out.println(actor.actor());
-			newQual.put("id", actor.account());
-
-			//System.out.println("newQual: " + newQual);
-			new Qualification(newQual, connection);
-			onLoad();
+			new Qualification(Integer.parseInt(id)).delete(connection);
 		} catch (DBProblemException | InvalidDataException | SQLException e) {
 			actor.handleException(e, false);
 		}
-	}
-
-	public void delete(String stringID) {
-		try (Connection connection = getConnection()) {
-			new Qualification(Integer.parseInt(stringID)).deleteQualification(connection);
-		} catch (DBProblemException | InvalidDataException | SQLException e) {
-			actor.handleException(e, false);
-		}
-	}
-
-//Renderer:	
-	public boolean noQualifications() {
-		if (qualifications == null)
-			onLoad();
-		return qualifications.size() == 0;
-	}
-
-	public List<Map<String, String>> getQualifications() {
-		if (qualifications == null)
-			onLoad();
-		return qualifications;
 	}
 
 //For dropdowns:
-	public List<String> getSubjects() {
-		return subjects;
-	}
-
-	public List<String> getSubjectsNull() {
-		return subjectsNull;
-	}
-
-	public List<String> getTypes() {
-		return types;
-	}
+	public List<String> getSubjects() { return subjects; }
+	public List<String> getSubjectsNull() { return subjectsNull; }
+	public List<String> getTypes() { return types; }
 
 //Getters & Setters
 	public String getTitle() {
-		return newQual.containsKey("title") ? (String) newQual.get("title") : "";
+		return newData.containsKey("title") ? (String) newData.get("title") : "";
 	}
-
 	public void setTitle(String title) {
-		newQual.put("title", title);
+		newData.put("title", title);
 	}
 
 	public String getsDay() {
-		return newQual.containsKey("sDay") ? (String) newQual.get("sDay") : "";
+		return newData.containsKey("sDay") ? (String) newData.get("sDay") : "";
 	}
-
 	public void setsDay(String sDay) {
-		newQual.put("sDay", sDay);
+		newData.put("sDay", sDay);
 	}
-
 	public String getsMonth() {
-		return newQual.containsKey("sMonth") ? (String) newQual.get("sDay") : "";
+		return newData.containsKey("sMonth") ? (String) newData.get("sDay") : "";
 	}
-
 	public void setsMonth(String sMonth) {
-		newQual.put("sMonth", sMonth);
+		newData.put("sMonth", sMonth);
 	}
-
 	public String getsYear() {
-		return newQual.containsKey("sYear") ? (String) newQual.get("sYear") : "";
+		return newData.containsKey("sYear") ? (String) newData.get("sYear") : "";
 	}
-
 	public void setsYear(String sYear) {
-		newQual.put("sYear", sYear);
+		newData.put("sYear", sYear);
 	}
 
 	public String geteDay() {
-		return newQual.containsKey("eDay") ? (String) newQual.get("eDay") : "";
+		return newData.containsKey("eDay") ? (String) newData.get("eDay") : "";
 	}
-
 	public void seteDay(String eDay) {
-		newQual.put("eDay", eDay);
+		newData.put("eDay", eDay);
 	}
-
 	public String geteMonth() {
-		return newQual.containsKey("eMonth") ? (String) newQual.get("eDay") : "";
+		return newData.containsKey("eMonth") ? (String) newData.get("eDay") : "";
 	}
-
 	public void seteMonth(String eMonth) {
-		newQual.put("eMonth", eMonth);
+		newData.put("eMonth", eMonth);
 	}
-
 	public String geteYear() {
-		return newQual.containsKey("eYear") ? (String) newQual.get("eYear") : "";
+		return newData.containsKey("eYear") ? (String) newData.get("eYear") : "";
 	}
-
 	public void seteYear(String eYear) {
-		newQual.put("eYear", eYear);
+		newData.put("eYear", eYear);
 	}
 
 	public String getComment() {
-		return newQual.containsKey("comment") ? (String) newQual.get("comment") : "";
+		return newData.containsKey("comment") ? (String) newData.get("comment") : "";
 	}
-
 	public void setComment(String comment) {
-		newQual.put("comment", comment);
+		newData.put("comment", comment);
 	}
-
+	
 	public String getWhere() {
-		return newQual.containsKey("institution") ? (String) newQual.get("institution") : "";
+		return newData.containsKey("institution") ? (String) newData.get("institution") : "";
 	}
-
 	public void setWhere(String where) {
-		newQual.put("institution", where);
+		newData.put("institution", where);
 	}
-
+	
 	public String getType() {
-		return newQual.containsKey("level") ? (String) newQual.get("level") : "";
+		return newData.containsKey("level") ? (String) newData.get("level") : "";
 	}
-
 	public void setType(String type) {
-		newQual.put("level", type);
+		newData.put("level", type);
 	}
 
 	public String getEmail() {
-		return newQual.containsKey("institutionEmail") ? (String) newQual.get("institutionEmail") : "";
+		return newData.containsKey("institutionEmail") ? (String) newData.get("institutionEmail") : "";
 	}
-
 	public void setEmail(String rEmail) {
-		newQual.put("institutionEmail", rEmail);
+		newData.put("institutionEmail", rEmail);
 	}
 
 	public String getPhoneNo() {
-		return newQual.containsKey("institutionPhoneNo") ? (String) newQual.get("institutionPhoneNo") : "";
+		return newData.containsKey("institutionPhoneNo") ? (String) newData.get("institutionPhoneNo") : "";
 	}
-
 	public void setPhoneNo(String rPhoneNo) {
-		newQual.put("institutionPhoneNo", rPhoneNo);
+		newData.put("institutionPhoneNo", rPhoneNo);
 	}
 
 	public String getReferee() {
-		return newQual.containsKey("refree") ? (String) newQual.get("referee") : "";
+		return newData.containsKey("refree") ? (String) newData.get("referee") : "";
 	}
-
 	public void setReferee(String referee) {
-		newQual.put("referee", referee);
+		newData.put("referee", referee);
 	}
 
 	public String getmainSubj() {
 		return "";
 	}
-
 	public void setmainSubj(String mainSubj) {
-		newQual.put("mainSubj", mainSubj);
+		newData.put("mainSubj", mainSubj);
 	}
 
 	public String getSubj1() {
 		return "";
 	}
-
 	public void setSubj1(String subj1) {
-		newQual.put("subj1", subj1);
+		newData.put("subj1", subj1);
 	}
-
 	public String getSubj2() {
 		return "";
 	}
-
 	public void setSubj2(String subj2) {
-		newQual.put("subj2", subj2);
+		newData.put("subj2", subj2);
 	}
-
 	public String getSubj3() {
 		return "";
 	}
-
 	public void setSubj3(String subj3) {
-		newQual.put("subj3", subj3);
+		newData.put("subj3", subj3);
 	}
 }

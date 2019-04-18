@@ -17,35 +17,23 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
-public class Qualification extends StorageAbstract{
-	// https://www.gov.uk/what-different-qualification-levels-mean/list-of-qualification-levels
-	// according to ucas there's 19839 undergraduate courses in the UK
-	// KISCourse.KISAIM valid entry --> basically level
+import exceptions.*;
+
+public class Qualification extends SecondaryStorage {
 //Object-specific variables
-	protected Boolean verified = null; //Defaults to false in DB
+	protected Boolean verified = false; //Defaults to false in DB
 	
 //Initialisation: constructors and variables setup
 	//Existing constructor, also enabling loading, if given a connection
-	public Qualification(int qualificationID) {
-		data.put("id", qualificationID);
+	public Qualification(int id) { super(id); }
+	public Qualification(int id, Connection connection) throws InvalidDataException, DBProblemException {
+		super(id, connection);
 		setDBVariables();
-	}
-	public Qualification(int qualificationID, Connection connection) throws InvalidDataException, DBProblemException {
-		data.put("id", qualificationID);
-		setDBVariables();
-		if (connection!=null) {
-			retrieve(connection);
-			verified = isVerified(connection);
-		}
-		
-		
+		if (connection!=null) verified = isVerified(connection);
 	}
 	//Creating constructor: no qualification id will be available this way
-	public Qualification(Map<String, Object> data, Connection connection) throws DBProblemException {
-		this.data = data;
-		verified = false;
-		setDBVariables();
-		create(connection);
+	public Qualification(String account, Map<String, Object> data, Connection connection) throws DBProblemException {
+		super(account, data, connection);
 	}
 	public void setDBVariables() {
 		keys = new ArrayList<String>(Arrays.asList(
@@ -78,8 +66,7 @@ public class Qualification extends StorageAbstract{
 		} catch (SQLException e) { throw new DBProblemException(e); }
 	}
 	
-	public boolean isVerified(Connection connection) throws InvalidDataException, DBProblemException { 
-		if(verified!=null) return verified;
+	protected boolean isVerified(Connection connection) throws InvalidDataException, DBProblemException { 
 		try(PreparedStatement veri = connection.prepareStatement("SELECT verified FROM Qualification WHERE qualificationID=?")) {
 			veri.setObject(1, data.get("id"));
 			try(ResultSet record = veri.executeQuery()) {
@@ -106,6 +93,10 @@ public class Qualification extends StorageAbstract{
 			allQualifications.add(new Qualification(qualificationID, connection));
 		}
 		return allQualifications;
+	}
+	
+	public static List<SecondaryStorage> all(Object id, Connection connection) throws DBProblemException, InvalidDataException {
+		return all("storage.Qualification", id, connection, "qualificationID", "Qualification", "accountID");
 	}
 
 //Getters and show methods

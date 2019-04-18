@@ -9,10 +9,11 @@ import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 
 import storage.*;
+import exceptions.*;
 
 @Named("actor")
 @SessionScoped
-public class Actor extends VysusBase implements Serializable {
+public class Actor extends vysusWeb.bases.VysusBase implements Serializable {
 	String actor = null;
 	String account = null;
 	Map<String, String> userData = null;
@@ -40,7 +41,7 @@ public class Actor extends VysusBase implements Serializable {
 			Account.makeAccount(accountID, accountData, connection);
 			
 			userData.put("accountID", accountID);
-			new User(connection, username, password, userData);
+			new User(username, password, userData, connection);
 			
 			this.actor = username;
 			this.account = accountID;

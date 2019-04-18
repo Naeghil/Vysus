@@ -11,11 +11,9 @@ import javax.enterprise.context.ConversationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import storage.*;
-
 @Named("institutionGet")
 @ConversationScoped
-public class InstitutionGet extends VysusBean implements Serializable {
+public class InstitutionGet extends vysusWeb.bases.VysusBean implements Serializable {
 	static List<String> types = new ArrayList<String>(Arrays.asList("Primary School","Secondary School","Further Education","University"));
 	
 	Map<String, Object> newData = new HashMap<String, Object>();
@@ -31,7 +29,7 @@ public class InstitutionGet extends VysusBean implements Serializable {
 			//System.out.println("signupInstitution.uGet: " + uGet);
 			//System.out.println("signupInstitution.actor/account: " + actor.actor);
 			actor.signup((String)userData.remove("username"), (String)userData.remove("password"), accountID, userData, newData);
-		} catch (InvalidDataException e) {
+		} catch (exceptions.InvalidDataException e) {
 			actor.handleException(e, false);
 		}
 	}

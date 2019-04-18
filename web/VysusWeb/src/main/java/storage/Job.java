@@ -7,36 +7,27 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
-public class Job extends StorageAbstract{
+import exceptions.*;
+
+public class Job extends SecondaryStorage {
 //Object-specific variables
 
 //Initialisation: constructors and variables setup
-	public Job(Integer jobID) {
-		data.put("id", jobID);
-		setDBVariables();
-	}
-	public Job(Integer jobID, Connection connection) 
-		throws DBProblemException, InvalidDataException {
-		data.put("id", jobID);
-		setDBVariables();
+	public Job(Integer id) { super(id); }
+	public Job(Integer id, Connection connection) throws DBProblemException, InvalidDataException {
+		super(id, connection);
 		if(connection!=null) {
-			retrieve(connection);
 			String candidate = candidate(connection);
 			if(candidate !=null) data.put("candidateID", candidate);
 			data.put("accepted", accepted(connection));
 		}
 	}
-	public Job(Map<String, Object> data, Connection connection) throws DBProblemException {
-		this.data = data;
-		setDBVariables();
-		create(connection);
+	public Job(String account, Map<String, Object> data, Connection connection) throws DBProblemException {
+		super(account, data, connection);
 	}
 	protected void setDBVariables() {
-		keys = new ArrayList<String>(Arrays.asList(
-			"subject", "title", "description", "ratePerHour"));
-		create = "INSERT INTO Job"
-				+ "(accountID, subject, title, description, ratePerHour) "
-				+ "VALUES(?, ?, ?, ?, ?)";
+		keys = new ArrayList<String>(Arrays.asList("subject", "title", "description", "ratePerHour"));
+		create = "INSERT INTO Job(accountID, subject, title, description, ratePerHour) VALUES(?, ?, ?, ?, ?)";
 		retrieve = "SELECT * FROM Job WHERE jobID=?";
 		delete = "DELETE FROM Job WHERE jobID=?";
 	}
@@ -112,6 +103,13 @@ public class Job extends StorageAbstract{
 			allJobs.add(new Job(jobID, connection));
 		}
 		return allJobs;
+	}
+	
+	public static List<SecondaryStorage> all(Object id, Connection connection) throws DBProblemException, InvalidDataException {
+		return all("storage.Job", id, connection, "jobID", "Job", "accountID");
+	}
+	public static List<SecondaryStorage> offers(Object id, Connection connection) throws DBProblemException, InvalidDataException {
+		return all("storage.Job", id, connection, "jobID", "Job", "candidateID");
 	}
 	
 	public static List<Job> offersFor(String candidate, Connection connection) throws DBProblemException, InvalidDataException {

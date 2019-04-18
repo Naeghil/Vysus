@@ -8,11 +8,11 @@ import javax.enterprise.context.ConversationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import storage.InvalidDataException;
+import exceptions.InvalidDataException;
 
 @Named("teacherGet")
 @ConversationScoped
-public class TeacherGet extends VysusBean implements Serializable {
+public class TeacherGet extends vysusWeb.bases.VysusBean implements Serializable {
 	Map<String, Object> newData = new HashMap<String, Object>();
 
 	@Inject

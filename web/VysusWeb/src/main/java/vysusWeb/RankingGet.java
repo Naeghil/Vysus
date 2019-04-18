@@ -45,7 +45,7 @@ public class RankingGet extends VysusBean implements Serializable {
 	
 	void retrieveCandidateData(Map<String, String> candidate, Connection connection) throws DBProblemException, InvalidDataException {
 		Map<String, String> data = new User((String)candidate.get("userID"), connection).showMini();
-		data.putAll(new Teacher(data.get("account"), connection).showMini());
+		data.putAll(new Teacher(data.get("account"), connection).show());
 		data.put("academic", (candidate.get("academic")));
 		data.put("work", (candidate.get("work")));
 		data.put("total", candidate.get("total"));

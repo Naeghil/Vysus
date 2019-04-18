@@ -19,26 +19,14 @@
 		<p>#{ranking.job.description}</p>
 	</div>
 	<div id="candidates-list" class="row w100 fulldimensions">
-		<p:accordionPanel>
-			<ui:repeat var="c" value="#{ranking.candidates}">
-				<p:tab title="#{c.fullName} Total: #{c.total}/20 Work: #{c.work}/10 Academic: #{c.academic}/10">
-					<p>#{c.aboutMe}</p>
-					<!-- Consider adding data-boxes with the qualifications -->
-					<h:form>
-						<h:commandButton value="Offer" action="#{ranking.offer(c.account)}" styleClass="btn btn-primary form-element"/>
-					</h:form>
-				</p:tab>
-			</ui:repeat>
-		</p:accordionPanel>
 		<ui:repeat var="c" value="#{ranking.candidates}" varStatus="status">
-			<div class="data-box">
-				<p>#{c.fullName} Total: #{c.total}/20 Work: #{c.work}/10 Academic: #{c.academic}/10</p>
+			<p:tab title="#{c.fullName} Total: #{c.total}/20 Work: #{c.work}/10 Academic: #{c.academic}/10">
 				<p>#{c.aboutMe}</p>
 				<!-- Consider adding data-boxes with the qualifications -->
 				<h:form>
 					<h:commandButton value="Offer" action="#{ranking.offer(c.account)}" styleClass="btn btn-primary form-element"/>
 				</h:form>
-			</div>
+			</p:tab>
 		</ui:repeat>
 	
 	</div>

@@ -54,6 +54,7 @@ public class RankingGet extends VysusBean implements Serializable {
 	}
 	
 	public void offer(String id) {
+		System.out.println("Got here");
 		try (Connection connection = getConnection()) {
 			System.out.println("RankingGet.offer.id: "+id);
 			new Job(jobID, connection).proposeTo(id, connection);

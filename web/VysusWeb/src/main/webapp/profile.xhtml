@@ -11,7 +11,7 @@
 		<f:viewAction action="#{actor.onLoad(true)}"/>
 		<f:viewAction action="#{actor.requestUserData()}"/>
 		<f:viewAction action="#{actor.requestAccountData()}"/>	
-		<f:viewAction action="#{offers.onLoad()}" if="#{actor.accType eq 0}"/>	
+		<f:viewAction action="#{offers.onLoad()}" if="#{actor.accType() eq 0}"/>	
 	</f:metadata>
 	
 	

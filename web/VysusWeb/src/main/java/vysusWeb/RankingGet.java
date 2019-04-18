@@ -33,7 +33,7 @@ public class RankingGet extends VysusBean implements Serializable {
 		try (Connection connection = getConnection()) {
 			job = new Job(jobID, connection).show();
 			//new ArrayList<Map<String, Object>>();
-			List<Map<String, String>> gradedCandidates = new Ranking().rankingMain(job.get("subject"), Float.parseFloat(job.get("ratePerHour")), connection);
+			List<Map<String, String>> gradedCandidates = new Ranking().rankingMain(job.get("subject"), Float.parseFloat(job.get("rate")), connection);
 			for(Map<String, String> cand : gradedCandidates) retrieveCandidateData(cand, connection);
 			
 

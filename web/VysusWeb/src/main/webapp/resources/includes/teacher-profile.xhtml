@@ -2,7 +2,7 @@
 	 xmlns:ui="http://java.sun.com/jsf/facelets"
 	 xmlns:p="http://primefaces.org/ui"
      xmlns:f="http://java.sun.com/jsf/core">
-	<h4>Your work preferences:</h4>
+    <h4>Your work preferences:</h4>
 	<div id="maxDist">
 		<p class="inline-block">Maximum Distance: </p>
 		<p class="profile-element inline-block">#{actor.accountField("maxDistance")}</p>
@@ -30,10 +30,6 @@
 			styleClass="form-control form-element w60 h30 profile-element hidden" required="false" />	
 	</div>
 	
-	
-	<f:metadata>
-		<f:viewAction action="#{offers.onLoad()}"/>
-	</f:metadata>
 	<div class="w100 data-box">
 		<h:outputText rendered="#{offers.noData()}"
 			value="You haven't been offered any jobs yet." />

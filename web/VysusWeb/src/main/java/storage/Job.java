@@ -60,7 +60,9 @@ public class Job extends StorageAbstract{
 	
 	public void proposeTo(String candidateID, Connection connection) throws DBProblemException, InvalidDataException {
 		try(PreparedStatement propose = connection.prepareStatement("UPDATE Job SET candidateID=? WHERE jobID=?");) {
-			propose.setObject(1, candidateID);
+			System.out.println("Proposing job to: "+candidateID);
+			System.out.println("Job proposed: "+data.get("id").toString());
+			propose.setString(1, candidateID);
 			propose.setObject(2, data.get("id"));
 			if(propose.executeUpdate() != 1) throw new InvalidDataException("Record not found");
 		} catch (SQLException e) { throw new DBProblemException(e); }

@@ -82,7 +82,6 @@ public class Actor extends vysusWeb.bases.VysusBase implements Serializable {
 		 }
 	}
 	public void requestAccountData() {
-		//System.out.println("when reqaccountdata: "+this.account+" "+this.actor);
 		if(!isIn()) return;
 		try(Connection connection = getConnection()){
 			 accountData = Account.getAccount(this.account, this.actor, connection).showFull();
@@ -90,7 +89,6 @@ public class Actor extends vysusWeb.bases.VysusBase implements Serializable {
 		} catch(InvalidDataException | DBProblemException | SQLException e) {
 			handleException(e, true);
 		}
-		//System.out.println(accountData);
 	}
 	
 	public void handleException(Exception ex, boolean fatal) {
@@ -109,19 +107,17 @@ public class Actor extends vysusWeb.bases.VysusBase implements Serializable {
 	}
 //Getters and setters:
 	public String userField(String key) {
-		//System.out.println("when userfield: "+this.account+" "+this.actor);
 		if(userData!=null && userData.containsKey(key)) return userData.get(key);
 		return "";
 	}
 	public String accountField(String key) {
-		//System.out.println("when accountfield: "+this.account+" "+this.actor);
 		if(accountData!=null && accountData.containsKey(key)) return accountData.get(key);
 		return "";
 	}
 	
 	public int accType() throws InvalidDataException {
-		//System.out.println("when account type: "+this.account+" "+this.actor);
-		return Account.accType(account);
+		if(isIn()) return Account.accType(account);
+		else return -1;
 	}
 	
 	public String getUserPicture() { 

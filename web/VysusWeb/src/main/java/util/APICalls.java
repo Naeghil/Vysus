@@ -24,7 +24,7 @@ public class APICalls {
 			//System.out.println("fullAddress.identifier: " + identifier);
 			//System.out.println("fullAddress.postcode: " + postcode);
 			String identifierFix = identifier.replaceAll("\\s","");
-			String APIData = APICalls.getData("https://api.getAddress.io/find/"+postcode+"/"+identifierFix+"?api-key=xDg38fqBR02Bgpr1KgDhVw18443");
+			String APIData = APICalls.getData("https://api.getAddress.io/find/"+postcode+"/"+identifierFix+"?api-key=V2c-6kTjTEix8zne5INfIw18441");
 			Map<String,String> testData = new HashMap<String,String>();
 			testData.put("Identifier", "WE RAN OUT OF API CALLS");
 			testData.put("Town", "WE RAN OUT OF API CALLS");

@@ -34,9 +34,9 @@ public class RankingGet extends VysusBean implements Serializable {
 			job = new Job(jobID, connection).show();
 			//new ArrayList<Map<String, Object>>();
 			List<Map<String, String>> gradedCandidates = new Ranking().rankingMain(job.get("subject"), Float.parseFloat(job.get("rate")), connection);
-			System.out.println("Graded candidates: " + gradedCandidates);
+			//System.out.println("Graded candidates: " + gradedCandidates);
 			for(Map<String, String> cand : gradedCandidates) retrieveCandidateData(cand, connection);
-			System.out.println("Candidates: " + candidates);
+			//System.out.println("Candidates: " + candidates);
 
 		} catch (InvalidDataException | DBProblemException | SQLException e) {
 			actor.handleException(e, false);
@@ -55,6 +55,7 @@ public class RankingGet extends VysusBean implements Serializable {
 	
 	public void offer(String id) {
 		try (Connection connection = getConnection()) {
+			System.out.println("RankingGet.offer.id: "+id);
 			new Job(jobID, connection).proposeTo(id, connection);
 			redirect("jobs.xhtml");
 		} catch (InvalidDataException | DBProblemException | SQLException e) {

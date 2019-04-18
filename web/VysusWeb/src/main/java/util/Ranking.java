@@ -43,11 +43,11 @@ public class Ranking {
 					
 					if (qualification.type.matches("Work experience")) {
 						teacherExperience = (float) experienceRanking(qualification.startDate,qualification.endDate);
-						System.out.println(current.accountID + " teacherExperience " + teacherValue);
+						//System.out.println(current.accountID + " teacherExperience " + teacherValue);
 						rankingBreakdown.put("work", Float.toString(teacherExperience));
 					} else {
 						teacherValue = (float) ((qualificationRelevancy(current.fromMain) * (qualificationRanking(qualification.type))));
-						System.out.println(current.accountID + " teacherValue " + teacherValue);
+						//System.out.println(current.accountID + " teacherValue " + teacherValue);
 						rankingBreakdown.put("academic", Float.toString(teacherValue));
 					}
 				}
@@ -55,7 +55,7 @@ public class Ranking {
 				float actualRanking = teacherValue + teacherExperience;
 				rankingBreakdown.put("total", Float.toString(actualRanking));
 				rankingBreakdowns.put(current.accountID, rankingBreakdown);
-				System.out.println(current.accountID + " is worth " + actualRanking);
+				//System.out.println(current.accountID + " is worth " + actualRanking);
 				alreadyTested.put(current.accountID,"yes");
 				
 				if (allRankings.containsKey(actualRanking)) {
@@ -67,7 +67,7 @@ public class Ranking {
 					newGroupedCandidates.add(current.accountID);
 					allRankings.put(actualRanking, newGroupedCandidates);
 				}
-				System.out.println(allRankings);
+				//System.out.println(allRankings);
 			
 				//allRankings.put(current.accountID,actualRanking);
 				}
@@ -77,16 +77,16 @@ public class Ranking {
 			List<String> people = allRankings.get(keys.get(i));
 			for (int j = 0; j < people.size(); j++) {
 				Map<String,String> userData = new HashMap<String,String>();
-				System.out.println(rankingBreakdowns);
+				//System.out.println(rankingBreakdowns);
 				userData.put("userID", findActor(people.get(j),connection));
 				userData.put("academic", rankingBreakdowns.get(people.get(j)).get("academic"));
 				userData.put("work", rankingBreakdowns.get(people.get(j)).get("work"));
 				userData.put("total", rankingBreakdowns.get(people.get(j)).get("total"));
 				finalRanking.add(userData);
-				System.out.println("finalRanking after " + people.get(j) + " " + finalRanking);
+				//System.out.println("finalRanking after " + people.get(j) + " " + finalRanking);
 			}
 		}
-		System.out.println(finalRanking);
+		//System.out.println(finalRanking);
 		return finalRanking;
 
 			

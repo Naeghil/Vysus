@@ -30,8 +30,9 @@
 			styleClass="form-control form-element w60 h30 profile-element hidden" required="false" />	
 	</div>
 	
-	<div class="w100 data-box">
-		<h:outputText rendered="#{offers.noData()}"
+	<div class="container-fluid w100 lefttext fulldimensions"><div class="row h100 w100 fulldimensions">
+		<div id="offers-display" class="col-md-7 h100 scroll-div">
+			<h:outputText rendered="#{offers.noData()}"
 			value="You haven't been offered any jobs yet." />
 		<ui:repeat var="o" value="#{offers.toShow}" varStatus="status">
 			<div class="data-box w100 lefttext">
@@ -47,4 +48,5 @@
 			</div>
 		</ui:repeat>
 	</div>
+	</div></div>
 </div>

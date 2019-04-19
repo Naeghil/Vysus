@@ -100,6 +100,7 @@ public class User extends SecondaryStorage {
 	}
 	
 	public static List<SecondaryStorage> all(Object id, Connection connection) throws DBProblemException, InvalidDataException {
+		System.out.println("User.all");
 		return all("storage.User", id, connection, "userID", "User", "accountID");
 	}
 	

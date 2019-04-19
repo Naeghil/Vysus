@@ -25,6 +25,7 @@ public class Staff extends vysusWeb.bases.SecondaryBean implements Serializable 
 	public void onLoad() { onLoad("yes"); }
 	
 	protected void loadData(Connection connection) throws DBProblemException, InvalidDataException {
+		System.out.println("Staff.loadData");
 		for (SecondaryStorage s : User.all(actor.account(), connection)) toShow.add(s.showFull());
 	}
 	

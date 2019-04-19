@@ -30,7 +30,6 @@ public class Qualifications extends vysusWeb.bases.SecondaryBean implements Seri
 			Arrays.asList("Undergraduate", "Postgraduate", "PHD", "Work experience"));
 
 	public void onLoad() { 
-		System.out.println("Qualifications.onLoad");
 		onLoad(""); 
 	}
 	
@@ -50,11 +49,13 @@ public class Qualifications extends vysusWeb.bases.SecondaryBean implements Seri
 		newData.put("endDate", eDate);
 		
 		new Qualification(actor.account(), newData, connection);
+		redirect("qualifications.xhtml");
 	}
 
 	public void delete(String id) {
 		try (Connection connection = getConnection()) {
 			new Qualification(Integer.parseInt(id)).delete(connection);
+			redirect("qualifications.xhtml");
 		} catch (DBProblemException | InvalidDataException | SQLException e) {
 			actor.handleException(e, false);
 		}

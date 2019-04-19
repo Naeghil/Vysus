@@ -19,7 +19,9 @@ import storage.SecondaryStorage;
 public class Jobs extends vysusWeb.bases.SecondaryBean implements Serializable {
 	static List<String> subjects = new ArrayList<String>(Arrays.asList("English Literature","English Language","Maths","Chemistry","Biology","Physics","History","Geography","French","German","Spanish","Mandarin","Resistant Materials","Art","Music","PE","Pastoral Studies","Computing and IT","Religious Studies"));
 	
-	public void onLoad() { onLoad("no"); }
+	public void onLoad() { 
+		onLoad("no"); 
+	}
 	
 	protected void loadData(Connection connection) throws DBProblemException, InvalidDataException {
 		for (SecondaryStorage j : Job.all(actor.account(), connection)) toShow.add(j.show());
@@ -27,6 +29,7 @@ public class Jobs extends vysusWeb.bases.SecondaryBean implements Serializable {
 	
 	protected void makeNew (Connection connection) throws InvalidDataException, DBProblemException {
 		new Job(actor.account(), newData, connection);
+		redirect("jobs.xhtml");
 	}
 	
 	public void findCandidates(String id) {
@@ -38,6 +41,7 @@ public class Jobs extends vysusWeb.bases.SecondaryBean implements Serializable {
 	public void delete(String id) {
 		try(Connection connection = getConnection()) {
 			new Job(Integer.parseInt(id)).deleteJob(connection);
+			redirect("jobs.xhtml");
 		} catch (DBProblemException | InvalidDataException | SQLException e) {
 			actor.handleException(e, false);
 		}

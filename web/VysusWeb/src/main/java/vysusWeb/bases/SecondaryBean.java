@@ -20,8 +20,9 @@ public abstract class SecondaryBean extends VysusBean {
 			message("You don't have the rights to go there.", "Bad navigation");
 			return;
 		}
-		toShow = new ArrayList<Map<String, String>>();
+		if(toShow!=null) return;
 		try (Connection connection = getConnection()) {
+			toShow = new ArrayList<Map<String, String>>();
 			loadData(connection);
 		} catch (DBProblemException | InvalidDataException | SQLException e) {
 			actor.handleException(e, true);

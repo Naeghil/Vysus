@@ -20,22 +20,17 @@ public class Ranking extends vysusWeb.bases.SecondaryBean implements Serializabl
 	Map<String, String> job = new HashMap<String, String>();
 	
 	public void onLoad() {
-		System.out.println("Ranking.onLoad: "+jobID);
-		if(jobID==null) {
+		if(getSessionMap().containsKey("jobID")) jobID = (Integer)getSessionMap().remove("jobID");
+		else {
 			redirect("profile.jsf");
 			message("No job", "No job selected");
 			return;
 		}
-		onLoad("");
+		onLoad("no");
 	} 
 	protected void loadData(Connection connection) throws DBProblemException, InvalidDataException {
 		System.out.println("Ranking.loadData");
 		job = new Job(jobID, connection).show();
-		if(!job.get("schoolID").equals(actor.account())) {
-			redirect("profile.jsf");
-			message("This job is not yours", "Not your job");
-			return;
-		}
 		List<Map<String, String>> gradedCandidates = 
 			new util.Ranking().rankingMain(job.get("subject"), Float.parseFloat(job.get("rate")), connection);
 		for(Map<String, String> cand : gradedCandidates) toShow.add(candidateData(cand, connection));
@@ -63,12 +58,6 @@ public class Ranking extends vysusWeb.bases.SecondaryBean implements Serializabl
 	
 	public Map<String, String> getJob(){
 		return job;
-	}
-	public Integer getjobID() {
-		return jobID;
-	}
-	public void setjobID(Integer id) {
-		jobID = id;
 	}
 
 	//Doesn't make nor deletes anything

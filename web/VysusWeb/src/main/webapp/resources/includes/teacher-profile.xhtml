@@ -43,7 +43,8 @@
 				#{o.description} <br/>
 				Per hour: £ #{o.ratePerHour} </p>
 				<h:form styleClass="w100 righttext">
-					<h:commandButton value="accept" action="#{offers.accept(o.id)}" styleClass="btn btn-primary form-element"/>
+					<h:commandButton value="Accept" action="#{offers.accept(o.id)}" styleClass="btn btn-primary form-element"/>
+					<h:commandButton value="Refuse" action="#{offers.refuse(o.id)}" styleClass="btn btn-primary form-element"/>
 				</h:form>
 			</div>
 		</ui:repeat>

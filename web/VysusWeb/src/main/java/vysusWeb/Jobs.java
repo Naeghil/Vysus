@@ -37,6 +37,15 @@ public class Jobs extends vysusWeb.bases.SecondaryBean implements Serializable {
 		redirect("ranking.jsf");
 	}
 	
+	public void revoke(String id) {
+		try (Connection connection = getConnection()) {
+			new Job(Integer.parseInt(id), connection).proposeTo(null, connection);
+			redirect("jobs.jsf");
+		} catch (InvalidDataException | DBProblemException | SQLException e) {
+			actor.handleException(e, false);
+		}
+	}
+	
 	public void delete(String id) {
 		try(Connection connection = getConnection()) {
 			new Job(Integer.parseInt(id)).deleteJob(connection);

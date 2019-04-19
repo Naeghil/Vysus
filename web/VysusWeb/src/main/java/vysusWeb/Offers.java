@@ -18,20 +18,25 @@ public class Offers extends vysusWeb.bases.SecondaryBean implements Serializable
 	public void onLoad() { onLoad(""); }
 	
 	protected void loadData(Connection connection) throws DBProblemException, InvalidDataException {
-		System.out.println("Loading the data: ");
 		for (SecondaryStorage j : Job.offers(actor.account(), connection)) {
 			Map<String, String> data = j.show();
-			System.out.println("Job from: "+data.get("schoolID"));			
 			data.putAll(new Institution(data.get("schoolID"), connection).showMini());
-			System.out.println(data);			
 			toShow.add(data);
 		}
-		System.out.println(toShow);
 	}
 	
 	public void accept(String id) {
 		try (Connection connection = getConnection()) {
 			new Job(Integer.parseInt(id), connection).accept(connection);
+			redirect("profile.jsf");
+		} catch (InvalidDataException | DBProblemException | SQLException e) {
+			actor.handleException(e, false);
+		}
+	}
+	
+	public void refuse(String id) {
+		try (Connection connection = getConnection()) {
+			new Job(Integer.parseInt(id), connection).proposeTo(null, connection);
 			redirect("profile.jsf");
 		} catch (InvalidDataException | DBProblemException | SQLException e) {
 			actor.handleException(e, false);

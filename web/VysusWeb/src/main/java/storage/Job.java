@@ -51,8 +51,6 @@ public class Job extends SecondaryStorage {
 	
 	public void proposeTo(String candidateID, Connection connection) throws DBProblemException, InvalidDataException {
 		try(PreparedStatement propose = connection.prepareStatement("UPDATE Job SET candidateID=? WHERE jobID=?");) {
-			System.out.println("Proposing job to: "+candidateID);
-			System.out.println("Job proposed: "+data.get("id").toString());
 			propose.setString(1, candidateID);
 			propose.setObject(2, data.get("id"));
 			if(propose.executeUpdate() != 1) throw new InvalidDataException("Record not found");
@@ -134,6 +132,7 @@ public class Job extends SecondaryStorage {
 		show.put("description", (String)data.get("description"));
 		show.put("rate", Float.toString((float)data.get("ratePerHour")));
 		if(data.containsKey("candidateID")) show.put("candidate", (String)data.get("candidateID"));
+		else show.put("candidate", "");
 		if((boolean)data.get("accepted")) show.put("accepted", "yes");
 		else show.put("accepted", "no");
 		

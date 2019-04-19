@@ -145,6 +145,10 @@ p { font-family: 'Gentium Basic',serif; }
 	border-color:red;
 }
 
+.yellow {
+	border-color:yellow;
+}
+
 /* sidebar.xhtml */
 .logout-button {
 	position:absolute;

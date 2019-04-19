@@ -26,6 +26,7 @@ public class Offers extends vysusWeb.bases.SecondaryBean implements Serializable
 			System.out.println(data);			
 			toShow.add(data);
 		}
+		System.out.println(toShow);
 	}
 	
 	public void accept(String id) {

@@ -33,16 +33,16 @@
 	<div class="w100 data-box">
 		<h:outputText rendered="#{offers.noData()}"
 			value="You haven't been offered any jobs yet." />
-		<ui:repeat var="j" value="offers.toShow" varStatus="status">
+		<ui:repeat var="o" value="offers.toShow" varStatus="status">
 			<div class="data-box w100 lefttext">
-				<p> #{j.title} at #{j.school}, #{j.type}<br/>
-				Where: #{j.address} <br/>
-				Subject: #{j.subject} <br/>
+				<p> #{o.title} at #{o.school}, #{o.type}<br/>
+				Where: #{o.address} <br/>
+				Subject: #{o.subject} <br/>
 				Description: <br/>
-				#{j.description} <br/>
-				Per hour: £ #{j.ratePerHour} </p>
+				#{o.description} <br/>
+				Per hour: £ #{o.ratePerHour} </p>
 				<h:form styleClass="w100 righttext">
-					<h:commandButton value="accept" action="#{offers.accept(j.id)}" styleClass="btn btn-primary form-element"/>
+					<h:commandButton value="accept" action="#{offers.accept(o.id)}" styleClass="btn btn-primary form-element"/>
 				</h:form>
 			</div>
 		</ui:repeat>

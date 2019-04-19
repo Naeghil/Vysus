@@ -30,8 +30,8 @@
 			styleClass="form-control form-element w60 h30 profile-element hidden" required="false" />	
 	</div>
 	
-	<div class="container-fluid w100 lefttext fulldimensions"><div class="row h100 w100 fulldimensions">
-		<div id="offers-display" class="col-md-7 h100 scroll-div">
+	<div class="container-fluid w100 lefttext fulldimensions"><div class="row w100 fulldimensions">
+		<div id="offers-display" class="col-md-7 w100 scroll-div">
 			<h:outputText rendered="#{offers.noData()}"
 			value="You haven't been offered any jobs yet." />
 		<ui:repeat var="o" value="#{offers.toShow}" varStatus="status">
@@ -42,7 +42,7 @@
 				Description: <br/>
 				#{o.description} <br/>
 				Per hour: £ #{o.ratePerHour} </p>
-				<h:form styleClass="w100 righttext">
+				<h:form rendered="#{o.accepted.equals('no')}" styleClass="w100 righttext">
 					<h:commandButton value="Accept" action="#{offers.accept(o.id)}" styleClass="btn btn-primary form-element"/>
 					<h:commandButton value="Refuse" action="#{offers.refuse(o.id)}" styleClass="btn btn-primary form-element"/>
 				</h:form>

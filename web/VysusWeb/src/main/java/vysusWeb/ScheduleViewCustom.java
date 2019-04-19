@@ -5,8 +5,8 @@ import java.util.Calendar;
 import java.util.Date;
 
 import javax.annotation.PostConstruct;
-import javax.enterprise.context.ConversationScoped;
 import javax.faces.application.FacesMessage;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 
@@ -19,7 +19,7 @@ import org.primefaces.model.ScheduleEvent;
 import org.primefaces.model.ScheduleModel;
 
 @Named("scheduleViewCustom")
-@ConversationScoped
+@ViewScoped
 public class ScheduleViewCustom implements Serializable {
  
     private ScheduleModel eventModel = new DefaultScheduleModel();

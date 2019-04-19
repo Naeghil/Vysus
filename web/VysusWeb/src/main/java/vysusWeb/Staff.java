@@ -40,11 +40,14 @@ public class Staff extends vysusWeb.bases.SecondaryBean implements Serializable 
 		newData.put("accountID", actor.account());
 		
 		new User((String)newData.remove("username"), (String)newData.remove("password"), newData, connection);
+		
+		redirect("staff.xhtml");
 	}
 	
 	public void delete(String id) {
 		try(Connection connection = getConnection()) {
 			new User(id).delete(connection);
+			redirect("staff.xhtml");
 		} catch (DBProblemException | InvalidDataException | SQLException e) {
 			actor.handleException(e, false);
 		}

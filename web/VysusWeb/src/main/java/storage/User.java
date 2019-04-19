@@ -24,8 +24,8 @@ import exceptions.*;
 public class User extends SecondaryStorage {
 //Object initialisation:
 	//Constructors for existing user
-	public User(String username) { super(username);	}
-	public User(String username, Connection connection) throws DBProblemException, InvalidDataException {
+	public User(Object username) { super(username);	}
+	public User(Object username, Connection connection) throws DBProblemException, InvalidDataException {
 		super(username, connection);
 	}
 	//Constructor for new user

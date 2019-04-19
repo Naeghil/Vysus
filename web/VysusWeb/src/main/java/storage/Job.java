@@ -13,8 +13,8 @@ public class Job extends SecondaryStorage {
 //Object-specific variables
 
 //Initialisation: constructors and variables setup
-	public Job(Integer id) { super(id); }
-	public Job(Integer id, Connection connection) throws DBProblemException, InvalidDataException {
+	public Job(Object id) { super(id); }
+	public Job(Object id, Connection connection) throws DBProblemException, InvalidDataException {
 		super(id, connection);
 		if(connection!=null) {
 			String candidate = candidate(connection);

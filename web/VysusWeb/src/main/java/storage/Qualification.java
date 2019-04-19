@@ -25,8 +25,8 @@ public class Qualification extends SecondaryStorage {
 	
 //Initialisation: constructors and variables setup
 	//Existing constructor, also enabling loading, if given a connection
-	public Qualification(int id) { super(id); }
-	public Qualification(int id, Connection connection) throws InvalidDataException, DBProblemException {
+	public Qualification(Object id) { super(id); }
+	public Qualification(Object id, Connection connection) throws InvalidDataException, DBProblemException {
 		super(id, connection);
 		setDBVariables();
 		if (connection!=null) verified = isVerified(connection);

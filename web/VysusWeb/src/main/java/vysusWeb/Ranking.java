@@ -20,6 +20,7 @@ public class Ranking extends vysusWeb.bases.SecondaryBean implements Serializabl
 	Map<String, String> job = new HashMap<String, String>();
 	
 	public void onLoad() {
+		System.out.println("Ranking.onLoad: "+jobID);
 		if(jobID==null) {
 			redirect("profile.jsf");
 			message("No job", "No job selected");

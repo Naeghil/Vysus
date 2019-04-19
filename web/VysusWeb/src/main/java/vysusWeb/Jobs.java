@@ -33,9 +33,6 @@ public class Jobs extends vysusWeb.bases.SecondaryBean implements Serializable {
 	}
 	
 	public void findCandidates(String id) {
-		System.out.println("Jobs.findCandidates: "+id);
-		getSessionMap().put("jobID", new Integer(id));
-		System.out.println(getSessionMap());
 		redirect("ranking.jsf?jobID="+id);
 	}
 	

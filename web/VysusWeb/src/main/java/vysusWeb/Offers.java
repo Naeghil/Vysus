@@ -18,9 +18,12 @@ public class Offers extends vysusWeb.bases.SecondaryBean implements Serializable
 	public void onLoad() { onLoad(""); }
 	
 	protected void loadData(Connection connection) throws DBProblemException, InvalidDataException {
+		System.out.println("Loading the data: ");
 		for (SecondaryStorage j : Job.offers(actor.account(), connection)) {
 			Map<String, String> data = j.show();
+			System.out.println("Job from: "+data.get("schoolID"));			
 			data.putAll(new Institution(data.get("schoolID"), connection).showMini());
+			System.out.println(data);			
 			toShow.add(data);
 		}
 	}

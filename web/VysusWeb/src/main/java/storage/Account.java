@@ -16,16 +16,12 @@ public abstract class Account extends StorageAbstract {
 	int accType = -1;
 
 //Initialisation: constructors and variables setup
-	public Account(String accountID) {
-		data.put("id", accountID);
-		setDBVariables();
+	public Account(String id) { super(id); }
+	public Account(String id, Connection connection) throws DBProblemException, InvalidDataException {
+		super(id, connection);
 	}
-	public Account(String accountID, Map<String, Object> accountData, Connection connection)
-		throws DBProblemException {
-		data = accountData;
-		data.put("id", accountID);
-		setDBVariables();
-		create(connection);
+	public Account(String id, Map<String, Object> data, Connection connection) throws DBProblemException {
+		super(id, data, connection);
 	}
 	//Masking constructor for existing accounts
 	public static Account getAccount(String accountID)throws InvalidDataException {

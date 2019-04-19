@@ -19,11 +19,12 @@ public class Institution extends Account{
 	
 //Initialisation: constructors and variables setup
 	//Uses super constructors
-	public Institution(String accountID) { super(accountID);  }
-	
-	public Institution(String accountID, String actor, Connection connection) throws DBProblemException, InvalidDataException { 
-		super(accountID); 
-		retrieve(connection);
+	public Institution(String id) { super(id);  }
+	public Institution(String id, Connection connection) throws DBProblemException, InvalidDataException {
+		super(id, connection);
+	}
+	public Institution(String id, String actor, Connection connection) throws DBProblemException, InvalidDataException { 
+		this(id, connection); 
 		requestAdminRights(actor);
 	}
 	public Institution(String accountID, Map<String, Object> accountData, Connection connection)

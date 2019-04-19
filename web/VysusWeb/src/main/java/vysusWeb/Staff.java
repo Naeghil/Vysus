@@ -25,11 +25,15 @@ public class Staff extends vysusWeb.bases.SecondaryBean implements Serializable 
 	public void onLoad() { onLoad("yes"); }
 	
 	protected void loadData(Connection connection) throws DBProblemException, InvalidDataException {
-		for (SecondaryStorage s : User.all(actor.account(), connection)) toShow.add(s.showFull());
+		for (SecondaryStorage s : User.all(actor.account(), connection)) {
+			Map<String, String> sData = s.showFull();
+			if(!sData.get("account").equals(actor.account())) toShow.add(s.showFull());
+		}
 	}
 	
 	protected void makeNew (Connection connection) throws InvalidDataException, DBProblemException {
-		Date date = Conv.stringToDate((String)newData.remove("year")+"-"+(String)newData.remove("month")+"-"+(String)newData.remove("day"));
+		Date date = Conv.stringToDate(
+			(String)newData.remove("year")+"-"+(String)newData.remove("month")+"-"+(String)newData.remove("day"));
 		
 		newData.put("dateOfBirth", date);
 		newData.put("fullName", (String)newData.remove("title")+" "+(String)newData.remove("name"));
@@ -40,19 +44,10 @@ public class Staff extends vysusWeb.bases.SecondaryBean implements Serializable 
 	
 	public void delete(String id) {
 		try(Connection connection = getConnection()) {
-			new storage.Staff(id).deleteStaff(connection);
+			new User(id).delete(connection);
 		} catch (DBProblemException | InvalidDataException | SQLException e) {
 			actor.handleException(e, false);
 		}
-	}
-
-//Renderer
-	public boolean noStaff() {
-		return staff.size()==0;
-	}
-	
-	public List<Map<String, String>> getStaff(){
-		return staff;
 	}
 	
 //Getters and setters:

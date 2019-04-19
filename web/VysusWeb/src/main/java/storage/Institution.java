@@ -52,23 +52,9 @@ public class Institution extends Account{
 	public void requestAdminRights(String actor) {
 		admin = actor.equals(data.get("sysAdminID"));
 	}
-	//The following methods handle the account's jobs
-	public void postJob(Map<String, Object> jobData, Connection connection)
-		throws DBProblemException, InvalidDataException {
-		if(admin) throw new InvalidDataException(null, "You don't have the rights to perform this operation");
-		//@SuppressWarnings("unused")
-		//Job newJob = new Job(jobData, connection)
-	}
-	public void deleteJob(Integer jobID, Connection connection)
-		throws DBProblemException, InvalidDataException {
-		if(admin) throw new InvalidDataException(null, "You don't have the rights to perform this operation");
-		//Job toDelete = new Job(jobID, null);
-		//toDelete.delete(connection);
-	}
-	
 	public void deleteAccount(Connection connection) throws DBProblemException, InvalidDataException{
-		for(Staff staff : Staff.allStaff(getID(), (String)data.get("sysAdminID"), connection)) staff.delete(connection);
-		for(Job job : Job.allJobs(getID(), connection)) job.delete(connection);
+		for(SecondaryStorage staff : User.all(getID(), connection)) staff.delete(connection);
+		for(SecondaryStorage job : Job.all(getID(), connection)) job.delete(connection);
 		this.delete(connection);
 	}
 	

@@ -25,7 +25,7 @@
 					#{j.description} <br/>
 					Per hour: £ #{j.rate}
 					</p>
-					<h:form rendered="#{j.accepted.equals('no')}"styleClass="w100 righttext fulldimensions">
+					<h:form rendered="#{j.accepted.equals('no')}" styleClass="w100 righttext fulldimensions">
 						<h:commandButton rendered="#{j.candidate.equals('')}" value="Find Candidates!" action="#{jobs.findCandidates(j.id)}" styleClass="btn btn-primary form-element"/>
 						<h:commandButton rendered="#{!j.candidate.equals('')}" value="Revoke" action="#{jobs.revoke(j.id)}" styleClass="btn btn-primary form-element"/>
 						<h:commandButton value="Delete" action="#{jobs.delete(j.id)}" styleClass="btn btn-primary form-element"/>

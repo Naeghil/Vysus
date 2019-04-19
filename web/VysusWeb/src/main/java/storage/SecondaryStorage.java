@@ -24,7 +24,7 @@ public abstract class SecondaryStorage extends StorageAbstract {
 	
 //Static methods
 	public void delete(Connection connection) throws DBProblemException, InvalidDataException {
-		this.delete(connection);
+		super.delete(connection);
 	}
 	
 	protected static List<SecondaryStorage> all(String className, Object queryBy, Connection connection, String idName, String table, String foreignKey)

@@ -31,7 +31,7 @@ public class Offers extends vysusWeb.bases.SecondaryBean implements Serializable
 	public void accept(String id) {
 		try (Connection connection = getConnection()) {
 			new Job(Integer.parseInt(id), connection).accept(connection);
-			redirect("jobs.xhtml");
+			redirect("profile.jsf");
 		} catch (InvalidDataException | DBProblemException | SQLException e) {
 			actor.handleException(e, false);
 		}

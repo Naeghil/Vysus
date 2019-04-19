@@ -33,7 +33,7 @@
 	<div class="w100 data-box">
 		<h:outputText rendered="#{offers.noData()}"
 			value="You haven't been offered any jobs yet." />
-		<ui:repeat var="j" values="offers.toShow">
+		<ui:repeat var="j" value="offers.toShow" varStatus="status">
 			<div class="data-box w100 lefttext">
 				#{j.title} at #{j.school}, #{j.type}<br/>
 				Where: #{j.address} <br/>

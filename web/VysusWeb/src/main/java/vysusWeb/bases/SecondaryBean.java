@@ -14,13 +14,13 @@ public abstract class SecondaryBean extends VysusBean {
 	protected List<Map<String, String>> toShow = null;
 	protected Map<String, Object> newData = new HashMap<String, Object>();
 	
+	public abstract void onLoad();
 	public void onLoad(String adminStatus){
 		if(!actor.accountField("admin").equals(adminStatus)) {
 			redirect("profile.xhtml");
 			message("You don't have the rights to go there.", "Bad navigation");
 			return;
 		}
-		if(toShow!=null) return;
 		try (Connection connection = getConnection()) {
 			toShow = new ArrayList<Map<String, String>>();
 			loadData(connection);
@@ -44,10 +44,12 @@ public abstract class SecondaryBean extends VysusBean {
 	public abstract void delete(String id);
 	
 	public boolean noData() {
+		if(toShow==null) onLoad();
 		return toShow!=null && toShow.size()==0;
 	}
 	
 	public List<Map<String, String>> gettoShow() {
+		if(toShow==null) onLoad();
 		return toShow;
 	}
 }

@@ -19,7 +19,7 @@ public class Ranking extends vysusWeb.bases.SecondaryBean implements Serializabl
 	Integer jobID;
 	Map<String, String> job = new HashMap<String, String>();
 	
-	void onLoad() {
+	public void onLoad() {
 		System.out.println("Ranking.onLoad");
 		if(getSessionMap().containsKey("jobID")) jobID = (Integer)getSessionMap().remove("jobID");
 		else {

@@ -29,19 +29,20 @@ public class Jobs extends vysusWeb.bases.SecondaryBean implements Serializable {
 	
 	protected void makeNew (Connection connection) throws InvalidDataException, DBProblemException {
 		new Job(actor.account(), newData, connection);
-		redirect("jobs.xhtml");
+		redirect("jobs.jsf");
 	}
 	
 	public void findCandidates(String id) {
 		System.out.println("Jobs.findCandidates: "+id);
 		getSessionMap().put("jobID", new Integer(id));
-		redirect("ranking.xhtml");
+		System.out.println(getSessionMap());
+		redirect("ranking.jsf?jobID="+id);
 	}
 	
 	public void delete(String id) {
 		try(Connection connection = getConnection()) {
 			new Job(Integer.parseInt(id)).deleteJob(connection);
-			redirect("jobs.xhtml");
+			redirect("jobs.jsf");
 		} catch (DBProblemException | InvalidDataException | SQLException e) {
 			actor.handleException(e, false);
 		}

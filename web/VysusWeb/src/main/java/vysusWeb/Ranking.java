@@ -21,9 +21,11 @@ public class Ranking extends vysusWeb.bases.SecondaryBean implements Serializabl
 	
 	public void onLoad() {
 		System.out.println("Ranking.onLoad");
+		System.out.println(getSessionMap());
+		System.out.println(jobID);
 		if(getSessionMap().containsKey("jobID")) jobID = (Integer)getSessionMap().remove("jobID");
 		else {
-			redirect("profile.xhtml");
+			redirect("profile.jsf");
 			message("No job", "No job selected");
 			return;
 		}
@@ -51,7 +53,7 @@ public class Ranking extends vysusWeb.bases.SecondaryBean implements Serializabl
 		try (Connection connection = getConnection()) {
 			System.out.println("RankingGet.offer.id: "+id);
 			new Job(jobID, connection).proposeTo(id, connection);
-			redirect("jobs.xhtml");
+			redirect("jobs.jsf");
 		} catch (InvalidDataException | DBProblemException | SQLException e) {
 			actor.handleException(e, false);
 		}
@@ -59,6 +61,12 @@ public class Ranking extends vysusWeb.bases.SecondaryBean implements Serializabl
 	
 	public Map<String, String> getJob(){
 		return job;
+	}
+	public Integer getjobID() {
+		return jobID;
+	}
+	public void setjobID(Integer id) {
+		jobID = id;
 	}
 
 	//Doesn't make nor deletes anything

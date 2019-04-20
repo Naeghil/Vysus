@@ -163,53 +163,10 @@ public class Ranking {
 		return filtered;
 	}
 	
-	public List<Candidate> jobFilter(String subject, float rate, Connection connection) throws DBProblemException {
-		List<Candidate> candidates = new ArrayList<Candidate>(filterMain(subject, rate, connection));
-		candidates.addAll(filterSecondary(subject, rate, connection));
-		return candidates;
-	}
+
 	
 	
-	public List<Candidate> filterMain(String subject, float rate, Connection connection) throws DBProblemException {
-		List<Candidate> firstFilter = new ArrayList<Candidate>();
-		//System.out.println("FilterMain");
-		try(PreparedStatement jobFilter = connection.prepareStatement(
-		  "SELECT User.userID as user, User.accountID as account, User.postcode as postcode, Teacher.maxDistance as maxDist "
-		+ "FROM User INNER JOIN Teacher ON User.accountID=Teacher.accountID INNER JOIN Qualification ON Teacher.accountID=Qualification.accountID "
-		+ "WHERE Qualification.mainSubj=? AND Teacher.minRatePerHour<=?")){
-			jobFilter.setString(1, subject);
-			jobFilter.setFloat(2, rate);
-			try(ResultSet rs = jobFilter.executeQuery()){
-				while(rs.next()) {
-					firstFilter.add(new Candidate(
-						rs.getString("user"), rs.getString("account"), rs.getString("postcode"), rs.getFloat("maxDist"), false));
-				}
-			}
-		} catch (SQLException e) { throw new DBProblemException(e); }
-		
-		return firstFilter;		
-	}
 	
-	public List<Candidate> filterSecondary(String subject, float rate, Connection connection) throws DBProblemException {
-		List<Candidate> firstFilter = new ArrayList<Candidate>();
-		//System.out.println("FilterSecondary");
-		try(PreparedStatement jobFilter = connection.prepareStatement(
-		  "SELECT User.userID as user, User.accountID as account, User.postcode as postcode, Teacher.maxDistance as maxDist "
-		+ "FROM User INNER JOIN Teacher ON User.accountID=Teacher.accountID INNER JOIN Qualification ON Teacher.accountID=Qualification.accountID "
-		+ "WHERE Qualification.subj1=? OR Qualification.subj2=? OR Qualification.subj3=? AND Qualification.mainSubj!=? AND Teacher.minRatePerHour<=?")){
-			for(int i=1; i<5; i++) jobFilter.setString(i, subject);
-			jobFilter.setFloat(5, rate);
-			try(ResultSet rs = jobFilter.executeQuery()){
-				while(rs.next()) {
-					firstFilter.add(new Candidate(
-						rs.getString("user"), rs.getString("account"), rs.getString("postcode"), rs.getFloat("maxDist"), false));
-				}
-					
-			}
-		} catch (SQLException e) { throw new DBProblemException(e); }
-		
-		return firstFilter;		
-	}
 	
 	public List<Qualification> findQualification(String subject, String accountID, Connection connection) throws DBProblemException {
 		List<Qualification> qualifications = new ArrayList<Qualification>();
@@ -233,29 +190,95 @@ public class Ranking {
 		return qualifications;		
 	}
 
-public String findActor(String accountID, Connection connection) throws DBProblemException {
-	String actorID = null;
-	try(PreparedStatement findQualificationType = connection.prepareStatement(
-	  "SELECT userID FROM User WHERE accountID=?")){
-		findQualificationType.setString(1, accountID);
-		
-		
-		try(ResultSet rs = findQualificationType.executeQuery()){
-			while(rs.next()) {
-				actorID = (rs.getString("userID"));
+	public String findActor(String accountID, Connection connection) throws DBProblemException {
+		String actorID = null;
+		try(PreparedStatement findQualificationType = connection.prepareStatement(
+		  "SELECT userID FROM User WHERE accountID=?")){
+			findQualificationType.setString(1, accountID);
+			
+			
+			try(ResultSet rs = findQualificationType.executeQuery()){
+				while(rs.next()) {
+					actorID = (rs.getString("userID"));
+				}
+			return actorID;
 			}
-		return actorID;
+			
+		} catch (SQLException e) { 
+			System.out.println(e.getMessage().toString());
+			throw new DBProblemException(e); 
 		}
-		
-	} catch (SQLException e) { 
-		System.out.println(e.getMessage().toString());
-		throw new DBProblemException(e); 
+					
 	}
-				
+//Filters: reduce the number of candidates based on relevant information
+	
+	
+	
+	//The firts filter actually generates the data
+	public List<Candidate> jobFilter(String subject, float rate, Connection connection) throws DBProblemException {
+		List<Candidate> candidates = new ArrayList<Candidate>(checkMain(subject, rate, connection));
+		candidates.addAll(checkSecondary(subject, rate, connection));
+		System.out.print("Ranking.jobFilter: ");
+		for(Candidate c : candidates) System.out.println(c.userID+" ");
+		System.out.println();
+		return candidates;
+	}
+//Checks: used in the filters
+	
+	
+	/** These two checks initially retrieve candidate data, depending on the job info (pay and subject)
+	 *  The two resulting lists differ for the "grading" they are going to receive **/
+	//Uses main subject for qualifications
+	public List<Candidate> checkMain(String subject, float rate, Connection connection) 
+		throws DBProblemException {
+		List<Candidate> firstFilter = new ArrayList<Candidate>();
+		try(PreparedStatement jobFilter = connection.prepareStatement(
+			"SELECT User.userID as user, User.accountID as account, User.postcode as postcode, "
+		  + "Teacher.maxDistance as maxDist "
+		  + "FROM User INNER JOIN Teacher ON User.accountID=Teacher.accountID "
+		  + "INNER JOIN Qualification ON Teacher.accountID=Qualification.accountID "
+		  + "WHERE Qualification.mainSubj=? AND Teacher.minRatePerHour<=?")){
+			jobFilter.setString(1, subject);
+			jobFilter.setFloat(2, rate);
+			try(ResultSet rs = jobFilter.executeQuery()){
+				while(rs.next()) {
+					Candidate newC = new Candidate( 
+						rs.getString("user"), rs.getString("account"), 
+						rs.getString("postcode"), rs.getFloat("maxDist"), true);
+					if(!firstFilter.contains(newC)) firstFilter.add(newC);
+				}
+			}
+		} catch (SQLException e) { throw new DBProblemException(e); }
+		return firstFilter;		
+	}
+	//Uses secondary subjects for qualifications
+	public List<Candidate> checkSecondary(String subject, float rate, Connection connection) 
+		throws DBProblemException {
+		List<Candidate> firstFilter = new ArrayList<Candidate>();
+		try(PreparedStatement jobFilter = connection.prepareStatement(
+			"SELECT User.userID as user, User.accountID as account, User.postcode as postcode, "
+		  + "Teacher.maxDistance as maxDist "
+		  + "FROM User INNER JOIN Teacher ON User.accountID=Teacher.accountID "
+		  + "INNER JOIN Qualification ON Teacher.accountID=Qualification.accountID "
+		  + "WHERE Qualification.subj1=? OR Qualification.subj2=? OR Qualification.subj3=? "
+		  + "AND Qualification.mainSubj!=? AND Teacher.minRatePerHour<=?")){
+			for(int i=1; i<5; i++) jobFilter.setString(i, subject);
+			jobFilter.setFloat(5, rate);
+			try(ResultSet rs = jobFilter.executeQuery()){
+				while(rs.next()) {
+					Candidate newC = new Candidate(
+						rs.getString("user"), rs.getString("account"), 
+						rs.getString("postcode"), rs.getFloat("maxDist"), false);
+					if(!firstFilter.contains(newC)) firstFilter.add(newC);
+				}	
+			}
+		} catch (SQLException e) { throw new DBProblemException(e); }
+		return firstFilter;		
+	}
 }
 
-}
 
+//These classes help us temporarily store candidate and qualification data:
 class Candidate {
 	public String userID;
 	public String accountID;
@@ -270,6 +293,17 @@ class Candidate {
 		this.maxDistance = mDis;
 		this.fromMain = main;
 	}
+	
+	@Override
+	public boolean equals(Object other) {
+		if(other!=null && other instanceof Candidate) {
+			Candidate o = (Candidate)other;
+			if(o.userID!=null) return this.userID.equals(o.userID);
+		}
+		return false;
+	}
+	
+	
 }
 
 class Qualification {

@@ -18,11 +18,11 @@ public class Ranking {
 		List<Candidate> candidates;
 		
 		//Filter by job
-		candidates = jobFilter((String)jobData.get("subject"), (float)jobData.get("rate"), connection);
+		candidates = jobFilter((String)jobData.get("mainSubj"), (float)jobData.get("ratePerHour"), connection);
 		//Filter by distance
 		candidates = distanceFilter((String)jobData.get("postcode"), candidates);
 		//Give the scores to candidates
-		candidates = giveScores((String)jobData.get("subject"), candidates, connection);
+		candidates = giveScores((String)jobData.get("mainSubj"), candidates, connection);
 		//Normalise the scores into grades out of 10
 		candidates = normaliseScores(candidates);
 		//Rank by total grade

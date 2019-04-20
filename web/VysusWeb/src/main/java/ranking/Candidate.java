@@ -68,4 +68,12 @@ public class Candidate implements Comparable<Candidate> {
 		if(o!=null) return getTotal().compareTo(o.getTotal());
 		return 0;
 	}
+	
+	@Override
+	public String toString() {
+		String thisString = 
+			"userID: "+userID+" accountID: "+accountID+" posctode: "+postcode+" maxDistance: "+maxDistance+
+			" work: "+work+" academic: "+academic;
+		return thisString;
+	}
 }

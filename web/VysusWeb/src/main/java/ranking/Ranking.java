@@ -16,18 +16,27 @@ public class Ranking {
 	public List<Map<String,String>> makeRanking(Map<String, Object> jobData, Connection connection)
 	throws DBProblemException {
 		List<Candidate> candidates;
+		String subject = (String)jobData.get("mainSubj");
+		float rate = (float) jobData.get("ratePerHour");
+		String postcode = (String)jobData.get("postcode");
+		System.out.println("makeRanking job data: "+subject+" "+rate+" "+postcode);
 		
 		//Filter by job
-		candidates = jobFilter((String)jobData.get("mainSubj"), (float)jobData.get("ratePerHour"), connection);
+		candidates = jobFilter(subject, rate, connection);
+		System.out.println("After jobFilter: "+candidates);
 		//Filter by distance
-		candidates = distanceFilter((String)jobData.get("postcode"), candidates);
+		candidates = distanceFilter(postcode, candidates);
+		System.out.println("After distanceFilter: "+candidates);
 		//Give the scores to candidates
-		candidates = giveScores((String)jobData.get("mainSubj"), candidates, connection);
+		candidates = giveScores(subject, candidates, connection);
+		System.out.println("After scoring: "+candidates);
 		//Normalise the scores into grades out of 10
 		candidates = normaliseScores(candidates);
+		System.out.println("After grading: "+candidates);
 		//Rank by total grade
 		Collections.sort(candidates, Collections.reverseOrder());
-		
+		System.out.println("Sorted: "+candidates);
+
 		//Make a map for display purposes
 		return Candidate.toDisplay(candidates);
 	}

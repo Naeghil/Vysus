@@ -22,8 +22,8 @@ import exceptions.*;
 //This extends SecondaryStorage for its use as "staff";
 public class User extends SecondaryStorage {
 //Initialisation:
-	public User(String username) { super(username);	}
-	public User(String username, Connection connection) throws DBProblemException, InvalidDataException {
+	public User(Object username) { super(username);	}
+	public User(Object username, Connection connection) throws DBProblemException, InvalidDataException {
 		super(username, connection);
 	}
 	public User(String username, String password, Map<String, Object> data, Connection connection) 

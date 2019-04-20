@@ -41,7 +41,6 @@ public class Qualifications extends vysusWeb.bases.SecondaryBean implements Seri
 	}
 	
 	protected void loadData(Connection connection) throws DBProblemException, InvalidDataException {
-		System.out.println("Qualifications.loadData");
 		for (SecondaryStorage q : Qualification.all(actor.account(), connection)) toShow.add(q.show());
 	}
 

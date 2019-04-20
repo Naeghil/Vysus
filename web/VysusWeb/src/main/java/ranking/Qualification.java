@@ -7,7 +7,7 @@ public class Qualification {
 	public String endDate;
 	public String mainSubj;
 	
-	public Qualification(String initType, String startDate, String endDate, String mainSubj) {
+	public Qualification(String initType, String mainSubj, String startDate, String endDate) {
 		this.type = initType;
 		this.startDate = startDate;
 		this.endDate = endDate;

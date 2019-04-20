@@ -30,10 +30,10 @@ public class InstitutionGet extends vysusWeb.bases.VysusBean implements Serializ
 	public void signupInstitution() {
 		try {
 			Map<String, Object> userData = uGet.userData();
-			String accountID = '1'+(String)userData.get("username");
-			newData.put("sysAdminID", uGet.getUsername());
 			String username = (String)userData.remove("username");
 			String password = (String)userData.remove("password");
+			String accountID = '1'+username;
+			newData.put("sysAdminID", username);
 			actor.signup(username, password, accountID, userData, newData);
 		} catch (exceptions.InvalidDataException e) {
 			actor.handleException(e, false);

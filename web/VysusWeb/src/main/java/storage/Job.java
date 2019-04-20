@@ -138,4 +138,7 @@ public class Job extends SecondaryStorage {
 		
 		return show;
 	}
+	public Map<String, Object> getData() {
+		return new HashMap<String, Object>(data);
+	}
 }

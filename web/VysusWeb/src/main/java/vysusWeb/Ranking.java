@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.enterprise.context.ConversationScoped;
@@ -29,10 +28,13 @@ public class Ranking extends vysusWeb.bases.SecondaryBean implements Serializabl
 		onLoad("no");
 	} 
 	protected void loadData(Connection connection) throws DBProblemException, InvalidDataException {
-		job = new Job(jobID, connection).show();
-		List<Map<String, String>> gradedCandidates = 
-			new util.Ranking().rankingMain(job.get("subject"), Float.parseFloat(job.get("rate")), connection);
-		for(Map<String, String> cand : gradedCandidates) toShow.add(candidateData(cand, connection));
+		Job j = new Job(jobID, connection);
+		job = j.show();
+		Map<String, Object> filterData = j.getData();
+		filterData.put("postcode", actor.accountField("postcode"));
+		for(Map<String, String> cand : new ranking.Ranking().makeRanking(filterData, connection)) {
+			toShow.add(candidateData(cand, connection));
+		}
 	}
 	
 	protected Map<String, String> candidateData(Map<String, String> candidate, Connection connection) throws DBProblemException, InvalidDataException {

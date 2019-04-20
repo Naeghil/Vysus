@@ -64,7 +64,7 @@ public class Institution extends Account{
 		Map<String, String> show = new HashMap<String, String>();
 		show.put("name", (String)data.get("name"));
 		show.put("type", (String)data.get("type"));
-		show.put("posctode", (String)data.get("postcode"));
+		show.put("postcode", (String)data.get("postcode"));
 		Map<String, String> fullAddress = APICalls.fullAddress((String)data.get("postcode"),(String)data.get("buildingIdentifier"));
 		String address = (fullAddress.get("Identifier")+"\n"+fullAddress.get("Town")+"\n"+fullAddress.get("City")+"\n"+fullAddress.get("County"));
 		show.put("address", address);

@@ -2,8 +2,7 @@ package storage;
 
 /*************************************************
  * 					Qualification				 *
- * These are associated to Teacher objects but 	 *
- * have no nested data.							 *
+ * These are associated to Teachers 			 *
  * The corresponding table has auto-increment id *
  ************************************************/
 
@@ -24,24 +23,26 @@ public class Qualification extends SecondaryStorage {
 	protected Boolean verified = false; //Defaults to false in DB
 	
 //Initialisation: constructors and variables setup
-	//Existing constructor, also enabling loading, if given a connection
 	public Qualification(Object id) { super(id); }
 	public Qualification(Object id, Connection connection) throws InvalidDataException, DBProblemException {
 		super(id, connection);
-		setDBVariables();
 		if (connection!=null) verified = isVerified(connection);
 	}
-	//Creating constructor: no qualification id will be available this way
-	public Qualification(String account, Map<String, Object> data, Connection connection) throws DBProblemException {
+	public Qualification(String account, Map<String, Object> data, Connection connection) 
+		throws DBProblemException {
 		super(account, data, connection);
 	}
 	public void setDBVariables() {
 		keys = new ArrayList<String>(Arrays.asList(
-			"title", "startDate", "endDate", "comment", "institution", "level", "institutionEmail", "institutionPhoneNo", "referee", "mainSubj", "subj1", "subj2", "subj3"));
+			"title", "startDate", "endDate", "comment", "institution", 
+			"level", "institutionEmail", "institutionPhoneNo", "referee", 
+			"mainSubj", "subj1", "subj2", "subj3"));
 		delete = "DELETE FROM Qualification WHERE qualificationID=?";
 		retrieve = "SELECT * FROM Qualification WHERE qualificationID=?";
 		create = "INSERT INTO Qualification"
-				+ "(accountID, title, startDate, endDate, comment, institution, level, institutionEmail, institutionPhoneNo, referee, mainSubj, subj1, subj2, subj3) "
+				+ "(accountID, title, startDate, endDate, comment, institution, "
+				+ "level, institutionEmail, institutionPhoneNo, referee, "
+				+ "mainSubj, subj1, subj2, subj3) "
 				+ "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	}
 	protected String update(List<String> changes) {
@@ -51,23 +52,22 @@ public class Qualification extends SecondaryStorage {
 		return upd;
 	}
 	
-	public void deleteQualification(Connection connection) throws DBProblemException, InvalidDataException{
-		this.delete(connection);
-	}
-	
 //Object-specific querying methods
-	//Used to set the verified byte to true
+	//Used to set verified to true
 	public void verify(Connection connection) throws DBProblemException, InvalidDataException {
-		try(PreparedStatement verify = connection.prepareStatement("UPDATE Qualification SET verified=? WHERE qualificationID=?");) {
+		try(PreparedStatement verify = connection.prepareStatement(
+			"UPDATE Qualification SET verified=? WHERE qualificationID=?");) {
 			verified=true;
 			verify.setBoolean(1, verified);
 			verify.setObject(2, data.get("id"));
 			if(verify.executeUpdate() != 1) throw new InvalidDataException("Record not found");
 		} catch (SQLException e) { throw new DBProblemException(e); }
 	}
-	
-	protected boolean isVerified(Connection connection) throws InvalidDataException, DBProblemException { 
-		try(PreparedStatement veri = connection.prepareStatement("SELECT verified FROM Qualification WHERE qualificationID=?")) {
+	//Used to check if the qualification is verified
+	protected boolean isVerified(Connection connection) 
+		throws InvalidDataException, DBProblemException { 
+		try(PreparedStatement veri = connection.prepareStatement(
+			"SELECT verified FROM Qualification WHERE qualificationID=?")) {
 			veri.setObject(1, data.get("id"));
 			try(ResultSet record = veri.executeQuery()) {
 				if(record.next()) return record.getBoolean("verified");
@@ -75,27 +75,9 @@ public class Qualification extends SecondaryStorage {
 			}
 		} catch (SQLException e ) {throw new DBProblemException(e); }
 	}
-	
-	public static List<Integer> qualificationList(Connection con, String account) throws DBProblemException {
-		List<Integer> list = new ArrayList<Integer>();
-		try(PreparedStatement qualifications = con.prepareStatement("SELECT qualificationID FROM Qualification WHERE accountID=?");) {
-			qualifications.setObject(1, account);
-			try(ResultSet result = qualifications.executeQuery();){
-				while(result.next()) list.add(result.getInt("qualificationID"));
-			}
-		} catch (SQLException e) { throw new DBProblemException(e); }
-		return list;
-	}
-	public static List<Qualification> allQualifications(String accountID, Connection connection) 
+	//From SecondaryStorage
+	public static List<SecondaryStorage> all(Object id, Connection connection) 
 		throws DBProblemException, InvalidDataException {
-		List<Qualification> allQualifications = new ArrayList<Qualification>();
-		for(Integer qualificationID : qualificationList(connection, accountID)) {
-			allQualifications.add(new Qualification(qualificationID, connection));
-		}
-		return allQualifications;
-	}
-	
-	public static List<SecondaryStorage> all(Object id, Connection connection) throws DBProblemException, InvalidDataException {
 		return all("storage.Qualification", id, connection, "qualificationID", "Qualification", "accountID");
 	}
 

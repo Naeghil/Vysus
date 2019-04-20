@@ -11,6 +11,13 @@ import javax.inject.Named;
 import storage.*;
 import exceptions.*;
 
+/****************************************
+ * 				 Offers	  				*
+ * SecondaryBean allowing display of job*
+ * offers made to a user, allowing them *
+ * to accept or refuse it. 				*
+ ***************************************/
+
 @Named("offers")
 @ConversationScoped
 public class Offers extends vysusWeb.bases.SecondaryBean implements Serializable {
@@ -46,5 +53,4 @@ public class Offers extends vysusWeb.bases.SecondaryBean implements Serializable
 	//Doesn't make new, nor deletes anything:
 	protected void makeNew (Connection connection) throws InvalidDataException, DBProblemException { }
 	public void delete(String id) { }
-	
 }

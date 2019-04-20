@@ -1,6 +1,6 @@
 package exceptions;
 
-/* *********************************************************
+/***********************************************************
  *                  NoLogException                         *
  * It wasn't possible to write a log of this operation     *
  * Write a log in a file and handle it in another moment   *

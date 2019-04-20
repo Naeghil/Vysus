@@ -14,7 +14,8 @@ public class Qualification {
 		this.mainSubj = mainSubj;
 	}
 	
-	
+	//These two methods calculate the value of a qualification with respect to a score
+	//They are "type"-safe, so they can be used with any kind of qualification
 	public float addWorkYears(String subject) {
 		if(!type.equals("Work experience")) return 0;
 		float start = Float.parseFloat(startDate.substring(0, 4));
@@ -22,7 +23,6 @@ public class Qualification {
 		float mod = mainSubj.equals(subject) ? (float)1.0 : (float)0.25;
 		return (end-start)*mod;
 	}
-	
 	public float addAcademic(String subject) {
 		float mod = mainSubj.equals(subject) ? (float)1.0 : (float)0.25;
 		float value = (float)(	

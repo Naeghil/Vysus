@@ -3,8 +3,11 @@ package vysusWeb;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
 
-//TODO: add a logger class that records database errors somewhere
-
+/************************
+ * 		  Login			*
+ * This bean is related *
+ * to index.jsf			*
+ ***********************/
 
 @Named("login")
 @RequestScoped

@@ -9,22 +9,21 @@ import java.sql.Connection;
 
 import exceptions.*;
 
+/***************************************************
+ *	 				Institution				   	   *
+ * Represents an object from the Institution table *
+ **************************************************/
+
 public class Teacher extends Account{
 //Object-specific variables
-	List<Qualification> qualifications = new ArrayList<Qualification>();
-	//TODO: protected Calendar calendar;
+	//TODO: protected Calendar calendar; currently not implemented
 //Initialisation: constructors and variables setup
-	//Uses super constructors:
-	public Teacher(String accountID) {
-		super(accountID);
+	public Teacher(String id) { super(id); }
+	public Teacher(String id, Connection connection) throws DBProblemException, InvalidDataException { 
+		super(id, connection);
 	}
-	public Teacher(String accountID, Connection connection) throws DBProblemException, InvalidDataException { 
-		super(accountID); 
-		retrieve(connection);
-	}
-	public Teacher(String accountID, Map<String, Object> accountData, Connection connection)
-		throws DBProblemException {
-		super(accountID, accountData, connection);
+	public Teacher(String id, Map<String, Object> data, Connection connection) throws DBProblemException {
+		super(id, data, connection);
 		//TODO: Create the calendar
 	}
 	protected void setDBVariables() {
@@ -46,20 +45,20 @@ public class Teacher extends Account{
 //Object-specific querying methods
 	
 //Public interfaces of protected methods
-	public void loadDeep(Connection connection)
-		throws DBProblemException, InvalidDataException {
-		qualifications = Qualification.allQualifications((String)data.get("id"), connection);
-	}
 	public void deleteAccount(Connection connection) throws DBProblemException, InvalidDataException {
-		for(Qualification qualification : Qualification.allQualifications(getID(), connection)) qualification.delete(connection);
+		for(SecondaryStorage qualification : Qualification.all((String)data.get("id"), connection)) {
+			qualification.delete(connection);
+		}
 	}
 	
 //Getters and show methods
+	//Data available to the employers
 	public Map<String, String> show() {
 		Map<String, String> show = new HashMap<String, String>();
 		show.put("aboutMe", (String)data.get("aboutMe"));
 		return show;
 	}
+	//Personal work preferences
 	public Map<String, String> showFull() {
 		Map<String, String> show = show();
 		show.put("maxDistance", Float.toString((float)data.get("maxDistance")));

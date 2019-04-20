@@ -15,6 +15,13 @@ import storage.*;
 import exceptions.*;
 import util.Conv;
 
+/****************************************
+ * 				  Staff  				*
+ * SecondaryBean allowing display and	*
+ * creation of staff for administrator	*
+ * users of a school account			*
+ ***************************************/
+
 @Named("staff")
 @ConversationScoped
 public class Staff extends vysusWeb.bases.SecondaryBean implements Serializable {

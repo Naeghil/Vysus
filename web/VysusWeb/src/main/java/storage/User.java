@@ -1,9 +1,8 @@
 package storage;
 
-/* *****************************************
- *                 User                    *
- * Represents a record in the table user   *
- *                                         *
+/******************************************
+ *                 User                   *
+ * Represents a record in the table User  *
  ******************************************/
 
 import java.util.Map;
@@ -22,28 +21,26 @@ import exceptions.*;
 
 //This extends SecondaryStorage for its use as "staff";
 public class User extends SecondaryStorage {
-//Object initialisation:
-	//Constructors for existing user
-	public User(Object username) { super(username);	}
-	public User(Object username, Connection connection) throws DBProblemException, InvalidDataException {
+//Initialisation:
+	public User(String username) { super(username);	}
+	public User(String username, Connection connection) throws DBProblemException, InvalidDataException {
 		super(username, connection);
 	}
-	//Constructor for new user
-	public User(String username, String password, Map<String, Object> data, Connection connection) throws DBProblemException, InvalidDataException {
+	public User(String username, String password, Map<String, Object> data, Connection connection) 
+		throws DBProblemException, InvalidDataException {
 		super(username, data, connection);
 		setPassword(connection, password);
 	}
-	//Sets object-specific queries and keys:
+	//Excludes password
 	protected void setDBVariables() {
-		keys = new ArrayList<String>(Arrays.asList("accountID", "fullName", "houseIdentifier", "postcode", "email", "phoneNo", "dateOfBirth"));
+		keys = new ArrayList<String>(Arrays.asList(
+			"accountID", "fullName", "houseIdentifier", "postcode", "email", "phoneNo", "dateOfBirth"));
 		delete = "DELETE FROM User WHERE userID=?";
 		retrieve = "SELECT * FROM User WHERE userID=?";
-		//This excludes password:
 		create = "INSERT INTO User"
 				+ "(userID, accountID, fullName, houseIdentifier, postcode, email, phoneNo, dateOfBirth) "
 				+ "VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
 	}
-	//Implementation of the update query (excludes password):
 	protected String update(List<String> changed) {
 		String upd = "UPDATE User SET " + changed.get(0);
 		for(int i=1; i<changed.size(); i++) upd += "=?, " + changed.get(i);
@@ -63,7 +60,8 @@ public class User extends SecondaryStorage {
 	}
 	//Checks user's password, returning the accountID if execution normally terminates
 	public String login(String password, Connection con) throws DBProblemException, InvalidDataException {
-		try (PreparedStatement getHash = con.prepareStatement("SELECT password, accountID FROM User WHERE userID=?");){
+		try (PreparedStatement getHash = con.prepareStatement(
+				"SELECT password, accountID FROM User WHERE userID=?");){
 			getHash.setObject(1, data.get("id"));
 			try(ResultSet rs = getHash.executeQuery();) {
 				if(rs.next()) {
@@ -74,7 +72,7 @@ public class User extends SecondaryStorage {
 			}
 		} catch (SQLException e) { throw new DBProblemException(e); }
 	}
-	//Checks uniqueness 
+	//To check uniqueness 
 	public static boolean exists(String username, Connection con) throws DBProblemException {
 		try(PreparedStatement unique = con.prepareStatement("SELECT userID FROM User WHERE userID=?");) {
 			unique.setString(1, username);
@@ -83,14 +81,15 @@ public class User extends SecondaryStorage {
 	}
 
 //Public interfaces of protected methods:
-	//Enables user deletion (TODO: currently unused)
+	//TODO: currently unused
 	public void deleteUser(String password, Connection connection) throws DBProblemException, InvalidDataException {
 		Account account = Account.getAccount(login(password, connection)); //Double checks password
 		account.deleteAccount(connection);
 		delete(connection);
 	}
-	//For enact changes to the user account (TODO: currently unused)
-	public void updateProfile(Map<String, Object> changes, Connection connection) throws InvalidDataException, DBProblemException {
+	//TODO: currently unused
+	public void updateProfile(Map<String, Object> changes, Connection connection) 
+		throws InvalidDataException, DBProblemException {
 		if(changes.containsKey("newPassword") && changes.containsKey("oldPassword")) {
 			login((String)changes.remove("oldPassword"), connection);
 			setPassword(connection, (String)changes.remove("newPassword"));
@@ -98,12 +97,13 @@ public class User extends SecondaryStorage {
 		this.changes = changes;
 		update(connection);
 	}
-	
-	public static List<SecondaryStorage> all(Object id, Connection connection) throws DBProblemException, InvalidDataException {
+	//From SecondaryStorage
+	public static List<SecondaryStorage> all(Object id, Connection connection) 
+		throws DBProblemException, InvalidDataException {
 		return all("storage.User", id, connection, "userID", "User", "accountID");
 	}
-	
 //Getters & Shows:
+	//Name and IDs
 	public Map<String, String> showMini() {
 		Map<String, String> show = new HashMap<String, String>();
 		show.put("username", (String)data.get("id"));
@@ -111,20 +111,26 @@ public class User extends SecondaryStorage {
 		show.put("fullName", (String)data.get("fullName"));
 		return show;
 	}
-	//Doesn't show the potential employers the address
+	//Communication information
 	public Map<String, String> show() {
 		Map<String, String> show = showMini();
 		show.put("email", (String)data.get("email"));
 		show.put("phoneNo", (String)data.get("phoneNo"));
 		return show;
 	}
+	//Personal information
 	public Map<String, String> showFull() {
 		Map<String, String> show = show();
 		show.put("DOB", Conv.dateToString((Date)data.get("dateOfBirth")));
-		Map<String, String> fullAddress = APICalls.fullAddress((String)data.get("postcode"),(String)data.get("houseIdentifier"));
-		String address = (fullAddress.get("Identifier")+"\n"+fullAddress.get("Town")+"\n"+fullAddress.get("City")+"\n"+fullAddress.get("County"));
+		//Retrieves the full address from post code and identifier using an external library
+		Map<String, String> fullAddress = 
+			APICalls.fullAddress((String)data.get("postcode"),(String)data.get("houseIdentifier"));
+		String address = 
+			  fullAddress.get("Identifier")+"\n"
+			+ fullAddress.get("Town")+"\n"
+			+ fullAddress.get("City")+"\n"
+			+ fullAddress.get("County");
 		show.put("address", address);
-		
 		return show;
 	}
 }

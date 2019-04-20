@@ -15,6 +15,13 @@ import exceptions.*;
 import storage.*;
 import util.Conv;
 
+/**************************************
+ * 			Qualifications	  		  *
+ * SecondaryBean allowing display and *
+ * creation of qualifications for 	  *
+ * teachers							  *
+ *************************************/
+
 @Named("qualifications")
 @ConversationScoped
 public class Qualifications extends vysusWeb.bases.SecondaryBean implements Serializable {
@@ -61,7 +68,7 @@ public class Qualifications extends vysusWeb.bases.SecondaryBean implements Seri
 		}
 	}
 
-//For dropdowns:
+//For drop-downs:
 	public List<String> getSubjects() { return subjects; }
 	public List<String> getSubjectsNull() { return subjectsNull; }
 	public List<String> getTypes() { return types; }

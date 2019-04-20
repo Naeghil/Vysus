@@ -9,31 +9,26 @@ import java.util.HashMap;
 import java.util.List;
 
 import exceptions.*;
+import java.util.Map;
 
 /**************************************************************
  *						StorageAbstract						  *
  * Summarises features of objects representing DB entities.   *
- * If these objects have nested objects, they are loaded in   *
- * a lazy fashion; otherwise they are loaded at construction. *
+ * Provides basic functions for database interaction, e.g.	  *
+ * four basic functions (insert, select, update, delete)	  *
  * The format of a storage object is:						  *
  * - Object-specific variables								  *
  * - Initialisation: constructors and variables setup		  *
- * 	- A constructor for existing objects, with retrieve option*
+ * 	- A constructor for existing objects (optional retrieve)  *
  * 	- A constructor for new objects							  *
  * 	- A setDBVariables method								  *
  * - Object-specific querying methods						  *
  * - Public interfaces of protected methods					  *
  * - Getters and show methods								  *
  *************************************************************/
-//Object-specific variables
-//Initialisation: constructors and variables setup
 //Object-specific querying methods
 //Public interfaces of protected methods
 //Getters and show methods
-
-
-import java.util.Map;
-
 
 public abstract class StorageAbstract {
 //Variables:
@@ -49,7 +44,7 @@ public abstract class StorageAbstract {
 	protected String retrieve;
 	protected abstract String update(List<String> changes);
 	
-//Constructors and initializers:
+//Constructors and initialisers:
 	public StorageAbstract() {}
 	public StorageAbstract(Object id) {
 		data.put("id", id);
@@ -108,7 +103,7 @@ public abstract class StorageAbstract {
 	}
 	
 //The following are methods used to construct views, return null if not applicable
-	//Retrieves and shows minimal details doesn't need to be logged in
+	//Retrieves and shows minimal details
 	public Map<String, String> showMini() {
 		return null;
 	}

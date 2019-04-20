@@ -11,6 +11,14 @@ import javax.inject.Named;
 import storage.*;
 import exceptions.*;
 
+/******************************************************
+ * 						Actor						  *
+ * The actor bean is a session-scoped bean that holds *
+ * data about the user currently using the system.	  *
+ * It lazily loads data from the DB to display them,  *
+ * and its methods are null-safe.					  *
+ *****************************************************/
+
 @Named("actor")
 @SessionScoped
 public class Actor extends vysusWeb.bases.VysusBase implements Serializable {
@@ -19,8 +27,8 @@ public class Actor extends vysusWeb.bases.VysusBase implements Serializable {
 	Map<String, String> userData = null;
 	Map<String, String> accountData = null;
 
-	
-//User session:
+//User session methods:
+	//Tries and login a user, storing its data if successful
 	public void login(String username, String password)  {
 		try(Connection connection = getConnection()){
 			if(connection==null) return;
@@ -31,34 +39,36 @@ public class Actor extends vysusWeb.bases.VysusBase implements Serializable {
 			 handleException(e, false);
 		}
 	}
-	
-	public void signup(String username, String password, String accountID, Map<String, Object> userData, Map<String, Object> accountData) {
+	//Tries and create a new user/account and logs them in
+	public void signup(String username, String password, String accountID, 
+		Map<String, Object> userData, Map<String, Object> accountData) {
 		try (Connection connection = getConnection()){
 			if(connection == null) return;
-			if(User.exists(username, connection)) throw new InvalidDataException("username", "This username already exists.");
+			if(User.exists(username, connection)) {
+				throw new InvalidDataException("username", "This username already exists.");
+			}
 			Account.makeAccount(accountID, accountData, connection);
-			
 			userData.put("accountID", accountID);
 			new User(username, password, userData, connection);
-			
+			//Login
 			this.actor = username;
 			this.account = accountID;
-			
 			redirect("profile.jsf");
 		} catch(InvalidDataException | DBProblemException | SQLException e) {
 			handleException(e, false);
 		}
 	}
-	
+	//Logging out means invalidating the session, thus creating a new, empty Actor object
 	public void logout() {
 		getExternalContext().invalidateSession();
 		redirect("index.jsf");
 	}
-	
+	//Checks login status
 	public boolean isIn() {
 		return this.actor!=null && this.account!=null;
 	}
-	
+	//Generic method to ensure internal pages are not available if not logged in
+	//and external pages are not available if logged in
 	public String onLoad(boolean internal) {
 		if(internal && actor==null) return "index.jsf";
 		if(!internal && actor!=null) return "profile.jsf";
@@ -82,12 +92,10 @@ public class Actor extends vysusWeb.bases.VysusBase implements Serializable {
 			handleException(e, true);
 		}
 	}
-	
+	//Handles an exception and logs out if it's fatal
 	public void handleException(Exception ex, boolean fatal) {
 		if(ex instanceof InvalidDataException) {
-			InvalidDataException e = (InvalidDataException)ex;
-			message(e);
-			System.out.println("Invalid data exception " + e.message() + " " + e.field());
+			message((InvalidDataException)ex);
 			if(fatal) logout();
 		} 
 		if(ex instanceof DBProblemException) {
@@ -121,5 +129,4 @@ public class Actor extends vysusWeb.bases.VysusBase implements Serializable {
 	public String actor() {
 		return actor;
 	}
-	
 }

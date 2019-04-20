@@ -37,25 +37,23 @@ public class Job extends SecondaryStorage {
 		upd += "=? WHERE jobID=?";
 		return upd;
 	}
-	
-	public void deleteJob(Connection connection) throws DBProblemException, InvalidDataException {
-		this.delete(connection);
-	}
-	
+		
 //Object-specific querying methods
+	//Special retrieve to also get the accountID
 	protected void retrieve(Connection con) throws DBProblemException, InvalidDataException {
 		keys.add("accountID");
 		super.retrieve(con);
 		keys.remove("accountID");
 	}
-	
-	public void proposeTo(String candidateID, Connection connection) throws DBProblemException, InvalidDataException {
+	//Making an offer to 'candidate'
+	public void proposeTo(String candidate, Connection connection) throws DBProblemException, InvalidDataException {
 		try(PreparedStatement propose = connection.prepareStatement("UPDATE Job SET candidateID=? WHERE jobID=?");) {
-			propose.setString(1, candidateID);
+			propose.setString(1, candidate);
 			propose.setObject(2, data.get("id"));
 			if(propose.executeUpdate() != 1) throw new InvalidDataException("Record not found");
 		} catch (SQLException e) { throw new DBProblemException(e); }
 	}
+	//Retrieve the candidate
 	public String candidate(Connection connection) throws DBProblemException, InvalidDataException{
 		try(PreparedStatement candidate = connection.prepareStatement("SELECT candidateID FROM Job WHERE jobID=?")) {
 			candidate.setObject(1, data.get("id"));
@@ -66,6 +64,7 @@ public class Job extends SecondaryStorage {
 			}
 		} catch (SQLException e ) {throw new DBProblemException(e); }
 	}
+	//Method allowing a candidate to accept a job
 	public void accept(Connection connection) throws DBProblemException, InvalidDataException {
 		try(PreparedStatement accept = connection.prepareStatement("UPDATE Job SET accepted=? WHERE jobID=?");) {
 			accept.setBoolean(1, true);
@@ -73,6 +72,7 @@ public class Job extends SecondaryStorage {
 			if(accept.executeUpdate() != 1) throw new InvalidDataException("Record not found");
 		} catch (SQLException e) { throw new DBProblemException(e); }
 	}
+	//Retrieves the accepted attribute
 	public boolean accepted(Connection connection) throws DBProblemException, InvalidDataException{
 		try(PreparedStatement accepted = connection.prepareStatement("SELECT accepted FROM Job WHERE jobID=?")) {
 			accepted.setObject(1, data.get("id"));
@@ -83,44 +83,14 @@ public class Job extends SecondaryStorage {
 			}
 		} catch (SQLException e ) {throw new DBProblemException(e); }
 	}
-	
-	public static List<Integer> jobList(Connection con, String account) throws DBProblemException {
-		List<Integer> list = new ArrayList<Integer>();
-		try(PreparedStatement qualifications = con.prepareStatement("SELECT jobID FROM Job WHERE accountID=?");) {
-			qualifications.setObject(1, account);
-			try(ResultSet result = qualifications.executeQuery();){
-				while(result.next()) list.add(result.getInt("jobID"));
-			}
-		} catch (SQLException e) { throw new DBProblemException(e); }
-		return list;
-	}
-	public static List<Job> allJobs(String accountID, Connection connection) 
-		throws DBProblemException, InvalidDataException {
-		List<Job> allJobs = new ArrayList<Job>();
-		for(Integer jobID : jobList(connection, accountID)) {
-			allJobs.add(new Job(jobID, connection));
-		}
-		return allJobs;
-	}
-	
+	//From SecondaryStorage
 	public static List<SecondaryStorage> all(Object id, Connection connection) throws DBProblemException, InvalidDataException {
 		return all("storage.Job", id, connection, "jobID", "Job", "accountID");
 	}
+	//Special for Job to retrieve all offers to a certain teacher
 	public static List<SecondaryStorage> offers(Object id, Connection connection) throws DBProblemException, InvalidDataException {
 		return all("storage.Job", id, connection, "jobID", "Job", "candidateID");
 	}
-	
-	public static List<Job> offersFor(String candidate, Connection connection) throws DBProblemException, InvalidDataException {
-		List<Job> allOffers = new ArrayList<Job>();
-		try(PreparedStatement qualifications = connection.prepareStatement("SELECT jobID FROM Job WHERE candidateID=?");) {
-			qualifications.setObject(1, candidate);
-			try(ResultSet result = qualifications.executeQuery();){
-				while(result.next()) allOffers.add(new Job(result.getInt("jobID"), connection));
-			}
-		} catch (SQLException e) { throw new DBProblemException(e); }
-		return allOffers;
-	}
-
 	
 //Getters and show methods
 	public Map<String, String> show(){
@@ -135,9 +105,9 @@ public class Job extends SecondaryStorage {
 		else show.put("candidate", "");
 		if((boolean)data.get("accepted")) show.put("accepted", "yes");
 		else show.put("accepted", "no");
-		
 		return show;
 	}
+	//Special for ranking purposes
 	public Map<String, Object> getData() {
 		return new HashMap<String, Object>(data);
 	}

@@ -13,30 +13,24 @@ import exceptions.DBProblemException;
 import util.APICalls;
 
 public class Ranking {	
+	//This method implements something akin to a pipe-and-filter architecture
 	public List<Map<String,String>> makeRanking(Map<String, Object> jobData, Connection connection)
 	throws DBProblemException {
 		List<Candidate> candidates;
 		String subject = (String)jobData.get("subject");
 		float rate = (float) jobData.get("ratePerHour");
 		String postcode = (String)jobData.get("postcode");
-		System.out.println("makeRanking job data: "+subject+" "+rate+" "+postcode);
 		
 		//Filter by job
 		candidates = jobFilter(subject, rate, connection);
-		System.out.println("After jobFilter: "+candidates);
 		//Filter by distance
 		candidates = distanceFilter(postcode, candidates);
-		System.out.println("After distanceFilter: "+candidates);
 		//Give the scores to candidates
 		candidates = giveScores(subject, candidates, connection);
-		System.out.println("After scoring: "+candidates);
 		//Normalise the scores into grades out of 10
 		candidates = normaliseScores(candidates);
-		System.out.println("After grading: "+candidates);
 		//Rank by total grade
 		Collections.sort(candidates, Collections.reverseOrder());
-		System.out.println("Sorted: "+candidates);
-
 		//Make a map for display purposes
 		return Candidate.toDisplay(candidates);
 	}
@@ -111,7 +105,7 @@ public class Ranking {
 		return qualifications;		
 	}
 	
-	//Wraps api distance check
+	//Wraps API distance check
 	public static boolean distanceCheck(String candidatePostcode, String jobPostcode, float maxDist) {
 		return APICalls.checkDistance(candidatePostcode,jobPostcode,maxDist);
 	}
@@ -124,7 +118,7 @@ public class Ranking {
 			  + "INNER JOIN Qualification ON Teacher.accountID=Qualification.accountID "
 	+ "WHERE Qualification.subj1=? OR Qualification.subj2=? OR Qualification.subj3=? "
 	+ "OR Qualification.mainSubj=? AND Teacher.minRatePerHour<=?";
-	
+	//Used to retrieve qualifications
 	protected static String retrieveQualifications = "SELECT * FROM Qualification "
 		  + "WHERE accountID=? AND (mainSubj=? OR subj1=? OR subj2=? OR subj3=?)";
 }

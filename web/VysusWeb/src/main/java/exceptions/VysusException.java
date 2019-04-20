@@ -1,12 +1,13 @@
 package exceptions;
 
-/* **********************************************************************
+/************************************************************************
  *                           StorageException                           *
- * Generic storage Exception, possibly thrown when SQLExceptions happen.*
+ * Generic custom Exception, whose subclasses are used internally to	*
+ * signal certain common error for error display and log purposes		*
  * Data in these exceptions may be used to craft the error messages     *
  * **********************************************************************/
 
-public class VysusException extends Exception {
+public abstract class VysusException extends Exception {
 	protected Exception nestedException;
 	
 	public VysusException() { 

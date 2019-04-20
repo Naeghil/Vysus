@@ -12,6 +12,14 @@ import javax.inject.Named;
 import exceptions.*;
 import storage.*;
 
+/*******************************************
+ * 				   Ranking	  			   *
+ * SecondaryBean using the ranking package *
+ * to generate and display a ranking of	   *
+ * candidates for a specific job, allowing *
+ * a staff user to offer the job to them   *
+ ******************************************/
+
 @Named("ranking")
 @ConversationScoped
 public class Ranking extends vysusWeb.bases.SecondaryBean implements Serializable {
@@ -65,9 +73,4 @@ public class Ranking extends vysusWeb.bases.SecondaryBean implements Serializabl
 	//Doesn't make nor deletes anything
 	protected void makeNew(Connection connection) throws InvalidDataException, DBProblemException {	}
 	public void delete(String id) { }
-	
-	
-	
-	
-
 }

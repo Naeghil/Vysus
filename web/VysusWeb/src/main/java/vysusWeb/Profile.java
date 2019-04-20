@@ -14,8 +14,14 @@ import storage.Account;
 import exceptions.*;
 import storage.User;
 
-//Data has been refreshed by the *Get beans
+/****************************************
+ * 				Profile					*
+ * This bean supports profile.jsf		*
+ * It manages rendering and 			*
+ * visualisation of profile information	*
+ ***************************************/
 
+//Data has been refreshed by the *Get beans
 @Named("profile")
 @ConversationScoped
 public class Profile extends vysusWeb.bases.VysusBean implements Serializable {
@@ -38,7 +44,7 @@ public class Profile extends vysusWeb.bases.VysusBean implements Serializable {
 			actor.handleException(e, true);
 		}
 	}
-	
+	//TODO: currently not available
 	public void update() {
 		try (Connection connection = getConnection()){
 			if(connection == null) return;
@@ -53,13 +59,13 @@ public class Profile extends vysusWeb.bases.VysusBean implements Serializable {
 			actor.handleException(e, false);
 		}
 	}
-	
 	protected Map<String, Object> getChanges() {
 		if(accType==0) return teacherGet.changes();
 		if(accType==1) return institutionGet.changes();
 		return null;
 	}
 	
+//Rendering:
 	public int getAccType() {
 		return accType;
 	}

@@ -13,17 +13,23 @@ import javax.inject.Named;
 import util.Conv;
 import exceptions.*;
 
+/****************************************
+ * 				  UserGet				*
+ * This bean is specific for user data	*
+ ***************************************/
+
 @Named("uGet")
 @ConversationScoped
 public class UserGet extends vysusWeb.bases.VysusBean implements Serializable {
-	//The reason why this is not a map is because there is no way to make it static:
-	static List<String> monthWord = new ArrayList<String>(Arrays.asList("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"));
-	static List<String> monthNo = new ArrayList<String>(Arrays.asList("01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12" ));
+	//The reason why this is not a map is because it's tricky to make it static:
+	static List<String> monthWord = new ArrayList<String>(Arrays.asList(
+		"January", "February", "March", "April", "May", "June", 
+		"July", "August", "September", "October", "November", "December"));
+	static List<String> monthNo = new ArrayList<String>(Arrays.asList(
+		"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12" ));
 	static List<String> titles = new ArrayList<String>(Arrays.asList("Mr", "Mrs", "Ms", "Sir", "Mme"));
 	
 	Map<String, Object> newData = new HashMap<String, Object>();
-
-	public UserGet(){}
 
 	public Map<String, Object> userData() throws InvalidDataException {
 		checkDate();
@@ -49,7 +55,7 @@ public class UserGet extends vysusWeb.bases.VysusBean implements Serializable {
 	}
 	
 //Getter and setters
-	//For dropdown
+	//For drop-down
 	public List<String> getMonthWord() {
 		return monthWord;
 	}

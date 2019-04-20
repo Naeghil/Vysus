@@ -15,61 +15,52 @@ import javax.sql.DataSource;
 
 import exceptions.InvalidDataException;
 
+/**************************************
+ * 			   VysusBase			  *
+ * Provides basic functions available *
+ * to all beans in the system		  *
+ *************************************/
+
 public class VysusBase {
-	
-	//Methods to retrieve session objects:
-		protected Map<String, Object> getSessionMap() {
-			return getExternalContext().getSessionMap();
-		}
-		protected ExternalContext getExternalContext() {
-			return getContext().getExternalContext();
-		}
-		protected FacesContext getContext() {
-			return FacesContext.getCurrentInstance();
-		}
-	//Forward and Redirect
-		protected void forward(String url) {
-			try {
-				getExternalContext().dispatch(url);
-			} catch(IOException e) {
-				message(null, "There was an error while redirecting you to the right place.");
-			}
-		}
-		protected void redirect(String url) {
-			try{
-				getExternalContext().redirect(url);
-			} catch(IOException e) {
-				message(null, "There was an error while redirecting you to the right place.");
-			}
-		}
-	//Adds a message to a component:
-		protected void message(InvalidDataException e) {
-			String field = e.field();
-			String msg = e.message();
-			if(field!=null) if(field.equals("userID")) field= "username";
-			message(msg, "Invalid "+field);
-		}
-		protected void message(String message, String detail) { message(null, message, detail); }
-		protected void message(String clientID, String message, String detail) {
-			FacesContext.getCurrentInstance().addMessage(clientID, new FacesMessage(message, detail));
-		}
-	//Get current viewID:
-		protected String viewID() {
-			return getContext().getViewRoot().getViewId();
-		}
-	//Produces a valid connection or displays error:
-		protected Connection getConnection() {
-			try {
-				DataSource vysusdb = (DataSource)((Context)new InitialContext()).lookup("java:/vysusDB");
-				return vysusdb.getConnection();
-			} catch(NamingException | SQLException e) {
-				message("No connection", "Sorry, a database connection could not be established");
-			}
-			return null;
-		}
-		
-
+//Methods to retrieve session objects:
+	protected Map<String, Object> getSessionMap() {
+		return getExternalContext().getSessionMap();
 	}
-
-
-
+	protected ExternalContext getExternalContext() {
+		return FacesContext.getCurrentInstance().getExternalContext();
+	}
+//Forward and Redirect
+	protected void forward(String url) { //TODO: Currently unused
+		try { getExternalContext().dispatch(url); } 
+		catch(IOException e) {
+			message(null, "There was an error while redirecting you to the right place.");
+		}
+	}
+	protected void redirect(String url) {
+		try{ getExternalContext().redirect(url); } 
+		catch(IOException e) {
+			message(null, "There was an error while redirecting you to the right place.");
+		}
+	}
+//Handles messages:
+	protected void message(InvalidDataException e) {
+		String field = e.field();
+		String msg = e.message();
+		if(field!=null) if(field.equals("userID")) field= "username";
+		message(msg, "Invalid "+field);
+	}
+	protected void message(String message, String detail) { message(null, message, detail); }
+	protected void message(String clientID, String message, String detail) {
+		FacesContext.getCurrentInstance().addMessage(clientID, new FacesMessage(message, detail));
+	}
+//Produces a valid connection or displays error:
+	protected Connection getConnection() {
+		try {
+			DataSource vysusdb = (DataSource)((Context)new InitialContext()).lookup("java:/vysusDB");
+			return vysusdb.getConnection();
+		} catch(NamingException | SQLException e) {
+			message("Sorry, a database connection could not be established", "No connection");
+		}
+		return null;
+	}
+}

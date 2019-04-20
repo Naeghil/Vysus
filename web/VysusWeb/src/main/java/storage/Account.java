@@ -12,9 +12,6 @@ import exceptions.*;
  ******************************************/
 
 public abstract class Account extends StorageAbstract {
-//Object-specific variables
-	int accType = -1;
-
 //Initialisation: constructors and variables setup
 	public Account(String id) { super(id); }
 	public Account(String id, Connection connection) throws DBProblemException, InvalidDataException {
@@ -24,13 +21,14 @@ public abstract class Account extends StorageAbstract {
 		super(id, data, connection);
 	}
 	//Masking constructor for existing accounts
-	public static Account getAccount(String accountID)throws InvalidDataException {
+	public static Account getAccount(String accountID) throws InvalidDataException {
 		int accType = Account.accType(accountID);
 		if(accType==0) return new Teacher(accountID);
 		if(accType==1) return new Institution(accountID);
 		return null;
 	}
-	public static Account getAccount(String accountID, String actor, Connection connection) throws DBProblemException, InvalidDataException {
+	public static Account getAccount(String accountID, String actor, Connection connection) 
+		throws DBProblemException, InvalidDataException {
 		int accType = Account.accType(accountID);
 		if(accType==0) return new Teacher(accountID, connection);
 		if(accType==1) return new Institution(accountID, actor, connection);
@@ -45,13 +43,10 @@ public abstract class Account extends StorageAbstract {
 		
 		throw new InvalidDataException(null, "Unrecognised account type");
 	}
-	//DB variables setup depends on the final account class
-	
-//Object-specific querying methods
-
 //Public interfaces of protected methods
+	//TODO: currently unused
 	public abstract void deleteAccount(Connection connection) throws DBProblemException, InvalidDataException;
-	
+	//TODO: currently unused
 	public void updateAccount(Map<String, Object> changes, Connection connection)
 		throws DBProblemException, InvalidDataException {
 		this.changes = changes;
@@ -63,10 +58,8 @@ public abstract class Account extends StorageAbstract {
 		int type = Character.getNumericValue(accountID.charAt(0));
 		if(type>=0 && type<=1) return type;
 		
-		throw new InvalidDataException(null, "Unrecognised account type");
+		throw new InvalidDataException("Unrecognised account type");
 	}
-	public String getID() {
-		return (String)data.get("id");
-	}
+	
 	
 }

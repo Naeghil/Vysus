@@ -1,32 +1,24 @@
 package exceptions;
 
-/* ************************************************************************
- *                         InvalidDataException                           *
- * Thrown when data is not valid at a db level (e.g. wrong login details) *
- * may be also used from the validation methods, to save some code        *
- * ************************************************************************/
-//TODO: consider changing to "NotFoundException" to make it clearer what it means
-//Distinguish it from format problems such as "InvalidInputException"
- 
+/************************************************************
+ *                  InvalidDataException             		*
+ * Thrown when data is not valid (e.g. wrong login details) *
+ * *********************************************************/
 
  public class InvalidDataException extends VysusException {
 	 String field;
 	 String message;
 	 
 	public InvalidDataException(Exception nested, String field, String message) {
-		nestedException = nested;
+		super(nested);
 		this.field = field;
 		this.message = message;
 	}
 	public InvalidDataException(String field, String message) {
-		nestedException = null;
-		this.field = field;
-		this.message = message;
+		this(null, field, message);
 	}
 	public InvalidDataException(String message) {
-		nestedException = null;
-		this.field = null;
-		this.message = message;
+		this(null, null, message);
 	}
 	
 	public String field() { return field; }

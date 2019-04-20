@@ -16,7 +16,7 @@ public class Ranking {
 	public List<Map<String,String>> makeRanking(Map<String, Object> jobData, Connection connection)
 	throws DBProblemException {
 		List<Candidate> candidates;
-		String subject = (String)jobData.get("mainSubj");
+		String subject = (String)jobData.get("subject");
 		float rate = (float) jobData.get("ratePerHour");
 		String postcode = (String)jobData.get("postcode");
 		System.out.println("makeRanking job data: "+subject+" "+rate+" "+postcode);

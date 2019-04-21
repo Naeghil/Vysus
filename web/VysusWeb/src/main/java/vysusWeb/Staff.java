@@ -97,7 +97,7 @@ public class Staff extends vysusWeb.bases.SecondaryBean implements Serializable 
 		return "";
 	}
 	public void setPostcode(String postcode) {
-		newData.put("postcode", postcode);
+		newData.put("postcode", postcode.replaceAll("\\s+",""));
 	}
 	
 	public String getDay() {

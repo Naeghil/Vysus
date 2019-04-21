@@ -21,6 +21,7 @@
 						requiredMessage="Make sure you enter a username" 
 						validatorMessage="Ensure your username is less than 59 characters">
 						<f:validateLength maximum="59" />
+						<f:validateRegex pattern="^[a-zA-Z0-9]*$"/>
 					</h:inputText>
 					<h:message for="username"/>
 					<h:inputSecret id="password" value="#{uGet.password}" a:placeholder="Password"

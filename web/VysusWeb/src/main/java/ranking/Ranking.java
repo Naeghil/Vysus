@@ -25,6 +25,9 @@ public class Ranking {
 		candidates = jobFilter(subject, rate, connection);
 		//Filter by distance
 		candidates = distanceFilter(postcode, candidates);
+		//The candidates have now been reduced to a minimum:
+		if(candidates.size()==0) return new ArrayList<Map<String, String>>();
+		
 		//Give the scores to candidates
 		candidates = giveScores(subject, candidates, connection);
 		//Normalise the scores into grades out of 10

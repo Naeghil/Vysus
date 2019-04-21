@@ -18,6 +18,8 @@
 		<p>#{ranking.job.description}</p>
 	</div>
 	<div id="candidates-list" class="row w100 fulldimensions">
+		<h:outputText rendered="#{ranking.noData()}"
+				value="Sorry, we couldn't find any available candidates for this position" />
 		<ui:repeat var="c" value="#{ranking.toShow}" varStatus="status">
 			<div class="data-box">
 				<p>#{c.fullName} Total: #{c.total}/20 Work: #{c.work}/10 Academic: #{c.academic}/10</p>

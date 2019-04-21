@@ -39,6 +39,7 @@
 					requiredMessage="Make sure you enter a username" 
 					validatorMessage="Ensure your username is less than 59 characters">
 					<f:validateLength maximum="59" />
+					<f:validateRegex pattern="^[a-zA-Z0-9]*$"/>
 				</h:inputText>
 				<h:message for="sUsername"/>
 				<h:inputSecret id="sPassword" value="#{staff.password}" a:placeholder="Password"
@@ -98,6 +99,7 @@
 				requiredMessage="Postcode is required."
 				validatorMessage="Please ensure your postcode is in the correct UK format.">
 				<f:validateRegex pattern="([Gg][Ii][Rr] 0[Aa]{2})|((([A-Za-z][0-9]{1,2})|(([A-Za-z][A-Ha-hJ-Yj-y][0-9]{1,2})|(([A-Za-z][0-9][A-Za-z])|([A-Za-z][A-Ha-hJ-Yj-y][0-9][A-Za-z]?))))\s?[0-9][A-Za-z]{2})"></f:validateRegex>
+				
 			</h:inputText>
             <h:message for="userPostcode"/>
           		

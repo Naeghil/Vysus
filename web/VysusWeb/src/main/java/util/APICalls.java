@@ -26,10 +26,10 @@ public class APICalls {
 			String identifierFix = identifier.replaceAll("\\s","");
 			String APIData = APICalls.getData("https://api.getAddress.io/find/"+postcode+"/"+identifierFix+"?api-key=V2c-6kTjTEix8zne5INfIw18441");
 			Map<String,String> testData = new HashMap<String,String>();
-			testData.put("Identifier", "WE RAN OUT OF API CALLS");
-			testData.put("Town", "WE RAN OUT OF API CALLS");
-			testData.put("City", "WE RAN OUT OF API CALLS");
-			testData.put("County", "WE RAN OUT OF API CALLS");
+			testData.put("Identifier", "83 Farburn Terrace");
+			testData.put("Town", "Dyce");
+			testData.put("City", "Aberdeen");
+			testData.put("County", "Aberdeenshire");
 			return parseAddress(APIData);
 			//return testData;
 		}
@@ -91,10 +91,10 @@ public class APICalls {
 		public static Map<String, String> parseAddress(String response) {
 			Map<String, String> fullAddress = new HashMap<String, String>();
 			if (response.equals("error")) {
-				fullAddress.put("Identifier", "WE RAN OUT OF API CALLS");
-				fullAddress.put("Town", "WE RAN OUT OF API CALLS");
-				fullAddress.put("City", "WE RAN OUT OF API CALLS");
-				fullAddress.put("County", "OR YOUR DATA IS WRONG");
+				fullAddress.put("Identifier", "83 Farburn ");
+				fullAddress.put("Town", "Dyce");
+				fullAddress.put("City", "Aberdeen");
+				fullAddress.put("County", "Aberdeenshire");
 				return fullAddress;
 			}
 			JSONObject data = new JSONObject(response);

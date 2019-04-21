@@ -16,6 +16,7 @@ import org.json.*;
 public class APICalls {
 
 	public static void main(String[] args) {
+		//Tests of API
 		//System.out.println(fullAddress("cm34qw","Danbury Fryer"));
 		//System.out.println(getDistance("cm34rl","ab245dj",1000	));
 	}
@@ -91,7 +92,7 @@ public class APICalls {
 		public static Map<String, String> parseAddress(String response) {
 			Map<String, String> fullAddress = new HashMap<String, String>();
 			if (response.equals("error")) {
-				fullAddress.put("Identifier", "83 Farburn ");
+				fullAddress.put("Identifier", "83 Farburn Terrace");
 				fullAddress.put("Town", "Dyce");
 				fullAddress.put("City", "Aberdeen");
 				fullAddress.put("County", "Aberdeenshire");

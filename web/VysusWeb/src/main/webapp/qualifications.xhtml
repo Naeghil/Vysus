@@ -39,8 +39,8 @@
 			<h:form>
 			<h:inputText id="title" value="#{qualifications.title}" a:placeholder="Qualification name"
          			styleClass="form-control form-element w50 inline-block" required="true"
-					requiredMessage="Make sure you enter an institution name" 
-					validatorMessage="Ensure your username is less than 257 characters">
+					requiredMessage="Make sure you enter a qualification name" 
+					validatorMessage="Ensure your qualification name is less than 257 characters">
 					<f:validateLength maximum="257" />
 				</h:inputText>
 			<h:message for="title"/>
@@ -117,8 +117,8 @@ styleClass="form-control form-element w95" required="false" />
 			
 			<h:inputText id="where" value="#{qualifications.where}" a:placeholder="Providing institution"
         			styleClass="form-control form-element inline-block w50" required="true"
-				requiredMessage="Make sure you enter an institution name" 
-				validatorMessage="Ensure your username is less than 257 characters">
+				requiredMessage="Make sure you enter a qualification description name" 
+				validatorMessage="Ensure your description is less than 257 characters">
 				<f:validateLength maximum="257" />
 			</h:inputText>
 			<h:message for="where"/>

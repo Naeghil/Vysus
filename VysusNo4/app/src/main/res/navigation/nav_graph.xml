@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/mainActivity">
+
+    <activity
+        android:id="@+id/mainActivity"
+        android:name="com.example.vysusApp.MainActivity"
+        android:label="activity_main"
+        tools:layout="@layout/activity_main">
+        <action
+            android:id="@+id/action_mainActivity_to_home"
+            app:destination="@id/homePage" />
+
+    </activity>
+    <activity
+        android:id="@+id/homePage"
+        android:name="com.example.vysusApp.HomePage"
+        android:label="activity_home_page"
+        tools:layout="@layout/activity_home_page" >
+        <action
+            android:id="@+id/action_homePage_to_jobFragment"
+            app:destination="@id/jobFragment" />
+        <action
+            android:id="@+id/action_homePage_to_notificationFragment"
+            app:destination="@id/notificationFragment" />
+        <action
+            android:id="@+id/action_homePage_to_profilePageFragment"
+            app:destination="@id/profilePageFragment" />
+        <action
+            android:id="@+id/action_homePage_to_chatDialogActivity"
+            app:destination="@id/chatDialogActivity" />
+    </activity>
+
+    <action
+        android:id="@+id/action_global_mainActivity"
+        app:destination="@id/mainActivity" />
+    <fragment
+        android:id="@+id/jobFragment"
+        android:name="com.example.vysusApp.JobFragment"
+        android:label="job_fragment_layout"
+        tools:layout="@layout/job_fragment_layout" />
+    <fragment
+        android:id="@+id/profilePageFragment"
+        android:name="com.example.vysusApp.profilePageFragment"
+        android:label="profile_page_layout"
+        tools:layout="@layout/profile_page_layout" />
+
+    <fragment
+        android:id="@+id/notificationFragment"
+        android:name="com.example.vysusApp.NotificationFragment"
+        android:label="notification_fragment_layout"
+        tools:layout="@layout/notification_fragment_layout" />
+    <activity
+        android:id="@+id/chatDialogActivity"
+        android:name="com.example.vysusApp.ChatDialogActivity"
+        android:label="activity_chat_dialog"
+        tools:layout="@layout/activity_chat_dialog" >
+        <action
+            android:id="@+id/action_chatDialogActivity_to_listUsersActivity"
+            app:destination="@id/listUsersActivity" />
+        <action
+            android:id="@+id/action_chatDialogActivity_to_messageActivity"
+            app:destination="@id/messageActivity" />
+    </activity>
+    <activity
+        android:id="@+id/listUsersActivity"
+        android:name="com.example.vysusApp.ListUsersActivity"
+        android:label="activity_list_users"
+        tools:layout="@layout/activity_list_users" />
+    <activity
+        android:id="@+id/messageActivity"
+        android:name="com.example.vysusApp.MessageActivity"
+        android:label="activity_message"
+        tools:layout="@layout/activity_message" />
+</navigation>

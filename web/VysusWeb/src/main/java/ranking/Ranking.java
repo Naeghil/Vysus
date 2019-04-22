@@ -44,7 +44,7 @@ public class Ranking {
 		float maxWork = Candidate.maxWork(list);
 		float maxAcademic = Candidate.maxAcademic(list);
 		for(Candidate c : list) {
-			c.work = (maxWork != 0)? (float)((int)(100f*c.work/maxWork))/10f :0;
+			c.work = (float)((int)(100f*c.work/maxWork))/10f;
 			c.academic = (maxAcademic != 0)? (float)((int)(100f*c.academic/maxAcademic))/10f :0;
 		}
 		return list;

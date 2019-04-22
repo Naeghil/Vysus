@@ -41,7 +41,7 @@
 				Subject: #{o.subject} <br/>
 				Description: <br/>
 				#{o.description} <br/>
-				Per hour: £ #{o.ratePerHour} </p>
+				Per hour: £ #{o.rate} </p>
 				<h:form rendered="#{o.accepted.equals('no')}" styleClass="w100 righttext">
 					<h:commandButton value="Accept" action="#{offers.accept(o.id)}" styleClass="btn btn-primary form-element"/>
 					<h:commandButton value="Refuse" action="#{offers.refuse(o.id)}" styleClass="btn btn-primary form-element"/>

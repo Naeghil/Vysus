@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_profilePage"
+        android:icon="@drawable/ic_action_name"
+        android:title="@string/title_profilePage" />
+
+    <item
+        android:id="@+id/navigation_jobs"
+        android:icon="@drawable/ic_work_icon"
+        android:title="@string/title_jobs" />
+
+    <item
+        android:id="@+id/navigation_notifications"
+        android:icon="@drawable/ic_notifications_black_24dp"
+        android:title="@string/title_notifications" />
+
+    <item
+        android:id="@+id/navigation_message"
+        android:icon="@drawable/ic_messenger_icon"
+        android:title="@string/title_messenger"/>
+
+</menu>

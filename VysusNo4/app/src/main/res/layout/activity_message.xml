@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MessageActivity"
+    android:background="@drawable/gradient">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/my_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        android:textAlignment="center"
+        app:layout_constraintTop_toTopOf="parent"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+        <TextView
+            android:id="@+id/personName"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:textAlignment="center"
+            android:textAllCaps="true"
+            android:textStyle="bold"
+            android:textColor="@color/blackestBlack"
+            android:textSize="20dp"
+            android:layout_marginRight="40dp"
+            android:gravity="center"
+            android:layout_gravity="center_horizontal"/>
+
+        <ImageButton
+            android:id="@+id/improvisedBackButton"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@android:drawable/ic_menu_revert"
+            android:background="@mipmap/empty_background"/>
+
+    </android.support.v7.widget.Toolbar>
+
+    <ListView
+        android:layout_marginTop="60dp"
+        android:id="@+id/messages_list"
+        android:layout_alignParentTop="true"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:divider="@drawable/gradient"
+        android:layout_marginBottom="40dp"
+        android:fitsSystemWindows="true"></ListView>
+
+
+
+    <ImageButton
+        android:id="@+id/send_button"
+        android:src="@android:drawable/ic_menu_send"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:padding="4dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:outlineAmbientShadowColor="@color/blackestBlack"
+        android:background="@mipmap/empty_background"/>
+
+    <EditText
+        android:id="@+id/edit_content"
+        android:layout_alignParentBottom="true"
+        android:layout_toLeftOf="@+id/send_button"
+        android:hint="Enter Message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+
+
+</RelativeLayout>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+android:layout_height="match_parent">
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Job offers will be displayed here once the app is fully connected to the backend"
+            android:textSize="48sp" />
+    </TableRow>
+
+<TableRow
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" />
+
+<TableRow
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" />
+
+<TableRow
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" />
+
+</TableLayout>

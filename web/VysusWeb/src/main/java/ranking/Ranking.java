@@ -23,17 +23,23 @@ public class Ranking {
 		
 		//Filter by job
 		candidates = jobFilter(subject, rate, connection);
+		System.out.println("After jobFilter: " + candidates.toString());
 		//Filter by distance
 		candidates = distanceFilter(postcode, candidates);
+		System.out.println("After distanceFilter: " + candidates.toString());
 		//The candidates have now been reduced to a minimum:
 		if(candidates.size()==0) return new ArrayList<Map<String, String>>();
 		
+		
 		//Give the scores to candidates
 		candidates = giveScores(subject, candidates, connection);
+		System.out.println("After giveScores: " + candidates.toString());
 		//Normalise the scores into grades out of 10
 		candidates = normaliseScores(candidates);
+		System.out.println("After normaliseScores: " + candidates.toString());
 		//Rank by total grade
 		Collections.sort(candidates, Collections.reverseOrder());
+		System.out.println("After sort: " + candidates.toString());
 		//Make a map for display purposes
 		return Candidate.toDisplay(candidates);
 	}
@@ -44,7 +50,7 @@ public class Ranking {
 		float maxWork = Candidate.maxWork(list);
 		float maxAcademic = Candidate.maxAcademic(list);
 		for(Candidate c : list) {
-			c.work = (float)((int)(100f*c.work/maxWork))/10f;
+			c.work = (maxWork != 0)? (float)((int)(100f*c.work/maxWork))/10f :0;
 			c.academic = (maxAcademic != 0)? (float)((int)(100f*c.academic/maxAcademic))/10f :0;
 		}
 		return list;

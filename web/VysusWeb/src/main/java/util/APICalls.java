@@ -25,7 +25,7 @@ public class APICalls {
 			//System.out.println("fullAddress.identifier: " + identifier);
 			//System.out.println("fullAddress.postcode: " + postcode);
 			String identifierFix = identifier.replaceAll("\\s","");
-			String APIData = APICalls.getData("https://api.getAddress.io/find/"+postcode+"/"+identifierFix+"?api-key=V2c-6kTjTEix8zne5INfIw18441");
+			String APIData = APICalls.getData("https://api.getAddress.io/find/"+postcode+"/"+identifierFix+"?api-key=GJUIdYuj6UiW-Atc5lR_uQ18432");
 			Map<String,String> testData = new HashMap<String,String>();
 			testData.put("Identifier", "83 Farburn Terrace");
 			testData.put("Town", "Dyce");
